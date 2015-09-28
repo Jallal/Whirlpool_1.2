@@ -1,0 +1,679 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		420838551BB8C6D100AB15F1 /* NavigationsButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420838541BB8C6D100AB15F1 /* NavigationsButtons.swift */; settings = {ASSET_TAGS = (); }; };
+		420838591BB8EB5400AB15F1 /* LandMarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420838581BB8EB5400AB15F1 /* LandMarkViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		421545B21BB8533F00AE1B23 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545AC1BB8533F00AE1B23 /* MainViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		421545B31BB8533F00AE1B23 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545AD1BB8533F00AE1B23 /* LoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		421545B41BB8533F00AE1B23 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545AE1BB8533F00AE1B23 /* SearchViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		421545B51BB8533F00AE1B23 /* RoomInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545AF1BB8533F00AE1B23 /* RoomInfoViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		421545B61BB8533F00AE1B23 /* NavigationFULLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545B01BB8533F00AE1B23 /* NavigationFULLViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		421545B71BB8533F00AE1B23 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545B11BB8533F00AE1B23 /* SearchResultsViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		421545BC1BB85FD600AE1B23 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 421545BB1BB85FD600AE1B23 /* MapKit.framework */; };
+		4288AAA01BB83093003EC9EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4288AA9F1BB83093003EC9EF /* AppDelegate.swift */; };
+		4288AAA51BB83093003EC9EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4288AAA31BB83093003EC9EF /* Main.storyboard */; };
+		4288AAA71BB83093003EC9EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4288AAA61BB83093003EC9EF /* Assets.xcassets */; };
+		4288AAAA1BB83093003EC9EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4288AAA81BB83093003EC9EF /* LaunchScreen.storyboard */; };
+		4288AAB51BB83093003EC9EF /* Whirlpool_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4288AAB41BB83093003EC9EF /* Whirlpool_iOSTests.swift */; };
+		4288AAC01BB83093003EC9EF /* Whirlpool_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4288AABF1BB83093003EC9EF /* Whirlpool_iOSUITests.swift */; };
+		42C01DF21BB8351600C2EEAD /* libGTLTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C01DF11BB8351600C2EEAD /* libGTLTouchStaticLib.a */; };
+		42C01DF41BB8352000C2EEAD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C01DF31BB8352000C2EEAD /* Security.framework */; };
+		42C01DF61BB8352F00C2EEAD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C01DF51BB8352F00C2EEAD /* SystemConfiguration.framework */; };
+		42C01DF81BB8364700C2EEAD /* GTMOAuth2ViewTouch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42C01DF71BB8364700C2EEAD /* GTMOAuth2ViewTouch.xib */; settings = {ASSET_TAGS = (); }; };
+		42C01DFC1BB8369A00C2EEAD /* GTLCalendar_Sources.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C01DFA1BB8369A00C2EEAD /* GTLCalendar_Sources.m */; settings = {ASSET_TAGS = (); }; };
+		847B58741BB9BF9800E22862 /* CalenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B58721BB9BF9800E22862 /* CalenderCell.swift */; settings = {ASSET_TAGS = (); }; };
+		847B58751BB9BF9800E22862 /* CalenderEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B58731BB9BF9800E22862 /* CalenderEvent.swift */; settings = {ASSET_TAGS = (); }; };
+		847B58761BB9DA2900E22862 /* CalenderCell.swift in Resources */ = {isa = PBXBuildFile; fileRef = 847B58721BB9BF9800E22862 /* CalenderCell.swift */; };
+		E8D6C8C38C4578E457FECB6A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 687F69D2BC4BA870FA74ACA3 /* libPods.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4288AAB11BB83093003EC9EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4288AA941BB83093003EC9EF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4288AA9B1BB83093003EC9EF;
+			remoteInfo = "Whirlpool-iOS";
+		};
+		4288AABC1BB83093003EC9EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4288AA941BB83093003EC9EF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4288AA9B1BB83093003EC9EF;
+			remoteInfo = "Whirlpool-iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0C8F9174D8A94754789191A5 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		420838541BB8C6D100AB15F1 /* NavigationsButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationsButtons.swift; path = ../NavigationsButtons.swift; sourceTree = "<group>"; };
+		420838581BB8EB5400AB15F1 /* LandMarkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LandMarkViewController.swift; path = ../LandMarkViewController.swift; sourceTree = "<group>"; };
+		421545AC1BB8533F00AE1B23 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		421545AD1BB8533F00AE1B23 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		421545AE1BB8533F00AE1B23 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		421545AF1BB8533F00AE1B23 /* RoomInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomInfoViewController.swift; sourceTree = "<group>"; };
+		421545B01BB8533F00AE1B23 /* NavigationFULLViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationFULLViewController.swift; sourceTree = "<group>"; };
+		421545B11BB8533F00AE1B23 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		421545B81BB85FB200AE1B23 /* Whirlpool-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Whirlpool-iOS.entitlements"; sourceTree = "<group>"; };
+		421545BB1BB85FD600AE1B23 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		4288AA9C1BB83093003EC9EF /* Whirlpool-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Whirlpool-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4288AA9F1BB83093003EC9EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "Whirlpool-iOS/AppDelegate.swift"; sourceTree = "<group>"; };
+		4288AAA41BB83093003EC9EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4288AAA61BB83093003EC9EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4288AAA91BB83093003EC9EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4288AAAB1BB83093003EC9EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4288AAB01BB83093003EC9EF /* Whirlpool-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Whirlpool-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4288AAB41BB83093003EC9EF /* Whirlpool_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Whirlpool_iOSTests.swift; sourceTree = "<group>"; };
+		4288AAB61BB83093003EC9EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4288AABB1BB83093003EC9EF /* Whirlpool-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Whirlpool-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4288AABF1BB83093003EC9EF /* Whirlpool_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Whirlpool_iOSUITests.swift; sourceTree = "<group>"; };
+		4288AAC11BB83093003EC9EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		42C01DF11BB8351600C2EEAD /* libGTLTouchStaticLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGTLTouchStaticLib.a; path = "../google-api-objectivec-client/Source/build/Debug-iphoneos/libGTLTouchStaticLib.a"; sourceTree = "<group>"; };
+		42C01DF31BB8352000C2EEAD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		42C01DF51BB8352F00C2EEAD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		42C01DF71BB8364700C2EEAD /* GTMOAuth2ViewTouch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTMOAuth2ViewTouch.xib; sourceTree = "<group>"; };
+		42C01DF91BB8369900C2EEAD /* Whirlpool-iOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Whirlpool-iOS-Bridging-Header.h"; sourceTree = "<group>"; };
+		42C01DFA1BB8369A00C2EEAD /* GTLCalendar_Sources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLCalendar_Sources.m; sourceTree = "<group>"; };
+		42C01DFB1BB8369A00C2EEAD /* GTLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLCalendar.h; sourceTree = "<group>"; };
+		687F69D2BC4BA870FA74ACA3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		847B58721BB9BF9800E22862 /* CalenderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderCell.swift; sourceTree = "<group>"; };
+		847B58731BB9BF9800E22862 /* CalenderEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderEvent.swift; sourceTree = "<group>"; };
+		EBE3433BF44B93823A77301D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4288AA991BB83093003EC9EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				42C01DF61BB8352F00C2EEAD /* SystemConfiguration.framework in Frameworks */,
+				42C01DF41BB8352000C2EEAD /* Security.framework in Frameworks */,
+				421545BC1BB85FD600AE1B23 /* MapKit.framework in Frameworks */,
+				42C01DF21BB8351600C2EEAD /* libGTLTouchStaticLib.a in Frameworks */,
+				E8D6C8C38C4578E457FECB6A /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4288AAAD1BB83093003EC9EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4288AAB81BB83093003EC9EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4288AA931BB83093003EC9EF = {
+			isa = PBXGroup;
+			children = (
+				4288AA9F1BB83093003EC9EF /* AppDelegate.swift */,
+				42C01DFA1BB8369A00C2EEAD /* GTLCalendar_Sources.m */,
+				42C01DFB1BB8369A00C2EEAD /* GTLCalendar.h */,
+				42C01DF71BB8364700C2EEAD /* GTMOAuth2ViewTouch.xib */,
+				4288AA9E1BB83093003EC9EF /* Whirlpool-iOS */,
+				4288AAB31BB83093003EC9EF /* Whirlpool-iOSTests */,
+				4288AABE1BB83093003EC9EF /* Whirlpool-iOSUITests */,
+				4288AA9D1BB83093003EC9EF /* Products */,
+				BA721CCAE2327D87DE4C9A98 /* Pods */,
+				AD51F4BD5583FE2E361657C3 /* Frameworks */,
+				42C01DF91BB8369900C2EEAD /* Whirlpool-iOS-Bridging-Header.h */,
+			);
+			sourceTree = "<group>";
+		};
+		4288AA9D1BB83093003EC9EF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4288AA9C1BB83093003EC9EF /* Whirlpool-iOS.app */,
+				4288AAB01BB83093003EC9EF /* Whirlpool-iOSTests.xctest */,
+				4288AABB1BB83093003EC9EF /* Whirlpool-iOSUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4288AA9E1BB83093003EC9EF /* Whirlpool-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				847B58721BB9BF9800E22862 /* CalenderCell.swift */,
+				847B58731BB9BF9800E22862 /* CalenderEvent.swift */,
+				421545B81BB85FB200AE1B23 /* Whirlpool-iOS.entitlements */,
+				421545AC1BB8533F00AE1B23 /* MainViewController.swift */,
+				421545AD1BB8533F00AE1B23 /* LoginViewController.swift */,
+				421545AE1BB8533F00AE1B23 /* SearchViewController.swift */,
+				421545AF1BB8533F00AE1B23 /* RoomInfoViewController.swift */,
+				421545B01BB8533F00AE1B23 /* NavigationFULLViewController.swift */,
+				421545B11BB8533F00AE1B23 /* SearchResultsViewController.swift */,
+				420838541BB8C6D100AB15F1 /* NavigationsButtons.swift */,
+				420838581BB8EB5400AB15F1 /* LandMarkViewController.swift */,
+				4288AAA31BB83093003EC9EF /* Main.storyboard */,
+				4288AAA61BB83093003EC9EF /* Assets.xcassets */,
+				4288AAA81BB83093003EC9EF /* LaunchScreen.storyboard */,
+				4288AAAB1BB83093003EC9EF /* Info.plist */,
+			);
+			path = "Whirlpool-iOS";
+			sourceTree = "<group>";
+		};
+		4288AAB31BB83093003EC9EF /* Whirlpool-iOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				4288AAB41BB83093003EC9EF /* Whirlpool_iOSTests.swift */,
+				4288AAB61BB83093003EC9EF /* Info.plist */,
+			);
+			path = "Whirlpool-iOSTests";
+			sourceTree = "<group>";
+		};
+		4288AABE1BB83093003EC9EF /* Whirlpool-iOSUITests */ = {
+			isa = PBXGroup;
+			children = (
+				4288AABF1BB83093003EC9EF /* Whirlpool_iOSUITests.swift */,
+				4288AAC11BB83093003EC9EF /* Info.plist */,
+			);
+			path = "Whirlpool-iOSUITests";
+			sourceTree = "<group>";
+		};
+		AD51F4BD5583FE2E361657C3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				421545BB1BB85FD600AE1B23 /* MapKit.framework */,
+				42C01DF51BB8352F00C2EEAD /* SystemConfiguration.framework */,
+				42C01DF31BB8352000C2EEAD /* Security.framework */,
+				42C01DF11BB8351600C2EEAD /* libGTLTouchStaticLib.a */,
+				687F69D2BC4BA870FA74ACA3 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BA721CCAE2327D87DE4C9A98 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EBE3433BF44B93823A77301D /* Pods.debug.xcconfig */,
+				0C8F9174D8A94754789191A5 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4288AA9B1BB83093003EC9EF /* Whirlpool-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4288AAC41BB83093003EC9EF /* Build configuration list for PBXNativeTarget "Whirlpool-iOS" */;
+			buildPhases = (
+				7B3EDED0561D6FDC0BECFE87 /* Check Pods Manifest.lock */,
+				4288AA981BB83093003EC9EF /* Sources */,
+				4288AA991BB83093003EC9EF /* Frameworks */,
+				4288AA9A1BB83093003EC9EF /* Resources */,
+				A3000C6B81E720DEEB9CBDED /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Whirlpool-iOS";
+			productName = "Whirlpool-iOS";
+			productReference = 4288AA9C1BB83093003EC9EF /* Whirlpool-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4288AAAF1BB83093003EC9EF /* Whirlpool-iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4288AAC71BB83093003EC9EF /* Build configuration list for PBXNativeTarget "Whirlpool-iOSTests" */;
+			buildPhases = (
+				4288AAAC1BB83093003EC9EF /* Sources */,
+				4288AAAD1BB83093003EC9EF /* Frameworks */,
+				4288AAAE1BB83093003EC9EF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4288AAB21BB83093003EC9EF /* PBXTargetDependency */,
+			);
+			name = "Whirlpool-iOSTests";
+			productName = "Whirlpool-iOSTests";
+			productReference = 4288AAB01BB83093003EC9EF /* Whirlpool-iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		4288AABA1BB83093003EC9EF /* Whirlpool-iOSUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4288AACA1BB83093003EC9EF /* Build configuration list for PBXNativeTarget "Whirlpool-iOSUITests" */;
+			buildPhases = (
+				4288AAB71BB83093003EC9EF /* Sources */,
+				4288AAB81BB83093003EC9EF /* Frameworks */,
+				4288AAB91BB83093003EC9EF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4288AABD1BB83093003EC9EF /* PBXTargetDependency */,
+			);
+			name = "Whirlpool-iOSUITests";
+			productName = "Whirlpool-iOSUITests";
+			productReference = 4288AABB1BB83093003EC9EF /* Whirlpool-iOSUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4288AA941BB83093003EC9EF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = MSU;
+				TargetAttributes = {
+					4288AA9B1BB83093003EC9EF = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = 2MU5RRNWNL;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					4288AAAF1BB83093003EC9EF = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = 4288AA9B1BB83093003EC9EF;
+					};
+					4288AABA1BB83093003EC9EF = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = 4288AA9B1BB83093003EC9EF;
+					};
+				};
+			};
+			buildConfigurationList = 4288AA971BB83093003EC9EF /* Build configuration list for PBXProject "Whirlpool-iOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4288AA931BB83093003EC9EF;
+			productRefGroup = 4288AA9D1BB83093003EC9EF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4288AA9B1BB83093003EC9EF /* Whirlpool-iOS */,
+				4288AAAF1BB83093003EC9EF /* Whirlpool-iOSTests */,
+				4288AABA1BB83093003EC9EF /* Whirlpool-iOSUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4288AA9A1BB83093003EC9EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				847B58761BB9DA2900E22862 /* CalenderCell.swift in Resources */,
+				42C01DF81BB8364700C2EEAD /* GTMOAuth2ViewTouch.xib in Resources */,
+				4288AAAA1BB83093003EC9EF /* LaunchScreen.storyboard in Resources */,
+				4288AAA71BB83093003EC9EF /* Assets.xcassets in Resources */,
+				4288AAA51BB83093003EC9EF /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4288AAAE1BB83093003EC9EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4288AAB91BB83093003EC9EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7B3EDED0561D6FDC0BECFE87 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A3000C6B81E720DEEB9CBDED /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4288AA981BB83093003EC9EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				421545B51BB8533F00AE1B23 /* RoomInfoViewController.swift in Sources */,
+				421545B41BB8533F00AE1B23 /* SearchViewController.swift in Sources */,
+				420838591BB8EB5400AB15F1 /* LandMarkViewController.swift in Sources */,
+				421545B61BB8533F00AE1B23 /* NavigationFULLViewController.swift in Sources */,
+				42C01DFC1BB8369A00C2EEAD /* GTLCalendar_Sources.m in Sources */,
+				4288AAA01BB83093003EC9EF /* AppDelegate.swift in Sources */,
+				847B58741BB9BF9800E22862 /* CalenderCell.swift in Sources */,
+				421545B31BB8533F00AE1B23 /* LoginViewController.swift in Sources */,
+				421545B71BB8533F00AE1B23 /* SearchResultsViewController.swift in Sources */,
+				421545B21BB8533F00AE1B23 /* MainViewController.swift in Sources */,
+				847B58751BB9BF9800E22862 /* CalenderEvent.swift in Sources */,
+				420838551BB8C6D100AB15F1 /* NavigationsButtons.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4288AAAC1BB83093003EC9EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4288AAB51BB83093003EC9EF /* Whirlpool_iOSTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4288AAB71BB83093003EC9EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4288AAC01BB83093003EC9EF /* Whirlpool_iOSUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4288AAB21BB83093003EC9EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4288AA9B1BB83093003EC9EF /* Whirlpool-iOS */;
+			targetProxy = 4288AAB11BB83093003EC9EF /* PBXContainerItemProxy */;
+		};
+		4288AABD1BB83093003EC9EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4288AA9B1BB83093003EC9EF /* Whirlpool-iOS */;
+			targetProxy = 4288AABC1BB83093003EC9EF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4288AAA31BB83093003EC9EF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4288AAA41BB83093003EC9EF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		4288AAA81BB83093003EC9EF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4288AAA91BB83093003EC9EF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4288AAC21BB83093003EC9EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4288AAC31BB83093003EC9EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4288AAC51BB83093003EC9EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EBE3433BF44B93823A77301D /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Whirlpool-iOS/Whirlpool-iOS.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleMaps\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleMaps/GoogleMaps\"",
+					"/Users/cse498/Desktop/Whirlpool/google-api-objectivec-client/Source/**",
+				);
+				INFOPLIST_FILE = "Whirlpool-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "MSU.Whirlpool-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Whirlpool-iOS-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4288AAC61BB83093003EC9EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0C8F9174D8A94754789191A5 /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Whirlpool-iOS/Whirlpool-iOS.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleMaps\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleMaps/GoogleMaps\"",
+					"/Users/cse498/Desktop/Whirlpool/google-api-objectivec-client/Source/**",
+				);
+				INFOPLIST_FILE = "Whirlpool-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "MSU.Whirlpool-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Whirlpool-iOS-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		4288AAC81BB83093003EC9EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Whirlpool-iOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "MSU.Whirlpool-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Whirlpool-iOS.app/Whirlpool-iOS";
+			};
+			name = Debug;
+		};
+		4288AAC91BB83093003EC9EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Whirlpool-iOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "MSU.Whirlpool-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Whirlpool-iOS.app/Whirlpool-iOS";
+			};
+			name = Release;
+		};
+		4288AACB1BB83093003EC9EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Whirlpool-iOSUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "MSU.Whirlpool-iOSUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Whirlpool-iOS";
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		4288AACC1BB83093003EC9EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Whirlpool-iOSUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "MSU.Whirlpool-iOSUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Whirlpool-iOS";
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4288AA971BB83093003EC9EF /* Build configuration list for PBXProject "Whirlpool-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4288AAC21BB83093003EC9EF /* Debug */,
+				4288AAC31BB83093003EC9EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4288AAC41BB83093003EC9EF /* Build configuration list for PBXNativeTarget "Whirlpool-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4288AAC51BB83093003EC9EF /* Debug */,
+				4288AAC61BB83093003EC9EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4288AAC71BB83093003EC9EF /* Build configuration list for PBXNativeTarget "Whirlpool-iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4288AAC81BB83093003EC9EF /* Debug */,
+				4288AAC91BB83093003EC9EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4288AACA1BB83093003EC9EF /* Build configuration list for PBXNativeTarget "Whirlpool-iOSUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4288AACB1BB83093003EC9EF /* Debug */,
+				4288AACC1BB83093003EC9EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4288AA941BB83093003EC9EF /* Project object */;
+}
