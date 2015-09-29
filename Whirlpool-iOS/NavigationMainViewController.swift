@@ -49,7 +49,7 @@ class  NavigationMainViewController: UIViewController, CLLocationManagerDelegate
         if running{
             if(CLAuthorizationStatus.AuthorizedWhenInUse == status){
                 locationManager.startUpdatingLocation()
-                mapView.myLocationEnabled = true
+                 mapView.myLocationEnabled = true
                 mapView.settings.myLocationButton = true
             }
         }else{

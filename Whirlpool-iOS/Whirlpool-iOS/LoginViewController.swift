@@ -125,7 +125,7 @@ public class LoginViewController: UIViewController {
                 eventString = "No upcoming events found."
             }
             
-            output.text = eventString
+            //output.text = eventString
             
             
             self.performSegueWithIdentifier("MainPage", sender: nil)
