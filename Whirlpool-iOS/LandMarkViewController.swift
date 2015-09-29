@@ -16,7 +16,7 @@ public class LandMarkViewController: UIViewController, UIPickerViewDelegate{
     @IBAction func GO(sender: AnyObject) {
         NSLog("THE SELECTED VALUE IS "+selectedValue)
         
-        ///self.performSegueWithIdentifier("NavigationSague", sender: nil)
+       self.performSegueWithIdentifier("NavigationSague2", sender: nil)
 
         
     }
