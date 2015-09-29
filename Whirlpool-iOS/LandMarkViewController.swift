@@ -38,5 +38,11 @@ public class LandMarkViewController: UIViewController, UIPickerViewDelegate{
         
         return self.landMarks[row]
     }
+    
+    
+    
+    
+    ///when you pick something go to this sague
+    //self.performSegueWithIdentifier("NavigationSague", sender: nil)
 
 }

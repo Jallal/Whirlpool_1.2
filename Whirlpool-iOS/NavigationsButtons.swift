@@ -22,7 +22,9 @@ class NavigationsButtons: UIViewController{
     
     
     @IBAction func Location(sender: AnyObject) {
-        self.BottomView.removeFromSuperview();
+        //self.BottomView.removeFromSuperview();
+        
+         self.performSegueWithIdentifier("NavigationSague", sender: nil)
         
         NSLog("HELOO YOU GOT ME")
         
