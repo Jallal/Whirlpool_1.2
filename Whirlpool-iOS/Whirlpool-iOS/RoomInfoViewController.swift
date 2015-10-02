@@ -66,8 +66,9 @@ class RoomInfoViewController: UIViewController,UIWebViewDelegate {
         /*if (cell == nil) {
             cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "cell")
         }*/
-        
+            cell!.textLabel?.textColor = UIColor.whiteColor()
             cell!.textLabel!.text = items[indexPath.row]
+        
             return cell!
         
     }

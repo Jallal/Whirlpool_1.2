@@ -12,27 +12,36 @@ import UIKit
 
 class CalenderEvent {
     //Variables that make up a calander event
-    var date: NSDate?
+    var startDate: String?
+    var endDate: String?
     var title: String?
-    var location: AnyObject?//CLLocation: this may be used to create a location
+    var location: String?//CLLocation: this may be used to create a location
     var type: String? //This could be for the colored bar on the cell depending on event type
     
+    /*struct CalenaderEvents
+    {
+        let EventSummary: String
+        let EventStartDate: String
+        let EventEndDate : String
+        let EventLocation : String
+    }*/
+
     
     
     
-    
-    init(CalenderEventData: [String: AnyObject]){
-        if let d = CalenderEventData["date"] {
-            date = d as? NSDate
+    init(CalenderEventSummary: String?, EventStartDate: String?, EventEndDate: String?, EventLocation :String? ) {
+        if let sd = EventStartDate {
+            startDate = sd
         }
-        if let t = CalenderEventData["title"] {
-            title = t as? String
+        
+        if let t = CalenderEventSummary {
+            title = t
         }
-        if let l = CalenderEventData["location"] {
+        if let l = EventLocation {
             location = l
         }
-        if let typ = CalenderEventData["type"] {
-            type = typ as? String
+        if let ed = EventEndDate {
+            endDate = ed
         }
     }
     

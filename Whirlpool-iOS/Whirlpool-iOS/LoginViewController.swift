@@ -9,10 +9,11 @@
 import UIKit
 
 
-var UserCalandenerInfo = [CalenaderEvents]()
+//var UserCalandenerInfo = [CalenaderEvents]()
+var _userCalenderInfo: UserCalenderInfo?
 
 public class LoginViewController: UIViewController {
-    
+    //var _userCalenderInfo: UserCalenderInfo?
     
     @IBOutlet weak var GoogoleView: UIView!
     private let kKeychainItemName = "Google Calendar API"
@@ -79,7 +80,7 @@ public class LoginViewController: UIViewController {
     // Display the start dates and event summaries in the UITextView
      public func displayResultWithTicket(
         ticket: GTLServiceTicket,
-        finishedWithObject events : GTLCalendarEvents,
+        finishedWithObject events : GTLCalendarEvents?,
         error : NSError?) {
           
             if let error = error {
@@ -88,48 +89,48 @@ public class LoginViewController: UIViewController {
             }
             
            var eventString = ""
-            
-            if events.items().count > 0 {
-                for event in events.items() as! [GTLCalendarEvent] {
-                    var location = event.location;
-                    var start : GTLDateTime! = event.start.dateTime ?? event.start.date
-                    /*var startString = NSDateFormatter.localizedStringFromDate(
-                        start.date,
-                        dateStyle: .ShortStyle,
-                        timeStyle: .ShortStyle
-                    )*/
-                    var startingString = NSDateFormatter()
-                    startingString.dateFormat = "hh:mm a"
-                    var startString = startingString.stringFromDate(start.date)
+            if events?.items() != nil {
+                _userCalenderInfo = UserCalenderInfo()
+                if events!.items().count > 0 {
+                    for event in events!.items() as! [GTLCalendarEvent] {
+                        let location = event.location;
+                        let start : GTLDateTime! = event.start.dateTime ?? event.start.date
+                        /*var startString = NSDateFormatter.localizedStringFromDate(
+                            start.date,
+                            dateStyle: .ShortStyle,
+                            timeStyle: .ShortStyle
+                        )*/
+                        let startingString = NSDateFormatter()
+                        startingString.dateFormat = "hh:mm a"
+                        let startString = startingString.stringFromDate(start.date)
+                        
+                        /***********************************/
+                        let EndDate   : GTLDateTime! = event.end.dateTime ?? event.end.date
+                        /*var endString = NSDateFormatter.localizedStringFromDate(
+                            EndDate.date,
+                            dateStyle: .ShortStyle,
+                            timeStyle: .ShortStyle
+                        )*/
+                      
+                        let endingString = NSDateFormatter()
+                        endingString.dateFormat = "hh:mm a"
+                        
+                        let endString = startingString.stringFromDate(EndDate.date)
+                        /***********************************/
+                        
+                        eventString += "\(startString) - \(event.summary)\n"
                     
-                    /***********************************/
-                    var EndDate   : GTLDateTime! = event.end.dateTime ?? event.end.date
-                    /*var endString = NSDateFormatter.localizedStringFromDate(
-                        EndDate.date,
-                        dateStyle: .ShortStyle,
-                        timeStyle: .ShortStyle
-                    )*/
-                  
-                    var endingString = NSDateFormatter()
-                    endingString.dateFormat = "hh:mm a"
-                    
-                    var endString = startingString.stringFromDate(EndDate.date)
-                    /***********************************/
-                    
-                    eventString += "\(startString) - \(event.summary)\n"
-                
-                    
-                    UserCalandenerInfo += [CalenaderEvents(EventSummary: event.summary,EventStartDate:startString,EventEndDate:endString,EventLocation :location )]
+                        _userCalenderInfo!.addEventToCalender(CalenderEvent(CalenderEventSummary: event.summary,EventStartDate:startString,EventEndDate:endString,EventLocation :location ))
+                        //UserCalandenerInfo += [CalenaderEvents(EventSummary: event.summary,EventStartDate:startString,EventEndDate:endString,EventLocation :location )]
+                    }
+                } else {
+                    eventString = "No upcoming events found."
                 }
-            } else {
-                eventString = "No upcoming events found."
             }
-            
             //output.text = eventString
             
             
             self.performSegueWithIdentifier("MainPage", sender: nil)
-            
     }
     
     
@@ -177,6 +178,14 @@ public class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
 
 }
+
+    /*override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        if (segue.identifier == "MainPage") {
+            let svc = segue.destinationViewController as! MainViewController
+            svc.userCalenderPassed = _userCalenderInfo
+            
+        }
+    }*/
     
     
 }
