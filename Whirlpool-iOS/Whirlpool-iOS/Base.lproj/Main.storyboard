@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<<<<<<< HEAD
+
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Sxk-6i-gx2">
-=======
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Sxk-6i-gx2">
->>>>>>> 8f4bf33fcdee81c632e760feadb87ac876e7778b
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
@@ -90,11 +87,8 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ftf-YY-0wm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-<<<<<<< HEAD
             <point key="canvasLocation" x="1370" y="-3629"/>
-=======
-            <point key="canvasLocation" x="1" y="-2270"/>
->>>>>>> 8f4bf33fcdee81c632e760feadb87ac876e7778b
+
         </scene>
         <!--Whirlpool-->
         <scene sceneID="1So-RI-38W">
@@ -158,12 +152,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kZ5-zL-7lo" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-<<<<<<< HEAD
+
             <point key="canvasLocation" x="3811" y="-3521"/>
-=======
-            <point key="canvasLocation" x="830" y="-1738.5"/>
->>>>>>> 8f4bf33fcdee81c632e760feadb87ac876e7778b
+
         </scene>
         <!--NavigationFULL View Controller-->
         <scene sceneID="Tbq-uC-WC9">
@@ -182,11 +173,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zjb-Sp-jPv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-<<<<<<< HEAD
             <point key="canvasLocation" x="2967" y="-4117"/>
-=======
-            <point key="canvasLocation" x="891" y="-2270"/>
->>>>>>> 8f4bf33fcdee81c632e760feadb87ac876e7778b
         </scene>
         <!--Land Mark View Controller-->
         <scene sceneID="VXR-fQ-tkb">
@@ -588,37 +575,7 @@
                                     <outlet property="delegate" destination="mMQ-jS-tgt" id="83a-Wr-CJ1"/>
                                 </connections>
                             </tableView>
-<<<<<<< HEAD
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oLx-xx-QTj">
-                                <rect key="frame" x="168" y="285" width="254" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Navigation"/>
-                                <connections>
-                                    <segue destination="Rc1-O9-PeQ" kind="show" id="NPx-W9-vJA"/>
-                                </connections>
-=======
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cSq-be-cW6" userLabel="Search Button">
-                                <rect key="frame" x="-1" y="6" width="600" height="50"/>
-                                <state key="normal" image="Search"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7KZ-nS-6l4">
-                                <rect key="frame" x="275" y="279" width="50" height="50"/>
-                                <state key="normal" image="Calender Event Button"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B0T-42-Qaa">
-                                <rect key="frame" x="50" y="279" width="50" height="50"/>
-                                <state key="normal" image="Directions Button"/>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Room Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GZN-dB-frf">
-                                <rect key="frame" x="-1" y="357" width="600" height="30"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="apS-Ga-Iuu">
-                                <rect key="frame" x="500" y="279" width="50" height="50"/>
-                                <state key="normal" image="Favorite Icon"/>
->>>>>>> 8f4bf33fcdee81c632e760feadb87ac876e7778b
+
                             </button>
                         </subviews>
                         <animations/>
@@ -658,11 +615,8 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pv5-Mc-WBx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-<<<<<<< HEAD
             <point key="canvasLocation" x="697" y="-3637"/>
-=======
-            <point key="canvasLocation" x="-1803" y="-2270"/>
->>>>>>> 8f4bf33fcdee81c632e760feadb87ac876e7778b
+
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="lP6-Rf-liw">
@@ -700,11 +654,9 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PgS-LI-s05" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-<<<<<<< HEAD
+
             <point key="canvasLocation" x="2878" y="-3521"/>
-=======
-            <point key="canvasLocation" x="-811" y="-2270"/>
->>>>>>> 8f4bf33fcdee81c632e760feadb87ac876e7778b
+
         </scene>
     </scenes>
     <resources>
@@ -714,12 +666,9 @@
         <image name="Favorite Icon" width="50" height="50"/>
         <image name="LocationButtonCell3" width="24" height="33"/>
         <image name="Relavant Icon" width="26" height="26"/>
-<<<<<<< HEAD
         <image name="Search" width="270" height="32"/>
         <image name="mapannotation" width="64" height="64"/>
-=======
-        <image name="Search" width="222" height="32"/>
->>>>>>> 8f4bf33fcdee81c632e760feadb87ac876e7778b
+
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="VBu-Gb-Vg7"/>
