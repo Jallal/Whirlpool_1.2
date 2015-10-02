@@ -10,7 +10,7 @@ import UIKit
 
 
 
-
+/*
 struct CalenaderEvents
 {
     let EventSummary: String 
@@ -18,7 +18,7 @@ struct CalenaderEvents
     let EventEndDate : String
     let EventLocation : String 
 }
-
+*/
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UITabBarDelegate {
     
@@ -30,7 +30,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var items = ["one","two"]
     var tableData = ["nine","six"]
     let screenSize: CGRect = UIScreen.mainScreen().bounds
-  
     
     override func viewDidLoad() {
         
@@ -61,15 +60,16 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(tableView == self.calender){
-            return  UserCalandenerInfo.count
+            return  (_userCalenderInfo?.getCalenderEventsCount())!
         }else{
-           return UserCalandenerInfo.count
+           return (_userCalenderInfo?.getCalenderEventsCount())!
         }
         
     }
     
     
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var calenderInfoTable = _userCalenderInfo?.getCalenderInfo()
         if(tableView == self.calender){
             let cell = tableView.dequeueReusableCellWithIdentifier("CalenderCellID") as! CalenderCell
             cell.dateLabelCalender!.font = UIFont(name: "HelveticaNeue-Thin", size: 16.0)
@@ -78,8 +78,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell.dateLabelCalender!.textColor = UIColor(red: 242.0/255, green: 241.0/255, blue: 239.0/255, alpha: 1.0)
             cell.dateLabelCalender!.backgroundColor = self.view.backgroundColor
             
-            cell.titleLabel!.text =  UserCalandenerInfo[indexPath.row].EventSummary
-            cell.dateLabelCalender!.text = UserCalandenerInfo[indexPath.row].EventStartDate + "\n" + UserCalandenerInfo[indexPath.row].EventEndDate
+            cell.titleLabel!.text =  calenderInfoTable![indexPath.row].title
+            cell.dateLabelCalender!.text = calenderInfoTable![indexPath.row].startDate! + "\n" + calenderInfoTable![indexPath.row].endDate!
             return cell
         }
         else{
@@ -89,7 +89,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell.dateLabelRelavant!.backgroundColor = self.view.backgroundColor
             cell.titleLabel!.textColor = UIColor.whiteColor()
             cell.dateLabelRelavant!.textColor = UIColor(red: 242.0/255, green: 241.0/255, blue: 239.0/255, alpha: 1.0)
-            cell.titleLabelRelavant!.text =  UserCalandenerInfo[indexPath.row].EventLocation
+            cell.titleLabelRelavant!.text =  calenderInfoTable![indexPath.row].location!
             cell.dateLabelRelavant!.text = "12/13/2015"
             return cell
         }

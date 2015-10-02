@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Search.png",
+      "filename" : "Room Capacity.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Search@2x.png",
+      "filename" : "Room Capacity@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Search@3x.png",
+      "filename" : "Room Capacity@3x.png",
       "scale" : "3x"
     }
   ],
