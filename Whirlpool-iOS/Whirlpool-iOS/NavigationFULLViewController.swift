@@ -18,18 +18,19 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate{
         super.viewDidLoad()
         self.locationManager.delegate = self
         self.locationManager.requestAlwaysAuthorization()
-        var cameraBuilding = GMSCameraPosition.cameraWithLatitude(42.96356, longitude: -85.8899, zoom: 14.7)
+         var cameraBuilding = GMSCameraPosition.cameraWithLatitude(42.724209, longitude: -84.480803, zoom: 14.7)
         let mapView = GMSMapView.mapWithFrame(CGRectZero, camera: cameraBuilding)
         mapView.settings.compassButton = true
         self.view = mapView
         let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2DMake(42.96356, -85.8999)
-        marker.title = "Whirlpool"
-        marker.snippet = "Harbor, MI"
+        marker.position = CLLocationCoordinate2DMake(42.724209, -84.480803)
+       marker.icon = UIImage(named: "mapannotation")
         marker.appearAnimation = kGMSMarkerAnimationPop
         marker.map = mapView
         
     }
+    
+    
     
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {

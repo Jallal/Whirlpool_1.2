@@ -46,11 +46,6 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "AAF8EF9A436AFEC75196FAB3945D2ABA5051A5E6"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Jallal\/Whirlpool_1.0.git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C6227BD4A2F698C5A096FB67F99A6E315AAD7612"
-    },
-    {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/gtm-http-fetcher.googlecode.com\/svn",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "b3aa69f0-f65c-a609-0a27-78855af037c1++2896"

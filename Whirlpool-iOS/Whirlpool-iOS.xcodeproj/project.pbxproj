@@ -16,6 +16,7 @@
 		421545B61BB8533F00AE1B23 /* NavigationFULLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545B01BB8533F00AE1B23 /* NavigationFULLViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		421545B71BB8533F00AE1B23 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545B11BB8533F00AE1B23 /* SearchResultsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		421545BC1BB85FD600AE1B23 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 421545BB1BB85FD600AE1B23 /* MapKit.framework */; };
+		4254961E1BBBA1B100B8CC5C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4254961D1BBBA1B100B8CC5C /* CoreLocation.framework */; };
 		427BAEDF1BB9F31100B3F63A /* NavigationMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427BAEDE1BB9F31100B3F63A /* NavigationMainViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		4288AAA01BB83093003EC9EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4288AA9F1BB83093003EC9EF /* AppDelegate.swift */; };
 		4288AAA51BB83093003EC9EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4288AAA31BB83093003EC9EF /* Main.storyboard */; };
@@ -63,6 +64,7 @@
 		421545B11BB8533F00AE1B23 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		421545B81BB85FB200AE1B23 /* Whirlpool-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Whirlpool-iOS.entitlements"; sourceTree = "<group>"; };
 		421545BB1BB85FD600AE1B23 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		4254961D1BBBA1B100B8CC5C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		427BAEDE1BB9F31100B3F63A /* NavigationMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationMainViewController.swift; path = ../NavigationMainViewController.swift; sourceTree = "<group>"; };
 		4288AA9C1BB83093003EC9EF /* Whirlpool-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Whirlpool-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4288AA9F1BB83093003EC9EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "Whirlpool-iOS/AppDelegate.swift"; sourceTree = "<group>"; };
@@ -94,9 +96,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4254961E1BBBA1B100B8CC5C /* CoreLocation.framework in Frameworks */,
+				421545BC1BB85FD600AE1B23 /* MapKit.framework in Frameworks */,
 				42C01DF61BB8352F00C2EEAD /* SystemConfiguration.framework in Frameworks */,
 				42C01DF41BB8352000C2EEAD /* Security.framework in Frameworks */,
-				421545BC1BB85FD600AE1B23 /* MapKit.framework in Frameworks */,
 				42C01DF21BB8351600C2EEAD /* libGTLTouchStaticLib.a in Frameworks */,
 				E8D6C8C38C4578E457FECB6A /* libPods.a in Frameworks */,
 			);
@@ -190,6 +193,7 @@
 		AD51F4BD5583FE2E361657C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4254961D1BBBA1B100B8CC5C /* CoreLocation.framework */,
 				421545BB1BB85FD600AE1B23 /* MapKit.framework */,
 				42C01DF51BB8352F00C2EEAD /* SystemConfiguration.framework */,
 				42C01DF31BB8352000C2EEAD /* Security.framework */,

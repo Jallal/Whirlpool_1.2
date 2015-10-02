@@ -91,7 +91,10 @@ public class LoginViewController: UIViewController {
             
             if events.items().count > 0 {
                 for event in events.items() as! [GTLCalendarEvent] {
-                    var location = event.location;
+                    var location = " "
+                    if(event.location != nil){
+                     location = event.location;
+                    }
                     var start : GTLDateTime! = event.start.dateTime ?? event.start.date
                     /*var startString = NSDateFormatter.localizedStringFromDate(
                         start.date,
@@ -117,8 +120,7 @@ public class LoginViewController: UIViewController {
                     /***********************************/
                     
                     eventString += "\(startString) - \(event.summary)\n"
-                
-                    
+         
                     UserCalandenerInfo += [CalenaderEvents(EventSummary: event.summary,EventStartDate:startString,EventEndDate:endString,EventLocation :location )]
                 }
             } else {
@@ -128,7 +130,7 @@ public class LoginViewController: UIViewController {
             //output.text = eventString
             
             
-            self.performSegueWithIdentifier("MainPage", sender: nil)
+           self.performSegueWithIdentifier("MainPage", sender: nil)
             
     }
     

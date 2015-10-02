@@ -13,10 +13,10 @@ import UIKit
 
 struct CalenaderEvents
 {
-    let EventSummary: String
+    let EventSummary: String 
     let EventStartDate: String
     let EventEndDate : String
-    let EventLocation : String
+    let EventLocation : String 
 }
 
 
