@@ -9,113 +9,99 @@
 import UIKit
 import GoogleMaps
 
-class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate{
+class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate ,GMSMapViewDelegate {
     
-    let locationManager = CLLocationManager()
+        @IBOutlet weak var mapView: GMSMapView!
+        
 
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.locationManager.delegate = self
-        self.locationManager.requestAlwaysAuthorization()
-         var cameraBuilding = GMSCameraPosition.cameraWithLatitude(42.724209, longitude: -84.480803, zoom: 14.7)
-        let mapView = GMSMapView.mapWithFrame(CGRectZero, camera: cameraBuilding)
-        mapView.settings.compassButton = true
-        self.view = mapView
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2DMake(42.724209, -84.480803)
-       marker.icon = UIImage(named: "mapannotation")
-        marker.appearAnimation = kGMSMarkerAnimationPop
-        marker.map = mapView
+        let locationManager = CLLocationManager()
         
-    }
-    
-    
-    
-    
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        updateLocation(false)
-        updateLocation(true)
-        
-        
-    }
-    
-    func updateLocation(running : Bool){
-       let mapView = self.view as! GMSMapView
-        let status = CLLocationManager.authorizationStatus()
-        if running{
-            if(CLAuthorizationStatus.AuthorizedWhenInUse == status){
-            locationManager.startUpdatingLocation()
-            mapView.myLocationEnabled = true
-            mapView.settings.myLocationButton = true
-            }
-        }else{
-            locationManager.startUpdatingLocation()
-            mapView.settings.myLocationButton = false
-            mapView.myLocationEnabled = false
-        }
-    }
-    
-override func viewDidAppear(animated: Bool) {
-    
-    super.viewDidAppear(animated)
-    updateLocation(true)
-    }
-  
-    
-    /*
-    
-    override func viewWillAppear(animated: Bool) {
-        if let url = NSBundle.mainBundle().URLForResource("index", withExtension: "html",subdirectory:"web"){
-        let fragurl = NSURL(string:"#FRAG_URL",relativeToURL:url)!
-        let request = NSURLRequest(URL:fragurl)
-        webView.delegate = self
-        webView.loadRequest(request)
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            self.locationManager.delegate = self
+            self.locationManager.requestAlwaysAuthorization()
+            self.mapView.delegate = self
+            
+            
         }
         
-    }
-    
-    
-    func webView(webView:UIWebView, shouldStartLoadingWithRequest request:NSURLRequest,navigationType: UIWebViewNavigationType)->Bool
-    {
-        NSLog("request:\(request)")
         
-        if let scheme = request.URL?.scheme{
-            if(scheme == "Jallal"){
-                NSLog("we got mike request:\(scheme)");
-                webView.stringByEvaluatingJavaScriptFromString("SomeJavaScriptFunc()")
-                return false;
+        func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+            // 3
+            if status == .AuthorizedWhenInUse {
+                
+                // 4
+                locationManager.startUpdatingLocation()
+                
+                //5
+                mapView.myLocationEnabled = true
+                mapView.settings.myLocationButton = true
             }
         }
         
-        return true;
+        
+        func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+            var location :CLLocation = locations.first!
+            
+            // 7
+            mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+            
+            // 8
+            locationManager.stopUpdatingLocation()
+        }
+        
+        override func viewDidAppear(animated: Bool) {
+            
+            super.viewDidAppear(animated)
+            updateLocation(true)
+        }
+        
+        func updateLocation(running : Bool){
+            
+            let status = CLLocationManager.authorizationStatus()
+            if running{
+                
+                locationManager.startUpdatingLocation()
+                self.mapView.myLocationEnabled = true
+                self.mapView.settings.myLocationButton = true
+            }else{
+                locationManager.startUpdatingLocation()
+                self.mapView.settings.myLocationButton = false
+                self.mapView.myLocationEnabled = false
+            }
+        }
         
         
-    }
-    
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-*/
-
+        
+        
+        
+        func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+            print(error)
+        }
+        
+        func mapView(mapView: GMSMapView!, idleAtCameraPosition position: GMSCameraPosition!) {
+            
+            reverseGeocodeCoordinate(position.target)
+        }
+        
+        func reverseGeocodeCoordinate(coordinate: CLLocationCoordinate2D) {
+            
+            // 1
+            let geocoder = GMSGeocoder()
+            
+            // 2
+            geocoder.reverseGeocodeCoordinate(coordinate) { response, error in
+                if let address = response?.firstResult() {
+                    
+                    // 3
+                    let lines = address.lines as! [String]
+                    
+                    // 4
+                    UIView.animateWithDuration(0.25) {
+                        self.view.layoutIfNeeded()
+                    }
+                }
+            }
+        }
 }
+

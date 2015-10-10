@@ -89,47 +89,17 @@ public class LoginViewController: UIViewController {
             }
             
            var eventString = ""
-<<<<<<< HEAD
-            
-            if events.items().count > 0 {
-                for event in events.items() as! [GTLCalendarEvent] {
-                    var location = " "
-                    if(event.location != nil){
-                     location = event.location;
-                    }
-                    var start : GTLDateTime! = event.start.dateTime ?? event.start.date
-                    /*var startString = NSDateFormatter.localizedStringFromDate(
-                        start.date,
-                        dateStyle: .ShortStyle,
-                        timeStyle: .ShortStyle
-                    )*/
-                    var startingString = NSDateFormatter()
-                    startingString.dateFormat = "hh:mm a"
-                    var startString = startingString.stringFromDate(start.date)
-                    
-                    /***********************************/
-                    var EndDate   : GTLDateTime! = event.end.dateTime ?? event.end.date
-                    /*var endString = NSDateFormatter.localizedStringFromDate(
-                        EndDate.date,
-                        dateStyle: .ShortStyle,
-                        timeStyle: .ShortStyle
-                    )*/
-                  
-                    var endingString = NSDateFormatter()
-                    endingString.dateFormat = "hh:mm a"
-                    
-                    var endString = startingString.stringFromDate(EndDate.date)
-                    /***********************************/
-                    
-                    eventString += "\(startString) - \(event.summary)\n"
-         
-                    UserCalandenerInfo += [CalenaderEvents(EventSummary: event.summary,EventStartDate:startString,EventEndDate:endString,EventLocation :location )]
-=======
+
             if events?.items() != nil {
+                var location = " "
+                var startString = " "
+                var endString = " "
                 _userCalenderInfo = UserCalenderInfo()
                 if events!.items().count > 0 {
                     for event in events!.items() as! [GTLCalendarEvent] {
-                        let location = event.location;
+                        if(event.location != nil){
+                        location = event.location;
+                        }
                         let start : GTLDateTime! = event.start.dateTime ?? event.start.date
                         /*var startString = NSDateFormatter.localizedStringFromDate(
                             start.date,
@@ -138,7 +108,7 @@ public class LoginViewController: UIViewController {
                         )*/
                         let startingString = NSDateFormatter()
                         startingString.dateFormat = "hh:mm a"
-                        let startString = startingString.stringFromDate(start.date)
+                        startString = startingString.stringFromDate(start.date)
                         
                         /***********************************/
                         let EndDate   : GTLDateTime! = event.end.dateTime ?? event.end.date
@@ -151,7 +121,7 @@ public class LoginViewController: UIViewController {
                         let endingString = NSDateFormatter()
                         endingString.dateFormat = "hh:mm a"
                         
-                        let endString = startingString.stringFromDate(EndDate.date)
+                         endString = startingString.stringFromDate(EndDate.date)
                         /***********************************/
                         
                         eventString += "\(startString) - \(event.summary)\n"
@@ -160,25 +130,21 @@ public class LoginViewController: UIViewController {
                         //UserCalandenerInfo += [CalenaderEvents(EventSummary: event.summary,EventStartDate:startString,EventEndDate:endString,EventLocation :location )]
                     }
                 } else {
-                    eventString = "No upcoming events found."
->>>>>>> 8f4bf33fcdee81c632e760feadb87ac876e7778b
+                   // eventString = "No upcoming events found."
+                       _userCalenderInfo!.addEventToCalender(CalenderEvent(CalenderEventSummary: " NO Event",EventStartDate:startString,EventEndDate:endString,EventLocation :location ))
                 }
             }
             //output.text = eventString
             
-            
-<<<<<<< HEAD
+        
            self.performSegueWithIdentifier("MainPage", sender: nil)
             
-=======
-            self.performSegueWithIdentifier("MainPage", sender: nil)
->>>>>>> 8f4bf33fcdee81c632e760feadb87ac876e7778b
     }
     
     
     // Creates the auth controller for authorizing access to Google Calendar API
     private func createAuthController() -> GTMOAuth2ViewControllerTouch {
-        let scopeString = scopes.joinWithSeparator(" ")
+        let scopeString = scopes.joinWithSeparator(" , ")
         return GTMOAuth2ViewControllerTouch(
             scope: scopeString,
             clientID: kClientID,
@@ -215,7 +181,7 @@ public class LoginViewController: UIViewController {
         alert.show()
     }
     
-    override public func didReceiveMemoryWarning() {
+    public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
 

@@ -24,11 +24,14 @@
 		4288AAAA1BB83093003EC9EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4288AAA81BB83093003EC9EF /* LaunchScreen.storyboard */; };
 		4288AAB51BB83093003EC9EF /* Whirlpool_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4288AAB41BB83093003EC9EF /* Whirlpool_iOSTests.swift */; };
 		4288AAC01BB83093003EC9EF /* Whirlpool_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4288AABF1BB83093003EC9EF /* Whirlpool_iOSUITests.swift */; };
+		42B976CD1BC1D5950012D29B /* UserCalenderInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B976CC1BC1D5950012D29B /* UserCalenderInfo.swift */; settings = {ASSET_TAGS = (); }; };
 		42C01DF21BB8351600C2EEAD /* libGTLTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C01DF11BB8351600C2EEAD /* libGTLTouchStaticLib.a */; };
 		42C01DF41BB8352000C2EEAD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C01DF31BB8352000C2EEAD /* Security.framework */; };
 		42C01DF61BB8352F00C2EEAD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C01DF51BB8352F00C2EEAD /* SystemConfiguration.framework */; };
 		42C01DF81BB8364700C2EEAD /* GTMOAuth2ViewTouch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42C01DF71BB8364700C2EEAD /* GTMOAuth2ViewTouch.xib */; settings = {ASSET_TAGS = (); }; };
 		42C01DFC1BB8369A00C2EEAD /* GTLCalendar_Sources.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C01DFA1BB8369A00C2EEAD /* GTLCalendar_Sources.m */; settings = {ASSET_TAGS = (); }; };
+		42C6AFF31BC4216D00245A2B /* web in Resources */ = {isa = PBXBuildFile; fileRef = 42C6AFF21BC4216C00245A2B /* web */; settings = {ASSET_TAGS = (); }; };
+		845E18771BC83F6400224DBA /* b0047_01_ROOMS.json in Resources */ = {isa = PBXBuildFile; fileRef = 845E18751BC83F6400224DBA /* b0047_01_ROOMS.json */; settings = {ASSET_TAGS = (); }; };
 		847B58741BB9BF9800E22862 /* CalenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B58721BB9BF9800E22862 /* CalenderCell.swift */; settings = {ASSET_TAGS = (); }; };
 		847B58751BB9BF9800E22862 /* CalenderEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B58731BB9BF9800E22862 /* CalenderEvent.swift */; settings = {ASSET_TAGS = (); }; };
 		847B58761BB9DA2900E22862 /* CalenderCell.swift in Resources */ = {isa = PBXBuildFile; fileRef = 847B58721BB9BF9800E22862 /* CalenderCell.swift */; };
@@ -78,6 +81,7 @@
 		4288AABB1BB83093003EC9EF /* Whirlpool-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Whirlpool-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4288AABF1BB83093003EC9EF /* Whirlpool_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Whirlpool_iOSUITests.swift; sourceTree = "<group>"; };
 		4288AAC11BB83093003EC9EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		42B976CC1BC1D5950012D29B /* UserCalenderInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCalenderInfo.swift; sourceTree = "<group>"; };
 		42C01DF11BB8351600C2EEAD /* libGTLTouchStaticLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGTLTouchStaticLib.a; path = "../google-api-objectivec-client/Source/build/Debug-iphoneos/libGTLTouchStaticLib.a"; sourceTree = "<group>"; };
 		42C01DF31BB8352000C2EEAD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		42C01DF51BB8352F00C2EEAD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -85,7 +89,9 @@
 		42C01DF91BB8369900C2EEAD /* Whirlpool-iOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Whirlpool-iOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		42C01DFA1BB8369A00C2EEAD /* GTLCalendar_Sources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLCalendar_Sources.m; sourceTree = "<group>"; };
 		42C01DFB1BB8369A00C2EEAD /* GTLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLCalendar.h; sourceTree = "<group>"; };
+		42C6AFF21BC4216C00245A2B /* web */ = {isa = PBXFileReference; lastKnownFileType = folder; path = web; sourceTree = "<group>"; };
 		687F69D2BC4BA870FA74ACA3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		845E18751BC83F6400224DBA /* b0047_01_ROOMS.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = b0047_01_ROOMS.json; sourceTree = "<group>"; };
 		847B58721BB9BF9800E22862 /* CalenderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderCell.swift; sourceTree = "<group>"; };
 		847B58731BB9BF9800E22862 /* CalenderEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderEvent.swift; sourceTree = "<group>"; };
 		EBE3433BF44B93823A77301D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -125,6 +131,8 @@
 		4288AA931BB83093003EC9EF = {
 			isa = PBXGroup;
 			children = (
+				845E18751BC83F6400224DBA /* b0047_01_ROOMS.json */,
+				42C6AFF21BC4216C00245A2B /* web */,
 				4288AA9F1BB83093003EC9EF /* AppDelegate.swift */,
 				42C01DFA1BB8369A00C2EEAD /* GTLCalendar_Sources.m */,
 				42C01DFB1BB8369A00C2EEAD /* GTLCalendar.h */,
@@ -152,6 +160,7 @@
 		4288AA9E1BB83093003EC9EF /* Whirlpool-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				42B976CC1BC1D5950012D29B /* UserCalenderInfo.swift */,
 				421545B81BB85FB200AE1B23 /* Whirlpool-iOS.entitlements */,
 				427BAEDE1BB9F31100B3F63A /* NavigationMainViewController.swift */,
 				847B58721BB9BF9800E22862 /* CalenderCell.swift */,
@@ -329,7 +338,9 @@
 			files = (
 				847B58761BB9DA2900E22862 /* CalenderCell.swift in Resources */,
 				42C01DF81BB8364700C2EEAD /* GTMOAuth2ViewTouch.xib in Resources */,
+				845E18771BC83F6400224DBA /* b0047_01_ROOMS.json in Resources */,
 				4288AAAA1BB83093003EC9EF /* LaunchScreen.storyboard in Resources */,
+				42C6AFF31BC4216D00245A2B /* web in Resources */,
 				4288AAA71BB83093003EC9EF /* Assets.xcassets in Resources */,
 				4288AAA51BB83093003EC9EF /* Main.storyboard in Resources */,
 			);
@@ -401,6 +412,7 @@
 				421545B71BB8533F00AE1B23 /* SearchResultsViewController.swift in Sources */,
 				421545B21BB8533F00AE1B23 /* MainViewController.swift in Sources */,
 				847B58751BB9BF9800E22862 /* CalenderEvent.swift in Sources */,
+				42B976CD1BC1D5950012D29B /* UserCalenderInfo.swift in Sources */,
 				420838551BB8C6D100AB15F1 /* NavigationsButtons.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -555,7 +567,7 @@
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/GoogleMaps\"",
 					"\"${PODS_ROOT}/Headers/Public/GoogleMaps/GoogleMaps\"",
-					"/Users/elhazzat/Desktop/Whirlpool/Whirlpool_1.2/google-api-objectivec-client/Source/**",
+					"/Users/cse498/Whirlpool_1.2/google-api-objectivec-client/Source/**",
 				);
 				INFOPLIST_FILE = "Whirlpool-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
@@ -582,7 +594,7 @@
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/GoogleMaps\"",
 					"\"${PODS_ROOT}/Headers/Public/GoogleMaps/GoogleMaps\"",
-					"/Users/elhazzat/Desktop/Whirlpool/Whirlpool_1.2/google-api-objectivec-client/Source/**",
+					"/Users/cse498/Whirlpool_1.2/google-api-objectivec-client/Source/**",
 				);
 				INFOPLIST_FILE = "Whirlpool-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;

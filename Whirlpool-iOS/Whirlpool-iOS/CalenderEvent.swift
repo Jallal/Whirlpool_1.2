@@ -29,7 +29,7 @@ class CalenderEvent {
     
     
     
-    init(CalenderEventSummary: String?, EventStartDate: String?, EventEndDate: String?, EventLocation :String? ) {
+    init(CalenderEventSummary: String?, EventStartDate: String?, EventEndDate: String?, var EventLocation :String? ) {
         if let sd = EventStartDate {
             startDate = sd
         }
@@ -38,7 +38,13 @@ class CalenderEvent {
             title = t
         }
         if let l = EventLocation {
+            
+            if(EventLocation != nil){
             location = l
+            }else{
+                location = " "
+                
+            }
         }
         if let ed = EventEndDate {
             endDate = ed

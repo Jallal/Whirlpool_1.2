@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MapsEngineLayer / no authentication / layerKey</title>
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+        #map {
+            height: 100%;
+        }
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+        <script>
+            function initMap() {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                                              center: {lat: 42, lng: -99},
+                                              zoom: 5
+                                              });
+                                              
+                                              var mapsEngineLayer = new google.maps.visualization.MapsEngineLayer({
+                                                                                                                  mapId: '10446176163891957399-13516001307527776624-4',
+                                                                                                                  layerKey: 'layer_00001',
+                                                                                                                  map: map,
+                                                                                                                  clickable: true,
+                                                                                                                  suppressInfoWindows: false
+                                                                                                                  });
+                                                                                                                  
+                                                                                                                  var mapsEngineLayer2 = new google.maps.visualization.MapsEngineLayer({
+                                                                                                                                                                                       mapId: '10446176163891957399-13516001307527776624-4',
+                                                                                                                                                                                       layerKey: 'layer_00002'
+                                                                                                                                                                                       });
+                                                                                                                                                                                       mapsEngineLayer2.setMap(map);
+            }
+        
+    </body>
+</html>

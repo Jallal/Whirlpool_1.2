@@ -13,13 +13,13 @@ public class LandMarkViewController: UIViewController, UIPickerViewDelegate{
     
     var selectedValue = " ";
     
-    @IBAction func GO(sender: AnyObject) {
+    /*@IBAction func GO(sender: AnyObject) {
         NSLog("THE SELECTED VALUE IS "+selectedValue)
         
        self.performSegueWithIdentifier("NavigationSague2", sender: nil)
 
         
-    }
+    }*/
     
     var landMarks = [" Building A "," Building B "," Building C ", " Building D"]
     

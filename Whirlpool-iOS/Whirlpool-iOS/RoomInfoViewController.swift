@@ -5,12 +5,10 @@
 //  Created by Jallal Elhazzat on 9/17/15.
 //
 //
-
+import GoogleMaps
 import UIKit
 
 class RoomInfoViewController: UIViewController,UIWebViewDelegate {
-
-
 
     @IBOutlet weak var roomInfo: UITableView!
     
@@ -18,25 +16,37 @@ class RoomInfoViewController: UIViewController,UIWebViewDelegate {
     
     
     
-    @IBAction func FullViewButton(sender: AnyObject) {
+
+    
+    
+    @IBAction func direction(sender: AnyObject) {
         
-          self.performSegueWithIdentifier("FullView", sender: nil)
+         self.performSegueWithIdentifier("FullView", sender: nil)
+        
         
     }
+    
+    
+    
+    
      var items = ["Hilltop 211","10 people","2 TVs","Phone"]
     
     
     
     override func viewWillAppear(animated: Bool) {
-        if let url = NSBundle.mainBundle().URLForResource("viewWithInfo", withExtension: "html",subdirectory:"web"){
+        if let url = NSBundle.mainBundle().URLForResource("File", withExtension: "html",subdirectory:"web"){
             let fragUrl = NSURL(string:"#FRAG_URL",relativeToURL:url)!
             let request = NSURLRequest(URL:fragUrl)
-            webView.delegate = self
-            webView.loadRequest(request)
+           // webView.delegate = self
+            //webView.loadRequest(request)
         }
         
     }
     
+    
+    
+    
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
