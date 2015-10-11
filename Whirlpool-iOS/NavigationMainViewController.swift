@@ -12,12 +12,15 @@ import GoogleMaps
 
 
 
-var coordinates  = [GMSMutablePath()];
+//var coordinates  = [GMSMutablePath()];
 
 class  NavigationMainViewController: UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,GMSIndoorDisplayDelegate {
     @IBOutlet weak var mapPin: UIImageView!
     @IBOutlet weak var Address: UILabel!
     @IBOutlet weak var mapView: GMSMapView!
+    
+    var roomdata       =  RoomsData();
+    
 
     let locationManager = CLLocationManager()
     
@@ -133,7 +136,7 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                                 if let feature = feature as? NSDictionary {
 
                                     if let geometry = feature["geometry"] as? NSDictionary {
-                                        
+                                         var RoomInformation  = RoomInfoViewController();
                                         
                                         if geometry["type"] as? String == "Polygon" {
                                             
@@ -142,7 +145,7 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                                             //var coordinates: [CLLocationCoordinate2D] = []
                                            
                                             if let locations = geometry["coordinates"] as? NSArray {
-
+                                                
                                                 // Iterate over line coordinates, stored in GeoJSON as many lng, lat arrays
 
                                                 for location in locations {
@@ -164,16 +167,16 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                                                         }
                                                     
                                                     }
-                                                   coordinates.append(rec);
-                             
+                                                   //coordinates.append(rec);
+                                                 RoomInformation.SetRoomCoordinates(rec)
                                                 }
                                          
                                           
                                             }
-                                           
+                                          
                                             
                                         }
-                                        
+                                        self.roomdata.addARoom(RoomInformation)
                                     }
                                     
                                 }
@@ -204,19 +207,21 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                 }
                 
             })
-
         
         }
     
     
     func updateUIMap(){
-        for rect in coordinates{
+        //for rect in coordinates{
+        for room in self.roomdata.getAllRooms(){
+            for rect in room.GetRoomCoordinates(){
             var polygon = GMSPolygon(path: rect)
             polygon.fillColor = UIColor(red:0.25, green:0, blue:0, alpha:0.05);
             polygon.strokeColor = UIColor.blackColor()
             polygon.strokeWidth = 1
             polygon.map = self.mapView
             self.view.setNeedsDisplay()
+        }
         }
     }
     
