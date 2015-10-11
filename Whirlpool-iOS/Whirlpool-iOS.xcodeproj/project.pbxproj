@@ -163,7 +163,6 @@
 			isa = PBXGroup;
 			children = (
 				42B976CC1BC1D5950012D29B /* UserCalenderInfo.swift */,
-				421545B81BB85FB200AE1B23 /* Whirlpool-iOS.entitlements */,
 				427BAEDE1BB9F31100B3F63A /* NavigationMainViewController.swift */,
 				847B58721BB9BF9800E22862 /* CalenderCell.swift */,
 				847B58731BB9BF9800E22862 /* CalenderEvent.swift */,
@@ -179,6 +178,7 @@
 				4288AAA31BB83093003EC9EF /* Main.storyboard */,
 				4288AAA61BB83093003EC9EF /* Assets.xcassets */,
 				4288AAA81BB83093003EC9EF /* LaunchScreen.storyboard */,
+				421545B81BB85FB200AE1B23 /* Whirlpool-iOS.entitlements */,
 				4288AAAB1BB83093003EC9EF /* Info.plist */,
 			);
 			path = "Whirlpool-iOS";
