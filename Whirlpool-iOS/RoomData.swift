@@ -30,6 +30,12 @@ class RoomData {
         
     }
     
+    public func GetName()->String{
+        return self.RoomName;
+        
+    }
+    
+    
     public func SetRoomNumber(roomnumber: String){
         
         self.RoomNumber = roomnumber;
@@ -39,5 +45,12 @@ class RoomData {
         return self.RoomNumber ;
     }
     
+    public func SetRoomName(name: String){
+        self.RoomName = name
+    }
 
+    
+    public func SetRoomEmail(email: String){
+        self.RoomEmail = email
+    }
 }

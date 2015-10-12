@@ -13,25 +13,18 @@ class SearchViewController: UITableViewController,UISearchBarDelegate,UISearchDi
     @IBOutlet var tableview: UITableView!
     @IBOutlet weak var searchbar: UISearchBar!
     
-    var friendsArray = [FriendItem]()
-    var filteredFriends = [FriendItem]()
+    var filteredRooms = [RoomData]()
     
     override func viewWillAppear(animated: Bool) {
         self.searchDisplayController?.active = true
         self.searchbar.becomeFirstResponder()
-        fetchEvents()
     }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
-        self.friendsArray += [FriendItem(name: "Vea Software")]
-        self.friendsArray += [FriendItem(name: "Apple")]
-        self.friendsArray += [FriendItem(name: "iTunes")]
-        self.friendsArray += [FriendItem(name: "iPhone")]
-        self.friendsArray += [FriendItem(name: "Mac")]
-        self.tableView.reloadData()
+        self.tableview.dataSource = self
+        self.tableview.delegate = self
         
     }
     
@@ -41,51 +34,6 @@ class SearchViewController: UITableViewController,UISearchBarDelegate,UISearchDi
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    public func fetchEvents(){
-        let query = GTLQueryCalendar.queryForEventsListWithCalendarId("primary")
-        query.maxResults = 10
-        query.timeMin = GTLDateTime(date: NSDate(), timeZone: NSTimeZone.localTimeZone())
-        query.singleEvents = true
-        query.orderBy = kGTLCalendarOrderByStartTime
-        service.executeQuery(
-            query,
-            delegate: self,
-            didFinishSelector: "displayResultWithTicket:finishedWithObject:error:"
-        )
-        
-    }
-    
-    
-    
-    // Display the start dates and event summaries in the UITextView
-    public func displayResultWithTicket(
-        ticket: GTLServiceTicket,
-        finishedWithObject events : GTLCalendarEvents?,
-        error : NSError?) {
-            
-            if let error = error {
-                showAlertLogin("Error", message: error.localizedDescription)
-                return
-            }
-            
-            var eventString = ""
-            if events?.items() != nil {
-                if events!.items().count > 0 {
-                    for event in events!.items() as! [GTLCalendarEvent] {
-                        let location = event.location;
-                        NSLog(event.summary)
-                        self.friendsArray += [FriendItem(name: event.summary)]
-                    }
-                } else {
-                    eventString = "No upcoming events found."
-                }
-            }
-    }
-    
-    
-    
-    
     
     // Helper for showing an alert
     func showAlertLogin(title : String, message: String) {
@@ -109,11 +57,13 @@ class SearchViewController: UITableViewController,UISearchBarDelegate,UISearchDi
     {
         if (tableView == self.searchDisplayController?.searchResultsTableView)
         {
-            return self.filteredFriends.count
+            print(_roomsData.count())
+            return _roomsData.count()
         }
         else
         {
-            return self.friendsArray.count
+            print(_roomsData.count())
+            return _roomsData.count()
         }
     }
     
@@ -122,18 +72,20 @@ class SearchViewController: UITableViewController,UISearchBarDelegate,UISearchDi
         
         let cell = self.tableView.dequeueReusableCellWithIdentifier("cell")
         
-        var friend : FriendItem
+        var room : RoomData
         
         if (tableView == self.searchDisplayController?.searchResultsTableView)
         {
-            friend = self.filteredFriends[indexPath.row]
+            room = _roomsData.getAllRooms()[indexPath.row]
+            print(room.GetName())
         }
         else
         {
-            friend = self.friendsArray[indexPath.row]
+            room = _roomsData.getAllRooms()[indexPath.row]
+            print(room.GetName())
         }
         
-        cell!.textLabel?.text = friend.name
+        cell!.textLabel?.text = room.GetName()
         
         return cell!
         
@@ -143,18 +95,20 @@ class SearchViewController: UITableViewController,UISearchBarDelegate,UISearchDi
     {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        var friend : FriendItem
+        var room : RoomData
         
         if (tableView == self.searchDisplayController?.searchResultsTableView)
         {
-            friend = self.filteredFriends[indexPath.row]
+           room = _roomsData.getAllRooms()[indexPath.row]
+            print(room.GetName())
         }
         else
         {
-            friend = self.friendsArray[indexPath.row]
+            room = _roomsData.getAllRooms()[indexPath.row]
+            print(room.GetName())
         }
         
-        print(friend.name)
+        print(room.GetName())
         
         
     }
@@ -164,10 +118,10 @@ class SearchViewController: UITableViewController,UISearchBarDelegate,UISearchDi
     func filterContenctsForSearchText(searchText: String, scope: String = "Title")
     {
         
-        self.filteredFriends = self.friendsArray.filter({( friend : FriendItem) -> Bool in
+        self.filteredRooms = _roomsData.getAllRooms().filter({( room : RoomData) -> Bool in
             
             var categoryMatch = (scope == "Title")
-            var stringMatch = friend.name.rangeOfString(searchText)
+            var stringMatch = room.GetName().rangeOfString(searchText)
             
             return categoryMatch && (stringMatch != nil)
             

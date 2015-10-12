@@ -26,6 +26,10 @@ class RoomsData {
         Rooms .append(room);
         
     }
+    
+    public func count()->Int {
+        return Rooms.count
+    }
 
     
     

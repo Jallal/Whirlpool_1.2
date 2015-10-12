@@ -11,6 +11,7 @@ import UIKit
 //var UserCalandenerInfo = [CalenaderEvents]()
 var _userCalenderInfo: UserCalenderInfo?
 let service = GTLServiceCalendar()
+var _roomsData = RoomsData()
 
 public class LoginViewController: UIViewController , NSXMLParserDelegate{
     //var _userCalenderInfo: UserCalenderInfo?
@@ -21,11 +22,12 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
     private let kClientSecret = "9--EmDPAMnvbJFhGbWKQyw1p"
     private var accessToken = String()
     private var xmlParser = NSXMLParser()
-    private var whirlpoolEmails = [String()]
     private var element = String()
-    
-    
-    
+    private var resEmail = String()
+    private var resName = String()
+    private var att = [String:String]()
+    private var nextResourceUrlPage = "https://apps-apis.google.com/a/feeds/calendar/resource/2.0/whirlpool.com/"
+    private var previousResourceUrlPage = String()
     
     private let scopes = [kGTLAuthScopeCalendar, "https://apps-apis.google.com/a/feeds/calendar/resource/"] //Add in a scope for Calender Resource API
     
@@ -54,7 +56,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
     }
     
     func httpCall(){
-        let whirlpoolResourceUrl = NSURL(string: "https://apps-apis.google.com/a/feeds/calendar/resource/2.0/whirlpool.com/")
+        let whirlpoolResourceUrl = NSURL(string: nextResourceUrlPage)
         let request = NSMutableURLRequest(URL: whirlpoolResourceUrl!)
         request.HTTPMethod = "GET"
         let headerToken = "Bearer " + accessToken
@@ -64,7 +66,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             var err: NSError?
             if err?.localizedDescription != nil
             {
-                print("hi")
+                print("error:", err?.localizedDescription)
             }
             else
             {
@@ -72,52 +74,25 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
                     //let jsonDict = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions()) as? NSDictionary
                     self.xmlParser = NSXMLParser(data: data!)
                     self.xmlParser.delegate = self
+                    self.previousResourceUrlPage = self.nextResourceUrlPage
                     if self.xmlParser.parse() {
-                        print("xml parse: ", self.xmlParser)
+                        if self.nextResourceUrlPage != self.previousResourceUrlPage {
+                            self.httpCall()
+                        }
+                        //print("previous:", self.previousResourceUrlPage)
+                        //print("previous:", self.nextResourceUrlPage)
+                        //print("xml parse: ", self.xmlParser)
                     }
                     else{
                         print("Darn xml parser")
                     }
                 } catch let error as NSError {
-                    print("dang, couldn't make into json obj", response )
+                    print("error: ", error )
                 }
                 
             }
         })
-        /*NSURLConnection.sendAsynchronousRequest( request, queue: NSOperationQueue(), completionHandler:{
-        (response: NSURLResponse?, data: NSData?, error: NSError?) -> Void in
-        if let anError = error
-        {
-        // got an error in getting the data, need to handle it
-        print("error calling GET on Google Resource")
-        }
-        else // no error returned by URL request
-        {
-        
-        print("No error")
-        // parse the result as json, since that's what the API provides
-        //var jsonError: NSError?
-        //let post = NSJSONSerialization.JSONObjectWithData(data!, options: nil) as! NSDictionary
-        /*if let aJSONError = jsonError
-        {
-        // got an error while parsing the data, need to handle it
-        print("error parsing /posts/1")
-        }
-        else
-        {
-        // now we have the post, let's just print it to prove we can access it
-        println("The post is: " + post.description)
-        
-        // the post object is a dictionary
-        // so we just access the title using the "title" key
-        // so check for a title and print it if we have one
-        if var postTitle = post["title"] as? String
-        {
-        print("The title is: " + postTitle)
-        }
-        }*/
-        }
-        })*/
+        self.performSegueWithIdentifier("MainPage", sender: nil)
     }
     
     // When the view appears, ensure that the Google Calendar API service is authorized
@@ -199,7 +174,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             //output.text = eventString
             
             self.httpCall()
-            self.performSegueWithIdentifier("MainPage", sender: nil)
+            
     }
     
     
@@ -250,15 +225,53 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
     
     
     public func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
-        element = elementName
-        print(elementName)
+        
+        if (elementName == "link" && attributeDict["rel"] == "next")  {
+            nextResourceUrlPage = attributeDict["href"]!
+            print("This is the next Resource Page: " + nextResourceUrlPage)
+        }
+        
+        if (elementName == "apps:property" ){
+            if attributeDict["name"] == "resourceCommonName" {
+                element = elementName
+                att = attributeDict
+                resName = att["value"]!
+            }
+            if attributeDict["name"] == "resourceEmail" {
+                element = elementName
+                att = attributeDict
+            }
+        }
+        
+
+        
     }
+    
     public func parser(parser: NSXMLParser!, foundCharacters string: String!)
     {
-        if element == ("value") {
-            whirlpoolEmails.append(element)
+        
+        if element == ("apps:property") {
+            /*if (att["value"]!.rangeOfString("US - Benton Harbor") != nil) {
+                //print(att["name"], att["value"])
+            }*/
+            if resName.rangeOfString("US - Benton Harbor") != nil {
+                resEmail = att["value"]!
+                //print(resName)
+                //print(resEmail)
+                resName = ""
+                
+                var newRoom = RoomData()
+                newRoom.SetRoomEmail(resName)
+                newRoom.SetRoomName(resName)
+                _roomsData.addARoom(newRoom)
+            }
+            
+            
         }
     }
+    
+    
+    
     
 }
 
