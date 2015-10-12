@@ -7,3 +7,37 @@
 //
 
 import Foundation
+import GoogleMaps
+
+
+class RoomData {
+
+    private var coordinates  = [GMSMutablePath()];
+    private  var RoomNumber = ""
+    private var RoomName = ""
+    private var RoomEmail = ""
+    
+    
+    
+    
+    public func SetRoomCoordinates(coord  : GMSMutablePath){
+        self.coordinates.append(coord);
+        
+    }
+    
+    public func GetRoomCoordinates()->[GMSMutablePath]{
+        return self.coordinates;
+        
+    }
+    
+    public func SetRoomNumber(roomnumber: String){
+        
+        self.RoomNumber = roomnumber;
+    }
+    public func GetRoomNumber()-> String{
+        
+        return self.RoomNumber ;
+    }
+    
+
+}

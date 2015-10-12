@@ -12,16 +12,16 @@ import GoogleMaps
 class RoomsData {
     
     
-    private var Rooms  = [RoomInfoViewController()];
+    private var Rooms  = [RoomData()];
    
     
-    public func getAllRooms()-> [RoomInfoViewController] {
+    public func getAllRooms()-> [RoomData] {
         
         return self.Rooms
         
     }
     
-    public func addARoom(room : RoomInfoViewController){
+    public func addARoom(room : RoomData){
         
         Rooms .append(room);
         
