@@ -16,8 +16,17 @@ class RoomData {
     private  var RoomNumber = ""
     private var RoomName = ""
     private var RoomEmail = ""
+    private var IsSelected = false;
     
-    
+    public func SetIsSelected(select : Bool){
+        
+              self.IsSelected = select;
+        
+    }
+    public func GetIsSelected() -> Bool{
+        return self.IsSelected;
+        
+    }
     
     
     public func SetRoomCoordinates(coord  : GMSMutablePath){
