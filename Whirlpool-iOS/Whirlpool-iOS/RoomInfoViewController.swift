@@ -17,32 +17,7 @@ class RoomInfoViewController: UIViewController,UIWebViewDelegate {
     @IBOutlet weak var webView: UIWebView!
     
     
-    private var coordinates  = [GMSMutablePath()];
-    private  var RoomNumber = ""
-    
-    
-    
-    
-    
-    public func SetRoomCoordinates(coord  : GMSMutablePath){
-        self.coordinates.append(coord);
-        
-    }
-    
-    public func GetRoomCoordinates()->[GMSMutablePath]{
-        return self.coordinates;
-        
-    }
 
-    public func SetRoomNumber(roomnumber: String){
-        
-        self.RoomNumber = roomnumber;
-    }
-    public func GetRoomNumber()-> String{
-        
-        return self.RoomNumber ;
-    }
-    
     
     @IBAction func direction(sender: AnyObject) {
         

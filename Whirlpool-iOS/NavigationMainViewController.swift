@@ -19,7 +19,7 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     @IBOutlet weak var Address: UILabel!
     @IBOutlet weak var mapView: GMSMapView!
     
-    var roomdata       =  RoomsData();
+    var roomdata  =  RoomsData();
     
 
     let locationManager = CLLocationManager()
@@ -136,7 +136,7 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                                 if let feature = feature as? NSDictionary {
 
                                     if let geometry = feature["geometry"] as? NSDictionary {
-                                         var RoomInformation  = RoomInfoViewController();
+                                         var RoomInformation  = RoomData();
                                         
                                         if geometry["type"] as? String == "Polygon" {
                                             
