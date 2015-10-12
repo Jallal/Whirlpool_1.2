@@ -59,10 +59,15 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(tableView == self.calender){
-            return  (_userCalenderInfo?.getCalenderEventsCount())!
-        }else{
-           return (_userCalenderInfo?.getCalenderEventsCount())!
+        if _userCalenderInfo != nil {
+            if(tableView == self.calender){
+                return  (_userCalenderInfo?.getCalenderEventsCount())!
+            }else{
+               return (_userCalenderInfo?.getCalenderEventsCount())!
+            }
+        }
+        else{
+            return 0
         }
         
     }
