@@ -16,15 +16,11 @@ class RoomsData {
    
     
     public func getAllRooms()-> [RoomData] {
-        
         return self.Rooms
-        
     }
     
     public func addARoom(room : RoomData){
-        
-        Rooms .append(room);
-        
+        Rooms.append(room);
     }
 
     

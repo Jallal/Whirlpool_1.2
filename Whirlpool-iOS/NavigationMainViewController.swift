@@ -12,16 +12,12 @@ import GoogleMaps
 
 
 
-//var coordinates  = [GMSMutablePath()];
-
 class  NavigationMainViewController: UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,GMSIndoorDisplayDelegate {
     @IBOutlet weak var mapPin: UIImageView!
     @IBOutlet weak var Address: UILabel!
     @IBOutlet weak var mapView: GMSMapView!
     
     var roomdata  =  RoomsData();
-    
-
     let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
@@ -35,13 +31,8 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     }
     
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        // 3
         if status == .AuthorizedWhenInUse {
-            
-            // 4
             locationManager.startUpdatingLocation()
-            
-            //5
             mapView.myLocationEnabled = true
             mapView.settings.myLocationButton = true
         }
@@ -50,11 +41,7 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     
    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         var location :CLLocation = locations.first!
-            
-            // 7
             mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 23, bearing: 0, viewingAngle: 0)
-    
-            // 8
             locationManager.stopUpdatingLocation()
     }
     
@@ -131,12 +118,20 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                         
                         // Load the `features` array for iteration
                         if let features = jsonDict["features"] as? NSArray {
+                            
                             for feature in features {
-
+                                var RoomInformation  = RoomData();
                                 if let feature = feature as? NSDictionary {
+                                    if let  property = feature["properties"] as? NSDictionary {
+  
+                                        if let roomNum = property["room"]{
+                                            RoomInformation.SetRoomNumber(roomNum as! String)
+                                            
+                                        }
 
+                                    }
                                     if let geometry = feature["geometry"] as? NSDictionary {
-                                         var RoomInformation  = RoomData();
+                                        
                                         
                                         if geometry["type"] as? String == "Polygon" {
                                             
@@ -157,8 +152,6 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                                                             
                                                             if (j+1 == location[i].count){
                                                                 rec.addCoordinate(CLLocationCoordinate2DMake(location[i][j].doubleValue,lat))
-                                                                print("Latitude:", lat)
-                                                                print("Longitude:", location[i][j].doubleValue)
                                                             }
                                                             else{
                                                                 lat = location[i][j].doubleValue
@@ -167,7 +160,6 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                                                         }
                                                     
                                                     }
-                                                   //coordinates.append(rec);
                                                  RoomInformation.SetRoomCoordinates(rec)
                                                 }
                                          
@@ -176,25 +168,14 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                                           
                                             
                                         }
-                                        self.roomdata.addARoom(RoomInformation)
                                     }
-                                    
                                 }
-
+                                self.roomdata.addARoom(RoomInformation)
                             }
-
                         }
 
                     }
-                    dispatch_async(dispatch_get_main_queue()) {
-                        do {
-                            self.updateUIMap()
-                        }
-                        catch {
-                            print("Failed to update UI")
-                        }
-                    }
-                    
+                    self.reDraw()
                 }
                
                     
@@ -212,37 +193,58 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     
     
     func updateUIMap(){
-        //for rect in coordinates{
         for room in self.roomdata.getAllRooms(){
             for rect in room.GetRoomCoordinates(){
             var polygon = GMSPolygon(path: rect)
-            polygon.fillColor = UIColor(red:0.25, green:0, blue:0, alpha:0.05);
+                if(room.GetIsSelected()){
+                  polygon.fillColor = UIColor(red:1.0, green:0.2, blue:0.3, alpha:0.9);
+                }else{
+                    polygon.fillColor = UIColor(red:0.25, green:0, blue:0, alpha:0.05);
+                }
             polygon.strokeColor = UIColor.blackColor()
             polygon.strokeWidth = 1
+            polygon.title = room.GetRoomNumber();
+            polygon.tappable = true;
             polygon.map = self.mapView
             self.view.setNeedsDisplay()
+            
         }
+
         }
+        
+        
+      
+    }
+    
+    func mapView(mapView: GMSMapView!, didTapOverlay overlay: GMSOverlay!) {
+        if((overlay.title) != nil){
+        for room in self.roomdata.getAllRooms(){
+            if(room.GetRoomNumber() == overlay.title){
+                room.SetIsSelected(true);
+            }else{
+                room.SetIsSelected(false);
+            }
+            
+        }
+            self.mapView.clear();
+            self.reDraw();
+        }
+
     }
     
     
-    /***************************************************/
-    func didChangeActiveBuilding(building: GMSIndoorBuilding!) {
-        
-        //currentBuilding = building
-        
-       // var levels = currentBuilding.levels as! [GMSIndoorLevel]
-        
-      //  mapView.indoorDisplay.activeLevel = levels[2] // set the level (key)
+    func reDraw(){
+        dispatch_async(dispatch_get_main_queue()) {
+            do {
+                self.updateUIMap()
+            }
+            catch {
+                print("Failed to update UI")
+            }
+        }
         
     }
     
-    func didChangeActiveLevel(level: GMSIndoorLevel!) {
-        
-       // println("will be called after activeBuilding")
-        
-    }
-    /*****************************************************************/
 }
 
     
