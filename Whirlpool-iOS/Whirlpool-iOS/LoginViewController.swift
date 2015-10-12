@@ -8,34 +8,39 @@
 
 import UIKit
 
-
 //var UserCalandenerInfo = [CalenaderEvents]()
 var _userCalenderInfo: UserCalenderInfo?
+let service = GTLServiceCalendar()
 
-public class LoginViewController: UIViewController {
+public class LoginViewController: UIViewController , NSXMLParserDelegate{
     //var _userCalenderInfo: UserCalenderInfo?
     
-    @IBOutlet weak var GoogoleView: UIView!
+    @IBOutlet weak var GoogleView: UIView!
     private let kKeychainItemName = "Google Calendar API"
     private let kClientID = "656758157986-ipeuj79t544atfl6fuuc6ij9q7eqh8mh.apps.googleusercontent.com"
     private let kClientSecret = "9--EmDPAMnvbJFhGbWKQyw1p"
+    private var accessToken = String()
+    private var xmlParser = NSXMLParser()
+    private var whirlpoolEmails = [String()]
+    private var element = String()
     
-    private let scopes = [kGTLAuthScopeCalendarReadonly]
     
-    private let service = GTLServiceCalendar()
+    
+    
+    private let scopes = [kGTLAuthScopeCalendar, "https://apps-apis.google.com/a/feeds/calendar/resource/"] //Add in a scope for Calender Resource API
+    
     let output = UITextView()
     
     // When the view loads, create necessary subviews
     // and initialize the Google Calendar API service
     override public func viewDidLoad() {
         super.viewDidLoad()
-        
-        output.frame = self.GoogoleView.bounds
+        output.frame = self.GoogleView.bounds
         output.editable = false
         output.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         output.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         
-        self.GoogoleView.addSubview(output);
+        self.GoogleView.addSubview(output);
         
         GTMOAuth2ViewControllerTouch.authForGoogleFromKeychainForName(
             kKeychainItemName,
@@ -43,6 +48,76 @@ public class LoginViewController: UIViewController {
             clientSecret: kClientSecret
         )
         
+        
+        
+        
+    }
+    
+    func httpCall(){
+        let whirlpoolResourceUrl = NSURL(string: "https://apps-apis.google.com/a/feeds/calendar/resource/2.0/whirlpool.com/")
+        let request = NSMutableURLRequest(URL: whirlpoolResourceUrl!)
+        request.HTTPMethod = "GET"
+        let headerToken = "Bearer " + accessToken
+        request.allHTTPHeaderFields = ["Authorization" : headerToken]
+        let queue:NSOperationQueue = NSOperationQueue()
+        NSURLConnection.sendAsynchronousRequest(request, queue: queue, completionHandler:{ (response: NSURLResponse?, data: NSData?, error: NSError?) -> Void in
+            var err: NSError?
+            if err?.localizedDescription != nil
+            {
+                print("hi")
+            }
+            else
+            {
+                do {
+                    //let jsonDict = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions()) as? NSDictionary
+                    self.xmlParser = NSXMLParser(data: data!)
+                    self.xmlParser.delegate = self
+                    if self.xmlParser.parse() {
+                        print("xml parse: ", self.xmlParser)
+                    }
+                    else{
+                        print("Darn xml parser")
+                    }
+                } catch let error as NSError {
+                    print("dang, couldn't make into json obj", response )
+                }
+                
+            }
+        })
+        /*NSURLConnection.sendAsynchronousRequest( request, queue: NSOperationQueue(), completionHandler:{
+        (response: NSURLResponse?, data: NSData?, error: NSError?) -> Void in
+        if let anError = error
+        {
+        // got an error in getting the data, need to handle it
+        print("error calling GET on Google Resource")
+        }
+        else // no error returned by URL request
+        {
+        
+        print("No error")
+        // parse the result as json, since that's what the API provides
+        //var jsonError: NSError?
+        //let post = NSJSONSerialization.JSONObjectWithData(data!, options: nil) as! NSDictionary
+        /*if let aJSONError = jsonError
+        {
+        // got an error while parsing the data, need to handle it
+        print("error parsing /posts/1")
+        }
+        else
+        {
+        // now we have the post, let's just print it to prove we can access it
+        println("The post is: " + post.description)
+        
+        // the post object is a dictionary
+        // so we just access the title using the "title" key
+        // so check for a title and print it if we have one
+        if var postTitle = post["title"] as? String
+        {
+        print("The title is: " + postTitle)
+        }
+        }*/
+        }
+        })*/
     }
     
     // When the view appears, ensure that the Google Calendar API service is authorized
@@ -51,6 +126,7 @@ public class LoginViewController: UIViewController {
         if let authorizer = service.authorizer,
             canAuth = authorizer.canAuthorize where canAuth {
                 fetchEvents()
+                
         } else {
             presentViewController(
                 createAuthController(),
@@ -77,74 +153,56 @@ public class LoginViewController: UIViewController {
     
     
     
+    
     // Display the start dates and event summaries in the UITextView
-     public func displayResultWithTicket(
+    public func displayResultWithTicket(
         ticket: GTLServiceTicket,
         finishedWithObject events : GTLCalendarEvents?,
         error : NSError?) {
-          
+            
             if let error = error {
-                showAlert("Error", message: error.localizedDescription)
+                showAlertLogin("Error", message: error.localizedDescription)
                 return
             }
             
-           var eventString = ""
-
+            var eventString = ""
             if events?.items() != nil {
-                var location = " "
-                var startString = " "
-                var endString = " "
                 _userCalenderInfo = UserCalenderInfo()
                 if events!.items().count > 0 {
                     for event in events!.items() as! [GTLCalendarEvent] {
-                        if(event.location != nil){
-                        location = event.location;
-                        }
+                        let location = event.location;
                         let start : GTLDateTime! = event.start.dateTime ?? event.start.date
-                        /*var startString = NSDateFormatter.localizedStringFromDate(
-                            start.date,
-                            dateStyle: .ShortStyle,
-                            timeStyle: .ShortStyle
-                        )*/
                         let startingString = NSDateFormatter()
                         startingString.dateFormat = "hh:mm a"
-                        startString = startingString.stringFromDate(start.date)
+                        let startString = startingString.stringFromDate(start.date)
                         
                         /***********************************/
                         let EndDate   : GTLDateTime! = event.end.dateTime ?? event.end.date
-                        /*var endString = NSDateFormatter.localizedStringFromDate(
-                            EndDate.date,
-                            dateStyle: .ShortStyle,
-                            timeStyle: .ShortStyle
-                        )*/
-                      
+                        
                         let endingString = NSDateFormatter()
                         endingString.dateFormat = "hh:mm a"
                         
-                         endString = startingString.stringFromDate(EndDate.date)
+                        let endString = startingString.stringFromDate(EndDate.date)
                         /***********************************/
                         
                         eventString += "\(startString) - \(event.summary)\n"
-                    
+                        
                         _userCalenderInfo!.addEventToCalender(CalenderEvent(CalenderEventSummary: event.summary,EventStartDate:startString,EventEndDate:endString,EventLocation :location ))
-                        //UserCalandenerInfo += [CalenaderEvents(EventSummary: event.summary,EventStartDate:startString,EventEndDate:endString,EventLocation :location )]
                     }
                 } else {
-                   // eventString = "No upcoming events found."
-                       _userCalenderInfo!.addEventToCalender(CalenderEvent(CalenderEventSummary: " NO Event",EventStartDate:startString,EventEndDate:endString,EventLocation :location ))
+                    eventString = "No upcoming events found."
                 }
             }
             //output.text = eventString
             
-        
-           self.performSegueWithIdentifier("MainPage", sender: nil)
-            
+            self.httpCall()
+            self.performSegueWithIdentifier("MainPage", sender: nil)
     }
     
     
     // Creates the auth controller for authorizing access to Google Calendar API
     private func createAuthController() -> GTMOAuth2ViewControllerTouch {
-        let scopeString = scopes.joinWithSeparator(" , ")
+        let scopeString = scopes.joinWithSeparator(" ")
         return GTMOAuth2ViewControllerTouch(
             scope: scopeString,
             clientID: kClientID,
@@ -162,16 +220,16 @@ public class LoginViewController: UIViewController {
             
             if let error = error {
                 service.authorizer = nil
-                showAlert("Authentication Error", message: error.localizedDescription)
+                showAlertLogin("Authentication Error", message: error.localizedDescription)
                 return
             }
-            
+            accessToken = (authResult.accessToken)
             service.authorizer = authResult
             dismissViewControllerAnimated(true, completion: nil)
     }
     
     // Helper for showing an alert
-    func showAlert(title : String, message: String) {
+    func showAlertLogin(title : String, message: String) {
         let alert = UIAlertView(
             title: title,
             message: message,
@@ -181,20 +239,23 @@ public class LoginViewController: UIViewController {
         alert.show()
     }
     
-    public override func didReceiveMemoryWarning() {
+    override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-
-}
-
-    /*override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        if (segue.identifier == "MainPage") {
-            let svc = segue.destinationViewController as! MainViewController
-            svc.userCalenderPassed = _userCalenderInfo
-            
-        }
-    }*/
+        
+    }
     
+    
+    public func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+        element = elementName
+        print(elementName)
+    }
+    public func parser(parser: NSXMLParser!, foundCharacters string: String!)
+    {
+        if element == ("value") {
+            whirlpoolEmails.append(element)
+        }
+    }
     
 }
 

@@ -31,6 +31,7 @@
 		42C01DF81BB8364700C2EEAD /* GTMOAuth2ViewTouch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42C01DF71BB8364700C2EEAD /* GTMOAuth2ViewTouch.xib */; settings = {ASSET_TAGS = (); }; };
 		42C01DFC1BB8369A00C2EEAD /* GTLCalendar_Sources.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C01DFA1BB8369A00C2EEAD /* GTLCalendar_Sources.m */; settings = {ASSET_TAGS = (); }; };
 		42C6AFF31BC4216D00245A2B /* web in Resources */ = {isa = PBXBuildFile; fileRef = 42C6AFF21BC4216C00245A2B /* web */; settings = {ASSET_TAGS = (); }; };
+		6E062A981BCB30E800BCA209 /* CalendarEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E062A971BCB30E800BCA209 /* CalendarEventViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		845E18771BC83F6400224DBA /* b0047_01_ROOMS.json in Resources */ = {isa = PBXBuildFile; fileRef = 845E18751BC83F6400224DBA /* b0047_01_ROOMS.json */; settings = {ASSET_TAGS = (); }; };
 		845E187A1BCB1A6900224DBA /* RoomsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E18791BCB1A6900224DBA /* RoomsData.swift */; settings = {ASSET_TAGS = (); }; };
 		847B58741BB9BF9800E22862 /* CalenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B58721BB9BF9800E22862 /* CalenderCell.swift */; settings = {ASSET_TAGS = (); }; };
@@ -92,6 +93,7 @@
 		42C01DFB1BB8369A00C2EEAD /* GTLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLCalendar.h; sourceTree = "<group>"; };
 		42C6AFF21BC4216C00245A2B /* web */ = {isa = PBXFileReference; lastKnownFileType = folder; path = web; sourceTree = "<group>"; };
 		687F69D2BC4BA870FA74ACA3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E062A971BCB30E800BCA209 /* CalendarEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarEventViewController.swift; sourceTree = "<group>"; };
 		845E18751BC83F6400224DBA /* b0047_01_ROOMS.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = b0047_01_ROOMS.json; sourceTree = "<group>"; };
 		845E18791BCB1A6900224DBA /* RoomsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomsData.swift; sourceTree = "<group>"; };
 		847B58721BB9BF9800E22862 /* CalenderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderCell.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 		4288AA9E1BB83093003EC9EF /* Whirlpool-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				6E062A971BCB30E800BCA209 /* CalendarEventViewController.swift */,
 				42B976CC1BC1D5950012D29B /* UserCalenderInfo.swift */,
 				427BAEDE1BB9F31100B3F63A /* NavigationMainViewController.swift */,
 				847B58721BB9BF9800E22862 /* CalenderCell.swift */,
@@ -408,6 +411,7 @@
 				845E187A1BCB1A6900224DBA /* RoomsData.swift in Sources */,
 				420838591BB8EB5400AB15F1 /* LandMarkViewController.swift in Sources */,
 				421545B61BB8533F00AE1B23 /* NavigationFULLViewController.swift in Sources */,
+				6E062A981BCB30E800BCA209 /* CalendarEventViewController.swift in Sources */,
 				42C01DFC1BB8369A00C2EEAD /* GTLCalendar_Sources.m in Sources */,
 				4288AAA01BB83093003EC9EF /* AppDelegate.swift in Sources */,
 				847B58741BB9BF9800E22862 /* CalenderCell.swift in Sources */,
@@ -571,7 +575,7 @@
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/GoogleMaps\"",
 					"\"${PODS_ROOT}/Headers/Public/GoogleMaps/GoogleMaps\"",
-					"/Users/cse498/Whirlpool_1.2/google-api-objectivec-client/Source/**",
+					"/Users/SpartyWare/Documents/XcodeProjects/Whirlpool_1.2/google-api-objectivec-client/Source/**",
 				);
 				INFOPLIST_FILE = "Whirlpool-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
@@ -598,7 +602,7 @@
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/GoogleMaps\"",
 					"\"${PODS_ROOT}/Headers/Public/GoogleMaps/GoogleMaps\"",
-					"/Users/cse498/Whirlpool_1.2/google-api-objectivec-client/Source/**",
+					"/Users/SpartyWare/Documents/XcodeProjects/Whirlpool_1.2/google-api-objectivec-client/Source/**",
 				);
 				INFOPLIST_FILE = "Whirlpool-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;

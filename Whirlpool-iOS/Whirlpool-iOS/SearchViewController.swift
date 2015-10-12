@@ -1,6 +1,6 @@
 //
 //  SearchTableViewController.swift
-//  
+//
 //
 //  Created by Jallal Elhazzat on 9/13/15.
 //
@@ -9,7 +9,7 @@
 import UIKit
 
 class SearchViewController: UITableViewController,UISearchBarDelegate,UISearchDisplayDelegate  {
-
+    
     @IBOutlet var tableview: UITableView!
     @IBOutlet weak var searchbar: UISearchBar!
     
@@ -17,8 +17,9 @@ class SearchViewController: UITableViewController,UISearchBarDelegate,UISearchDi
     var filteredFriends = [FriendItem]()
     
     override func viewWillAppear(animated: Bool) {
-    self.searchDisplayController?.active = true
-     self.searchbar.becomeFirstResponder()
+        self.searchDisplayController?.active = true
+        self.searchbar.becomeFirstResponder()
+        fetchEvents()
     }
     
     override func viewDidLoad()
@@ -30,10 +31,8 @@ class SearchViewController: UITableViewController,UISearchBarDelegate,UISearchDi
         self.friendsArray += [FriendItem(name: "iTunes")]
         self.friendsArray += [FriendItem(name: "iPhone")]
         self.friendsArray += [FriendItem(name: "Mac")]
-        
         self.tableView.reloadData()
-       
-       
+        
     }
     
     
@@ -43,6 +42,61 @@ class SearchViewController: UITableViewController,UISearchBarDelegate,UISearchDi
         // Dispose of any resources that can be recreated.
     }
     
+    public func fetchEvents(){
+        let query = GTLQueryCalendar.queryForEventsListWithCalendarId("primary")
+        query.maxResults = 10
+        query.timeMin = GTLDateTime(date: NSDate(), timeZone: NSTimeZone.localTimeZone())
+        query.singleEvents = true
+        query.orderBy = kGTLCalendarOrderByStartTime
+        service.executeQuery(
+            query,
+            delegate: self,
+            didFinishSelector: "displayResultWithTicket:finishedWithObject:error:"
+        )
+        
+    }
+    
+    
+    
+    // Display the start dates and event summaries in the UITextView
+    public func displayResultWithTicket(
+        ticket: GTLServiceTicket,
+        finishedWithObject events : GTLCalendarEvents?,
+        error : NSError?) {
+            
+            if let error = error {
+                showAlertLogin("Error", message: error.localizedDescription)
+                return
+            }
+            
+            var eventString = ""
+            if events?.items() != nil {
+                if events!.items().count > 0 {
+                    for event in events!.items() as! [GTLCalendarEvent] {
+                        let location = event.location;
+                        NSLog(event.summary)
+                        self.friendsArray += [FriendItem(name: event.summary)]
+                    }
+                } else {
+                    eventString = "No upcoming events found."
+                }
+            }
+    }
+    
+    
+    
+    
+    
+    // Helper for showing an alert
+    func showAlertLogin(title : String, message: String) {
+        let alert = UIAlertView(
+            title: title,
+            message: message,
+            delegate: nil,
+            cancelButtonTitle: "OK"
+        )
+        alert.show()
+    }
     
     // MARK: - Table View
     
@@ -147,6 +201,6 @@ class SearchViewController: UITableViewController,UISearchBarDelegate,UISearchDi
         //self.navigationController?.pushViewController(secondViewController, animated: true)
         self.navigationController?.presentViewController(secondViewController, animated: true, completion: nil)
     }
-
-
+    
+    
 }

@@ -11,8 +11,9 @@ import GoogleMaps
 
 class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate ,GMSMapViewDelegate {
     
-        @IBOutlet weak var mapView: GMSMapView!
+      //  @IBOutlet weak var mapView: GMSMapView!
         
+    @IBOutlet weak var mapView: GMSMapView!
 
         let locationManager = CLLocationManager()
         
