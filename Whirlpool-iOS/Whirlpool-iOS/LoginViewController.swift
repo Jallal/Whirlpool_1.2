@@ -170,7 +170,10 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
                 _userCalenderInfo = UserCalenderInfo()
                 if events!.items().count > 0 {
                     for event in events!.items() as! [GTLCalendarEvent] {
-                        let location = event.location;
+                        var location =  ""
+                        if event.location != nil{
+                            location = event.location
+                        }
                         let start : GTLDateTime! = event.start.dateTime ?? event.start.date
                         let startingString = NSDateFormatter()
                         startingString.dateFormat = "hh:mm a"
