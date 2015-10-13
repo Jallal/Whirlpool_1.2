@@ -198,8 +198,11 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
             var polygon = GMSPolygon(path: rect)
                 if(room.GetIsSelected()){
                   polygon.fillColor = UIColor(red:1.0, green:0.2, blue:0.3, alpha:0.9);
+                    /* add opacity and overlay */
+                    
                 }else{
-                    polygon.fillColor = UIColor(red:0.25, green:0, blue:0, alpha:0.05);
+                    //polygon.fillColor = UIColor(red:0.25, green:0, blue:0, alpha:0.05);
+                     polygon.fillColor = UIColor(red: 59/255, green: 178/255, blue: 208/255, alpha: 1)
                 }
             polygon.strokeColor = UIColor.blackColor()
             polygon.strokeWidth = 1
@@ -217,9 +220,13 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     }
     
     func mapView(mapView: GMSMapView!, didTapOverlay overlay: GMSOverlay!) {
+        
         if((overlay.title) != nil){
         for room in self.roomdata.getAllRooms(){
             if(room.GetRoomNumber() == overlay.title){
+               // var coordinate = room.GetRoomCoordinates();
+                //var position = CLLocationCoordinate2DMake(coordinate.startIndex,coordinate.endIndex)
+                //var marker = GMSMarker(position: position )
                 room.SetIsSelected(true);
             }else{
                 room.SetIsSelected(false);
@@ -243,6 +250,15 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
             }
         }
         
+    }
+    
+    
+    func tappedView(sender : UITapGestureRecognizer) {
+        /*var tappedPoint = sender.locationInView(self.view)
+        print(tappedPoint) // Not returning values on tap
+        
+        var marker = GMSMarker(position: tappedPoint)
+        marker.title = "Hello World"*/
     }
     
 }
