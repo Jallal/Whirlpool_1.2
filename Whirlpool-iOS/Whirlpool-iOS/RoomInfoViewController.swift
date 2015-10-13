@@ -15,7 +15,9 @@ class RoomInfoViewController: UIViewController,UIWebViewDelegate {
     @IBOutlet weak var roomInfo: UITableView!
     
     @IBOutlet weak var webView: UIWebView!
+    @IBOutlet weak var RoomNameLabel: UILabel!
     
+    internal var _room = RoomData()
     
 
     
@@ -39,6 +41,10 @@ class RoomInfoViewController: UIViewController,UIWebViewDelegate {
             let request = NSURLRequest(URL:fragUrl)
            // webView.delegate = self
             //webView.loadRequest(request)
+        }
+        
+        if _room.GetName() != "" {
+            RoomNameLabel.text = _room.GetName()
         }
         
     }

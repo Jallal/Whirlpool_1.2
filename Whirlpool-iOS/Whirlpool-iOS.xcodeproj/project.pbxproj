@@ -575,8 +575,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
+					"$(inhereted)",
 					"\"${PODS_ROOT}/Headers/Public/GoogleMaps\"",
 					"\"${PODS_ROOT}/Headers/Public/GoogleMaps/GoogleMaps\"",
 					"/Users/cse498/Desktop/Whirlpool_1.2/google-api-objectivec-client/Source/**",
@@ -602,8 +601,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
+					"$(inhereted)",
 					"\"${PODS_ROOT}/Headers/Public/GoogleMaps\"",
 					"\"${PODS_ROOT}/Headers/Public/GoogleMaps/GoogleMaps\"",
 					"/Users/cse498/Desktop/Whirlpool_1.2/google-api-objectivec-client/Source/**",

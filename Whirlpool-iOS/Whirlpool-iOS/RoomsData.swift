@@ -9,10 +9,10 @@
 import Foundation
 import GoogleMaps
 
-class RoomsData {
+public class RoomsData {
     
     
-    private var Rooms  = [RoomData()];
+    var Rooms  = [RoomData]();
    
     
     public func getAllRooms()-> [RoomData] {
@@ -21,6 +21,10 @@ class RoomsData {
     
     public func addARoom(room : RoomData){
         Rooms.append(room);
+    }
+    
+    public func count()->Int {
+        return Rooms.count
     }
 
     

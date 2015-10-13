@@ -35,10 +35,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         
         super.viewDidLoad()
-     /*  let nibName = UINib(nibName: "CalenderCell", bundle: nil)
-        self.calendar.registerNib(nibName, forCellReuseIdentifier: "CalenderCellID")
-        self.relevant.registerNib(nibName, forCellReuseIdentifier: "CalenderCellID")
-*/
         self.calender.dataSource = self
         
         self.calender.delegate = self

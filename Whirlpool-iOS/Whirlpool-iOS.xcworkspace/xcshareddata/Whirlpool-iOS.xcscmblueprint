@@ -1,33 +1,48 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "AAF8EF9A436AFEC75196FAB3945D2ABA5051A5E6",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "AAF8EF9A436AFEC75196FAB3945D2ABA5051A5E6+++E09E350",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
-    "052f66bb-8366-e9ed-b056-95094e25c79e++505" : {
+    "052f66bb-8366-e9ed-b056-95094e25c79e++505+++9D95DA5" : {
 
     },
-    "052f66bb-8366-e9ed-b056-95094e25c79e++2896" : {
+    "052f66bb-8366-e9ed-b056-95094e25c79e++505+++F888389" : {
 
     },
-    "b3aa69f0-f65c-a609-0a27-78855af037c1++2896" : {
+    "22754eea-fc93-e339-b032-c1f495b90c16++2896+++7884675" : {
 
     },
-    "22754eea-fc93-e339-b032-c1f495b90c16++2896" : {
+    "052f66bb-8366-e9ed-b056-95094e25c79e++505+++0DB9B08" : {
+
+    },
+    "b3aa69f0-f65c-a609-0a27-78855af037c1++2896+++8EAC460" : {
+
+    },
+    "b3aa69f0-f65c-a609-0a27-78855af037c1++2896+++5FE794B" : {
+
+    },
+    "22754eea-fc93-e339-b032-c1f495b90c16++2896+++6BAC0D9" : {
 
     }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "052f66bb-8366-e9ed-b056-95094e25c79e++505" : 0,
-    "052f66bb-8366-e9ed-b056-95094e25c79e++2896" : 0,
-    "AAF8EF9A436AFEC75196FAB3945D2ABA5051A5E6" : 0,
-    "b3aa69f0-f65c-a609-0a27-78855af037c1++2896" : 0,
-    "22754eea-fc93-e339-b032-c1f495b90c16++2896" : 0
+    "052f66bb-8366-e9ed-b056-95094e25c79e++505+++9D95DA5" : 0,
+    "052f66bb-8366-e9ed-b056-95094e25c79e++505+++F888389" : 0,
+    "22754eea-fc93-e339-b032-c1f495b90c16++2896+++7884675" : 0,
+    "052f66bb-8366-e9ed-b056-95094e25c79e++505+++0DB9B08" : 0,
+    "b3aa69f0-f65c-a609-0a27-78855af037c1++2896+++8EAC460" : 0,
+    "b3aa69f0-f65c-a609-0a27-78855af037c1++2896+++5FE794B" : 0,
+    "22754eea-fc93-e339-b032-c1f495b90c16++2896+++6BAC0D9" : 0,
+    "AAF8EF9A436AFEC75196FAB3945D2ABA5051A5E6+++E09E350" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "044032F5-E00A-4DCD-9E0B-9930AEBD72F2",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "052f66bb-8366-e9ed-b056-95094e25c79e++505" : "Whirlpool\/google-api-objectivec-client\/",
-    "052f66bb-8366-e9ed-b056-95094e25c79e++2896" : "Whirlpool_1.2\/google-api-objectivec-client\/",
-    "AAF8EF9A436AFEC75196FAB3945D2ABA5051A5E6" : "Whirlpool_1.2\/",
-    "b3aa69f0-f65c-a609-0a27-78855af037c1++2896" : "Whirlpool\/google-api-objectivec-client\/Source\/HTTPFetcher\/",
-    "22754eea-fc93-e339-b032-c1f495b90c16++2896" : "Whirlpool\/google-api-objectivec-client\/Source\/OAuth2\/"
+    "052f66bb-8366-e9ed-b056-95094e25c79e++505+++9D95DA5" : "Whirlpool\/google-api-objectivec-client\/",
+    "052f66bb-8366-e9ed-b056-95094e25c79e++505+++F888389" : "Whirlpool\/google-api-objectivec-client\/",
+    "22754eea-fc93-e339-b032-c1f495b90c16++2896+++7884675" : "Whirlpool\/google-api-objectivec-client\/Source\/OAuth2\/",
+    "052f66bb-8366-e9ed-b056-95094e25c79e++505+++0DB9B08" : "Whirlpool_1.2\/google-api-objectivec-client\/",
+    "b3aa69f0-f65c-a609-0a27-78855af037c1++2896+++8EAC460" : "Whirlpool_1.2\/google-api-objectivec-client\/Source\/HTTPFetcher\/",
+    "b3aa69f0-f65c-a609-0a27-78855af037c1++2896+++5FE794B" : "Whirlpool\/google-api-objectivec-client\/Source\/HTTPFetcher\/",
+    "22754eea-fc93-e339-b032-c1f495b90c16++2896+++6BAC0D9" : "Whirlpool_1.2\/google-api-objectivec-client\/Source\/OAuth2\/",
+    "AAF8EF9A436AFEC75196FAB3945D2ABA5051A5E6+++E09E350" : "Whirlpool_1.2\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Whirlpool-iOS",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -36,27 +51,42 @@
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/google-api-objectivec-client.googlecode.com\/svn",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "052f66bb-8366-e9ed-b056-95094e25c79e++2896"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "052f66bb-8366-e9ed-b056-95094e25c79e++505+++0DB9B08"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/google-api-objectivec-client.googlecode.com\/svn",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "052f66bb-8366-e9ed-b056-95094e25c79e++505"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "052f66bb-8366-e9ed-b056-95094e25c79e++505+++9D95DA5"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/google-api-objectivec-client.googlecode.com\/svn",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "052f66bb-8366-e9ed-b056-95094e25c79e++505+++F888389"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/gtm-oauth2.googlecode.com\/svn",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "22754eea-fc93-e339-b032-c1f495b90c16++2896"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "22754eea-fc93-e339-b032-c1f495b90c16++2896+++6BAC0D9"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/gtm-oauth2.googlecode.com\/svn",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "22754eea-fc93-e339-b032-c1f495b90c16++2896+++7884675"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Jallal\/Whirlpool_1.2.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "AAF8EF9A436AFEC75196FAB3945D2ABA5051A5E6"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "AAF8EF9A436AFEC75196FAB3945D2ABA5051A5E6+++E09E350"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/gtm-http-fetcher.googlecode.com\/svn",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "b3aa69f0-f65c-a609-0a27-78855af037c1++2896"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "b3aa69f0-f65c-a609-0a27-78855af037c1++2896+++5FE794B"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/gtm-http-fetcher.googlecode.com\/svn",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "b3aa69f0-f65c-a609-0a27-78855af037c1++2896+++8EAC460"
     }
   ]
 }
