@@ -10,12 +10,12 @@ import Foundation
 import GoogleMaps
 
 
-class RoomData {
+public class RoomData {
 
     private var coordinates  = [GMSMutablePath()];
-    private  var RoomNumber = ""
-    private var RoomName = ""
-    private var RoomEmail = ""
+    private  var RoomNumber = String()
+    private var RoomName = String()
+    private var RoomEmail = String()
     private var IsSelected = false;
     
     public func SetIsSelected(select : Bool){
@@ -39,6 +39,16 @@ class RoomData {
         
     }
     
+    public func GetName()->String{
+        return self.RoomName;
+        
+    }
+    
+    public func GetEmail()-> String {
+        return self.RoomEmail
+    }
+    
+    
     public func SetRoomNumber(roomnumber: String){
         
         self.RoomNumber = roomnumber;
@@ -48,5 +58,12 @@ class RoomData {
         return self.RoomNumber ;
     }
     
+    public func SetRoomName(name: String){
+        self.RoomName = name
+    }
 
+    
+    public func SetRoomEmail(email: String){
+        self.RoomEmail = email
+    }
 }

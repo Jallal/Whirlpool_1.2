@@ -26,7 +26,6 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
         self.locationManager.requestAlwaysAuthorization()
         self.mapView.delegate = self
         parseJson( );
-      
         
     }
     
