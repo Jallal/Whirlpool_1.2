@@ -17,6 +17,22 @@ public class RoomData {
     private var RoomName = String()
     private var RoomEmail = String()
     private var IsSelected = false;
+    private var roomCenter = CLLocationCoordinate2DMake(0,0)
+    
+    
+    public func SetroomCenter(x : double_t, y : double_t){
+        
+        self.roomCenter.latitude  = x;
+        self.roomCenter.longitude = y;
+
+        
+    }
+    public func GetroomCenter() -> CLLocationCoordinate2D{
+        return self.roomCenter
+        
+    }
+    
+    
     
     public func SetIsSelected(select : Bool){
         

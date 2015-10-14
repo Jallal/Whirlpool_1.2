@@ -16,8 +16,6 @@ class NavigationsButtons: UIViewController{
     @IBAction func LandMark(sender: AnyObject) {
         self.BottomView.removeFromSuperview();
         
-        NSLog("HELOO YOU GOT ME")
-        
     }
     
     
@@ -26,7 +24,6 @@ class NavigationsButtons: UIViewController{
         
          self.performSegueWithIdentifier("NavigationSague", sender: nil)
         
-        NSLog("HELOO YOU GOT ME")
         
         
     }
