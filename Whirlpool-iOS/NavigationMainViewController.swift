@@ -40,7 +40,7 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     
    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         var location :CLLocation = locations.first!
-            mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 23, bearing: 0, viewingAngle: 0)
+            mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 20, bearing: 0, viewingAngle: 0)
             locationManager.stopUpdatingLocation()
     }
     

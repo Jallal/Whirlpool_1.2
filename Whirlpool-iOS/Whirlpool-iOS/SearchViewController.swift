@@ -11,6 +11,7 @@ import UIKit
 class SearchViewController: UITableViewController,UISearchBarDelegate,UISearchDisplayDelegate  {
     
     @IBOutlet var tableview: UITableView!
+    
     @IBOutlet weak var searchbar: UISearchBar!
     
     var filteredRooms = [RoomData]()

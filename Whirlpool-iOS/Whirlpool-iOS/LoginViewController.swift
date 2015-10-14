@@ -71,7 +71,6 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             else
             {
                 do {
-                    //let jsonDict = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions()) as? NSDictionary
                     self.xmlParser = NSXMLParser(data: data!)
                     self.xmlParser.delegate = self
                     self.previousResourceUrlPage = self.nextResourceUrlPage
@@ -79,9 +78,10 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
                         if self.nextResourceUrlPage != self.previousResourceUrlPage {
                             self.httpCall()
                         }
-                        //print("previous:", self.previousResourceUrlPage)
-                        //print("previous:", self.nextResourceUrlPage)
-                        //print("xml parse: ", self.xmlParser)
+                        else
+                        {
+                            self.performSegueWithIdentifier("MainPage", sender: nil)
+                        }
                     }
                     else{
                         print("Darn xml parser")
@@ -92,7 +92,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
                 
             }
         })
-        self.performSegueWithIdentifier("MainPage", sender: nil)
+        
     }
     
     // When the view appears, ensure that the Google Calendar API service is authorized
