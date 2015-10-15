@@ -236,13 +236,14 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
                     //london.map = self.mapView
                     polygon.fillColor = UIColor(red:1.0, green:0.2, blue:0.3, alpha:0.9);
                 }else{
-                    polygon.fillColor = UIColor(red:0.25, green:0, blue:0, alpha:0.05);
+                    //polygon.fillColor = UIColor(red:0.25, green:0, blue:0, alpha:0.05);
+                    polygon.fillColor = UIColor(red:(191/255.0), green:191/255.0, blue:191/255.0, alpha:1.0);
                 }
                
                 if(room.GetRoomNumber()=="105B"){
                     var position = room.GetroomCenter()
                     var restroom = GMSMarker(position: position)
-                    restroom.icon = UIImage(named: "restroom.jpg")
+                    restroom.icon = UIImage(named: "wbathroom.jpg")
                    restroom.flat = true
                    restroom.map = self.mapView
                 }
@@ -254,13 +255,26 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
                     conference.flat = true
                     conference.map = self.mapView
                 }
-                if((room.GetRoomNumber()=="SW1")){
+                if((room.GetRoomNumber()=="110F")){
                     var position = room.GetroomCenter()
                     var exit = GMSMarker(position: position)
-                    exit.icon = UIImage(named: "exit.jpg")
+                    exit.icon = UIImage(named: "mbathroom.jpg")
                     exit.flat = true
                     exit.map = self.mapView
                 }
+                if((room.GetRoomNumber()=="110A")){
+                    var position = room.GetroomCenter()
+                    var stairs = GMSMarker(position: position)
+                    stairs .icon = UIImage(named: "stairs.jpg")
+                    stairs .flat = true
+                    stairs .map = self.mapView
+                }
+                if((room.GetRoomNumber()=="SW1")||(room.GetRoomNumber()=="HW1")||(room.GetRoomNumber()=="HW2")){
+                    //polygon.fillColor = UIColor(red: 105/255.0, green: 94/255.0, blue: 133/255.0, alpha: 1.0)//purple color
+                    polygon.fillColor = UIColor(red:(236/255.0), green:(236/255.0), blue:(236/255.0), alpha:1.0);
+                }
+                
+                
                 
                 polygon.strokeColor = UIColor.blackColor()
                 polygon.strokeWidth = 1

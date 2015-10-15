@@ -578,8 +578,8 @@
 					"$(inhereted)",
 					"\"${PODS_ROOT}/Headers/Public/GoogleMaps\"",
 					"\"${PODS_ROOT}/Headers/Public/GoogleMaps/GoogleMaps\"",
-                    "/Users/elhazzat/Desktop/Whirlpool/Whirlpool_1.2/google-api-objectivec-client/Source",
-                    "/Users/elhazzat/Desktop/Whirlpool/Whirlpool_1.2/google-api-objectivec-client/Source/**"
+					"/Users/elhazzat/Desktop/Whirlpool/Whirlpool_1.2/google-api-objectivec-client/Source",
+					"/Users/cse498/Desktop/Whirlpool_1.2/google-api-objectivec-client/Source/**",
 				);
 				INFOPLIST_FILE = "Whirlpool-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
@@ -604,9 +604,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inhereted)",
 					"\"${PODS_ROOT}/Headers/Public/GoogleMaps\"",
-                        "\"${PODS_ROOT}/Headers/Public/GoogleMaps/GoogleMaps\"",
-                        "/Users/elhazzat/Desktop/Whirlpool/Whirlpool_1.2/google-api-objectivec-client/Source",
-                        "/Users/elhazzat/Desktop/Whirlpool/Whirlpool_1.2/google-api-objectivec-client/Source/**",
+					"\"${PODS_ROOT}/Headers/Public/GoogleMaps/GoogleMaps\"",
+					"/Users/elhazzat/Desktop/Whirlpool/Whirlpool_1.2/google-api-objectivec-client/Source",
+					"/Users/cse498/Desktop/Whirlpool_1.2/google-api-objectivec-client/Source/**",
 				);
 				INFOPLIST_FILE = "Whirlpool-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
