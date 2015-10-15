@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yKG-nJ-qvB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A279b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yKG-nJ-qvB">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
@@ -604,11 +604,11 @@
                         <viewControllerLayoutGuide type="bottom" id="TUb-dj-YgM"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="T5r-lh-9zR">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="392"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="422"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4R9-yG-Rhh" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="392"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="422"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -642,8 +642,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ClF-04-1e5" userLabel="MapView">
-                                <rect key="frame" x="0.0" y="64" width="600" height="392"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ClF-04-1e5" userLabel="MapView">
+                                <rect key="frame" x="0.0" y="64" width="600" height="422"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.1647058824" green="0.1960784314" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -651,10 +651,10 @@
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qO4-GK-qh9">
-                                <rect key="frame" x="0.0" y="549" width="600" height="50"/>
+                                <rect key="frame" x="0.0" y="487" width="600" height="112"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8jj-Te-HWW">
-                                        <rect key="frame" x="30" y="23" width="56" height="56"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8jj-Te-HWW">
+                                        <rect key="frame" x="30" y="56" width="56" height="56"/>
                                         <animations/>
                                         <state key="normal" image="current"/>
                                         <connections>
@@ -662,11 +662,13 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xYV-Au-RzD">
-                                        <rect key="frame" x="514" y="-16" width="56" height="56"/>
+                                        <rect key="frame" x="514" y="56" width="56" height="56"/>
+                                        <animations/>
                                         <state key="normal" image="Landmark"/>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="wordWrap" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHO-jR-glF">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="41"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
+                                        <animations/>
                                         <color key="backgroundColor" red="0.078431372549019607" green="0.098039215686274508" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Directions From">
@@ -688,12 +690,12 @@
                                     <constraint firstAttribute="trailing" secondItem="EHO-jR-glF" secondAttribute="trailing" id="D9X-vt-MZo"/>
                                     <constraint firstAttribute="bottom" secondItem="EHO-jR-glF" secondAttribute="bottom" constant="15" id="URZ-mn-y6N"/>
                                     <constraint firstItem="EHO-jR-glF" firstAttribute="centerX" secondItem="qO4-GK-qh9" secondAttribute="centerX" id="aWi-AJ-PFT"/>
-                                    <constraint firstAttribute="bottom" secondItem="8jj-Te-HWW" secondAttribute="bottom" constant="10" id="atT-8N-ZuQ"/>
-                                    <constraint firstAttribute="bottom" secondItem="xYV-Au-RzD" secondAttribute="bottom" constant="10" id="emZ-yQ-Dbf"/>
+                                    <constraint firstAttribute="bottom" secondItem="8jj-Te-HWW" secondAttribute="bottom" id="atT-8N-ZuQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="xYV-Au-RzD" secondAttribute="bottom" id="emZ-yQ-Dbf"/>
                                     <constraint firstItem="8jj-Te-HWW" firstAttribute="leading" secondItem="qO4-GK-qh9" secondAttribute="leading" constant="30" id="gPM-Zt-tsk"/>
                                     <constraint firstItem="EHO-jR-glF" firstAttribute="top" secondItem="qO4-GK-qh9" secondAttribute="top" id="gth-5m-kZE"/>
                                     <constraint firstItem="EHO-jR-glF" firstAttribute="top" secondItem="qO4-GK-qh9" secondAttribute="top" constant="1" id="hx7-Lo-7wn"/>
-                                    <constraint firstItem="EHO-jR-glF" firstAttribute="centerX" secondItem="qO4-GK-qh9" secondAttribute="centerX" constant="10" id="kMn-Sv-yJa"/>
+                                    <constraint firstItem="EHO-jR-glF" firstAttribute="centerX" secondItem="qO4-GK-qh9" secondAttribute="centerX" id="kMn-Sv-yJa"/>
                                     <constraint firstAttribute="trailing" secondItem="xYV-Au-RzD" secondAttribute="trailing" constant="30" id="kdT-re-l10"/>
                                 </constraints>
                                 <variation key="default">
@@ -709,10 +711,10 @@
                         <color key="backgroundColor" red="0.1647058824" green="0.1960784314" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="qO4-GK-qh9" firstAttribute="bottom" secondItem="uHl-cr-IFg" secondAttribute="top" constant="-1" id="36j-ed-3r5"/>
-                            <constraint firstItem="qO4-GK-qh9" firstAttribute="top" secondItem="ClF-04-1e5" secondAttribute="bottom" id="BQS-Ai-z3p"/>
+                            <constraint firstItem="qO4-GK-qh9" firstAttribute="top" secondItem="ClF-04-1e5" secondAttribute="bottom" constant="1" id="BQS-Ai-z3p"/>
                             <constraint firstItem="qO4-GK-qh9" firstAttribute="trailing" secondItem="ClF-04-1e5" secondAttribute="trailing" id="Scc-8I-8HA"/>
                             <constraint firstAttribute="trailing" secondItem="qO4-GK-qh9" secondAttribute="trailing" id="TV9-CV-Pw7"/>
-                            <constraint firstItem="qO4-GK-qh9" firstAttribute="top" secondItem="Kal-LZ-oSu" secondAttribute="top" constant="549" id="cx7-Ru-b2Y"/>
+                            <constraint firstItem="qO4-GK-qh9" firstAttribute="top" secondItem="Kal-LZ-oSu" secondAttribute="top" constant="487" id="cx7-Ru-b2Y"/>
                             <constraint firstItem="ClF-04-1e5" firstAttribute="top" secondItem="Ou5-m7-eiB" secondAttribute="bottom" id="hk7-1k-8qC"/>
                             <constraint firstItem="ClF-04-1e5" firstAttribute="leading" secondItem="qO4-GK-qh9" secondAttribute="leading" id="jdM-gN-LG9"/>
                             <constraint firstItem="qO4-GK-qh9" firstAttribute="leading" secondItem="Kal-LZ-oSu" secondAttribute="leading" id="oSy-PC-q0M"/>

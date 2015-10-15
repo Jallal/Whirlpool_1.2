@@ -39,7 +39,11 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         var location :CLLocation = locations.first!
-        mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 20, bearing: 0, viewingAngle: 0)
+        
+        
+        var position = CLLocationCoordinate2D(latitude: 42.730393055675, longitude: -84.481692969575)
+        mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
+        //mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 20, bearing: 0, viewingAngle: 0)
         locationManager.stopUpdatingLocation()
     }
     
@@ -217,12 +221,6 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
             for rect in room.GetRoomCoordinates(){
                 var polygon = GMSPolygon(path: rect)
                 if(room.GetIsSelected()){
-                    
-                    
-                    print("^^^^^^^^^^^^^^^^^^^^^^^^^^")
-                    print(room.GetRoomNumber())
-                    
-                    
                     var position = room.GetroomCenter()
                     var marker = GMSMarker(position: position)
                     marker.appearAnimation = kGMSMarkerAnimationPop
