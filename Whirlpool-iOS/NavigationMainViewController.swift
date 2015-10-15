@@ -231,51 +231,95 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
         }
     
     
+    
     func updateUIMap(){
         for room in self.roomdata.getAllRooms(){
             for rect in room.GetRoomCoordinates(){
-            var polygon = GMSPolygon(path: rect)
+                var polygon = GMSPolygon(path: rect)
                 if(room.GetIsSelected()){
-                  polygon.fillColor = UIColor(red:1.0, green:0.2, blue:0.3, alpha:0.9);
-                    /* add opacity and overlay */
-                    
+                    var position = room.GetroomCenter()
+                    var marker = GMSMarker(position: position)
+                    marker.appearAnimation = kGMSMarkerAnimationPop
+                    // marker.icon = UIImage(named: "restroom.jpg")
+                    marker.icon = UIImage(named: "mapannotation.png")
+                    marker.flat = true
+                    marker.map = self.mapView
+                    //var london = GMSMarker(position: position)
+                    //london.icon = UIImage(named: "restroom")
+                    //london.flat = true
+                    //london.map = self.mapView
+                    polygon.fillColor = UIColor(red:1.0, green:0.2, blue:0.3, alpha:0.9);
                 }else{
                     //polygon.fillColor = UIColor(red:0.25, green:0, blue:0, alpha:0.05);
-                     polygon.fillColor = UIColor(red: 59/255, green: 178/255, blue: 208/255, alpha: 1)
+                    polygon.fillColor = UIColor(red:(191/255.0), green:191/255.0, blue:191/255.0, alpha:1.0);
                 }
-            polygon.strokeColor = UIColor.blackColor()
-            polygon.strokeWidth = 1
-            polygon.title = room.GetRoomNumber();
-            polygon.tappable = true;
-            polygon.map = self.mapView
-            self.view.setNeedsDisplay()
-            
-        }
-
-        }
-        
-        
-      
-    }
-    
-    func mapView(mapView: GMSMapView!, didTapOverlay overlay: GMSOverlay!) {
-        
-        if((overlay.title) != nil){
-        for room in self.roomdata.getAllRooms(){
-            if(room.GetRoomNumber() == overlay.title){
-               // var coordinate = room.GetRoomCoordinates();
-                //var position = CLLocationCoordinate2DMake(coordinate.startIndex,coordinate.endIndex)
-                //var marker = GMSMarker(position: position )
-                room.SetIsSelected(true);
-            }else{
-                room.SetIsSelected(false);
+                
+                if(room.GetRoomNumber()=="105B"){
+                    var position = room.GetroomCenter()
+                    var restroom = GMSMarker(position: position)
+                    restroom.icon = UIImage(named: "wbathroom.jpg")
+                    restroom.flat = true
+                    restroom.map = self.mapView
+                }
+                if((room.GetRoomNumber()=="111")||(room.GetRoomNumber()=="109")){
+                    
+                    var position = room.GetroomCenter()
+                    var conference = GMSMarker(position: position)
+                    conference.icon = UIImage(named: "conference.jpg")
+                    conference.flat = true
+                    conference.map = self.mapView
+                }
+                if((room.GetRoomNumber()=="110F")){
+                    var position = room.GetroomCenter()
+                    var exit = GMSMarker(position: position)
+                    exit.icon = UIImage(named: "mbathroom.jpg")
+                    exit.flat = true
+                    exit.map = self.mapView
+                }
+                if((room.GetRoomNumber()=="110A")){
+                    var position = room.GetroomCenter()
+                    var stairs = GMSMarker(position: position)
+                    stairs .icon = UIImage(named: "stairs.jpg")
+                    stairs .flat = true
+                    stairs .map = self.mapView
+                }
+                if((room.GetRoomNumber()=="SW1")||(room.GetRoomNumber()=="HW1")||(room.GetRoomNumber()=="HW2")){
+                    //polygon.fillColor = UIColor(red: 105/255.0, green: 94/255.0, blue: 133/255.0, alpha: 1.0)//purple color
+                    polygon.fillColor = UIColor(red:(236/255.0), green:(236/255.0), blue:(236/255.0), alpha:1.0);
+                }
+                
+                
+                
+                polygon.strokeColor = UIColor.blackColor()
+                polygon.strokeWidth = 1
+                polygon.title = room.GetRoomNumber();
+                polygon.tappable = true;
+                polygon.map = self.mapView
+                self.view.setNeedsDisplay()
+                
             }
             
         }
+        
+        
+        
+    }
+
+    
+    func mapView(mapView: GMSMapView!, didTapOverlay overlay: GMSOverlay!) {
+        if((overlay.title) != nil){
+            for room in self.roomdata.getAllRooms(){
+                if(room.GetRoomNumber() == overlay.title){
+                    room.SetIsSelected(true);
+                }else{
+                    room.SetIsSelected(false);
+                }
+                
+            }
             self.mapView.clear();
             self.reDraw();
         }
-
+        
     }
     
     
@@ -292,13 +336,13 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     }
     
     
-    func tappedView(sender : UITapGestureRecognizer) {
+    /*func tappedView(sender : UITapGestureRecognizer) {
         /*var tappedPoint = sender.locationInView(self.view)
         print(tappedPoint) // Not returning values on tap
         
         var marker = GMSMarker(position: tappedPoint)
         marker.title = "Hello World"*/
-    }
+    }*/
     
     
     
