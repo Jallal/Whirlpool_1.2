@@ -235,7 +235,8 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
                     polygon.fillColor = UIColor(red:1.0, green:0.2, blue:0.3, alpha:0.9);
                 }else{
                     //polygon.fillColor = UIColor(red:0.25, green:0, blue:0, alpha:0.05);
-                    polygon.fillColor = UIColor(red:(191/255.0), green:191/255.0, blue:191/255.0, alpha:1.0);
+                    //polygon.fillColor = UIColor(red:(191/255.0), green:191/255.0, blue:191/255.0, alpha:1.0);
+                     polygon.fillColor = UIColor(red: 59/255, green: 178/255, blue: 208/255, alpha: 1)
                 }
                
                 if(room.GetRoomNumber()=="105B"){
