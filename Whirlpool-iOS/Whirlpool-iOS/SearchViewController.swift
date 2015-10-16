@@ -10,9 +10,6 @@ import UIKit
 
 class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplayDelegate  {
     
-    //@IBOutlet var tableview: UITableView!
-    
-    //@IBOutlet weak var searchbar: UISearchBar!
     @IBOutlet weak var tableview: UITableView!
     
     @IBOutlet weak var searchbar: UISearchBar!
@@ -22,7 +19,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
     
     override func viewWillAppear(animated: Bool) {
         self.searchDisplayController?.active = true
-        self.searchbar.becomeFirstResponder()
+       // self.searchbar.becomeFirstResponder()
         self.filteredRooms = _roomsData.getAllRooms()
     }
     
@@ -30,7 +27,8 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
     {
         super.viewDidLoad()
         //self.tableview.dataSource = self
-         //self.tableview.delegate = self
+        //self.tableview.delegate = self
+        tableview.reloadData()
         
         for room in _roomsData.getAllRooms(){
             print(room.GetEmail(), ",",room.GetName())
@@ -58,7 +56,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
     
     // MARK: - Table View
     
-     func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
         return 1
     }
@@ -78,7 +76,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell")
+        let cell = tableview.dequeueReusableCellWithIdentifier("cell")
         
         var room : RoomData
         
@@ -90,10 +88,16 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
         {
             room = filteredRooms[indexPath.row]
         }
+        print("*****************************************")
+        print(room.GetName())
+        print("*****************************************")
+
+        //cell!.textLabel?.text = room.GetName()
         
+
         cell!.textLabel?.text = room.GetName()
-        
         return cell!
+
         
     }
     

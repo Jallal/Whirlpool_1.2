@@ -41,15 +41,27 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     
     var waypointsArray: Array<String> = []
     
-    var originAddress : String = ""
-    var destinationAddress : String = ""
+    var originAddress : String = "2000 N. M-63 Benton Harbor, MI, 49022-2692"
+    var destinationAddress : String = "220 Trowbridge Rd, East Lansing, MI 48824"
     @IBOutlet weak var mapPin: UIImageView!
     @IBOutlet weak var Address: UILabel!
     @IBOutlet weak var mapView: GMSMapView!
     
     
     @IBAction func startDirections(sender: AnyObject) {
-            //self.recreateRoute()
+        self.getDirections(self.originAddress, destination: self.destinationAddress, waypoints: waypointsArray, travelMode: nil, completionHandler: { (status, success) -> Void in
+            
+            if success {
+                self.configureMapAndMarkersForRoute()
+                self.drawRoute()
+                self.displayRouteInfo()
+            }
+            else {
+                print("********************************************************")
+                print(status)
+                print("********************************************************")
+            }
+        })
         }
     
     
@@ -144,7 +156,7 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                 
                 // Get the path for example.geojson in the app's bundle
                 
-                let jsonPath = NSBundle.mainBundle().pathForResource("b0047_01_ROOMS", ofType: "json")
+                let jsonPath = NSBundle.mainBundle().pathForResource("RVCB2B_P_ROOMS", ofType: "json")
                 let jsonData = NSData(contentsOfFile: jsonPath!)
                 
                 do {
@@ -231,7 +243,6 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
         }
     
     
-    
     func updateUIMap(){
         for room in self.roomdata.getAllRooms(){
             for rect in room.GetRoomCoordinates(){
@@ -248,20 +259,21 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                     //london.icon = UIImage(named: "restroom")
                     //london.flat = true
                     //london.map = self.mapView
-                    polygon.fillColor = UIColor(red:1.0, green:0.2, blue:0.3, alpha:0.9);
+                    //polygon.fillColor = UIColor(red:1.0, green:0.2, blue:0.3, alpha:0.9);
+                    polygon.fillColor = UIColor(red:(137/255.0), green:196/255.0, blue:244/255.0, alpha:1.0);
                 }else{
-                    //polygon.fillColor = UIColor(red:0.25, green:0, blue:0, alpha:0.05);
-                    polygon.fillColor = UIColor(red:(191/255.0), green:191/255.0, blue:191/255.0, alpha:1.0);
+                    polygon.fillColor = UIColor(red:(255/255.0), green:249/255.0, blue:236/255.0, alpha:1.0);
+                    // polygon.fillColor = UIColor(red:(191/255.0), green:191/255.0, blue:191/255.0, alpha:1.0);
                 }
                 
-                if(room.GetRoomNumber()=="105B"){
+                if(room.GetRoomNumber()=="B250"){
                     var position = room.GetroomCenter()
                     var restroom = GMSMarker(position: position)
                     restroom.icon = UIImage(named: "wbathroom.jpg")
                     restroom.flat = true
                     restroom.map = self.mapView
                 }
-                if((room.GetRoomNumber()=="111")||(room.GetRoomNumber()=="109")){
+                if((room.GetRoomNumber()=="B240")||(room.GetRoomNumber()=="B215")){
                     
                     var position = room.GetroomCenter()
                     var conference = GMSMarker(position: position)
@@ -269,29 +281,34 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                     conference.flat = true
                     conference.map = self.mapView
                 }
-                if((room.GetRoomNumber()=="110F")){
+                if((room.GetRoomNumber()=="B218")){
                     var position = room.GetroomCenter()
                     var exit = GMSMarker(position: position)
                     exit.icon = UIImage(named: "mbathroom.jpg")
                     exit.flat = true
                     exit.map = self.mapView
                 }
-                if((room.GetRoomNumber()=="110A")){
+                if((room.GetRoomNumber()=="B242")){
                     var position = room.GetroomCenter()
                     var stairs = GMSMarker(position: position)
                     stairs .icon = UIImage(named: "stairs.jpg")
                     stairs .flat = true
                     stairs .map = self.mapView
                 }
-                if((room.GetRoomNumber()=="SW1")||(room.GetRoomNumber()=="HW1")||(room.GetRoomNumber()=="HW2")){
-                    //polygon.fillColor = UIColor(red: 105/255.0, green: 94/255.0, blue: 133/255.0, alpha: 1.0)//purple color
-                    polygon.fillColor = UIColor(red:(236/255.0), green:(236/255.0), blue:(236/255.0), alpha:1.0);
+                
+                if((room.GetRoomNumber()=="B250")||(room.GetRoomNumber()=="B205")||(room.GetRoomNumber()=="B218")||(room.GetRoomNumber()=="B217")){
+                    polygon.fillColor = UIColor(red: 234/255.0, green: 230/255.0, blue: 245/255.0, alpha: 1.0)//purple color
                 }
                 
+                if((room.GetRoomNumber()=="B241") || (room.GetRoomNumber()=="B234")||(room.GetRoomNumber()=="B219")||(room.GetRoomNumber()=="B251")||(room.GetRoomNumber()=="B230")){
+                    polygon.fillColor  = UIColor.whiteColor()
+                }
+                if((room.GetRoomNumber()=="B236")||(room.GetRoomNumber()=="B232")||(room.GetRoomNumber()=="B223")||(room.GetRoomNumber()=="B247") || (room.GetRoomNumber()=="B233-229")||(room.GetRoomNumber() == "B235-238")||(room.GetRoomNumber()=="B245-248")||(room.GetRoomNumber()=="B222-220")){
+                    polygon.fillColor  = UIColor.whiteColor()
+                }
                 
-                
-                polygon.strokeColor = UIColor.blackColor()
-                polygon.strokeWidth = 1
+                polygon.strokeColor = UIColor(red:(108/255.0), green:(122/255.0), blue:(137/255.0), alpha:1.0);
+                polygon.strokeWidth = 0.5
                 polygon.title = room.GetRoomNumber();
                 polygon.tappable = true;
                 polygon.map = self.mapView
@@ -354,10 +371,15 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                 var directionsURLString = baseURLDirections + "origin=" + originLocation + "&destination=" + destinationLocation
                 
                 directionsURLString = directionsURLString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!*/
+        var originalLoc =  CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
+        
+        var destinationLoc =  CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
         
                 if let originLocation = origin {
                     if let destinationLocation = destination {
-                        var directionsURLString = baseURLDirections + "origin=" + originLocation + "&destination=" + destinationLocation
+                        var directionsURLString = baseURLDirections + "origin=" + self.originAddress + "&destination=" + self.destinationAddress
+                        
+                          //var directionsURLString = baseURLDirections + "origin=" + originLocation + "&destination=" + destinationLocation
                         
                         if let routeWaypoints = waypoints {
                             directionsURLString += "&waypoints=optimize:true"
@@ -554,8 +576,8 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
         print("********************************************************")
         //print(status)
         print("********************************************************")
-        //if let polyline = routePolyline {
-           // clearRoute()
+        if let polyline = routePolyline {
+           clearRoute()
             
             self.getDirections(self.originAddress, destination: self.destinationAddress, waypoints: waypointsArray, travelMode: nil, completionHandler: { (status, success) -> Void in
                 
@@ -570,7 +592,7 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                     print("********************************************************")
                 }
             })
-        //}
+        }
     }
     
     

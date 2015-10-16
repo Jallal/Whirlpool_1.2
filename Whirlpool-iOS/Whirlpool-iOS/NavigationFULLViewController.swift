@@ -224,7 +224,7 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
                     var position = room.GetroomCenter()
                     var marker = GMSMarker(position: position)
                     marker.appearAnimation = kGMSMarkerAnimationPop
-                   // marker.icon = UIImage(named: "restroom.jpg")
+                    // marker.icon = UIImage(named: "restroom.jpg")
                     marker.icon = UIImage(named: "mapannotation.png")
                     marker.flat = true
                     marker.map = self.mapView
@@ -233,35 +233,35 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
                     //london.flat = true
                     //london.map = self.mapView
                     //polygon.fillColor = UIColor(red:1.0, green:0.2, blue:0.3, alpha:0.9);
-                      polygon.fillColor = UIColor(red:(137/255.0), green:196/255.0, blue:244/255.0, alpha:1.0);
+                    polygon.fillColor = UIColor(red:(137/255.0), green:196/255.0, blue:244/255.0, alpha:1.0);
                 }else{
                     polygon.fillColor = UIColor(red:(255/255.0), green:249/255.0, blue:236/255.0, alpha:1.0);
-                   // polygon.fillColor = UIColor(red:(191/255.0), green:191/255.0, blue:191/255.0, alpha:1.0);
+                    // polygon.fillColor = UIColor(red:(191/255.0), green:191/255.0, blue:191/255.0, alpha:1.0);
                 }
-               
-                if(room.GetRoomNumber()=="105B"){
+                
+                if(room.GetRoomNumber()=="B250"){
                     var position = room.GetroomCenter()
                     var restroom = GMSMarker(position: position)
                     restroom.icon = UIImage(named: "wbathroom.jpg")
-                   restroom.flat = true
-                   restroom.map = self.mapView
+                    restroom.flat = true
+                    restroom.map = self.mapView
                 }
-                if((room.GetRoomNumber()=="111")||(room.GetRoomNumber()=="109")){
-                   
+                if((room.GetRoomNumber()=="B240")||(room.GetRoomNumber()=="B215")){
+                    
                     var position = room.GetroomCenter()
                     var conference = GMSMarker(position: position)
                     conference.icon = UIImage(named: "conference.jpg")
                     conference.flat = true
                     conference.map = self.mapView
                 }
-                if((room.GetRoomNumber()=="110F")){
+                if((room.GetRoomNumber()=="B218")){
                     var position = room.GetroomCenter()
                     var exit = GMSMarker(position: position)
                     exit.icon = UIImage(named: "mbathroom.jpg")
                     exit.flat = true
                     exit.map = self.mapView
                 }
-                if((room.GetRoomNumber()=="110A")){
+                if((room.GetRoomNumber()=="B242")){
                     var position = room.GetroomCenter()
                     var stairs = GMSMarker(position: position)
                     stairs .icon = UIImage(named: "stairs.jpg")
@@ -274,18 +274,13 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
                 }
                 
                 if((room.GetRoomNumber()=="B241") || (room.GetRoomNumber()=="B234")||(room.GetRoomNumber()=="B219")||(room.GetRoomNumber()=="B251")||(room.GetRoomNumber()=="B230")){
-                       polygon.fillColor  = UIColor.whiteColor()
+                    polygon.fillColor  = UIColor.whiteColor()
                 }
                 if((room.GetRoomNumber()=="B236")||(room.GetRoomNumber()=="B232")||(room.GetRoomNumber()=="B223")||(room.GetRoomNumber()=="B247") || (room.GetRoomNumber()=="B233-229")||(room.GetRoomNumber() == "B235-238")||(room.GetRoomNumber()=="B245-248")||(room.GetRoomNumber()=="B222-220")){
-                    //polygon.fillColor = UIColor(red: 105/255.0, green: 94/255.0, blue: 133/255.0, alpha: 1.0)//purple color
-                    //polygon.fillColor = UIColor(red:(236/255.0), green:(236/255.0), blue:(236/255.0), alpha:1.0);
                     polygon.fillColor  = UIColor.whiteColor()
                 }
                 
-                
-                
-                //polygon.strokeColor = UIColor.blackColor()
-               polygon.strokeColor = UIColor(red:(108/255.0), green:(122/255.0), blue:(137/255.0), alpha:1.0);
+                polygon.strokeColor = UIColor(red:(108/255.0), green:(122/255.0), blue:(137/255.0), alpha:1.0);
                 polygon.strokeWidth = 0.5
                 polygon.title = room.GetRoomNumber();
                 polygon.tappable = true;
@@ -299,6 +294,8 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
         
         
     }
+    
+
     
     func mapView(mapView: GMSMapView!, didTapOverlay overlay: GMSOverlay!) {
         print("*************************************************")

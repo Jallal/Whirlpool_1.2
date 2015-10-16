@@ -33,7 +33,6 @@
 		42C6AFF31BC4216D00245A2B /* web in Resources */ = {isa = PBXBuildFile; fileRef = 42C6AFF21BC4216C00245A2B /* web */; settings = {ASSET_TAGS = (); }; };
 		6E062A981BCB30E800BCA209 /* CalendarEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E062A971BCB30E800BCA209 /* CalendarEventViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		6EB781241BCB3C9800166FC2 /* RoomData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB781231BCB3C9800166FC2 /* RoomData.swift */; settings = {ASSET_TAGS = (); }; };
-		845E18771BC83F6400224DBA /* b0047_01_ROOMS.json in Resources */ = {isa = PBXBuildFile; fileRef = 845E18751BC83F6400224DBA /* b0047_01_ROOMS.json */; settings = {ASSET_TAGS = (); }; };
 		845E187A1BCB1A6900224DBA /* RoomsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E18791BCB1A6900224DBA /* RoomsData.swift */; settings = {ASSET_TAGS = (); }; };
 		847B58741BB9BF9800E22862 /* CalenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B58721BB9BF9800E22862 /* CalenderCell.swift */; settings = {ASSET_TAGS = (); }; };
 		847B58751BB9BF9800E22862 /* CalenderEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B58731BB9BF9800E22862 /* CalenderEvent.swift */; settings = {ASSET_TAGS = (); }; };
@@ -97,7 +96,6 @@
 		687F69D2BC4BA870FA74ACA3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E062A971BCB30E800BCA209 /* CalendarEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarEventViewController.swift; sourceTree = "<group>"; };
 		6EB781231BCB3C9800166FC2 /* RoomData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RoomData.swift; path = ../RoomData.swift; sourceTree = "<group>"; };
-		845E18751BC83F6400224DBA /* b0047_01_ROOMS.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = b0047_01_ROOMS.json; sourceTree = "<group>"; };
 		845E18791BCB1A6900224DBA /* RoomsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomsData.swift; sourceTree = "<group>"; };
 		847B58721BB9BF9800E22862 /* CalenderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderCell.swift; sourceTree = "<group>"; };
 		847B58731BB9BF9800E22862 /* CalenderEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderEvent.swift; sourceTree = "<group>"; };
@@ -139,7 +137,6 @@
 		4288AA931BB83093003EC9EF = {
 			isa = PBXGroup;
 			children = (
-				845E18751BC83F6400224DBA /* b0047_01_ROOMS.json */,
 				847D91B51BD07B4C0019AEAB /* RVCB2B_P_ROOMS.json */,
 				42C6AFF21BC4216C00245A2B /* web */,
 				4288AA9F1BB83093003EC9EF /* AppDelegate.swift */,
@@ -351,7 +348,6 @@
 				847B58761BB9DA2900E22862 /* CalenderCell.swift in Resources */,
 				42C01DF81BB8364700C2EEAD /* GTMOAuth2ViewTouch.xib in Resources */,
 				847D91B61BD07B4C0019AEAB /* RVCB2B_P_ROOMS.json in Resources */,
-				845E18771BC83F6400224DBA /* b0047_01_ROOMS.json in Resources */,
 				4288AAAA1BB83093003EC9EF /* LaunchScreen.storyboard in Resources */,
 				42C6AFF31BC4216D00245A2B /* web in Resources */,
 				4288AAA71BB83093003EC9EF /* Assets.xcassets in Resources */,
