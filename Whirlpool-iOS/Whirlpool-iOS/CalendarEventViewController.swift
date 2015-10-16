@@ -43,8 +43,6 @@ class CalendarEventViewController: UIViewController {
         
         addNewEvent(newEvent)
         
-        
-        
     }
     
     public func addNewEvent(event : GTLCalendarEvent){

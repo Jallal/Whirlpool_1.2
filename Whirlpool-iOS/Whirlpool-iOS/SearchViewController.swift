@@ -8,9 +8,12 @@
 
 import UIKit
 
-class SearchViewController: UITableViewController,UISearchBarDelegate,UISearchDisplayDelegate  {
+class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplayDelegate  {
     
-    @IBOutlet var tableview: UITableView!
+    //@IBOutlet var tableview: UITableView!
+    
+    //@IBOutlet weak var searchbar: UISearchBar!
+    @IBOutlet weak var tableview: UITableView!
     
     @IBOutlet weak var searchbar: UISearchBar!
     
@@ -26,8 +29,8 @@ class SearchViewController: UITableViewController,UISearchBarDelegate,UISearchDi
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.tableview.dataSource = self
-        self.tableview.delegate = self
+        //self.tableview.dataSource = self
+         //self.tableview.delegate = self
         
         for room in _roomsData.getAllRooms(){
             print(room.GetEmail(), ",",room.GetName())
@@ -55,12 +58,12 @@ class SearchViewController: UITableViewController,UISearchBarDelegate,UISearchDi
     
     // MARK: - Table View
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+     func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         if (tableView == self.searchDisplayController?.searchResultsTableView)
         {
@@ -72,10 +75,10 @@ class SearchViewController: UITableViewController,UISearchBarDelegate,UISearchDi
         }
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("cell")
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell")
         
         var room : RoomData
         
@@ -94,7 +97,7 @@ class SearchViewController: UITableViewController,UISearchBarDelegate,UISearchDi
         
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
@@ -149,8 +152,9 @@ class SearchViewController: UITableViewController,UISearchBarDelegate,UISearchDi
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar){
-        let secondViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MainViewController") as! MainViewController
-        self.navigationController?.presentViewController(secondViewController, animated: true, completion: nil)
+        //let secondViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MainViewController") as! MainViewController
+        //self.navigationController?.presentViewController(secondViewController, animated: true, completion: nil)
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?){
