@@ -12,15 +12,15 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
     
     @IBOutlet weak var tableview: UITableView!
     
-    @IBOutlet weak var searchbar: UISearchBar!
     
+    @IBOutlet weak var searchbar: UISearchBar!
     var filteredRooms = [RoomData]()
     var _roomToPass = RoomData()
     
     override func viewWillAppear(animated: Bool) {
         self.searchDisplayController?.active = true
-       // self.searchbar.becomeFirstResponder()
-        self.filteredRooms = _roomsData.getAllRooms()
+        searchbar.becomeFirstResponder()
+       
     }
     
     override func viewDidLoad()
@@ -28,12 +28,9 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
         super.viewDidLoad()
         //self.tableview.dataSource = self
         //self.tableview.delegate = self
-        tableview.reloadData()
-        
-        for room in _roomsData.getAllRooms(){
-            print(room.GetEmail(), ",",room.GetName())
-        }
-        
+       
+         self.filteredRooms = _roomsData.getAllRooms()
+         tableview.reloadData()
     }
     
     
@@ -88,13 +85,6 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
         {
             room = filteredRooms[indexPath.row]
         }
-        print("*****************************************")
-        print(room.GetName())
-        print("*****************************************")
-
-        //cell!.textLabel?.text = room.GetName()
-        
-
         cell!.textLabel?.text = room.GetName()
         return cell!
 
@@ -156,8 +146,6 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar){
-        //let secondViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MainViewController") as! MainViewController
-        //self.navigationController?.presentViewController(secondViewController, animated: true, completion: nil)
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     

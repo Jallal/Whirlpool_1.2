@@ -72,6 +72,7 @@
                     </view>
                     <connections>
                         <outlet property="searchDisplayController" destination="KgM-Ox-Okm" id="F09-FG-msW"/>
+                        <outlet property="searchbar" destination="BFu-El-dd7" id="4Ed-c4-edr"/>
                         <outlet property="tableview" destination="qeh-7v-J8b" id="w1Z-io-Phc"/>
                         <segue destination="CxC-Xo-sOW" kind="show" identifier="RoomInfo" id="GzI-wt-rVh"/>
                     </connections>
