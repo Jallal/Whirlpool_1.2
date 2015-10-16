@@ -13,10 +13,6 @@ import GoogleMaps
 
 
 class  NavigationMainViewController: UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,GMSIndoorDisplayDelegate {
-    @IBOutlet weak var mapPin: UIImageView!
-    @IBOutlet weak var Address: UILabel!
-    @IBOutlet weak var mapView: GMSMapView!
-    
     let baseURLDirections = "https://maps.googleapis.com/maps/api/directions/json?"
     
     var selectedRoute: Dictionary<NSObject, AnyObject>!
@@ -47,10 +43,14 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     
     var originAddress : String = ""
     var destinationAddress : String = ""
-
+    @IBOutlet weak var mapPin: UIImageView!
+    @IBOutlet weak var Address: UILabel!
+    @IBOutlet weak var mapView: GMSMapView!
     
     
-    
+    @IBAction func startDirections(sender: AnyObject) {
+            //self.recreateRoute()
+        }
     
     
     
@@ -79,7 +79,7 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
         //var location :CLLocation = locations.first!
             //mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 20, bearing: 0, viewingAngle: 0)
     
-      var position = CLLocationCoordinate2D(latitude: 42.730393055675, longitude: -84.481692969575)
+        var position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
       mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
         locationManager.stopUpdatingLocation()
     }
@@ -335,18 +335,20 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
         
     }
     
-    
-    /*func tappedView(sender : UITapGestureRecognizer) {
-        /*var tappedPoint = sender.locationInView(self.view)
-        print(tappedPoint) // Not returning values on tap
-        
-        var marker = GMSMarker(position: tappedPoint)
-        marker.title = "Hello World"*/
-    }*/
+
     
     
     
     func getDirections(origin: String!, destination: String!, waypoints: Array<String>!, travelMode: AnyObject!, completionHandler: ((status: String, success: Bool) -> Void)) {
+        
+        
+        print("********************************************************")
+        print(origin)
+        print(destination)
+        print(waypoints)
+        //print(travelMode)
+        //print(completionHandler)
+        print("********************************************************")
         /*if let originLocation = origin {
             if let destinationLocation = destination {
                 var directionsURLString = baseURLDirections + "origin=" + originLocation + "&destination=" + destinationLocation
@@ -549,8 +551,11 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     }
     
     func recreateRoute() {
-        if let polyline = routePolyline {
-            clearRoute()
+        print("********************************************************")
+        //print(status)
+        print("********************************************************")
+        //if let polyline = routePolyline {
+           // clearRoute()
             
             self.getDirections(self.originAddress, destination: self.destinationAddress, waypoints: waypointsArray, travelMode: nil, completionHandler: { (status, success) -> Void in
                 
@@ -560,10 +565,12 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                     self.displayRouteInfo()
                 }
                 else {
+                    print("********************************************************")
                     print(status)
+                    print("********************************************************")
                 }
             })
-        }
+        //}
     }
     
     
