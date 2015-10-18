@@ -18,19 +18,34 @@ class CalendarEventViewController: UIViewController {
     
     @IBOutlet weak var eventDescription: UITextView!
     
+    var guest = String()
+    var location = String()
+    
     
     @IBAction func buttonCreateEvent(sender: AnyObject) {
-        createAnEvent()
+        let newEvent = createAnEvent()
+        addNewEvent(newEvent)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        eventDescription.layer.cornerRadius = 5
+        eventDescription.layer.borderColor = UIColor.grayColor().CGColor
+        eventDescription.layer.borderWidth = 0.5
+        
+    }
+    
+    override func viewDidLoad() {
+        eventLocation.text = location
+    }
+    
     //Create an event to add to the calender
-    public func createAnEvent(){
+    internal func createAnEvent()->GTLCalendarEvent{
         let newEvent = GTLCalendarEvent()
         newEvent.summary = eventTitle.text
         newEvent.descriptionProperty = eventDescription.text
         newEvent.location = eventLocation.text
-        
         let startDate = NSDate(timeInterval: 3600, sinceDate: NSDate())
         
         newEvent.start = GTLCalendarEventDateTime()
@@ -40,12 +55,19 @@ class CalendarEventViewController: UIViewController {
         
         newEvent.end = GTLCalendarEventDateTime()
         newEvent.end.dateTime = GTLDateTime(date: endDate, timeZone: NSTimeZone.localTimeZone())
+        if guest != String() {
+            let eventGuest = GTLCalendarEventAttendee()
+            eventGuest.email = guest
+            eventGuest.displayName = location
+            eventGuest.resource = true
+            newEvent.attendees = [eventGuest]
+        }
+        return newEvent
         
-        addNewEvent(newEvent)
         
     }
     
-    public func addNewEvent(event : GTLCalendarEvent){
+    internal func addNewEvent(event : GTLCalendarEvent){
         var editEventTicket = GTLServiceTicket()
         let query =  GTLQueryCalendar.queryForEventsInsertWithObject(event, calendarId: "primary")
         editEventTicket = service.executeQuery(query, completionHandler: { (ticket, object, error) -> Void in

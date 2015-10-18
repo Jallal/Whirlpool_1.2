@@ -7,18 +7,8 @@
 //
 import Foundation
 import UIKit
+import CoreData
 
-
-
-/*
-struct CalenaderEvents
-{
-    let EventSummary: String 
-    let EventStartDate: String
-    let EventEndDate : String
-    let EventLocation : String 
-}
-*/
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UITabBarDelegate {
     
@@ -30,6 +20,38 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var items = ["one","two"]
     var tableData = ["nine","six"]
     let screenSize: CGRect = UIScreen.mainScreen().bounds
+    
+    var _favorites = [NSManagedObject]()
+    var _roomToPass = RoomData()
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
+        //1
+        let appDelegate =
+        UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let managedContext = appDelegate.managedObjectContext
+        
+        //2
+        let fetchRequest = NSFetchRequest(entityName: "Favorites")
+        
+        //3
+        do {
+            let results =
+            try managedContext.executeFetchRequest(fetchRequest)
+            _favorites = results as! [NSManagedObject]
+            self.calender.reloadData()
+            self.relevant.reloadData()
+            
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+    }
+    
+    
     
     override func viewDidLoad() {
         
@@ -55,16 +77,23 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if _userCalenderInfo != nil {
-            if(tableView == self.calender){
+        
+        
+        if tableView == self.calender {
+            if _userCalenderInfo != nil {
                 return  (_userCalenderInfo?.getCalenderEventsCount())!
-            }else{
-               return (_userCalenderInfo?.getCalenderEventsCount())!
+            }
+            else {
+                return 0
             }
         }
-        else{
-            return 0
+        
+        
+        if tableView == relevant {
+            return _favorites.count
         }
+        
+        return 0
         
     }
     
@@ -90,7 +119,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell.dateLabelRelavant!.backgroundColor = self.view.backgroundColor
             cell.titleLabel!.textColor = UIColor.whiteColor()
             cell.dateLabelRelavant!.textColor = UIColor(red: 242.0/255, green: 241.0/255, blue: 239.0/255, alpha: 1.0)
-            cell.titleLabelRelavant!.text =  calenderInfoTable![indexPath.row].location!
+            cell.titleLabelRelavant!.text =  _favorites[indexPath.row].valueForKey("roomName") as? String
             cell.dateLabelRelavant!.text = "12/13/2015"
             return cell
         }
@@ -112,10 +141,38 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func colorForIndex(rowIndex: Int)->UIColor
     {
-        //let itemCount = UserCalandenerInfo.count - 1
-        //let val = Double(Double(rowIndex) / Double(itemCount)) * Double(0.3)
-        //return UIColor(red: 29.0/255.0 , green: CGFloat(val), blue: 224.0/255.0, alpha: 1)
         return UIColor(red: 82.0/255.0 , green: 179.0/255.0, blue: 217.0/255.0, alpha: 1)
         
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let room = RoomData()
+        
+        if (tableView == self.relevant)
+        {
+            room.SetRoomName((_favorites[indexPath.row].valueForKey("roomName") as? String)!)
+            _roomToPass = room
+            performSegueWithIdentifier("relevantSeg", sender: self)
+        }
+        
+        
+        
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "relevantSeg" {
+            let roomVC = segue.destinationViewController as! RoomInfoViewController
+            let room = _roomsData.getRoomWithName(_roomToPass.GetName())
+            if room.GetName() != String(){
+                roomVC._room = room
+            }
+        }
+        
+    }
+
+    
 }

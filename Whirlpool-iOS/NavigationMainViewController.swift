@@ -91,7 +91,7 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
         //var location :CLLocation = locations.first!
             //mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 20, bearing: 0, viewingAngle: 0)
     
-        var position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
+        let position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
       mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
         locationManager.stopUpdatingLocation()
     }

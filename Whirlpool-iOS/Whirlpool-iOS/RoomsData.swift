@@ -26,6 +26,15 @@ public class RoomsData {
     public func count()->Int {
         return Rooms.count
     }
+    
+    public func getRoomWithName(roomName: String)-> RoomData {
+        for room in Rooms {
+            if room.GetName() == roomName {
+                return room
+            }
+        }
+            return RoomData() //Check for empty name on return of this function
+    }
 
     
     

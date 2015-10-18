@@ -32,6 +32,7 @@
 		42C01DFC1BB8369A00C2EEAD /* GTLCalendar_Sources.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C01DFA1BB8369A00C2EEAD /* GTLCalendar_Sources.m */; settings = {ASSET_TAGS = (); }; };
 		42C6AFF31BC4216D00245A2B /* web in Resources */ = {isa = PBXBuildFile; fileRef = 42C6AFF21BC4216C00245A2B /* web */; settings = {ASSET_TAGS = (); }; };
 		6E062A981BCB30E800BCA209 /* CalendarEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E062A971BCB30E800BCA209 /* CalendarEventViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		6E83A9771BD2D6BE00306C86 /* FavoriteModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E83A9751BD2D6BE00306C86 /* FavoriteModel.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
 		6EB781241BCB3C9800166FC2 /* RoomData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB781231BCB3C9800166FC2 /* RoomData.swift */; settings = {ASSET_TAGS = (); }; };
 		845E187A1BCB1A6900224DBA /* RoomsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E18791BCB1A6900224DBA /* RoomsData.swift */; settings = {ASSET_TAGS = (); }; };
 		847B58741BB9BF9800E22862 /* CalenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B58721BB9BF9800E22862 /* CalenderCell.swift */; settings = {ASSET_TAGS = (); }; };
@@ -95,6 +96,7 @@
 		42C6AFF21BC4216C00245A2B /* web */ = {isa = PBXFileReference; lastKnownFileType = folder; path = web; sourceTree = "<group>"; };
 		687F69D2BC4BA870FA74ACA3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E062A971BCB30E800BCA209 /* CalendarEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarEventViewController.swift; sourceTree = "<group>"; };
+		6E83A9761BD2D6BE00306C86 /* FavoriteModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoriteModel.xcdatamodel; sourceTree = "<group>"; };
 		6EB781231BCB3C9800166FC2 /* RoomData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RoomData.swift; path = ../RoomData.swift; sourceTree = "<group>"; };
 		845E18791BCB1A6900224DBA /* RoomsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomsData.swift; sourceTree = "<group>"; };
 		847B58721BB9BF9800E22862 /* CalenderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderCell.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				4288AAA81BB83093003EC9EF /* LaunchScreen.storyboard */,
 				421545B81BB85FB200AE1B23 /* Whirlpool-iOS.entitlements */,
 				4288AAAB1BB83093003EC9EF /* Info.plist */,
+				6E83A9751BD2D6BE00306C86 /* FavoriteModel.xcdatamodeld */,
 			);
 			path = "Whirlpool-iOS";
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 				847B58751BB9BF9800E22862 /* CalenderEvent.swift in Sources */,
 				42B976CD1BC1D5950012D29B /* UserCalenderInfo.swift in Sources */,
 				420838551BB8C6D100AB15F1 /* NavigationsButtons.swift in Sources */,
+				6E83A9771BD2D6BE00306C86 /* FavoriteModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -581,6 +585,7 @@
 					"/Users/elhazzat/Desktop/Whirlpool/Whirlpool_1.2/google-api-objectivec-client/Source",
 					"/Users/cse498/Desktop/Whirlpool_1.2/google-api-objectivec-client/Source/**",
 					"/Users/elhazzat/Desktop/Whirlpool/Whirlpool_1.2/google-api-objectivec-client/Source/**",
+					"/Users/SpartyWare/Documents/XcodeProjects/Whirlpool_1.2/google-api-objectivec-client/Source/**",
 				);
 				INFOPLIST_FILE = "Whirlpool-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
@@ -609,6 +614,7 @@
 					"/Users/elhazzat/Desktop/Whirlpool/Whirlpool_1.2/google-api-objectivec-client/Source",
 					"/Users/cse498/Desktop/Whirlpool_1.2/google-api-objectivec-client/Source/**",
 					"/Users/elhazzat/Desktop/Whirlpool/Whirlpool_1.2/google-api-objectivec-client/Source/**",
+					"/Users/SpartyWare/Documents/XcodeProjects/Whirlpool_1.2/google-api-objectivec-client/Source/**",
 				);
 				INFOPLIST_FILE = "Whirlpool-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
@@ -708,6 +714,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6E83A9751BD2D6BE00306C86 /* FavoriteModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6E83A9761BD2D6BE00306C86 /* FavoriteModel.xcdatamodel */,
+			);
+			currentVersion = 6E83A9761BD2D6BE00306C86 /* FavoriteModel.xcdatamodel */;
+			path = FavoriteModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 4288AA941BB83093003EC9EF /* Project object */;
 }
