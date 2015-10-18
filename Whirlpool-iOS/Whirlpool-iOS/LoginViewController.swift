@@ -84,6 +84,8 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
                         }
                         else
                         {
+                            //Make call to database
+                            self.pushRoomDataToDatabase()
                             self.performSegueWithIdentifier("MainPage", sender: nil)
                         }
                     }
@@ -251,20 +253,49 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
         
     }
     
-    public func parser(parser: NSXMLParser!, foundCharacters string: String!)
+    public func parser(parser: NSXMLParser, foundCharacters string: String)
     {
         
         if element == ("apps:property") {
             if resName.rangeOfString("US - Benton Harbor") != nil {
                 resEmail = att["value"]!
-                var tempResName = resName
+                let tempResName = resName
                 resName = ""
-                var newRoom = RoomData()
+                let newRoom = RoomData()
                 newRoom.SetRoomEmail(resEmail)
                 newRoom.SetRoomName(tempResName)
                 _roomsData.addARoom(newRoom)
             }
             
+            
+        }
+    }
+    
+    
+    func pushRoomDataToDatabase(){
+        for room in _roomsData.getAllRooms() {
+            var roomLongName = room.GetRoomName()
+            var splitRoomName = roomLongName.componentsSeparatedByString("-")
+            print(splitRoomName)
+            if splitRoomName.count == 4 {
+                var loc = getAbbr(splitRoomName[2].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
+                _roomsData.updateRoomStatus("busy", email: room.GetRoomEmail(), room: splitRoomName[3].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()), location: loc)
+            }
+        }
+    }
+    
+    func getAbbr(location: String)->String{
+        switch location {
+        case "Riverview":
+                return "BHR"
+        case "Hilltop 150":
+            return "HIL150"
+        case "Hilltop 211":
+            return "HIL211"
+        case "St. Joe Tech Center":
+            return "SJTech"
+        default:
+            return location
             
         }
     }
