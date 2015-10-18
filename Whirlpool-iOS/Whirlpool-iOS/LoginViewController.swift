@@ -85,7 +85,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
                         else
                         {
                             //Make call to database
-                            self.pushRoomDataToDatabase()
+                            //self.pushRoomDataToDatabase()
                             self.performSegueWithIdentifier("MainPage", sender: nil)
                         }
                     }
@@ -179,7 +179,8 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             }
             //output.text = eventString
             
-            self.httpCall()
+            //self.httpCall()
+            self.performSegueWithIdentifier("MainPage", sender: nil)
             
     }
     
@@ -276,10 +277,11 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
         for room in _roomsData.getAllRooms() {
             var roomLongName = room.GetRoomName()
             var splitRoomName = roomLongName.componentsSeparatedByString("-")
-            print(splitRoomName)
-            if splitRoomName.count == 4 {
-                var loc = getAbbr(splitRoomName[2].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
-                _roomsData.updateRoomStatus("busy", email: room.GetRoomEmail(), room: splitRoomName[3].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()), location: loc)
+            
+            if splitRoomName.count >= 4 {
+                var locTemp = getAbbr(splitRoomName[2].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
+                let roomTemp = splitRoomName[3].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                _roomsData.insertroominfo(locTemp, room: roomTemp, floor: "2", status: "Busy", email: room.GetRoomEmail(), ownership: "Online", resources: "TV", capacity: "5")
             }
         }
     }

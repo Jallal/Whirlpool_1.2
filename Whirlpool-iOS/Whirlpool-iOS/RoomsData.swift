@@ -109,7 +109,7 @@ public class RoomsData {
                                     
                                 }
                                 else if(count==9){
-                                    // RoomInformation.SetRoomEmail(ro as! String)
+                                     RoomInformation.SetRoomEmail(ro as! String)
                                     
                                 }
                                 count = count+1
@@ -142,6 +142,9 @@ public class RoomsData {
     
 func insertroominfo( loc: String,room: String,floor:String,status:String,email:String,ownership:String,resources:String,capacity: String){
         var bodyData = "location=\(loc)&room=\(room)&floor=\(floor)&status=\(status)&email=\(email)&ownership=\(ownership)&resources=\(resources)&capacity=\(capacity)"
+    //var bodyData = ["location" :loc, "room": room, "floor" : floor, "status" : status, "email": email, "ownership":ownership, "resources": resources, "capacity":capacity]
+    
+    
         let URL: NSURL = NSURL(string: "https://webdev.cse.msu.edu/~elhazzat/wim/room-insert.php")!
         let request:NSMutableURLRequest = NSMutableURLRequest(URL:URL)
         request.HTTPMethod = "POST"
@@ -149,6 +152,8 @@ func insertroominfo( loc: String,room: String,floor:String,status:String,email:S
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue())
             {
                 (response, data, error) in
+                print(response)
+                print(data)
                 var output = NSString(data: data!, encoding: NSUTF8StringEncoding) // new output variable
                 //var array = self.JSONParseArray(output)
         }
@@ -159,7 +164,7 @@ func insertroominfo( loc: String,room: String,floor:String,status:String,email:S
     
     
     func updateRoomStatus( value : Bool, email : String,room: String,location : String){
-        var bodyData = "status=\(value)&email=\(email)&room=\(room)&location=\(location)"
+        var bodyData = "?status=\(value)&email=\(email)&room=\(room)&location=\(location)"
         let URL: NSURL = NSURL(string: "https://webdev.cse.msu.edu/~elhazzat/wim/room-save.php")!
         let request:NSMutableURLRequest = NSMutableURLRequest(URL:URL)
         request.HTTPMethod = "POST"
@@ -167,6 +172,7 @@ func insertroominfo( loc: String,room: String,floor:String,status:String,email:S
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue())
             {
                 (response, data, error) in
+                
                 var output = NSString(data: data!, encoding: NSUTF8StringEncoding) // new output variable
                 //var array = self.JSONParseArray(output)
         }
