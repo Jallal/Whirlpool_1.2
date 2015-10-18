@@ -140,6 +140,10 @@ public class RoomsData {
     }
     
     
+
+    
+    
+    
 func insertroominfo( loc: String,room: String,floor:String,status:String,email:String,ownership:String,resources:String,capacity: String){
         var bodyData = "location=\(loc)&room=\(room)&floor=\(floor)&status=\(status)&email=\(email)&ownership=\(ownership)&resources=\(resources)&capacity=\(capacity)"
     //var bodyData = ["location" :loc, "room": room, "floor" : floor, "status" : status, "email": email, "ownership":ownership, "resources": resources, "capacity":capacity]
