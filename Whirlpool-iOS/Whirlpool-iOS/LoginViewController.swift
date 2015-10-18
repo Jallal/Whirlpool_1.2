@@ -14,6 +14,8 @@ let service = GTLServiceCalendar()
 var _roomsData = RoomsData()
 
 public class LoginViewController: UIViewController , NSXMLParserDelegate{
+    
+    
     //var _userCalenderInfo: UserCalenderInfo?
     
     @IBOutlet weak var GoogleView: UIView!
@@ -33,6 +35,9 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
     
     let output = UITextView()
     
+
+
+    
     // When the view loads, create necessary subviews
     // and initialize the Google Calendar API service
     override public func viewDidLoad() {
@@ -49,9 +54,8 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             clientID: kClientID,
             clientSecret: kClientSecret
         )
-        
-        
-        
+        _roomsData.updateRoomsInfo();
+
         
     }
     

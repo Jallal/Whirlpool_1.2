@@ -24,8 +24,6 @@ class NavigationsButtons: UIViewController{
         
          self.performSegueWithIdentifier("NavigationSague", sender: nil)
         
-        
-        
     }
     
     

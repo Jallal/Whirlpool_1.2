@@ -124,7 +124,7 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
                                 if let  property = feature["properties"] as? NSDictionary {
                                     
                                     if let roomNum = property["room"]{
-                                        RoomInformation.SetRoomNumber(roomNum as! String)
+                                        RoomInformation.SetRoomName(roomNum as! String)
                                         
                                     }
                                     
@@ -239,14 +239,14 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
                     // polygon.fillColor = UIColor(red:(191/255.0), green:191/255.0, blue:191/255.0, alpha:1.0);
                 }
                 
-                if(room.GetRoomNumber()=="B250"){
+                if(room.GetRoomName()=="B250"){
                     var position = room.GetroomCenter()
                     var restroom = GMSMarker(position: position)
                     restroom.icon = UIImage(named: "wbathroom.jpg")
                     restroom.flat = true
                     restroom.map = self.mapView
                 }
-                if((room.GetRoomNumber()=="B240")||(room.GetRoomNumber()=="B215")){
+                if((room.GetRoomName()=="B240")||(room.GetRoomName()=="B215")){
                     
                     var position = room.GetroomCenter()
                     var conference = GMSMarker(position: position)
@@ -254,14 +254,14 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
                     conference.flat = true
                     conference.map = self.mapView
                 }
-                if((room.GetRoomNumber()=="B218")){
+                if((room.GetRoomName()=="B218")){
                     var position = room.GetroomCenter()
                     var exit = GMSMarker(position: position)
                     exit.icon = UIImage(named: "mbathroom.jpg")
                     exit.flat = true
                     exit.map = self.mapView
                 }
-                if((room.GetRoomNumber()=="B242")){
+                if((room.GetRoomName()=="B242")){
                     var position = room.GetroomCenter()
                     var stairs = GMSMarker(position: position)
                     stairs .icon = UIImage(named: "stairs.jpg")
@@ -269,20 +269,20 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
                     stairs .map = self.mapView
                 }
                 
-                if((room.GetRoomNumber()=="B250")||(room.GetRoomNumber()=="B205")||(room.GetRoomNumber()=="B218")||(room.GetRoomNumber()=="B217")){
+                if((room.GetRoomName()=="B250")||(room.GetRoomName()=="B205")||(room.GetRoomName()=="B218")||(room.GetRoomName()=="B217")){
                     polygon.fillColor = UIColor(red: 234/255.0, green: 230/255.0, blue: 245/255.0, alpha: 1.0)//purple color
                 }
                 
-                if((room.GetRoomNumber()=="B241") || (room.GetRoomNumber()=="B234")||(room.GetRoomNumber()=="B219")||(room.GetRoomNumber()=="B251")||(room.GetRoomNumber()=="B230")){
+                if((room.GetRoomName()=="B241") || (room.GetRoomName()=="B234")||(room.GetRoomName()=="B219")||(room.GetRoomName()=="B251")||(room.GetRoomName()=="B230")){
                     polygon.fillColor  = UIColor.whiteColor()
                 }
-                if((room.GetRoomNumber()=="B236")||(room.GetRoomNumber()=="B232")||(room.GetRoomNumber()=="B223")||(room.GetRoomNumber()=="B247") || (room.GetRoomNumber()=="B233-229")||(room.GetRoomNumber() == "B235-238")||(room.GetRoomNumber()=="B245-248")||(room.GetRoomNumber()=="B222-220")){
+                if((room.GetRoomName()=="B236")||(room.GetRoomName()=="B232")||(room.GetRoomName()=="B223")||(room.GetRoomName()=="B247") || (room.GetRoomName()=="B233-229")||(room.GetRoomName() == "B235-238")||(room.GetRoomName()=="B245-248")||(room.GetRoomName()=="B222-220")){
                     polygon.fillColor  = UIColor.whiteColor()
                 }
                 
                 polygon.strokeColor = UIColor(red:(108/255.0), green:(122/255.0), blue:(137/255.0), alpha:1.0);
                 polygon.strokeWidth = 0.5
-                polygon.title = room.GetRoomNumber();
+                polygon.title = room.GetRoomName();
                 polygon.tappable = true;
                 polygon.map = self.mapView
                 self.view.setNeedsDisplay()
@@ -302,7 +302,7 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
         print(overlay.title)
         if((overlay.title) != nil){
             for room in self.roomdata.getAllRooms(){
-                if(room.GetRoomNumber() == overlay.title){
+                if(room.GetRoomName() == overlay.title){
                     room.SetIsSelected(true);
                 }else{
                     room.SetIsSelected(false);

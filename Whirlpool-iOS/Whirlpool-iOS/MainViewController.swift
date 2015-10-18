@@ -32,8 +32,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     
     override func viewDidLoad() {
-        
-        
         super.viewDidLoad()
         self.calender.dataSource = self
         
@@ -46,6 +44,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.relevant.separatorStyle = .None
         
         self.navigationItem.setHidesBackButton(true, animated:true);
+        _roomsData.updateRoomsInfo();
     
     }
 

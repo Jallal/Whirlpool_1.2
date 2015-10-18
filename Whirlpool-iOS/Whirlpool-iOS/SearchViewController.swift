@@ -20,6 +20,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
     override func viewWillAppear(animated: Bool) {
         self.searchDisplayController?.active = true
         searchbar.becomeFirstResponder()
+         _roomsData.updateRoomsInfo();
        
     }
     

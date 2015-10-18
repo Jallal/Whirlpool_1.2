@@ -10,7 +10,7 @@ import UIKit
 
 
 
-class RoomInfoViewController: UIViewController,UIWebViewDelegate {
+class RoomInfoViewController: UIViewController,UIWebViewDelegate,NSXMLParserDelegate {
 
     @IBOutlet weak var roomInfo: UITableView!
     
@@ -19,11 +19,15 @@ class RoomInfoViewController: UIViewController,UIWebViewDelegate {
     
     internal var _room = RoomData()
     
+    
+    
+    
 
     
     @IBAction func direction(sender: AnyObject) {
         
-         self.performSegueWithIdentifier("FullView", sender: nil)
+         //self.performSegueWithIdentifier("FullView", sender: nil)
+       
         
         
     }
@@ -31,7 +35,8 @@ class RoomInfoViewController: UIViewController,UIWebViewDelegate {
     
     
     
-     var items = ["Hilltop 211","10 people","2 TVs","Phone"]
+    // var items = ["Hilltop 211","10 people","2 TVs","Phone"]
+    var items  = _room.GetRoomResources();
     
     
     
@@ -43,8 +48,8 @@ class RoomInfoViewController: UIViewController,UIWebViewDelegate {
             //webView.loadRequest(request)
         }
         
-        if _room.GetName() != "" {
-            RoomNameLabel.text = _room.GetName()
+        if _room.GetRoomName() != "" {
+            RoomNameLabel.text = _room.GetRoomName()
         }
         
     }
@@ -78,10 +83,7 @@ class RoomInfoViewController: UIViewController,UIWebViewDelegate {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
-        
-        /*if (cell == nil) {
-            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "cell")
-        }*/
+    
             cell!.textLabel?.textColor = UIColor.whiteColor()
             cell!.textLabel!.text = items[indexPath.row]
         
@@ -108,7 +110,8 @@ class RoomInfoViewController: UIViewController,UIWebViewDelegate {
         
         
     }
-
     
 
+    
+    
 }

@@ -13,11 +13,20 @@ import GoogleMaps
 public class RoomData {
 
     private var coordinates  = [GMSMutablePath()];
-    private  var RoomNumber = String()
     private var RoomName = String()
     private var RoomEmail = String()
     private var IsSelected = false;
     private var roomCenter = CLLocationCoordinate2DMake(0,0)
+    private var roomLOcation = String()
+    private var roomCapacity  = String()
+    private var roomPolycomExt = String()
+    private var roomAvResources = [String]()
+    private var roomOwnership = String()
+    private var roomNotes = String()
+    private var roomstatus = String()
+    private var roomFloor = String()
+    
+    
     
     
     public func SetroomCenter(x : double_t, y : double_t){
@@ -55,31 +64,67 @@ public class RoomData {
         
     }
     
-    public func GetName()->String{
+    public func GetRoomName()->String{
         return self.RoomName;
         
     }
     
-    public func GetEmail()-> String {
+    public func GetRoomEmail()-> String {
         return self.RoomEmail
     }
     
     
-    public func SetRoomNumber(roomnumber: String){
-        
-        self.RoomNumber = roomnumber;
-    }
-    public func GetRoomNumber()-> String{
-        
-        return self.RoomNumber ;
-    }
+    
     
     public func SetRoomName(name: String){
         self.RoomName = name
     }
+    
+    
 
     
     public func SetRoomEmail(email: String){
         self.RoomEmail = email
     }
+    
+    
+    public func SetRoomLocation(loca: String){
+        self.roomLOcation = loca
+    }
+    
+    
+    public func SetRoomCapacity(capacity: String){
+        self.roomCapacity = capacity
+    }
+    
+    public func SetRoomResources(resources: String){
+        let AvResources = resources.componentsSeparatedByString(",")
+        self.roomAvResources = AvResources
+    }
+    public func GetRoomResources()->[String]{
+        return self.roomAvResources
+    }
+    
+    public func SetRoomOwnership(owner: String){
+     
+        self.roomOwnership = owner
+    }
+    
+    public func SetRoomNotes(notes: String){
+        
+        self.roomNotes = notes
+    }
+    
+    public func SetRoomStatus(status: String){
+    self.roomstatus  = status
+    }
+    
+    public func SetRoomPolycomExt( poly : String){
+        self.roomPolycomExt = poly
+    }
+    public func SetRoomFloor(floor : String){
+        self.roomFloor = floor
+    }
+    
+
 }
