@@ -86,7 +86,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
         {
             room = filteredRooms[indexPath.row]
         }
-        cell!.textLabel?.text = room.GetName()
+        cell!.textLabel?.text = room.GetRoomName()
         return cell!
 
         
@@ -120,7 +120,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
         
         self.filteredRooms = _roomsData.getAllRooms().filter({( room : RoomData) -> Bool in
             var categoryMatch = (scope == "Title")
-            var stringMatch = room.GetName().rangeOfString(searchText)
+            var stringMatch = room.GetRoomName().rangeOfString(searchText)
             return categoryMatch && (stringMatch != nil)
             
         })
