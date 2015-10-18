@@ -140,8 +140,8 @@ public class RoomsData {
     }
     
     
-    func updateRoomStatus( value : Bool, email : String,room: String){
-        var bodyData = "status=\(value)&email=\(email)&room=\(room)"
+    func updateRoomStatus( value : Bool, email : String,room: String,location : String){
+        var bodyData = "status=\(value)&email=\(email)&room=\(room)&location=\(location)"
         let URL: NSURL = NSURL(string: "https://webdev.cse.msu.edu/~elhazzat/wim/room-save.php")!
         let request:NSMutableURLRequest = NSMutableURLRequest(URL:URL)
         request.HTTPMethod = "POST"
