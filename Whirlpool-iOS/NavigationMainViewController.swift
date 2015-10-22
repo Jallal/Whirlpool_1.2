@@ -32,7 +32,6 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     @IBOutlet weak var Address: UILabel!
     @IBOutlet weak var mapView: GMSMapView!
     
-    //var roomdata  =  RoomsData();
     let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
