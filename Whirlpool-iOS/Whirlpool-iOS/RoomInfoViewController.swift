@@ -110,8 +110,12 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         var position = _room.GetroomCenter();
+    
         
         if(CLLocationCoordinate2DIsValid(position)){
+             _room.SetIsSelected(true);
+            self.mapView.clear();
+            self.reDraw();
             mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
             locationManager.stopUpdatingLocation()
             
@@ -231,7 +235,10 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
             for rect in room.GetRoomCoordinates(){
                 var polygon = GMSPolygon(path: rect)
                 if(room.GetIsSelected()){
+                    print("***************************************");
+                    print("You selected me");
                     var position = room.GetroomCenter()
+                    print(position);
                     var marker = GMSMarker(position: position)
                     marker.appearAnimation = kGMSMarkerAnimationPop
                     // marker.icon = UIImage(named: "restroom.jpg")
@@ -249,6 +256,35 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
                     // polygon.fillColor = UIColor(red:(191/255.0), green:191/255.0, blue:191/255.0, alpha:1.0);
                 }
                 
+                if(room.GetRoomName()=="B250"){
+                    var position = room.GetroomCenter()
+                    var restroom = GMSMarker(position: position)
+                    restroom.icon = UIImage(named: "wbathroom.jpg")
+                    restroom.flat = true
+                    restroom.map = self.mapView
+                }
+                if((room.GetRoomName()=="B240")||(room.GetRoomName()=="B215")){
+                    
+                    var position = room.GetroomCenter()
+                    var conference = GMSMarker(position: position)
+                    conference.icon = UIImage(named: "conference.jpg")
+                    conference.flat = true
+                    conference.map = self.mapView
+                }
+                if((room.GetRoomName()=="B218")){
+                    var position = room.GetroomCenter()
+                    var exit = GMSMarker(position: position)
+                    exit.icon = UIImage(named: "mbathroom.jpg")
+                    exit.flat = true
+                    exit.map = self.mapView
+                }
+                if((room.GetRoomName()=="B242")){
+                    var position = room.GetroomCenter()
+                    var stairs = GMSMarker(position: position)
+                    stairs .icon = UIImage(named: "stairs.jpg")
+                    stairs .flat = true
+                    stairs .map = self.mapView
+                }
                 
                 if((room.GetRoomName()=="B250")||(room.GetRoomName()=="B205")||(room.GetRoomName()=="B218")||(room.GetRoomName()=="B217")){
                     polygon.fillColor = UIColor(red: 234/255.0, green: 230/255.0, blue: 245/255.0, alpha: 1.0)//purple color
@@ -277,7 +313,6 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         }
         
         
-        
     }
     
     
@@ -291,9 +326,10 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
                 }
                 
             }
-            self.mapView.clear();
-            self.reDraw();
+          
         }
+        self.mapView.clear();
+        self.reDraw();
         
     }
     

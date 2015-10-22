@@ -179,7 +179,6 @@ func insertroominfo( loc: String,room: String,floor:String,status:String,email:S
     }
     
     func parseJson( ){
-        
         // Parsing GeoJSON can be CPU intensive, do it on a background thread
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
@@ -223,6 +222,10 @@ func insertroominfo( loc: String,room: String,floor:String,status:String,email:S
                                         if let locations = geometry["coordinates"] as? NSArray {
                                             
                                             // Iterate over line coordinates, stored in GeoJSON as many lng, lat arrays
+                                            var maxX : double_t = -400
+                                            var maxY : double_t = -400
+                                            var minX : double_t = 400
+                                            var minY : double_t = 400
                                             
                                             for location in locations {
                                                 var rec = GMSMutablePath()
@@ -233,14 +236,35 @@ func insertroominfo( loc: String,room: String,floor:String,status:String,email:S
                                                         
                                                         if (j+1 == location[i].count){
                                                             rec.addCoordinate(CLLocationCoordinate2DMake(location[i][j].doubleValue,lat))
+                                                            if(maxX < location[i][j].doubleValue){
+                                                                maxX = location[i][j].doubleValue
+                                                            }
+                                                            if(maxY < lat){
+                                                                maxY = lat
+                                                            }
+                                                            if(minX > location[i][j].doubleValue){
+                                                                minX = location[i][j].doubleValue
+                                                            }
+                                                            if(minY > lat){
+                                                                minY = lat
+                                                            }
+                                                            
                                                         }
                                                         else{
                                                             lat = location[i][j].doubleValue
+                                                            if(maxY <  lat){
+                                                                maxY = lat
+                                                            }
+                                                            if(minY >  lat){
+                                                                minY = lat
+                                                            }
+                                                            
                                                         }
-                                                        
                                                     }
                                                     
+                                                    
                                                 }
+                                                RoomInformation.SetroomCenter((minX+maxX)/2, y: ((minY+maxY)/2))
                                                 RoomInformation.SetRoomCoordinates(rec)
                                             }
                                             
@@ -268,7 +292,5 @@ func insertroominfo( loc: String,room: String,floor:String,status:String,email:S
             }
             
         })
-        
-    }
-    
+      }
 }
