@@ -14,7 +14,6 @@
 		421545B41BB8533F00AE1B23 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545AE1BB8533F00AE1B23 /* SearchViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		421545B51BB8533F00AE1B23 /* RoomInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545AF1BB8533F00AE1B23 /* RoomInfoViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		421545B61BB8533F00AE1B23 /* NavigationFULLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545B01BB8533F00AE1B23 /* NavigationFULLViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		421545B71BB8533F00AE1B23 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545B11BB8533F00AE1B23 /* SearchResultsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		421545BC1BB85FD600AE1B23 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 421545BB1BB85FD600AE1B23 /* MapKit.framework */; };
 		4254961E1BBBA1B100B8CC5C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4254961D1BBBA1B100B8CC5C /* CoreLocation.framework */; };
 		427BAEDF1BB9F31100B3F63A /* NavigationMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427BAEDE1BB9F31100B3F63A /* NavigationMainViewController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -68,7 +67,6 @@
 		421545AE1BB8533F00AE1B23 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		421545AF1BB8533F00AE1B23 /* RoomInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomInfoViewController.swift; sourceTree = "<group>"; };
 		421545B01BB8533F00AE1B23 /* NavigationFULLViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationFULLViewController.swift; sourceTree = "<group>"; };
-		421545B11BB8533F00AE1B23 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		421545B81BB85FB200AE1B23 /* Whirlpool-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Whirlpool-iOS.entitlements"; sourceTree = "<group>"; };
 		421545BB1BB85FD600AE1B23 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		4254961D1BBBA1B100B8CC5C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -178,7 +176,6 @@
 				421545AE1BB8533F00AE1B23 /* SearchViewController.swift */,
 				421545AF1BB8533F00AE1B23 /* RoomInfoViewController.swift */,
 				421545B01BB8533F00AE1B23 /* NavigationFULLViewController.swift */,
-				421545B11BB8533F00AE1B23 /* SearchResultsViewController.swift */,
 				420838541BB8C6D100AB15F1 /* NavigationsButtons.swift */,
 				420838581BB8EB5400AB15F1 /* LandMarkViewController.swift */,
 				6EB781231BCB3C9800166FC2 /* RoomData.swift */,
@@ -424,7 +421,6 @@
 				847B58741BB9BF9800E22862 /* CalenderCell.swift in Sources */,
 				421545B31BB8533F00AE1B23 /* LoginViewController.swift in Sources */,
 				427BAEDF1BB9F31100B3F63A /* NavigationMainViewController.swift in Sources */,
-				421545B71BB8533F00AE1B23 /* SearchResultsViewController.swift in Sources */,
 				421545B21BB8533F00AE1B23 /* MainViewController.swift in Sources */,
 				847B58751BB9BF9800E22862 /* CalenderEvent.swift in Sources */,
 				42B976CD1BC1D5950012D29B /* UserCalenderInfo.swift in Sources */,

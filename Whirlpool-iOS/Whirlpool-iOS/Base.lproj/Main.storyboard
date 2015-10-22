@@ -372,7 +372,7 @@
                                 <animations/>
                                 <state key="normal" image="Directions Button"/>
                                 <connections>
-                                    <segue destination="9rI-gr-NXP" kind="show" id="AMZ-0r-usn"/>
+                                    <segue destination="9rI-gr-NXP" kind="show" identifier="MainNavView" id="AMZ-0r-usn"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Room Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="OxO-P5-US8">
@@ -588,7 +588,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="afH-dV-Bq7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-235" y="-2011"/>
+            <point key="canvasLocation" x="-359" y="-2652"/>
         </scene>
         <!--Land Mark View Controller-->
         <scene sceneID="Ts1-U3-2jN">
@@ -794,7 +794,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yy2-FJ-kmZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1193" y="-2250"/>
+            <point key="canvasLocation" x="-1585" y="-1981"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sK8-PH-Qdl">
@@ -831,7 +831,7 @@
         <image name="mapannotation" width="64" height="64"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ey3-g5-lxB"/>
         <segue reference="AMZ-0r-usn"/>
+        <segue reference="Ey3-g5-lxB"/>
     </inferredMetricsTieBreakers>
 </document>

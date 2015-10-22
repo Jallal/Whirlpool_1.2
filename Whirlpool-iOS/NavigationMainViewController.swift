@@ -13,9 +13,6 @@ import GoogleMaps
 
 
 class  NavigationMainViewController: UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,GMSIndoorDisplayDelegate {
-    let baseURLDirections = "https://maps.googleapis.com/maps/api/directions/json?"
-    
-        
     var originMarker: GMSMarker!
     
     var destinationMarker: GMSMarker!
@@ -23,8 +20,8 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     var routePolyline: GMSPolyline!
     
     var markersArray: Array<GMSMarker> = []
-    
     var waypointsArray: Array<String> = []
+    internal var _room = RoomData()
     
     var originAddress : String = "2000 N. M-63 Benton Harbor, MI, 49022-2692"
     var destinationAddress : String = "220 Trowbridge Rd, East Lansing, MI 48824"
@@ -53,9 +50,19 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     
     
    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
-      mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
+    var position = _room.GetroomCenter();
+    if(CLLocationCoordinate2DIsValid(position)){
+        _room.SetIsSelected(true);
+        self.mapView.clear();
+        self.reDraw();
+        mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
         locationManager.stopUpdatingLocation()
+        
+    }else{
+        position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
+        mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
+        locationManager.stopUpdatingLocation()
+    }
     }
     
     override func viewDidAppear(animated: Bool) {

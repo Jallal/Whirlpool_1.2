@@ -51,11 +51,19 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
        
     }
     
-    @IBAction func direction(sender: AnyObject) {
+      /*override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?){
         
-         //self.performSegueWithIdentifier("FullView", sender: nil)
+        // self.performSegueWithIdentifier("FullView", sender: nil)
+        
+        //if (segue.identifier == "RoomInfo") {
+            
+            // initialize new view controller and cast it as your view controller
+            var viewController = segue.destinationViewController as! RoomInfoViewController
+            // your new view controller should have property that will store passed value
+            viewController._room = _room
+       // }
        
-    }
+    }*/
     
     
     
@@ -226,8 +234,15 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
             eventVC.guest = _room.GetRoomEmail()
             eventVC.location = _room.GetRoomName()
             
-            
         }
+        
+        if (segue.identifier == "MainNavView") {
+        // initialize new view controller and cast it as your view controller
+        var viewController = segue.destinationViewController as! NavigationMainViewController
+        // your new view controller should have property that will store passed value
+         viewController._room = _room
+         }
+        
     }
     
     func updateUIMap(){
@@ -235,8 +250,6 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
             for rect in room.GetRoomCoordinates(){
                 var polygon = GMSPolygon(path: rect)
                 if(room.GetIsSelected()){
-                    print("***************************************");
-                    print("You selected me");
                     var position = room.GetroomCenter()
                     print(position);
                     var marker = GMSMarker(position: position)
@@ -245,15 +258,9 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
                     marker.icon = UIImage(named: "mapannotation.png")
                     marker.flat = true
                     marker.map = self.mapView
-                    //var london = GMSMarker(position: position)
-                    //london.icon = UIImage(named: "restroom")
-                    //london.flat = true
-                    //london.map = self.mapView
-                    //polygon.fillColor = UIColor(red:1.0, green:0.2, blue:0.3, alpha:0.9);
                     polygon.fillColor = UIColor(red:(137/255.0), green:196/255.0, blue:244/255.0, alpha:1.0);
                 }else{
                     polygon.fillColor = UIColor(red:(255/255.0), green:249/255.0, blue:236/255.0, alpha:1.0);
-                    // polygon.fillColor = UIColor(red:(191/255.0), green:191/255.0, blue:191/255.0, alpha:1.0);
                 }
                 
                 if(room.GetRoomName()=="B250"){
