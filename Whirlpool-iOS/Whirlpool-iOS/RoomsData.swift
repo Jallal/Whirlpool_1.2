@@ -139,11 +139,6 @@ public class RoomsData {
         
     }
     
-    
-
-    
-    
-    
 func insertroominfo( loc: String,room: String,floor:String,status:String,email:String,ownership:String,resources:String,capacity: String){
         var bodyData = "location=\(loc)&room=\(room)&floor=\(floor)&status=\(status)&email=\(email)&ownership=\(ownership)&resources=\(resources)&capacity=\(capacity)"
     //var bodyData = ["location" :loc, "room": room, "floor" : floor, "status" : status, "email": email, "ownership":ownership, "resources": resources, "capacity":capacity]
@@ -180,6 +175,99 @@ func insertroominfo( loc: String,room: String,floor:String,status:String,email:S
                 var output = NSString(data: data!, encoding: NSUTF8StringEncoding) // new output variable
                 //var array = self.JSONParseArray(output)
         }
+        
+    }
+    
+    func parseJson( ){
+        
+        // Parsing GeoJSON can be CPU intensive, do it on a background thread
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            
+            // Get the path for example.geojson in the app's bundle
+            
+            let jsonPath = NSBundle.mainBundle().pathForResource("RVCB2B_P_ROOMS", ofType: "json")
+            let jsonData = NSData(contentsOfFile: jsonPath!)
+            
+            do {
+                
+                // Load and serialize the GeoJSON into a dictionary filled with properly-typed objects
+                
+                if let jsonDict = try NSJSONSerialization.JSONObjectWithData(jsonData!, options: []) as? NSDictionary {
+                    
+                    //print(jsonDict);
+                    
+                    // Load the `features` array for iteration
+                    if let features = jsonDict["features"] as? NSArray {
+                        
+                        for feature in features {
+                            var RoomInformation  = RoomData();
+                            if let feature = feature as? NSDictionary {
+                                if let  property = feature["properties"] as? NSDictionary {
+                                    
+                                    if let roomNum = property["room"]{
+                                        RoomInformation.SetRoomName(roomNum as! String)
+                                        
+                                    }
+                                    
+                                }
+                                if let geometry = feature["geometry"] as? NSDictionary {
+                                    
+                                    
+                                    if geometry["type"] as? String == "Polygon" {
+                                        
+                                        // Create an array to hold the formatted coordinates for our line
+                                        
+                                        //var coordinates: [CLLocationCoordinate2D] = []
+                                        
+                                        if let locations = geometry["coordinates"] as? NSArray {
+                                            
+                                            // Iterate over line coordinates, stored in GeoJSON as many lng, lat arrays
+                                            
+                                            for location in locations {
+                                                var rec = GMSMutablePath()
+                                                
+                                                for var i = 0; i < location.count; i++ {
+                                                    var lat = 0 as Double
+                                                    for var j = 0; j < location[i].count; j++ {
+                                                        
+                                                        if (j+1 == location[i].count){
+                                                            rec.addCoordinate(CLLocationCoordinate2DMake(location[i][j].doubleValue,lat))
+                                                        }
+                                                        else{
+                                                            lat = location[i][j].doubleValue
+                                                        }
+                                                        
+                                                    }
+                                                    
+                                                }
+                                                RoomInformation.SetRoomCoordinates(rec)
+                                            }
+                                            
+                                            
+                                        }
+                                        
+                                        
+                                    }
+                                }
+                            }
+                            self.addARoom(RoomInformation)
+                        }
+                    }
+                    
+                }
+            }
+                
+                
+            catch
+                
+            {
+                
+                print("GeoJSON parsing failed")
+                
+            }
+            
+        })
         
     }
     

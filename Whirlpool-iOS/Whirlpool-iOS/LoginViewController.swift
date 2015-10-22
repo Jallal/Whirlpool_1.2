@@ -55,6 +55,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             clientSecret: kClientSecret
         )
         _roomsData.updateRoomsInfo();
+        _roomsData.parseJson();
 
         
     }

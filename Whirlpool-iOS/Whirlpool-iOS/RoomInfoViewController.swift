@@ -8,11 +8,12 @@
 import GoogleMaps
 import UIKit
 import CoreData
+import Foundation
 
 
 
 
-class RoomInfoViewController: UIViewController,UIWebViewDelegate,NSXMLParserDelegate {
+class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationManagerDelegate,GMSMapViewDelegate,GMSIndoorDisplayDelegate {
 
     struct busyTime {
         let start: NSDate
@@ -21,69 +22,105 @@ class RoomInfoViewController: UIViewController,UIWebViewDelegate,NSXMLParserDele
         let endString: String
     }
     
+    @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var roomInfo: UITableView!
-    
-    
-    @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var RoomNameLabel: UILabel!
-    
     internal var _room = RoomData()
+    internal var _freeBusyDayInterval = 31.0
+    internal var _roomFreeBusyTimes = [busyTime]()
+    let locationManager = CLLocationManager()
+    var items : Array<String> = []
+
+    
+    
+    
+    
+    
     @IBAction func favoriteButton(sender: UIButton) {
         let alert = UIAlertController(title: _room.GetRoomName(), message: "New Favorite Added", preferredStyle: .Alert)
         let attributeString = NSAttributedString(string: "New Favorite", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(15),
             NSBackgroundColorDocumentAttribute: UIColor.blueColor()])
         alert.setValue(attributeString, forKey: "attributedMessage")
-
         //Add to favorite Data Core right here
         self.saveFavoriteRoom(_room)
         presentViewController(alert, animated: true) { () -> Void in
             sleep(1)
             alert.dismissViewControllerAnimated(true, completion: nil)
         }
+        items = _room.GetRoomResources();
+       
     }
-    internal var _freeBusyDayInterval = 31.0
-    internal var _roomFreeBusyTimes = [busyTime]()
+    
     @IBAction func direction(sender: AnyObject) {
         
          //self.performSegueWithIdentifier("FullView", sender: nil)
        
-        
-        
     }
     
     
     
     
-    var items = ["Hilltop 211","10 people","2 TVs","Phone"]
-    //var items  = _room.GetRoomResources();
+    //var items = ["Hilltop 211","10 people","2 TVs","Phone"]
+    
     
     
     
     override func viewWillAppear(animated: Bool) {
-        if let url = NSBundle.mainBundle().URLForResource("File", withExtension: "html",subdirectory:"web"){
-            let fragUrl = NSURL(string:"#FRAG_URL",relativeToURL:url)!
-            let request = NSURLRequest(URL:fragUrl)
-        }
         
         if _room.GetRoomName() != "" {
             RoomNameLabel.text = _room.GetRoomName()
         }
         
         freeBusyTimesGetRequest(_room.GetRoomEmail())
+        updateLocation(true)
         
     }
     
-    
-    
-    
-  
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.locationManager.delegate = self
+        self.locationManager.requestAlwaysAuthorization()
+        self.mapView.delegate = self
+        self.reDraw()
         
-        //let url = NSURL (string: "http://micello.com/m/23640");
-        //let requestObj = NSURLRequest(URL: url!);
-        //roomView.loadRequest(requestObj);
+     
+    }
+    func updateLocation(running : Bool){
+        
+        let status = CLLocationManager.authorizationStatus()
+        if running{
+            
+            locationManager.startUpdatingLocation()
+            self.mapView.myLocationEnabled = true
+            self.mapView.settings.myLocationButton = true
+        }else{
+            locationManager.startUpdatingLocation()
+            self.mapView.settings.myLocationButton = false
+            self.mapView.myLocationEnabled = false
+        }
+    }
+    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == .AuthorizedWhenInUse {
+            locationManager.startUpdatingLocation()
+            mapView.myLocationEnabled = true
+            mapView.settings.myLocationButton = true
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        var position = _room.GetroomCenter();
+        
+        if(CLLocationCoordinate2DIsValid(position)){
+            mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
+            locationManager.stopUpdatingLocation()
+            
+        }else{
+            position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
+            mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
+            locationManager.stopUpdatingLocation()
+        }
+      
     }
     
     
@@ -177,24 +214,6 @@ class RoomInfoViewController: UIViewController,UIWebViewDelegate,NSXMLParserDele
     }
     
     
-    func webView(webView:UIWebView, shouldStartLoadingWithRequest request:NSURLRequest,navigationType: UIWebViewNavigationType)->Bool
-    {
-        NSLog("request:\(request)")
-        
-        if let scheme = request.URL?.scheme{
-            if(scheme == "Jallal"){
-                NSLog("we got Jallal request:\(scheme)");
-                if let result = webView.stringByEvaluatingJavaScriptFromString("Jallal.SomeJavaScriptFunc()"){
-                    NSLog("Result:\(result)")
-                }
-                return false;
-            }
-        }
-        
-        return true;
-        
-        
-    }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "bookRoomSeg" {
@@ -207,7 +226,89 @@ class RoomInfoViewController: UIViewController,UIWebViewDelegate,NSXMLParserDele
         }
     }
     
-
+    func updateUIMap(){
+        for room in _roomsData.getAllRooms(){
+            for rect in room.GetRoomCoordinates(){
+                var polygon = GMSPolygon(path: rect)
+                if(room.GetIsSelected()){
+                    var position = room.GetroomCenter()
+                    var marker = GMSMarker(position: position)
+                    marker.appearAnimation = kGMSMarkerAnimationPop
+                    // marker.icon = UIImage(named: "restroom.jpg")
+                    marker.icon = UIImage(named: "mapannotation.png")
+                    marker.flat = true
+                    marker.map = self.mapView
+                    //var london = GMSMarker(position: position)
+                    //london.icon = UIImage(named: "restroom")
+                    //london.flat = true
+                    //london.map = self.mapView
+                    //polygon.fillColor = UIColor(red:1.0, green:0.2, blue:0.3, alpha:0.9);
+                    polygon.fillColor = UIColor(red:(137/255.0), green:196/255.0, blue:244/255.0, alpha:1.0);
+                }else{
+                    polygon.fillColor = UIColor(red:(255/255.0), green:249/255.0, blue:236/255.0, alpha:1.0);
+                    // polygon.fillColor = UIColor(red:(191/255.0), green:191/255.0, blue:191/255.0, alpha:1.0);
+                }
+                
+                
+                if((room.GetRoomName()=="B250")||(room.GetRoomName()=="B205")||(room.GetRoomName()=="B218")||(room.GetRoomName()=="B217")){
+                    polygon.fillColor = UIColor(red: 234/255.0, green: 230/255.0, blue: 245/255.0, alpha: 1.0)//purple color
+                }
+                
+                if((room.GetRoomName()=="B241") || (room.GetRoomName()=="B234")||(room.GetRoomName()=="B219")||(room.GetRoomName()=="B251")||(room.GetRoomName()=="B230")){
+                    polygon.fillColor  = UIColor.whiteColor()
+                }
+                if((room.GetRoomName()=="B236")||(room.GetRoomName()=="B232")||(room.GetRoomName()=="B223")){
+                    polygon.fillColor  = UIColor.whiteColor()
+                }
+                
+                if((room.GetRoomName()=="B247") || (room.GetRoomName()=="B233-229")||(room.GetRoomName()=="B235-238")||(room.GetRoomName()=="B245-248")||(room.GetRoomName()=="B222-220")){
+                    polygon.fillColor  = UIColor.whiteColor()
+                }
+                
+                polygon.strokeColor = UIColor(red:(108/255.0), green:(122/255.0), blue:(137/255.0), alpha:1.0);
+                polygon.strokeWidth = 0.5
+                polygon.title = room.GetRoomName();
+                polygon.tappable = true;
+                polygon.map = self.mapView
+                self.view.setNeedsDisplay()
+                
+            }
+            
+        }
+        
+        
+        
+    }
+    
+    
+    func mapView(mapView: GMSMapView!, didTapOverlay overlay: GMSOverlay!) {
+        if((overlay.title) != nil){
+            for room in _roomsData.getAllRooms(){
+                if(room.GetRoomName() == overlay.title){
+                    room.SetIsSelected(true);
+                }else{
+                    room.SetIsSelected(false);
+                }
+                
+            }
+            self.mapView.clear();
+            self.reDraw();
+        }
+        
+    }
+    
+    
+    func reDraw(){
+        dispatch_async(dispatch_get_main_queue()) {
+            do {
+                self.updateUIMap()
+            }
+            catch {
+                print("Failed to update UI")
+            }
+        }
+        
+    }
     
     
 }
