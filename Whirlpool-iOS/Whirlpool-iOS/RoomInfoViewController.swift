@@ -73,11 +73,6 @@ class RoomInfoViewController: UIViewController,UIWebViewDelegate,NSXMLParserDele
         
     }
     
-    
-    
-    
-  
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

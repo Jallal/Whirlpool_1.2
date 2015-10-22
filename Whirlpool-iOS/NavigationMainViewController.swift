@@ -57,9 +57,7 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                 self.displayRouteInfo()
             }
             else {
-                print("********************************************************")
                 print(status)
-                print("********************************************************")
             }
         })
         }
