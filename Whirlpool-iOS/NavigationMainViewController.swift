@@ -14,12 +14,12 @@ import GoogleMaps
 
 class  NavigationMainViewController: UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,GMSIndoorDisplayDelegate,UIPopoverPresentationControllerDelegate {
     var originMarker: GMSMarker!
-    
     var destinationMarker: GMSMarker!
-    
     var routePolyline: GMSPolyline!
     
-    var path1 = GMSMutablePath()
+    var markersArray: Array<GMSMarker> = []
+    var waypointsArray: Array<String> = []
+    internal var _room = RoomData()
 
     
    
@@ -28,14 +28,13 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
 
     
     @IBAction func getDirections(sender: AnyObject) {
-        
-        self.drawRoute();
+        mapPin.hidden = false;
+        //self.drawRoute();
         
     }
     
-    var markersArray: Array<GMSMarker> = []
-    var waypointsArray: Array<String> = []
-    internal var _room = RoomData()
+ 
+    
     
 
     @IBOutlet weak var mapPin: UIImageView!
@@ -49,6 +48,9 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
         self.locationManager.delegate = self
         self.locationManager.requestAlwaysAuthorization()
         self.mapView.delegate = self
+        mapPin.hidden = true;
+       mapPin.userInteractionEnabled = true
+        mapPin.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "buttonTapped:"))
         self.reDraw()
         
     }
@@ -64,11 +66,16 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     
    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     var position = _room.GetroomCenter();
+    
+    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+    print(position );
+    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+
     if(CLLocationCoordinate2DIsValid(position)){
         _room.SetIsSelected(true);
         self.mapView.clear();
         self.reDraw();
-        mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
+        mapView.camera = GMSCameraPosition(target: position, zoom: 22, bearing: 0, viewingAngle: 0)
         locationManager.stopUpdatingLocation()
         
     }else{
@@ -109,11 +116,7 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     }
     
     func reverseGeocodeCoordinate(coordinate: CLLocationCoordinate2D) {
-        path1.addCoordinate(coordinate);
-        
-        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-        print(coordinate);
-        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        //path1.addCoordinate(coordinate);
         
         // 1
         let geocoder = GMSGeocoder()
@@ -135,6 +138,18 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     }
     
 
+    
+    
+    
+    func buttonTapped(sender: UITapGestureRecognizer) {
+        if (sender.state == .Ended) {
+            print("worked")
+            self.drawRoute();
+             mapPin.hidden = true;
+        }
+    }
+    
+    
     
     
     func updateUIMap(){
@@ -245,18 +260,14 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     }
     
     func drawRoute() {
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1125481710248, longitude: -86.4690153300762))
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124869864774, longitude: -86.4690012484789))
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124646018721, longitude: -86.4691199362278))
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124322685395, longitude: -86.4692942798138))
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123357658793, longitude: -86.4692661166191))
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123596428398, longitude: -86.4691561460495))
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123725761897, longitude: -86.4690542221069))
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123795403001, longitude: -86.4690260589123))
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123273094536, longitude: -86.4690468460321))
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123327812586, longitude: -86.4690260589123))
-        
-        
+        var path1 = GMSMutablePath()
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.112460373668, longitude: -86.4693130552769))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123345222873, longitude: -86.4692755043507))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124106300692, longitude: -86.4688671380281))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124384864893, longitude: -86.4688731729984))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124812659679, longitude: -86.4686639606953))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124046608347, longitude: -86.4686451852322))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124081428882, longitude: -86.4686243981123))
         
         var polyline = GMSPolyline(path: path1)
         polyline.strokeColor = UIColor.blueColor()
