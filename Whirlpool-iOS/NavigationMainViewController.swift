@@ -19,8 +19,19 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     
     var routePolyline: GMSPolyline!
     
+    var path1 = GMSMutablePath()
+
+    
+   
     
     
+
+    
+    @IBAction func getDirections(sender: AnyObject) {
+        
+        self.drawRoute();
+        
+    }
     
     var markersArray: Array<GMSMarker> = []
     var waypointsArray: Array<String> = []
@@ -98,6 +109,11 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     }
     
     func reverseGeocodeCoordinate(coordinate: CLLocationCoordinate2D) {
+        path1.addCoordinate(coordinate);
+        
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        print(coordinate);
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         
         // 1
         let geocoder = GMSGeocoder()
@@ -200,7 +216,6 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
 
     
     func mapView(mapView: GMSMapView!, didTapOverlay overlay: GMSOverlay!) {
-        self.bringRommDetails();
         if((overlay.title) != nil){
             for room in _roomsData.getAllRooms(){
                 if(room.GetRoomName() == overlay.title){
@@ -229,8 +244,26 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
         
     }
     
-
-    
+    func drawRoute() {
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1125481710248, longitude: -86.4690153300762))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124869864774, longitude: -86.4690012484789))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124646018721, longitude: -86.4691199362278))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124322685395, longitude: -86.4692942798138))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123357658793, longitude: -86.4692661166191))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123596428398, longitude: -86.4691561460495))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123725761897, longitude: -86.4690542221069))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123795403001, longitude: -86.4690260589123))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123273094536, longitude: -86.4690468460321))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123327812586, longitude: -86.4690260589123))
+        
+        
+        
+        var polyline = GMSPolyline(path: path1)
+        polyline.strokeColor = UIColor.blueColor()
+        polyline.strokeWidth = 2.0
+        polyline.geodesic = true
+        polyline.map = mapView;
+    }
     
     
 }
