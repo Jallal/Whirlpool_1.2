@@ -270,27 +270,8 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
                     restroom.flat = true
                     restroom.map = self.mapView
                 }
-                if((room.GetRoomName()=="B240")||(room.GetRoomName()=="B215")){
-                    
-                    var position = room.GetroomCenter()
-                    var conference = GMSMarker(position: position)
-                    conference.icon = UIImage(named: "conference.jpg")
-                    conference.flat = true
-                    conference.map = self.mapView
-                }
                 if((room.GetRoomName()=="B218")){
-                    var position = room.GetroomCenter()
-                    var exit = GMSMarker(position: position)
-                    exit.icon = UIImage(named: "mbathroom.jpg")
-                    exit.flat = true
-                    exit.map = self.mapView
-                }
-                if((room.GetRoomName()=="B242")){
-                    var position = room.GetroomCenter()
-                    var stairs = GMSMarker(position: position)
-                    stairs .icon = UIImage(named: "stairs.jpg")
-                    stairs .flat = true
-                    stairs .map = self.mapView
+                   polygon.fillColor = UIColor(red: 234/255.0, green: 230/255.0, blue: 245/255.0, alpha: 1.0)//purple color
                 }
                 
                 if((room.GetRoomName()=="B250")||(room.GetRoomName()=="B205")||(room.GetRoomName()=="B218")||(room.GetRoomName()=="B217")){

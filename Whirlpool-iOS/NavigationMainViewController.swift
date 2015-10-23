@@ -12,19 +12,21 @@ import GoogleMaps
 
 
 
-class  NavigationMainViewController: UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,GMSIndoorDisplayDelegate {
+class  NavigationMainViewController: UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,GMSIndoorDisplayDelegate,UIPopoverPresentationControllerDelegate {
     var originMarker: GMSMarker!
     
     var destinationMarker: GMSMarker!
     
     var routePolyline: GMSPolyline!
     
+    
+    
+    
     var markersArray: Array<GMSMarker> = []
     var waypointsArray: Array<String> = []
     internal var _room = RoomData()
     
-    var originAddress : String = "2000 N. M-63 Benton Harbor, MI, 49022-2692"
-    var destinationAddress : String = "220 Trowbridge Rd, East Lansing, MI 48824"
+
     @IBOutlet weak var mapPin: UIImageView!
     @IBOutlet weak var Address: UILabel!
     @IBOutlet weak var mapView: GMSMapView!
@@ -149,27 +151,13 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                     restroom.flat = true
                     restroom.map = self.mapView
                 }
-                if((room.GetRoomName()=="B240")||(room.GetRoomName()=="B215")){
-                    
-                    var position = room.GetroomCenter()
-                    var conference = GMSMarker(position: position)
-                    conference.icon = UIImage(named: "conference.jpg")
-                    conference.flat = true
-                    conference.map = self.mapView
-                }
+        
                 if((room.GetRoomName()=="B218")){
                     var position = room.GetroomCenter()
                     var exit = GMSMarker(position: position)
                     exit.icon = UIImage(named: "mbathroom.jpg")
                     exit.flat = true
                     exit.map = self.mapView
-                }
-                if((room.GetRoomName()=="B242")){
-                    var position = room.GetroomCenter()
-                    var stairs = GMSMarker(position: position)
-                    stairs .icon = UIImage(named: "stairs.jpg")
-                    stairs .flat = true
-                    stairs .map = self.mapView
                 }
                 
                 if((room.GetRoomName()=="B250")||(room.GetRoomName()=="B205")||(room.GetRoomName()=="B218")||(room.GetRoomName()=="B217")){
@@ -185,6 +173,14 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                 
                 if((room.GetRoomName()=="B247") || (room.GetRoomName()=="B233-229")||(room.GetRoomName()=="B235-238")||(room.GetRoomName()=="B245-248")||(room.GetRoomName()=="B222-220")){
                     polygon.fillColor  = UIColor.whiteColor()
+                }
+                if(room.GetRoomName()=="B215"){
+                    
+                    polygon.fillColor = UIColor(red: 27/255.0, green: 188/255.0, blue: 155/255.0, alpha: 1.0)// open conferance rooms
+                }
+                if(room.GetRoomName()=="B240"){
+                    
+                    polygon.fillColor = UIColor(red: 211/255.0, green: 84/255.0, blue:0/255.0, alpha: 1.0)// busy conferance rooms
                 }
                 
                 polygon.strokeColor = UIColor(red:(108/255.0), green:(122/255.0), blue:(137/255.0), alpha:1.0);
@@ -204,6 +200,7 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
 
     
     func mapView(mapView: GMSMapView!, didTapOverlay overlay: GMSOverlay!) {
+        self.bringRommDetails();
         if((overlay.title) != nil){
             for room in _roomsData.getAllRooms(){
                 if(room.GetRoomName() == overlay.title){
@@ -231,9 +228,14 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
         }
         
     }
-}
+    
 
     
+    
+    
+}
+
+
 
 
 

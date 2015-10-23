@@ -516,7 +516,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LSJ-a7-XAY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1881" y="-1462"/>
+            <point key="canvasLocation" x="-2168" y="-1883"/>
         </scene>
         <!--Navigation Main View Controller-->
         <scene sceneID="H4D-D4-aKx">
@@ -543,7 +543,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="mapannotation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ic-ZL-uKD">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="start" translatesAutoresizingMaskIntoConstraints="NO" id="5Ic-ZL-uKD">
                                 <rect key="frame" x="273" y="278" width="53" height="46"/>
                                 <animations/>
                                 <constraints>
@@ -588,7 +588,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="afH-dV-Bq7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-359" y="-2652"/>
+            <point key="canvasLocation" x="-1323" y="-2593"/>
         </scene>
         <!--Land Mark View Controller-->
         <scene sceneID="Ts1-U3-2jN">
@@ -629,15 +629,10 @@
                             <constraint firstItem="Tuu-kz-wVp" firstAttribute="top" secondItem="QUu-oM-zQq" secondAttribute="bottom" constant="90" id="fgm-pw-hVJ"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <segue destination="9rI-gr-NXP" kind="show" identifier="NavigationSague2" id="ejU-3Q-7gg">
-                            <nil key="action"/>
-                        </segue>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qxC-cy-5io" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1102" y="-1358"/>
+            <point key="canvasLocation" x="-747" y="-296"/>
         </scene>
         <!--NavigationFULL View Controller-->
         <scene sceneID="hvX-bK-y4U">
@@ -672,7 +667,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N00-Pc-hOq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="498" y="-2634.5"/>
+            <point key="canvasLocation" x="-703" y="-333.5"/>
         </scene>
         <!--Navigations Buttons-->
         <scene sceneID="uOx-2N-XrN">
@@ -787,14 +782,11 @@
                     <navigationItem key="navigationItem" id="iTc-is-VXm"/>
                     <connections>
                         <outlet property="BottomView" destination="qO4-GK-qh9" id="cfb-3r-MVc"/>
-                        <segue destination="9rI-gr-NXP" kind="show" identifier="NavigationSague" id="S83-PZ-HEa">
-                            <nil key="action"/>
-                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yy2-FJ-kmZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1585" y="-1981"/>
+            <point key="canvasLocation" x="-1522" y="-173"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sK8-PH-Qdl">
@@ -828,10 +820,9 @@
         <image name="Search" width="222" height="32"/>
         <image name="current" width="56" height="56"/>
         <image name="directionsFrom" width="291" height="56"/>
-        <image name="mapannotation" width="64" height="64"/>
+        <image name="start" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AMZ-0r-usn"/>
         <segue reference="Ey3-g5-lxB"/>
     </inferredMetricsTieBreakers>
 </document>
