@@ -20,22 +20,17 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     var markersArray: Array<GMSMarker> = []
     var waypointsArray: Array<String> = []
     internal var _room = RoomData()
-
-    
-   
-    
-    
-
     
     @IBAction func getDirections(sender: AnyObject) {
         mapPin.hidden = false;
-        //self.drawRoute();
+        self.drawRoute();
         
     }
     
  
     
     
+    @IBOutlet weak var TopView: UIView!
 
     @IBOutlet weak var mapPin: UIImageView!
     @IBOutlet weak var Address: UILabel!
@@ -51,7 +46,10 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
         mapPin.hidden = true;
        mapPin.userInteractionEnabled = true
         mapPin.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "buttonTapped:"))
+
         self.reDraw()
+        
+    
         
     }
     
@@ -66,10 +64,6 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     
    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     var position = _room.GetroomCenter();
-    
-    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-    print(position );
-    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 
     if(CLLocationCoordinate2DIsValid(position)){
         _room.SetIsSelected(true);
@@ -85,9 +79,16 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     }
     }
     
+
+    
+   
+    
+
     override func viewDidAppear(animated: Bool) {
         
         super.viewDidAppear(animated)
+      
+    
         updateLocation(true)
     }
     
@@ -117,6 +118,9 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     
     func reverseGeocodeCoordinate(coordinate: CLLocationCoordinate2D) {
         //path1.addCoordinate(coordinate);
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        print(coordinate);
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         
         // 1
         let geocoder = GMSGeocoder()
@@ -127,7 +131,7 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                 
                 // 3
                 let lines = address.lines as! [String]
-                 self.Address.text = lines.joinWithSeparator(", ")
+                 //self.Address.text = lines.joinWithSeparator(", ")
                 
                 // 4
                 UIView.animateWithDuration(0.25) {
@@ -261,13 +265,13 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     
     func drawRoute() {
         var path1 = GMSMutablePath()
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.112460373668, longitude: -86.4693130552769))
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123345222873, longitude: -86.4692755043507))
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124106300692, longitude: -86.4688671380281))
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124384864893, longitude: -86.4688731729984))
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124812659679, longitude: -86.4686639606953))
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124046608347, longitude: -86.4686451852322))
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124081428882, longitude: -86.4686243981123))
+    path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124322685395, longitude: -86.4693868160248))
+       path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123720787532, longitude: -86.4693734049797))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123128837836, longitude: -86.4693579822779))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123531761639, longitude: -86.4691346883774))
+         path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1122599067262, longitude: -86.4691477641463))
+         path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1122621451943, longitude: -86.4691266417503))
+ 
         
         var polyline = GMSPolyline(path: path1)
         polyline.strokeColor = UIColor.blueColor()
@@ -277,7 +281,17 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     }
     
     
+    
+    
+        
+    
+    
 }
+
+
+
+
+
 
 
 

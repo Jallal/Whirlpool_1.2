@@ -530,20 +530,12 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="60y-Wl-ImA" customClass="GMSMapView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="60y-Wl-ImA" customClass="GMSMapView">
                                 <rect key="frame" x="0.0" y="115" width="600" height="437"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.1620561636" green="0.2273020942" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="User Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yGq-F5-e0c">
-                                <rect key="frame" x="0.0" y="64" width="599" height="52"/>
-                                <animations/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="start" translatesAutoresizingMaskIntoConstraints="NO" id="5Ic-ZL-uKD">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="start" translatesAutoresizingMaskIntoConstraints="NO" id="5Ic-ZL-uKD">
                                 <rect key="frame" x="273" y="278" width="53" height="46"/>
                                 <animations/>
                                 <constraints>
@@ -560,35 +552,38 @@
                                     <action selector="getDirections:" destination="9rI-gr-NXP" eventType="touchUpInside" id="CWV-Dc-PCB"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mgj-jh-ZuC">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="115"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="64w-DE-EZM" firstAttribute="top" secondItem="60y-Wl-ImA" secondAttribute="bottom" constant="-1" id="1Ml-zM-ob5"/>
-                            <constraint firstItem="5Ic-ZL-uKD" firstAttribute="centerX" secondItem="yGq-F5-e0c" secondAttribute="centerX" id="6C5-DZ-c8q"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="yGq-F5-e0c" secondAttribute="trailing" constant="-19" id="9KR-ry-fXf"/>
+                            <constraint firstItem="Mgj-jh-ZuC" firstAttribute="leading" secondItem="HmC-MI-LrU" secondAttribute="leadingMargin" constant="-20" id="0Db-it-mnm"/>
+                            <constraint firstItem="64w-DE-EZM" firstAttribute="top" secondItem="60y-Wl-ImA" secondAttribute="bottom" constant="-65" id="1Ml-zM-ob5"/>
                             <constraint firstItem="0d2-7I-zgx" firstAttribute="top" secondItem="64w-DE-EZM" secondAttribute="bottom" id="AuL-oX-pk2"/>
-                            <constraint firstItem="0d2-7I-zgx" firstAttribute="top" secondItem="60y-Wl-ImA" secondAttribute="bottom" constant="48" id="C7z-Vw-6dH"/>
-                            <constraint firstItem="60y-Wl-ImA" firstAttribute="top" secondItem="eCd-bM-pXZ" secondAttribute="bottom" constant="51" id="Cno-d0-Dxz"/>
+                            <constraint firstItem="0d2-7I-zgx" firstAttribute="top" secondItem="60y-Wl-ImA" secondAttribute="bottom" constant="-16" id="C7z-Vw-6dH"/>
+                            <constraint firstItem="60y-Wl-ImA" firstAttribute="top" secondItem="eCd-bM-pXZ" secondAttribute="bottom" constant="115" id="Cno-d0-Dxz"/>
+                            <constraint firstItem="60y-Wl-ImA" firstAttribute="top" secondItem="Mgj-jh-ZuC" secondAttribute="bottom" id="Hcx-9T-anz"/>
                             <constraint firstItem="64w-DE-EZM" firstAttribute="leading" secondItem="HmC-MI-LrU" secondAttribute="leadingMargin" constant="-21" id="I9B-o3-wIq"/>
-                            <constraint firstItem="yGq-F5-e0c" firstAttribute="top" secondItem="HmC-MI-LrU" secondAttribute="topMargin" constant="64" id="JLE-oV-B8u"/>
                             <constraint firstAttribute="trailingMargin" secondItem="60y-Wl-ImA" secondAttribute="trailing" constant="-20" id="K6Q-8Q-5Qy"/>
-                            <constraint firstItem="yGq-F5-e0c" firstAttribute="leading" secondItem="HmC-MI-LrU" secondAttribute="leadingMargin" constant="-20" id="Ogx-hR-afX"/>
+                            <constraint firstItem="Mgj-jh-ZuC" firstAttribute="centerX" secondItem="HmC-MI-LrU" secondAttribute="centerX" id="LnB-lZ-SEh"/>
                             <constraint firstItem="5Ic-ZL-uKD" firstAttribute="centerY" secondItem="HmC-MI-LrU" secondAttribute="centerY" id="fNW-sz-qIe"/>
                             <constraint firstAttribute="trailingMargin" secondItem="64w-DE-EZM" secondAttribute="trailing" constant="-19" id="g0G-Ml-aHK"/>
-                            <constraint firstItem="60y-Wl-ImA" firstAttribute="top" secondItem="yGq-F5-e0c" secondAttribute="bottom" constant="-1" id="mJ4-EQ-mFu"/>
                             <constraint firstItem="60y-Wl-ImA" firstAttribute="leading" secondItem="HmC-MI-LrU" secondAttribute="leadingMargin" constant="-20" id="rzC-j3-L7e"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Mgj-jh-ZuC" secondAttribute="trailing" constant="-20" id="ymJ-US-4Ze"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="Address" destination="yGq-F5-e0c" id="PMN-pS-Y8f"/>
+                        <outlet property="TopView" destination="Mgj-jh-ZuC" id="tum-Nv-qP9"/>
                         <outlet property="mapPin" destination="5Ic-ZL-uKD" id="gPQ-8r-o2b"/>
                         <outlet property="mapView" destination="60y-Wl-ImA" id="V48-Cv-dyy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="afH-dV-Bq7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1407" y="-2606"/>
+            <point key="canvasLocation" x="-1254" y="-2586"/>
         </scene>
         <!--Land Mark View Controller-->
         <scene sceneID="Ts1-U3-2jN">
