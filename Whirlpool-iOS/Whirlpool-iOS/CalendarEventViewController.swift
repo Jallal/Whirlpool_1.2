@@ -35,6 +35,12 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
+        
+        //[self.navigationController.navigationBar setTitleTextAttributes:
+        //@{NSForegroundColorAttributeName:[UIColor yellowColor]}];
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+        
         self.navTitle.titleView?.tintColor = UIColor.whiteColor()
         eventDescription.layer.cornerRadius = 5
         eventDescription.layer.borderColor = UIColor.grayColor().CGColor
