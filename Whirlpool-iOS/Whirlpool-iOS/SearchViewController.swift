@@ -8,6 +8,11 @@
 
 import UIKit
 
+
+protocol selectedRoomDataDelagate {
+    func userSelectedRoom(roomData: RoomData)
+}
+
 class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplayDelegate  {
     
     @IBOutlet weak var tableview: UITableView!
@@ -16,7 +21,10 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
     @IBOutlet weak var searchbar: UISearchBar!
     var filteredRooms = [RoomData]()
     var _roomToPass = RoomData()
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
+    let screenSize: CGRect = UIScreen.mainScreen().bounds
+    var roomDelagate: selectedRoomDataDelagate? = nil   //Data delgate to pass back the room choosen to the main page
+    
+    
     
     override func viewWillAppear(animated: Bool) {
         self.searchDisplayController?.active = true
@@ -55,6 +63,13 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
             cancelButtonTitle: "OK"
         )
         alert.show()
+    }
+    
+    func userSelectedRoomToSend(roomData: RoomData) {
+        if (roomDelagate != nil) {
+            roomDelagate!.userSelectedRoom(roomData)
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     // MARK: - Table View
@@ -114,7 +129,8 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
         
         
         _roomToPass = room
-        performSegueWithIdentifier("RoomInfo", sender: self)
+        userSelectedRoomToSend(_roomToPass)
+        //performSegueWithIdentifier("RoomInfo", sender: self)
         
     }
     

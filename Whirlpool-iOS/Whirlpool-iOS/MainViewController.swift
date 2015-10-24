@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UITabBarDelegate {
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UITabBarDelegate, selectedRoomDataDelagate {
     
     let buildingToImage = ["Benson Road":"Benson Road (BEN).png", "BHTC":"Benton Harbor Tech Center.png",
     "Edgewater":"Edge Water Tech Center.png", "GHQ":"GHQ.png", "Harbortown": "Harbor Town.png",
@@ -29,7 +29,16 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var _favorites = [NSManagedObject]()
     var _roomToPass = RoomData()
     var searchedForRoom = false
-    var specificSearchedRoom: RoomData?
+    var specificSearchedRoom: RoomData? = nil
+    
+    
+     func userSelectedRoom(roomData: RoomData) {
+            specificSearchedRoom = roomData
+        print("######################\(roomData.GetRoomName())############################")
+            performSegueWithIdentifier("searchSegToRoom", sender: self)
+    }
+    
+    
     
     override func viewWillAppear(animated: Bool) {
         
@@ -249,6 +258,18 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 roomVC._room = room
             }
             
+        }
+        if segue.identifier == "searchSegToRoom" {
+            let roomVC = segue.destinationViewController as! RoomInfoViewController
+            let room = specificSearchedRoom!
+            specificSearchedRoom = nil
+            print(room)
+            roomVC._room = room
+        }
+        
+        if segue.identifier == "popUpSearchSeg" {
+            let searchVC = segue.destinationViewController as! SearchViewController
+            searchVC.roomDelagate = self
         }
         
     }
