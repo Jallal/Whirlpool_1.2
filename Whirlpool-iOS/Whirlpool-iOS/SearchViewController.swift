@@ -16,11 +16,16 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
     @IBOutlet weak var searchbar: UISearchBar!
     var filteredRooms = [RoomData]()
     var _roomToPass = RoomData()
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
     
     override func viewWillAppear(animated: Bool) {
         self.searchDisplayController?.active = true
         searchbar.becomeFirstResponder()
-         _roomsData.updateRoomsInfo();
+        searchbar.backgroundColor = UIColor.clearColor()
+        searchbar.barTintColor = UIColor.whiteColor()
+        searchbar.translucent = false
+        self.navigationController?.navigationBar.hidden = true
+        _roomsData.updateRoomsInfo();
        
     }
     
@@ -113,6 +118,12 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
         
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+        return screenSize.height * 0.16
+    }
+    
+    
     // MARK: - Search Methods
     
     func filterContenctsForSearchText(searchText: String, scope: String = "Title")
@@ -147,7 +158,8 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar){
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        //self.navigationController?.popToRootViewControllerAnimated(true)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?){
