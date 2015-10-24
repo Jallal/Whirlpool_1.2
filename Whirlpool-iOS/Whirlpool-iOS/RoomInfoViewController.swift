@@ -51,36 +51,15 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
        
     }
     
-      /*override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?){
-        
-        // self.performSegueWithIdentifier("FullView", sender: nil)
-        
-        //if (segue.identifier == "RoomInfo") {
-            
-            // initialize new view controller and cast it as your view controller
-            var viewController = segue.destinationViewController as! RoomInfoViewController
-            // your new view controller should have property that will store passed value
-            viewController._room = _room
-       // }
-       
-    }*/
-    
-    
-    
-    
-    //var items = ["Hilltop 211","10 people","2 TVs","Phone"]
-    
-    
-    
     
     override func viewWillAppear(animated: Bool) {
-        
+        updateLocation(true)
         if _room.GetRoomName() != "" {
             RoomNameLabel.text = _room.GetRoomName()
         }
         
         freeBusyTimesGetRequest(_room.GetRoomEmail())
-        updateLocation(true)
+        
         
     }
     
@@ -118,7 +97,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         var position = _room.GetroomCenter();
-    
+        print("This is the position:   \(position)   ##########################")
         
         if(CLLocationCoordinate2DIsValid(position)){
              _room.SetIsSelected(true);
