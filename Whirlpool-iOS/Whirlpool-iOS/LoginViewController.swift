@@ -152,7 +152,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
                 _userCalenderInfo = UserCalenderInfo()
                 if events!.items().count > 0 {
                     for event in events!.items() as! [GTLCalendarEvent] {
-                        var location =  ""
+                        var location =  String()
                         if event.location != nil{
                             location = event.location
                         }
@@ -172,7 +172,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
                         
                         eventString += "\(startString) - \(event.summary)\n"
                         
-                        _userCalenderInfo!.addEventToCalender(CalenderEvent(CalenderEventSummary: event.summary,EventStartDate:startString,EventEndDate:endString,EventLocation :location ))
+                        _userCalenderInfo!.addEventToCalender(CalenderEvent(CalenderEventSummary: event.summary,EventStartDate:startString,EventEndDate:endString,EventLocation :location, event:event ))
                     }
                 } else {
                     eventString = "No upcoming events found."
@@ -276,11 +276,11 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
     
     func pushRoomDataToDatabase(){
         for room in _roomsData.getAllRooms() {
-            var roomLongName = room.GetRoomName()
+            let roomLongName = room.GetRoomName()
             var splitRoomName = roomLongName.componentsSeparatedByString("-")
             
             if splitRoomName.count >= 4 {
-                var locTemp = getAbbr(splitRoomName[2].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
+                let locTemp = getAbbr(splitRoomName[2].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
                 let roomTemp = splitRoomName[3].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
                 _roomsData.insertroominfo(locTemp, room: roomTemp, floor: "2", status: "Busy", email: room.GetRoomEmail(), ownership: "Online", resources: "TV", capacity: "5")
             }

@@ -24,7 +24,7 @@ class UserCalenderInfo {
     func getCalenderInfo()->[CalenderEvent] {
         if CalenderInfo.count == 0 {
             var tempCalender = [CalenderEvent]()
-            tempCalender.append(CalenderEvent(CalenderEventSummary: "No Events Today", EventStartDate: "", EventEndDate: "", EventLocation: ""))
+            tempCalender.append(CalenderEvent(CalenderEventSummary: "No Events Today", EventStartDate: "", EventEndDate: "", EventLocation: "", event:GTLCalendarEvent()))
             return tempCalender
         }
         
