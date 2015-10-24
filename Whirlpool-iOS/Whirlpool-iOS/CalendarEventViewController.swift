@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CalendarEventViewController: UIViewController,UITextFieldDelegate {
+class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate {
 
     @IBOutlet weak var eventTitle: UITextField!
     
@@ -45,15 +45,13 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate {
         eventDescription.layer.cornerRadius = 5
         eventDescription.layer.borderColor = UIColor.grayColor().CGColor
         eventDescription.layer.borderWidth = 0.5
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
-        
-    }
+        }
     
     override func viewDidLoad() {
-        self.eventTitle.delegate = self
-        self.eventLocation.delegate = self
-          eventLocation.text = location
+        eventTitle.delegate = self
+        eventLocation.delegate = self
+        eventDescription.delegate = self
+        eventLocation.text = location
     }
     
     //Create an event to add to the calender
@@ -104,7 +102,7 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate {
         return false
     }
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        if(text == "\n") {
+        if text == "\n"{
             textView.resignFirstResponder()
             return false
         }
