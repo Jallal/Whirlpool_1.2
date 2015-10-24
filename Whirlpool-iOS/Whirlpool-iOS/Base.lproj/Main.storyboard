@@ -379,65 +379,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="b50-hP-ZAl">
-                                <rect key="frame" x="0.0" y="192" width="600" height="216"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Location" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dxq-AL-tYz">
+                                <rect key="frame" x="131" y="130" width="337" height="30"/>
                                 <animations/>
-                                <date key="date" timeIntervalSinceReferenceDate="465797367.98325098">
-                                    <!--2015-10-06 04:09:27 +0000-->
-                                </date>
-                            </datePicker>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GVh-b3-5YL">
-                                <rect key="frame" x="250" y="498" width="100" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="go" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Description" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9vs-VH-8F3">
+                                <rect key="frame" x="131" y="177" width="337" height="57"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.1620561636" green="0.2273020942" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mdq-fy-eeU">
+                                <rect key="frame" x="131" y="85" width="337" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="go"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GVh-b3-5YL">
+                                <rect key="frame" x="250" y="486" width="70" height="30"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.6588235294" green="0.82352941180000006" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Go">
+                                <state key="normal" title="Add Event">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="buttonCreateEvent:" destination="pfZ-AQ-pez" eventType="touchUpInside" id="nkQ-cH-h8B"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dxq-AL-tYz">
-                                <rect key="frame" x="20" y="143" width="560" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Event Informations" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dHh-Go-Qjw">
+                                <rect key="frame" x="131" y="56" width="337" height="21"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Description" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9vs-VH-8F3">
-                                <rect key="frame" x="20" y="416" width="560" height="74"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="b50-hP-ZAl">
+                                <rect key="frame" x="132" y="248" width="337" height="216"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mdq-fy-eeU">
-                                <rect key="frame" x="20" y="61" width="560" height="30"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                                <date key="date" timeIntervalSinceReferenceDate="465797367.98325098">
+                                    <!--2015-10-06 04:09:27 +0000-->
+                                </date>
+                            </datePicker>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="9vs-VH-8F3" firstAttribute="top" secondItem="b50-hP-ZAl" secondAttribute="bottom" constant="8" id="0LN-yo-d8q"/>
-                            <constraint firstItem="Mdq-fy-eeU" firstAttribute="centerX" secondItem="qab-bI-OCe" secondAttribute="centerX" id="1Ym-k1-XIJ"/>
-                            <constraint firstItem="dxq-AL-tYz" firstAttribute="top" secondItem="Mdq-fy-eeU" secondAttribute="bottom" constant="52" id="6Rm-h5-qRn"/>
-                            <constraint firstItem="GVh-b3-5YL" firstAttribute="centerX" secondItem="qab-bI-OCe" secondAttribute="centerX" id="7bB-aH-EYx"/>
-                            <constraint firstItem="b50-hP-ZAl" firstAttribute="width" secondItem="qab-bI-OCe" secondAttribute="width" id="B1w-vf-cYa"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="9vs-VH-8F3" secondAttribute="leading" id="C66-Yr-GMH"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="dxq-AL-tYz" secondAttribute="leading" id="Fch-lW-4im"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Mdq-fy-eeU" secondAttribute="trailing" id="JDc-yp-Hqt"/>
-                            <constraint firstItem="9vs-VH-8F3" firstAttribute="centerX" secondItem="qab-bI-OCe" secondAttribute="centerX" id="TqO-bO-qol"/>
-                            <constraint firstItem="Mdq-fy-eeU" firstAttribute="top" secondItem="EOF-Fq-4mO" secondAttribute="bottom" constant="41" id="UNj-8i-izu"/>
-                            <constraint firstItem="PVn-mr-bHX" firstAttribute="top" secondItem="GVh-b3-5YL" secondAttribute="bottom" constant="8" id="Zfx-k7-HMl"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="dxq-AL-tYz" secondAttribute="trailing" id="bwj-wm-l1P"/>
-                            <constraint firstItem="b50-hP-ZAl" firstAttribute="top" secondItem="dxq-AL-tYz" secondAttribute="bottom" constant="19" id="eas-e0-NHz"/>
-                            <constraint firstItem="b50-hP-ZAl" firstAttribute="centerX" secondItem="qab-bI-OCe" secondAttribute="centerX" id="hw0-tr-IQH"/>
-                            <constraint firstItem="dxq-AL-tYz" firstAttribute="centerX" secondItem="qab-bI-OCe" secondAttribute="centerX" id="lKv-Mw-NUj"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="9vs-VH-8F3" secondAttribute="trailing" id="lUY-Vy-W1U"/>
-                            <constraint firstItem="GVh-b3-5YL" firstAttribute="top" secondItem="9vs-VH-8F3" secondAttribute="bottom" constant="8" symbolic="YES" id="muv-nn-Kr3"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="Mdq-fy-eeU" secondAttribute="leading" id="sdV-Lc-Mc3"/>
-                        </constraints>
                     </view>
                     <connections>
                         <outlet property="eventDatePicker" destination="b50-hP-ZAl" id="qss-Vo-TTK"/>
@@ -448,7 +436,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LSJ-a7-XAY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1223" y="-2599"/>
+            <point key="canvasLocation" x="-1324" y="-2553"/>
         </scene>
         <!--Navigation Main View Controller-->
         <scene sceneID="H4D-D4-aKx">

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CalendarEventViewController: UIViewController {
+class CalendarEventViewController: UIViewController,UITextFieldDelegate {
 
     @IBOutlet weak var eventTitle: UITextField!
     
@@ -20,6 +20,7 @@ class CalendarEventViewController: UIViewController {
     
     var guest = String()
     var location = String()
+    var kbHeight: CGFloat!
     
     
     @IBAction func buttonCreateEvent(sender: AnyObject) {
@@ -33,11 +34,15 @@ class CalendarEventViewController: UIViewController {
         eventDescription.layer.cornerRadius = 5
         eventDescription.layer.borderColor = UIColor.grayColor().CGColor
         eventDescription.layer.borderWidth = 0.5
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         
     }
     
     override func viewDidLoad() {
-        eventLocation.text = location
+        self.eventTitle.delegate = self
+        self.eventLocation.delegate = self
+          eventLocation.text = location
     }
     
     //Create an event to add to the calender
@@ -83,7 +88,33 @@ class CalendarEventViewController: UIViewController {
     }
 
     
-    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
+    }
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    func keyboardWillShow(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            if let keyboardSize =  (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+                 kbHeight  = keyboardSize.height
+                self.animateTextField(true)
+            }
+        }
+    }
+    func keyboardWillHide(notification: NSNotification) {
+        self.animateTextField(false)
+    }
+    func animateTextField(up: Bool) {
+        var movement = (up ? -kbHeight : kbHeight)
+        
+        UIView.animateWithDuration(0.3, animations: {
+            self.view.frame = CGRectOffset(self.view.frame, 0, movement)
+        })
+    }
     
     
     
