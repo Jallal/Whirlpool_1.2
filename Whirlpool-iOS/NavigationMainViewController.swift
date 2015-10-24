@@ -264,9 +264,13 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
         polyline.geodesic = true
         polyline.map = mapView;
     }
-    
+
     
 }
+
+
+
+
 
 
 
