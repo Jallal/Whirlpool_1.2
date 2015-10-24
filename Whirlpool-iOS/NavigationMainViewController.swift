@@ -12,22 +12,26 @@ import GoogleMaps
 
 
 
-class  NavigationMainViewController: UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,GMSIndoorDisplayDelegate {
-    let baseURLDirections = "https://maps.googleapis.com/maps/api/directions/json?"
-    
-        
+class  NavigationMainViewController: UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,GMSIndoorDisplayDelegate,UIPopoverPresentationControllerDelegate {
     var originMarker: GMSMarker!
-    
     var destinationMarker: GMSMarker!
-    
     var routePolyline: GMSPolyline!
     
     var markersArray: Array<GMSMarker> = []
-    
     var waypointsArray: Array<String> = []
+    internal var _room = RoomData()
     
-    var originAddress : String = "2000 N. M-63 Benton Harbor, MI, 49022-2692"
-    var destinationAddress : String = "220 Trowbridge Rd, East Lansing, MI 48824"
+    @IBAction func getDirections(sender: AnyObject) {
+        mapPin.hidden = false;
+        self.drawRoute();
+        
+    }
+    
+ 
+    
+    
+    @IBOutlet weak var TopView: UIView!
+
     @IBOutlet weak var mapPin: UIImageView!
     @IBOutlet weak var Address: UILabel!
     @IBOutlet weak var mapView: GMSMapView!
@@ -39,7 +43,13 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
         self.locationManager.delegate = self
         self.locationManager.requestAlwaysAuthorization()
         self.mapView.delegate = self
+        mapPin.hidden = true;
+       mapPin.userInteractionEnabled = true
+        mapPin.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "buttonTapped:"))
+
         self.reDraw()
+        
+    
         
     }
     
@@ -53,14 +63,32 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     
     
    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
-      mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
+    var position = _room.GetroomCenter();
+
+    if(CLLocationCoordinate2DIsValid(position)){
+        _room.SetIsSelected(true);
+        self.mapView.clear();
+        self.reDraw();
+        mapView.camera = GMSCameraPosition(target: position, zoom: 22, bearing: 0, viewingAngle: 0)
+        locationManager.stopUpdatingLocation()
+        
+    }else{
+        position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
+        mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
         locationManager.stopUpdatingLocation()
     }
+    }
     
+
+    
+   
+    
+
     override func viewDidAppear(animated: Bool) {
         
         super.viewDidAppear(animated)
+      
+    
         updateLocation(true)
     }
     
@@ -89,6 +117,10 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     }
     
     func reverseGeocodeCoordinate(coordinate: CLLocationCoordinate2D) {
+        //path1.addCoordinate(coordinate);
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        print(coordinate);
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         
         // 1
         let geocoder = GMSGeocoder()
@@ -99,7 +131,7 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                 
                 // 3
                 let lines = address.lines as! [String]
-                 self.Address.text = lines.joinWithSeparator(", ")
+                 //self.Address.text = lines.joinWithSeparator(", ")
                 
                 // 4
                 UIView.animateWithDuration(0.25) {
@@ -110,6 +142,18 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     }
     
 
+    
+    
+    
+    func buttonTapped(sender: UITapGestureRecognizer) {
+        if (sender.state == .Ended) {
+            print("worked")
+            self.drawRoute();
+             mapPin.hidden = true;
+        }
+    }
+    
+    
     
     
     func updateUIMap(){
@@ -142,27 +186,13 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                     restroom.flat = true
                     restroom.map = self.mapView
                 }
-                if((room.GetRoomName()=="B240")||(room.GetRoomName()=="B215")){
-                    
-                    var position = room.GetroomCenter()
-                    var conference = GMSMarker(position: position)
-                    conference.icon = UIImage(named: "conference.jpg")
-                    conference.flat = true
-                    conference.map = self.mapView
-                }
+        
                 if((room.GetRoomName()=="B218")){
                     var position = room.GetroomCenter()
                     var exit = GMSMarker(position: position)
                     exit.icon = UIImage(named: "mbathroom.jpg")
                     exit.flat = true
                     exit.map = self.mapView
-                }
-                if((room.GetRoomName()=="B242")){
-                    var position = room.GetroomCenter()
-                    var stairs = GMSMarker(position: position)
-                    stairs .icon = UIImage(named: "stairs.jpg")
-                    stairs .flat = true
-                    stairs .map = self.mapView
                 }
                 
                 if((room.GetRoomName()=="B250")||(room.GetRoomName()=="B205")||(room.GetRoomName()=="B218")||(room.GetRoomName()=="B217")){
@@ -178,6 +208,14 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                 
                 if((room.GetRoomName()=="B247") || (room.GetRoomName()=="B233-229")||(room.GetRoomName()=="B235-238")||(room.GetRoomName()=="B245-248")||(room.GetRoomName()=="B222-220")){
                     polygon.fillColor  = UIColor.whiteColor()
+                }
+                if(room.GetRoomName()=="B215"){
+                    
+                    polygon.fillColor = UIColor(red: 27/255.0, green: 188/255.0, blue: 155/255.0, alpha: 1.0)// open conferance rooms
+                }
+                if(room.GetRoomName()=="B240"){
+                    
+                    polygon.fillColor = UIColor(red: 211/255.0, green: 84/255.0, blue:0/255.0, alpha: 1.0)// busy conferance rooms
                 }
                 
                 polygon.strokeColor = UIColor(red:(108/255.0), green:(122/255.0), blue:(137/255.0), alpha:1.0);
@@ -224,9 +262,38 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
         }
         
     }
+    
+    func drawRoute() {
+        var path1 = GMSMutablePath()
+    path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124322685395, longitude: -86.4693868160248))
+       path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123720787532, longitude: -86.4693734049797))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123128837836, longitude: -86.4693579822779))
+        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123531761639, longitude: -86.4691346883774))
+         path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1122599067262, longitude: -86.4691477641463))
+         path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1122621451943, longitude: -86.4691266417503))
+ 
+        
+        var polyline = GMSPolyline(path: path1)
+        polyline.strokeColor = UIColor.blueColor()
+        polyline.strokeWidth = 2.0
+        polyline.geodesic = true
+        polyline.map = mapView;
+    }
+    
+    
+    
+    
+        
+    
+    
 }
 
-    
+
+
+
+
+
+
 
 
 
