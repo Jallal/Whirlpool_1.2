@@ -97,29 +97,14 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate {
         textField.resignFirstResponder()
         return false
     }
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-    func keyboardWillShow(notification: NSNotification) {
-        if let userInfo = notification.userInfo {
-            if let keyboardSize =  (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-                 kbHeight  = keyboardSize.height
-                self.animateTextField(true)
-            }
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n") {
+            textView.resignFirstResponder()
+            return false
         }
+        return true
     }
-    func keyboardWillHide(notification: NSNotification) {
-        self.animateTextField(false)
-    }
-    func animateTextField(up: Bool) {
-        var movement = (up ? -kbHeight : kbHeight)
-        
-        UIView.animateWithDuration(0.3, animations: {
-            self.view.frame = CGRectOffset(self.view.frame, 0, movement)
-        })
-    }
+
     
     
     

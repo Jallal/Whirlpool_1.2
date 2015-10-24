@@ -130,6 +130,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func parseLocationString(location: String)->String {
+        if !location.containsString("-") {
+            return String()
+        }
         if location == String() {
             return ""
         }
