@@ -23,8 +23,6 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     
     @IBAction func getDirections(sender: AnyObject) {
         mapPin.hidden = false;
-        self.drawRoute();
-        
     }
     
  
@@ -46,11 +44,7 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
         mapPin.hidden = true;
        mapPin.userInteractionEnabled = true
         mapPin.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "buttonTapped:"))
-
         self.reDraw()
-        
-    
-        
     }
     
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
@@ -147,9 +141,8 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     
     func buttonTapped(sender: UITapGestureRecognizer) {
         if (sender.state == .Ended) {
-            print("worked")
             self.drawRoute();
-             mapPin.hidden = true;
+            mapPin.hidden = true;
         }
     }
     
@@ -265,13 +258,13 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
     
     func drawRoute() {
         var path1 = GMSMutablePath()
-    path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124322685395, longitude: -86.4693868160248))
-       path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123720787532, longitude: -86.4693734049797))
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123128837836, longitude: -86.4693579822779))
-        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1123531761639, longitude: -86.4691346883774))
-         path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1122599067262, longitude: -86.4691477641463))
-         path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1122621451943, longitude: -86.4691266417503))
- 
+       path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124842505816, longitude: -86.4693117141724))
+         path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124501762335, longitude: -86.4693019911647))
+         path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.112486240324, longitude: -86.4691266417503))
+         path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1125648350986, longitude: -86.4691413938999))
+         path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1125710530355, longitude: -86.4691202715039))
+        
+     
         
         var polyline = GMSPolyline(path: path1)
         polyline.strokeColor = UIColor.blueColor()

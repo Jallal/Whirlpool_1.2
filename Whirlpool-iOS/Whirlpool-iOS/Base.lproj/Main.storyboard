@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yKG-nJ-qvB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A279b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yKG-nJ-qvB">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
-        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
@@ -478,8 +478,10 @@
                                     <constraint firstAttribute="height" constant="44" id="Xoc-Vu-Kmi"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="qC9-Gl-rRb"/>
                                 </constraints>
+
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
                                 <color key="textColor" red="0.16862745100000001" green="0.33725490200000002" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -597,61 +599,56 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="start" translatesAutoresizingMaskIntoConstraints="NO" id="5Ic-ZL-uKD">
-                                <rect key="frame" x="273" y="278" width="53" height="46"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="53" id="6AN-tc-PfI"/>
-                                    <constraint firstAttribute="height" constant="46" id="XhD-et-z60"/>
-                                </constraints>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="64w-DE-EZM">
                                 <rect key="frame" x="-1" y="487" width="600" height="49"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Get Directions"/>
+                                <state key="normal" title="Get Directions">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="getDirections:" destination="9rI-gr-NXP" eventType="touchUpInside" id="CWV-Dc-PCB"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mgj-jh-ZuC" customClass="Rainbow" customModule="Whirlpool_iOS" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="115"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="60y-Wl-ImA" customClass="GMSMapView">
+                                <rect key="frame" x="0.0" y="0.0" width="599" height="487"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="60y-Wl-ImA" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="start" translatesAutoresizingMaskIntoConstraints="NO" id="5Ic-ZL-uKD">
+                                <rect key="frame" x="256" y="206" width="86" height="75"/>
                                 <animations/>
-                                <color key="backgroundColor" red="0.1620561636" green="0.2273020942" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="5m4-re-d5Q"/>
+                                    <constraint firstAttribute="width" secondItem="5Ic-ZL-uKD" secondAttribute="height" multiplier="53:46" id="ONX-Y1-3ni"/>
+                                    <constraint firstAttribute="height" constant="75" id="upa-QW-aXs"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Mgj-jh-ZuC" firstAttribute="leading" secondItem="HmC-MI-LrU" secondAttribute="leadingMargin" constant="-20" id="0Db-it-mnm"/>
                             <constraint firstItem="64w-DE-EZM" firstAttribute="top" secondItem="60y-Wl-ImA" secondAttribute="bottom" id="1Ml-zM-ob5"/>
                             <constraint firstItem="0d2-7I-zgx" firstAttribute="top" secondItem="64w-DE-EZM" secondAttribute="bottom" id="AuL-oX-pk2"/>
                             <constraint firstItem="0d2-7I-zgx" firstAttribute="top" secondItem="60y-Wl-ImA" secondAttribute="bottom" constant="49" id="C7z-Vw-6dH"/>
                             <constraint firstItem="60y-Wl-ImA" firstAttribute="top" secondItem="eCd-bM-pXZ" secondAttribute="bottom" id="Cno-d0-Dxz"/>
-                            <constraint firstItem="60y-Wl-ImA" firstAttribute="top" secondItem="Mgj-jh-ZuC" secondAttribute="bottom" constant="-115" id="Hcx-9T-anz"/>
                             <constraint firstItem="64w-DE-EZM" firstAttribute="leading" secondItem="HmC-MI-LrU" secondAttribute="leadingMargin" constant="-21" id="I9B-o3-wIq"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="60y-Wl-ImA" secondAttribute="trailing" constant="-20" id="K6Q-8Q-5Qy"/>
-                            <constraint firstItem="Mgj-jh-ZuC" firstAttribute="centerX" secondItem="HmC-MI-LrU" secondAttribute="centerX" id="LnB-lZ-SEh"/>
-                            <constraint firstItem="5Ic-ZL-uKD" firstAttribute="centerY" secondItem="HmC-MI-LrU" secondAttribute="centerY" id="fNW-sz-qIe"/>
+                            <constraint firstItem="5Ic-ZL-uKD" firstAttribute="centerX" secondItem="60y-Wl-ImA" secondAttribute="centerX" id="IuJ-sD-LOc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="60y-Wl-ImA" secondAttribute="trailing" constant="-19" id="K6Q-8Q-5Qy"/>
                             <constraint firstAttribute="trailingMargin" secondItem="64w-DE-EZM" secondAttribute="trailing" constant="-19" id="g0G-Ml-aHK"/>
                             <constraint firstItem="60y-Wl-ImA" firstAttribute="leading" secondItem="HmC-MI-LrU" secondAttribute="leadingMargin" constant="-20" id="rzC-j3-L7e"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Mgj-jh-ZuC" secondAttribute="trailing" constant="-20" id="ymJ-US-4Ze"/>
+                            <constraint firstItem="5Ic-ZL-uKD" firstAttribute="centerY" secondItem="60y-Wl-ImA" secondAttribute="centerY" id="vbF-YB-qjp"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="TopView" destination="Mgj-jh-ZuC" id="tum-Nv-qP9"/>
                         <outlet property="mapPin" destination="5Ic-ZL-uKD" id="gPQ-8r-o2b"/>
                         <outlet property="mapView" destination="60y-Wl-ImA" id="V48-Cv-dyy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="afH-dV-Bq7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2253" y="-1513"/>
+            <point key="canvasLocation" x="-2229" y="-1663"/>
         </scene>
         <!--Land Mark View Controller-->
         <scene sceneID="Ts1-U3-2jN">
