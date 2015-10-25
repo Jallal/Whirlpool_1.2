@@ -20,7 +20,6 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
     
     
     var editingEvent = false
-    var addingEvent = false
     
     var guest = String()
     var location = String()
