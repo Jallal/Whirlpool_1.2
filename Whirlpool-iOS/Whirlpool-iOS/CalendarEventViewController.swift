@@ -10,6 +10,8 @@ import UIKit
 
 class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate {
 
+    @IBOutlet weak var EndEvent: UILabel!
+    @IBOutlet weak var startEvent: UILabel!
     @IBOutlet weak var eventTitle: UITextField!
     
     @IBOutlet weak var eventLocation: UITextField!
@@ -17,6 +19,16 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
     @IBOutlet weak var eventDatePicker: UIDatePicker!
     
     @IBOutlet weak var eventDescription: UITextView!
+    @IBAction func MyDatePicker(sender: AnyObject) {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"
+        var strDate = dateFormatter.stringFromDate(eventDatePicker.date)
+        self.startEvent.text = strDate
+    }
+    
+    
+    
+   
     
     
     var editingEvent = false
