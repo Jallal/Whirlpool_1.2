@@ -341,7 +341,7 @@
                                         <animations/>
                                         <state key="normal" image="Add Event Button"/>
                                         <connections>
-                                            <segue destination="pfZ-AQ-pez" kind="show" id="0tP-nm-TGn"/>
+                                            <segue destination="pfZ-AQ-pez" kind="show" identifier="bookRoomSeg" id="0tP-nm-TGn"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -886,7 +886,7 @@
         <image name="start" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="OV2-DF-bGW"/>
+        <segue reference="0tP-nm-TGn"/>
         <segue reference="Ey3-g5-lxB"/>
     </inferredMetricsTieBreakers>
 </document>
