@@ -29,7 +29,8 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     internal var _freeBusyDayInterval = 31.0
     internal var _roomFreeBusyTimes = [busyTime]()
     let locationManager = CLLocationManager()
-    var items : Array<String> = []
+    //var items : Array<String> = []
+      var RoomAmenities = ["Capacity","Whiteboard","Monitor","Polycom","Phone","Floor","VIDEO CONFERENCE"]
     
     @IBAction func cancelRoomView(sender: AnyObject) {
         self.navigationController?.popToRootViewControllerAnimated(true)
@@ -45,7 +46,8 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
             sleep(1)
             alert.dismissViewControllerAnimated(true, completion: nil)
         }
-        items = _room.GetRoomResources();
+        //items = _room.GetRoomResources();
+        RoomAmenities = _room.GetRoomResources();
        
     }
     
@@ -57,7 +59,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
             RoomNameLabel.text = _room.GetRoomName()
         }
         
-        freeBusyTimesGetRequest(_room.GetRoomEmail())
+        //freeBusyTimesGetRequest(_room.GetRoomEmail())
         
         
     }
@@ -141,7 +143,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         
     }
     
-    func freeBusyTimesGetRequest(roomEmail: String) {
+    /*func freeBusyTimesGetRequest(roomEmail: String) {
         var freeBusyTicket = GTLServiceTicket()
         let requestItem = GTLCalendarFreeBusyRequestItem()
         requestItem.identifier = roomEmail
@@ -183,17 +185,17 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
             }
             self.roomInfo.reloadData()
         })
-    }
+    }*/
     
     
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+   /* func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return _roomFreeBusyTimes.count
         
-    }
+    }*/
     
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    /*func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
             cell?.textLabel?.font = UIFont(name: "HelveticaNeue-Thin", size: 20.0)
             cell!.textLabel?.textColor = UIColor.blackColor()
@@ -201,10 +203,56 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
             cell!.textLabel!.text = cellTextTimeZone
             return cell!
         
-    }
+    }*/
     
     
 
+    
+    
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return RoomAmenities.count
+        
+    }
+    
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell")
+        
+        /*if (cell == nil) {
+        cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "cell")
+        }*/
+        
+        cell!.textLabel!.text = RoomAmenities[indexPath.row]
+        if(cell!.textLabel!.text=="Capacity"){
+            cell!.detailTextLabel!.text = "15"
+            
+        }else if(cell!.textLabel!.text=="Whiteboard"){
+             cell!.detailTextLabel!.text = "Yes"
+            
+        }else if(cell!.textLabel!.text=="Monitor"){
+            cell!.detailTextLabel!.text = "NO"
+            
+        }else if(cell!.textLabel!.text=="Polycom"){
+            cell!.detailTextLabel!.text = "Yes"
+            
+        }else if(cell!.textLabel!.text=="Phone"){
+            cell!.detailTextLabel!.text = "Yes"
+            
+        }else if(cell!.textLabel!.text=="Floor"){
+            cell!.detailTextLabel!.text = "2nd floor south"
+            
+        }else if(cell!.textLabel!.text=="VIDEO CONFERENCE"){
+             cell!.detailTextLabel!.text = "Yes"
+            
+        }
+        
+        return cell!
+        
+    }
+    
+    
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "bookRoomSeg" {
             var eventVC = segue.destinationViewController as! CalendarEventViewController
