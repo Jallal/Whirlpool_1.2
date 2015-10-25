@@ -213,7 +213,7 @@
                                         <animations/>
                                         <state key="normal" image="Add Event Button"/>
                                         <connections>
-                                            <segue destination="pfZ-AQ-pez" kind="show" id="OV2-DF-bGW"/>
+                                            <segue destination="pfZ-AQ-pez" kind="show" identifier="eventHandleSeg" id="OV2-DF-bGW"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -769,7 +769,7 @@
         <image name="start" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="OV2-DF-bGW"/>
         <segue reference="Ey3-g5-lxB"/>
-        <segue reference="0tP-nm-TGn"/>
     </inferredMetricsTieBreakers>
 </document>

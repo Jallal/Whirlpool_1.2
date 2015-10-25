@@ -139,6 +139,17 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return locationSplit[2].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
     }
     
+    func checkIfRoomLocation(locationString: String)->String {
+        let roomToFind = locationString.componentsSeparatedByString("-")
+        if roomToFind.count > 3 {
+            let roomName = roomToFind[3].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+            return roomName
+        }
+        else {
+            return String()
+        }
+    }
+    
 //    func determineTimeTill(timeOfEvent:
     
     
@@ -242,13 +253,22 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         editAction.backgroundColor = UIColor(patternImage: UIImage(named: "Edit + Shape.png")!)
         // 5
         
-        let navigationAction = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "\t") { (action: UITableViewRowAction!, indexPath: NSIndexPath!) -> Void in
-            self.performSegueWithIdentifier("relevantSeg", sender: self)
+        let locationToParseForRoom =  _userCalenderInfo!.getCalenderInfo()[indexPath.row].location
+        
+        if checkIfRoomLocation(locationToParseForRoom!) != String() {
+            let navigationAction = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "\t") { (action: UITableViewRowAction!, indexPath: NSIndexPath!) -> Void in
+                let locationToParseForRoom =  _userCalenderInfo!.getCalenderInfo()[indexPath.row].location
+                let potentialRoom = self.checkIfRoomLocation(locationToParseForRoom!)
+                
+                    self._roomToPass.SetRoomName(potentialRoom)
+                    self.performSegueWithIdentifier("relevantSeg", sender: self)
+            }
+            navigationAction.backgroundColor = UIColor(patternImage: UIImage(named: "Navigate + Shape.png")!)
+            return [deleteAction,editAction, navigationAction]
         }
-        
-        navigationAction.backgroundColor = UIColor(patternImage: UIImage(named: "Navigate + Shape.png")!)
-        
-        return [deleteAction,editAction, navigationAction]
+        else{
+            return [deleteAction,editAction]
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

@@ -18,6 +18,10 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
     
     @IBOutlet weak var eventDescription: UITextView!
     
+    
+    var editingEvent = false
+    var addingEvent = false
+    
     var guest = String()
     var location = String()
     var kbHeight: CGFloat!
