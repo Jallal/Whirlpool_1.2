@@ -35,6 +35,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var _roomToPass = RoomData()
     var searchedForRoom = false
     var specificSearchedRoom: RoomData? = nil
+    var clickedEdit = false
+    var editingEventToPass: CalenderEvent?
     
     
      func userSelectedRoom(roomData: RoomData) {
@@ -228,7 +230,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // 1
         let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "\t" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
             // 2
-            let deleteMenu = UIAlertController(title: nil, message: "Delete this event", preferredStyle: .ActionSheet)
+            /*let deleteMenu = UIAlertController(title: nil, message: "Delete this event", preferredStyle: .ActionSheet)
             
             let deleteAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Default, handler: nil)
             let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
@@ -237,13 +239,17 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             deleteMenu.addAction(cancelAction)
             
             
-            self.presentViewController(deleteMenu, animated: true, completion: nil)
+            self.presentViewController(deleteMenu, animated: true, completion: nil)*/
+            _userCalenderInfo!.getCalenderInfo()[indexPath.row].deleteNewEvent()
+            _userCalenderInfo!.CalenderInfo.removeAtIndex(indexPath.row)
+            self.calender.reloadData()
+            
         })
         deleteAction.backgroundColor = UIColor(patternImage: UIImage(named: "Delete + Shape.png")!)
         // 3
         let editAction = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "\t" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
             // 4
-            let editMenu = UIAlertController(title: nil, message: "Edit this event", preferredStyle: .ActionSheet)
+            /*let editMenu = UIAlertController(title: nil, message: "Edit this event", preferredStyle: .ActionSheet)
             
             let eventEditAction = UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: nil)
             let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
@@ -252,7 +258,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             editMenu.addAction(cancelAction)
             
             
-            self.presentViewController(editMenu, animated: true, completion: nil)
+            self.presentViewController(editMenu, animated: true, completion: nil)*/
+            self.clickedEdit = true
+            self.editingEventToPass = _userCalenderInfo?.getCalenderInfo()[indexPath.row]
+            self.performSegueWithIdentifier("eventHandleSeg", sender: self)
+            
+            
         })
         
         editAction.backgroundColor = UIColor(patternImage: UIImage(named: "Edit + Shape.png")!)
@@ -297,6 +308,15 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if segue.identifier == "popUpSearchSeg" {
             let searchVC = segue.destinationViewController as! SearchViewController
             searchVC.roomDelagate = self
+        }
+        if segue.identifier == "eventHandleSeg" {
+            if clickedEdit == true {
+                let editEventVC = segue.destinationViewController as! CalendarEventViewController
+                editEventVC.editingEvent = editingEventToPass
+                editEventVC.editingEventBool = true
+                editingEventToPass = nil
+                clickedEdit = false
+            }
         }
         
     }

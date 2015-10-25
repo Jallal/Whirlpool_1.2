@@ -103,6 +103,20 @@ class CalenderEvent {
     }
     
     
+    internal func deleteNewEvent(){
+        var deleteEventTicket = GTLServiceTicket()
+        let query =  GTLQueryCalendar.queryForEventsDeleteWithCalendarId("primary", eventId: self.event.identifier)
+        deleteEventTicket = service.executeQuery(query, completionHandler: { (ticket, object, error) -> Void in
+            if error == nil {
+                print("No Error")
+            }
+            else {
+                NSLog(error.localizedDescription)
+            }
+        })
+    }
+    
+    
     
     
 }

@@ -16,22 +16,31 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
     
     @IBOutlet weak var eventLocation: UITextField!
     
-    @IBOutlet weak var eventDatePicker: UIDatePicker!
-    
+    @IBOutlet weak var eventDatePickerStart: UIDatePicker!
+    @IBOutlet weak var eventDatePickerEnd: UIDatePicker!
     @IBOutlet weak var eventDescription: UITextView!
     @IBAction func MyDatePicker(sender: AnyObject) {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"
-        var strDate = dateFormatter.stringFromDate(eventDatePicker.date)
+        let strDate = dateFormatter.stringFromDate(eventDatePickerStart.date)
         self.startEvent.text = strDate
     }
     
+    @IBAction func datePickerEndTimeAction(sender: AnyObject) {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"
+        let endDate = dateFormatter.stringFromDate(eventDatePickerEnd.date)
+        self.EndEvent.text = endDate
+        
+    }
     
+    @IBOutlet weak var addOrEditEventButton: UIBarButtonItem!
     
    
     
     
-    var editingEvent = false
+    var editingEventBool = false
+    var editingEvent:CalenderEvent?
     
     var guest = String()
     var location = String()
@@ -41,8 +50,14 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     @IBAction func buttonAddEvent(sender: AnyObject) {
-        let newEvent = createAnEvent()
-        addNewEvent(newEvent)
+        if editingEventBool {
+            let editedEvent = createAnEvent()
+            addEditedEvent(editedEvent)
+        }
+        else {
+            let newEvent = createAnEvent()
+            addNewEvent(newEvent)
+        }
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -50,8 +65,9 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         
         super.viewWillAppear(animated)
         
-        //[self.navigationController.navigationBar setTitleTextAttributes:
-        //@{NSForegroundColorAttributeName:[UIColor yellowColor]}];
+        if editingEventBool {
+            setViewToEditing()
+        }
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         
@@ -67,18 +83,32 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         eventLocation.text = location
     }
     
+    
+    internal func setViewToEditing(){
+        self.title = "Editing Event"
+        eventTitle.text = editingEvent?.title
+        eventLocation.text = editingEvent?.location
+        eventDescription.text = editingEvent?.event.descriptionProperty
+        eventDatePickerStart.date = (editingEvent?.event.start.dateTime.date)!
+        eventDatePickerEnd.date = (editingEvent?.event.end.dateTime.date)!
+    }
+    
+    func editEventButtonClicked() {
+        print("In the edit event button")
+    }
+    
     //Create an event to add to the calender
     internal func createAnEvent()->GTLCalendarEvent{
         let newEvent = GTLCalendarEvent()
         newEvent.summary = eventTitle.text
         newEvent.descriptionProperty = eventDescription.text
         newEvent.location = eventLocation.text
-        let startDate = NSDate(timeInterval: 3600, sinceDate: NSDate())
+        let startDate = eventDatePickerStart.date
         
         newEvent.start = GTLCalendarEventDateTime()
         newEvent.start.dateTime = GTLDateTime(date: startDate, timeZone: NSTimeZone.localTimeZone())
         
-        let endDate = NSDate(timeInterval: 3600 * 2, sinceDate: NSDate())
+        let endDate = eventDatePickerEnd.date
         
         newEvent.end = GTLCalendarEventDateTime()
         newEvent.end.dateTime = GTLDateTime(date: endDate, timeZone: NSTimeZone.localTimeZone())
@@ -95,13 +125,24 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
     }
     
     internal func addNewEvent(event : GTLCalendarEvent){
-        var editEventTicket = GTLServiceTicket()
+        var addEventTicket = GTLServiceTicket()
         let query =  GTLQueryCalendar.queryForEventsInsertWithObject(event, calendarId: "primary")
-        editEventTicket = service.executeQuery(query, completionHandler: { (ticket, object, error) -> Void in
-            //editEventTicket = nil
+        addEventTicket = service.executeQuery(query, completionHandler: { (ticket, object, error) -> Void in
             if error == nil {
-                let event = object as! GTLCalendarEvent
-                NSLog(event.summary)
+                print("Added Sucessfully")
+            }
+            else {
+                NSLog(error.localizedDescription)
+            }
+        })
+    }
+    
+    internal func addEditedEvent(event: GTLCalendarEvent){
+        var editEventTicket = GTLServiceTicket()
+        let query =  GTLQueryCalendar.queryForEventsUpdateWithObject(event, calendarId: "primary", eventId: editingEvent?.event.identifier)
+        editEventTicket = service.executeQuery(query, completionHandler: { (ticket, object, error) -> Void in
+            if error == nil {
+                print("Edited Sucessfully")
             }
             else {
                 NSLog(error.localizedDescription)
