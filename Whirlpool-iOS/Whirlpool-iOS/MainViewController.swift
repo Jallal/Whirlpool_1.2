@@ -17,6 +17,11 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         "Hilltop 150":"Hilltop 150 South.png", "Hilltop 211":"Hilltop 211 North.png", "MMC":"US Benton Harbor MMC.png", "R&E":"R&E.png", "Riverview":"Riverview (RV).png", "St. Joe Tech Center":"St Joe Tech Center.png", "":"Whirlpool Default.png"]
     
     
+    @IBAction func favoriteListButton(sender: AnyObject) {
+            self.navigationController?.navigationBar.hidden = true
+            
+        
+    }
     
     @IBOutlet weak var calender: UITableView!
 
