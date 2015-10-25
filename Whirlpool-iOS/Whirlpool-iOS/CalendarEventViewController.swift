@@ -18,13 +18,12 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
     
     @IBOutlet weak var eventDescription: UITextView!
     
-    @IBOutlet weak var navTitle: UINavigationItem!
     var guest = String()
     var location = String()
     var kbHeight: CGFloat!
     
     @IBAction func buttonCancel(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     @IBAction func buttonAddEvent(sender: AnyObject) {
         let newEvent = createAnEvent()
@@ -41,7 +40,6 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         
-        self.navTitle.titleView?.tintColor = UIColor.whiteColor()
         eventDescription.layer.cornerRadius = 5
         eventDescription.layer.borderColor = UIColor.grayColor().CGColor
         eventDescription.layer.borderWidth = 0.5

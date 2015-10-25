@@ -30,12 +30,10 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     internal var _roomFreeBusyTimes = [busyTime]()
     let locationManager = CLLocationManager()
     var items : Array<String> = []
-
     
-    
-    
-    
-    
+    @IBAction func cancelRoomView(sender: AnyObject) {
+        self.navigationController?.popToRootViewControllerAnimated(true)
+    }
     @IBAction func favoriteButton(sender: UIButton) {
         let alert = UIAlertController(title: _room.GetRoomName(), message: "New Favorite Added", preferredStyle: .Alert)
         let attributeString = NSAttributedString(string: "New Favorite", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(15),
@@ -53,6 +51,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     
     
     override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         updateLocation(true)
         if _room.GetRoomName() != "" {
             RoomNameLabel.text = _room.GetRoomName()
@@ -196,9 +195,9 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
-    
-            cell!.textLabel?.textColor = UIColor.whiteColor()
-            let cellTextTimeZone = _roomFreeBusyTimes[indexPath.row].startString  + " - " + _roomFreeBusyTimes[indexPath.row].endString
+            cell?.textLabel?.font = UIFont(name: "HelveticaNeue-Thin", size: 20.0)
+            cell!.textLabel?.textColor = UIColor.blackColor()
+          let cellTextTimeZone = _roomFreeBusyTimes[indexPath.row].startString  + " - " + _roomFreeBusyTimes[indexPath.row].endString
             cell!.textLabel!.text = cellTextTimeZone
             return cell!
         

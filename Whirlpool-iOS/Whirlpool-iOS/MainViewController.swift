@@ -34,7 +34,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
      func userSelectedRoom(roomData: RoomData) {
             specificSearchedRoom = roomData
-        print("######################\(roomData.GetRoomName())############################")
             performSegueWithIdentifier("searchSegToRoom", sender: self)
     }
     
