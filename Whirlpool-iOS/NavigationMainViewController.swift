@@ -44,6 +44,7 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
         mapPin.hidden = true;
        mapPin.userInteractionEnabled = true
         mapPin.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "buttonTapped:"))
+          self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         self.reDraw()
     }
     
@@ -72,17 +73,11 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
         locationManager.stopUpdatingLocation()
     }
     }
-    
-
-    
-   
-    
 
     override func viewDidAppear(animated: Bool) {
         
         super.viewDidAppear(animated)
-      
-    
+        
         updateLocation(true)
     }
     

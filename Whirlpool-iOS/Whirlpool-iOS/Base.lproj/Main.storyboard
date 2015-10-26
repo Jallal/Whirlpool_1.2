@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
@@ -478,10 +479,8 @@
                                     <constraint firstAttribute="height" constant="44" id="Xoc-Vu-Kmi"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="qC9-Gl-rRb"/>
                                 </constraints>
-
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
                                 <color key="textColor" red="0.16862745100000001" green="0.33725490200000002" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
-
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -502,6 +501,7 @@
                             </label>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="tG5-Rp-gFM">
                                 <rect key="frame" x="0.0" y="456" width="600" height="80"/>
+                                <animations/>
                                 <date key="date" timeIntervalSinceReferenceDate="467497376.09731501">
                                     <!--2015-10-25 20:22:56 +0000-->
                                 </date>
