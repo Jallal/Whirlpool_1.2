@@ -38,6 +38,7 @@
 		847B58751BB9BF9800E22862 /* CalenderEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B58731BB9BF9800E22862 /* CalenderEvent.swift */; settings = {ASSET_TAGS = (); }; };
 		847B58761BB9DA2900E22862 /* CalenderCell.swift in Resources */ = {isa = PBXBuildFile; fileRef = 847B58721BB9BF9800E22862 /* CalenderCell.swift */; };
 		847D91B61BD07B4C0019AEAB /* RVCB2B_P_ROOMS.json in Resources */ = {isa = PBXBuildFile; fileRef = 847D91B51BD07B4C0019AEAB /* RVCB2B_P_ROOMS.json */; settings = {ASSET_TAGS = (); }; };
+		84E2B69E1BDE87BC004D0838 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E2B69D1BDE87BC004D0838 /* FavoritesViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		E8D6C8C38C4578E457FECB6A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 687F69D2BC4BA870FA74ACA3 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +101,7 @@
 		847B58721BB9BF9800E22862 /* CalenderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderCell.swift; sourceTree = "<group>"; };
 		847B58731BB9BF9800E22862 /* CalenderEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderEvent.swift; sourceTree = "<group>"; };
 		847D91B51BD07B4C0019AEAB /* RVCB2B_P_ROOMS.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RVCB2B_P_ROOMS.json; sourceTree = "<group>"; };
+		84E2B69D1BDE87BC004D0838 /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		EBE3433BF44B93823A77301D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -180,6 +182,7 @@
 				420838581BB8EB5400AB15F1 /* LandMarkViewController.swift */,
 				6EB781231BCB3C9800166FC2 /* RoomData.swift */,
 				845E18791BCB1A6900224DBA /* RoomsData.swift */,
+				84E2B69D1BDE87BC004D0838 /* FavoritesViewController.swift */,
 				4288AAA31BB83093003EC9EF /* Main.storyboard */,
 				4288AAA61BB83093003EC9EF /* Assets.xcassets */,
 				4288AAA81BB83093003EC9EF /* LaunchScreen.storyboard */,
@@ -419,6 +422,7 @@
 				42C01DFC1BB8369A00C2EEAD /* GTLCalendar_Sources.m in Sources */,
 				4288AAA01BB83093003EC9EF /* AppDelegate.swift in Sources */,
 				847B58741BB9BF9800E22862 /* CalenderCell.swift in Sources */,
+				84E2B69E1BDE87BC004D0838 /* FavoritesViewController.swift in Sources */,
 				421545B31BB8533F00AE1B23 /* LoginViewController.swift in Sources */,
 				427BAEDF1BB9F31100B3F63A /* NavigationMainViewController.swift in Sources */,
 				421545B21BB8533F00AE1B23 /* MainViewController.swift in Sources */,

@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UITabBarDelegate, selectedRoomDataDelagate {
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UITabBarDelegate, selectedRoomDataDelagate, selectedFavoriteDelagate {
     
     let buildingToImage = ["Benson Road":"Benson Road (BEN).png", "BHTC":"Benton Harbor Tech Center.png",
     "Edgewater":"Edge Water Tech Center.png", "GHQ":"GHQ.png", "Harbortown": "Harbor Town.png",
@@ -43,12 +43,17 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             specificSearchedRoom = roomData
             performSegueWithIdentifier("searchSegToRoom", sender: self)
     }
+    func userSelectedFavorite(favRoom: RoomData) {
+        _roomToPass = favRoom
+        performSegueWithIdentifier("relevantSeg", sender: self)
+    }
     
     
     
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
+        self.calender.reloadData()
         //Check to see if we are coming from the search page and we need to segue to room info page
         if searchedForRoom == true {
             performSegueWithIdentifier("RoomInfo", sender: self)
@@ -77,6 +82,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }
+        
     }
     
     
@@ -169,9 +175,15 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell.titleLabel!.textColor = UIColor.blackColor()
             cell.dateLabelCalender!.textColor = UIColor.blackColor()
             cell.titleLabel!.text =  calenderInfoTable![indexPath.row].title
+        if calenderInfoTable![indexPath.row].location?.componentsSeparatedByString("-").count >= 3 {
             let buidlingName = parseLocationString(calenderInfoTable![indexPath.row].location!)
             let buildingPicString = buildingToImage[buidlingName]
             cell.buildingImage.image = UIImage(named: buildingPicString!)
+        }
+        else {
+            let buildingName = buildingToImage[String()]
+            cell.buildingImage.image = UIImage(named: buildingName!)
+        }
             cell.dateLabelCalender!.text = calenderInfoTable![indexPath.row].startDate! + "-" + calenderInfoTable![indexPath.row].endDate!
             cell.timeTill.text = calenderInfoTable![indexPath.row].getTimeUntilEventStart()
             return cell
@@ -295,7 +307,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if room.GetRoomName() != String(){
                 roomVC._room = room
             }
-            
+            _roomToPass = RoomData()
         }
         if segue.identifier == "searchSegToRoom" {
             let roomVC = segue.destinationViewController as! RoomInfoViewController
@@ -308,6 +320,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if segue.identifier == "popUpSearchSeg" {
             let searchVC = segue.destinationViewController as! SearchViewController
             searchVC.roomDelagate = self
+        }
+        if segue.identifier == "popoverFavSeg" {
+            let favVC = segue.destinationViewController as! FavoriteViewController
+            favVC.favoriteRoomDelagate = self
         }
         if segue.identifier == "eventHandleSeg" {
             if clickedEdit == true {
