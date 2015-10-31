@@ -279,7 +279,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
                     var position = room.GetroomCenter()
                     print(position);
                     var marker = GMSMarker(position: position)
-                    marker.appearAnimation = kGMSMarkerAnimationPop
+                    //marker.appearAnimation = kGMSMarkerAnimationPop
                     // marker.icon = UIImage(named: "restroom.jpg")
                     marker.icon = UIImage(named: "mapannotation.png")
                     marker.flat = true

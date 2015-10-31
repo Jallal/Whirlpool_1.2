@@ -156,7 +156,7 @@ class  NavigationMainViewController: UIViewController , CLLocationManagerDelegat
                 if(room.GetIsSelected()){
                     var position = room.GetroomCenter()
                     var marker = GMSMarker(position: position)
-                    marker.appearAnimation = kGMSMarkerAnimationPop
+                    //marker.appearAnimation = kGMSMarkerAnimationPop
                     // marker.icon = UIImage(named: "restroom.jpg")
                     marker.icon = UIImage(named: "mapannotation.png")
                     marker.flat = true
