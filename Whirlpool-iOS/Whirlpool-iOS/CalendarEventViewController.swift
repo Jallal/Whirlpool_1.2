@@ -9,6 +9,13 @@
 import UIKit
 
 class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate {
+    
+    var editingEventBool = false
+    var editingEvent:CalenderEvent?
+    
+    var guest = String()
+    var location = String()
+    var kbHeight: CGFloat!
 
     @IBOutlet weak var EndEvent: UILabel!
     @IBOutlet weak var startEvent: UILabel!
@@ -25,7 +32,6 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         let strDate = dateFormatter.stringFromDate(eventDatePickerStart.date)
         self.startEvent.text = strDate
     }
-    
     @IBAction func datePickerEndTimeAction(sender: AnyObject) {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"
@@ -33,19 +39,7 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         self.EndEvent.text = endDate
         
     }
-    
     @IBOutlet weak var addOrEditEventButton: UIBarButtonItem!
-    
-   
-    
-    
-    var editingEventBool = false
-    var editingEvent:CalenderEvent?
-    
-    var guest = String()
-    var location = String()
-    var kbHeight: CGFloat!
-    
     @IBAction func buttonCancel(sender: AnyObject) {
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
@@ -61,6 +55,7 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
@@ -74,6 +69,7 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         eventDescription.layer.cornerRadius = 5
         eventDescription.layer.borderColor = UIColor.grayColor().CGColor
         eventDescription.layer.borderWidth = 0.5
+        setUpDatePicker()
         }
     
     override func viewDidLoad() {
@@ -81,6 +77,18 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         eventLocation.delegate = self
         eventDescription.delegate = self
         eventLocation.text = location
+    }
+    
+    internal func setUpDatePicker(){
+        
+        eventDatePickerStart.timeZone = NSTimeZone.localTimeZone()
+        eventDatePickerEnd.timeZone = NSTimeZone.localTimeZone()
+        
+        eventDatePickerStart.minuteInterval = 5
+        eventDatePickerEnd.minuteInterval = 5
+        
+        eventDatePickerStart.minimumDate = NSDate()
+        eventDatePickerEnd.minimumDate = NSDate()
     }
     
     
@@ -91,10 +99,6 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         eventDescription.text = editingEvent?.event.descriptionProperty
         eventDatePickerStart.date = (editingEvent?.event.start.dateTime.date)!
         eventDatePickerEnd.date = (editingEvent?.event.end.dateTime.date)!
-    }
-    
-    func editEventButtonClicked() {
-        print("In the edit event button")
     }
     
     //Create an event to add to the calender
@@ -120,8 +124,6 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
             newEvent.attendees = [eventGuest]
         }
         return newEvent
-        
-        
     }
     
     internal func addNewEvent(event : GTLCalendarEvent){
