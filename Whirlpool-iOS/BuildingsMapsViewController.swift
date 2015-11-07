@@ -23,6 +23,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     //the message on the notification view
     var  label   : UILabel   = UILabel();
 
+    @IBOutlet weak var getDirections: UIButton!
     //origin marker during navigation
     var originMarker: GMSMarker!
     //distination marker for navigation
@@ -33,11 +34,18 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     internal var _room = RoomData()
     //the picker for the floors
    @IBOutlet weak var floorPicker: UITableView!
-   
     
-    //Button to request direction
+    
+    @IBAction func helpButton(sender: AnyObject) {
+        
+        self.floorPicker.hidden = !self.floorPicker.hidden
+        self.Address.hidden = !self.Address.hidden
+        self.getDirections.hidden = !self.getDirections.hidden
+        
+    }
+    
     @IBAction func getDirections(sender: AnyObject) {
-        mapPin.hidden = false;
+      self.mapPin.hidden = !self.mapPin.hidden
         
     }
     // The pin that helps locat the user
@@ -52,16 +60,18 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         /***************************************/
-        var position = _room.GetroomCenter();
+         var position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
         if(CLLocationCoordinate2DIsValid(position)){
             _room.SetIsSelected(true);
             self.mapView.clear();
             self.reDraw();
+            position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
             mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
+            
             locationManager.stopUpdatingLocation()
             
         }else{
-            position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
+             position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
             mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
             locationManager.stopUpdatingLocation()
         }
@@ -73,9 +83,10 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         self.mapView.delegate = self
         
         //the pin to help locat the user
-        mapPin.hidden = true;
-        floorPicker.hidden = true
-        Address.hidden = true
+        self.mapPin.hidden = true;
+        self.floorPicker.hidden = true
+        self.Address.hidden = true
+        self.getDirections.hidden = true
         mapPin.userInteractionEnabled = true
         mapPin.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "buttonTapped:"))
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
@@ -267,7 +278,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                 if(room.GetIsSelected()){
                     var position = room.GetroomCenter()
                     var marker = GMSMarker(position: position)
-                    marker.appearAnimation = kGMSMarkerAnimationPop
+                    //marker.appearAnimation = kGMSMarkerAnimationPop
                     marker.icon = UIImage(named: "mapannotation.png")
                     marker.flat = true
                     marker.map = self.mapView

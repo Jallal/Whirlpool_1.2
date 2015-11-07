@@ -25,6 +25,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     @IBOutlet weak var RoomNameLabel: UILabel!
     @IBOutlet weak var newView: UIView!
     internal var _room = RoomData()
+    var _roomsData = RoomsData()
 
 
     /**
@@ -75,11 +76,13 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     
     
     override func viewWillAppear(animated: Bool) {
+       
        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         updateLocation(true)
         if _room.GetRoomName() != "" {
             RoomNameLabel.text = _room.GetRoomName()
         }
+         _roomsData.getTheGeoJson("RV")
     }
     
     override func viewDidLoad() {
@@ -249,9 +252,9 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
                     self.roomInfo.reloadData()
                     let position = room.GetroomCenter()
                     let marker = GMSMarker(position: position)
-                    marker.appearAnimation = kGMSMarkerAnimationPop
                     marker.icon = UIImage(named: "mapannotation.png")
                     marker.flat = true
+                     //marker.appearAnimation = kGMSMarkerAnimationPop
                     marker.map = self.mapView
                     polygon.fillColor = UIColor(red:(137/255.0), green:196/255.0, blue:244/255.0, alpha:1.0);
                 }else{

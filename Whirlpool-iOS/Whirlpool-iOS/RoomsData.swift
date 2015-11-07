@@ -60,6 +60,8 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
     
     
     func updateRoomsInfo(building_id : String ,room_name : String,RoomInformation : RoomData) {
+        
+        
          dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
         let urlPath = "https://whirlpool-indoor-maps.appspot.com/room?building_name=\(building_id)&room_name=\(room_name)"
         guard let endpoint = NSURL(string: urlPath) else { print("Error creating endpoint");return }
@@ -70,7 +72,6 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
                 do {
                 
                     if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as?  NSDictionary {
-                        
                         if let features = json["amenities"] as? NSArray {
                              for resource in features {
                                 RoomInformation.SetRoomResources((resource as? String)!)
@@ -120,32 +121,59 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
     
     
     
-    func getTheGeoJson(){
-         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-        let urlPath = "https://whirlpoolmaps.appspot.com/geojson?building_name=RV"
-        guard let endpoint = NSURL(string: urlPath) else { print("Error creating endpoint");return }
-        let request = NSMutableURLRequest(URL:endpoint)
-        NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
-            do {
-                
+    func getTheGeoJson(building_id : String){
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            let urlPath = "https://whirlpool-indoor-maps.appspot.com/blobstore/ops?building_name=\(building_id)"
+            guard let endpoint = NSURL(string: urlPath) else { print("Error creating endpoint");return }
+            let request = NSMutableURLRequest(URL:endpoint)
+            NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
                 do {
-                    
-                    if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as?  NSDictionary {
-                      print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-                        print(json)
-
+                    if let jsonDict = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? NSDictionary {
+                          if let features = jsonDict["floors"] as? [[String: AnyObject]]{
+                            for da in  features{
+                            
+                                if let cap = da["geojson"] as? NSString{
+                                    
+                                   let file = "file.txt"
+                                    let text = cap
+                                    if let dir : NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
+                                        let path = dir.stringByAppendingPathComponent(file);
+                                        
+                                        //writing
+                                        do {
+                                            try text.writeToFile(path, atomically: false, encoding: NSUTF8StringEncoding)
+                                        }
+                                        catch {/* error handling here */}
+                                        
+                                        //reading
+                                        do {
+                                           //let text2 = try NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding)
+                                            self.parseJson(path,Building_id: building_id);
+                                          
+                                        }
+                                        catch {/* error handling here */}
+                                    }
+                                    
+                                
+                              
+                                }
+                                
+                            }
+                           
+                            
+                        
+                        }
+                        
                     }
-                    
+                } catch let error as NSError {
+                    // error handling
+                } catch {
+                    print(error)
                 }
-            } catch let error as JSONError {
-                print(error.rawValue)
-            } catch {
-                print(error)
-            }
-            
-            }.resume()
-    })
-
+                
+                }.resume()
+        })
+        
 }
 
 
@@ -154,20 +182,20 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
 
 
     //func parseJson( filename : String,Building_id : String){
-    func parseJson( filename : String){
+    func parseJson(jsonPath : String,var Building_id : String){
         
-        self.getTheGeoJson()
+        //self.getTheGeoJson()
         
         
         // Parsing GeoJSON can be CPU intensive, do it on a background thread
-        var Building_id : String =  "RV"
+        //var Building_id : String =  "RV"
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             
             // Get the path for example.geojson in the app's bundle
             
-            let jsonPath = NSBundle.mainBundle().pathForResource(filename, ofType: "json")
-            let jsonData = NSData(contentsOfFile: jsonPath!)
+            //let jsonPath = NSBundle.mainBundle().pathForResource(filename, ofType: "json")
+            let jsonData = NSData(contentsOfFile: jsonPath)
             
             do {
                 

@@ -28,6 +28,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
     private var att = [String:String]()
     private var nextResourceUrlPage = "https://apps-apis.google.com/a/feeds/calendar/resource/2.0/whirlpool.com/"
     private var previousResourceUrlPage = String()
+    private var daysToGrab = 1.0
     
     private let scopes = [kGTLAuthScopeCalendar, "https://apps-apis.google.com/a/feeds/calendar/resource/"] //Add in a scope for Calender Resource API
     
@@ -52,6 +53,8 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             clientID: kClientID,
             clientSecret: kClientSecret
         )
+        
+       _roomsData.getTheGeoJson("RV")
          
     }
     
@@ -112,11 +115,6 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             )
         }
         
-       for file in AllFiles{
-        _roomsData.parseJson(file)
-        
-        }
-        
     }
     
     // Construct a query and get a list of upcoming events from the user calendar
@@ -124,6 +122,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
         let query = GTLQueryCalendar.queryForEventsListWithCalendarId("primary")
         query.maxResults = 10
         query.timeMin = GTLDateTime(date: NSDate(), timeZone: NSTimeZone.localTimeZone())
+        query.timeMax = GTLDateTime(date: NSDate().dateByAddingTimeInterval(60.0*60.0*24.0*daysToGrab), timeZone: NSTimeZone.localTimeZone())
         query.singleEvents = true
         query.orderBy = kGTLCalendarOrderByStartTime
         service.executeQuery(
