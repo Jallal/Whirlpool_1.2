@@ -10,22 +10,20 @@ import UIKit
 import CoreData
 
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UITabBarDelegate, selectedRoomDataDelagate, selectedFavoriteDelagate {
+class MainViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate,UITabBarDelegate, selectedRoomDataDelagate, selectedFavoriteDelagate, UICollectionViewDelegateFlowLayout {
     
     let buildingToImage = ["Benson Road":"Benson Road (BEN).png", "BHTC":"Benton Harbor Tech Center.png",
     "Edgewater":"Edge Water Tech Center.png", "GHQ":"GHQ.png", "Harbortown": "Harbor Town.png",
         "Hilltop 150":"Hilltop 150 South.png", "Hilltop 211":"Hilltop 211 North.png", "MMC":"US Benton Harbor MMC.png", "R&E":"R&E.png", "Riverview":"Riverview (RV).png", "St. Joe Tech Center":"St Joe Tech Center.png", "":"Whirlpool Default.png"]
     
+    let sectionInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
     
     @IBAction func favoriteListButton(sender: AnyObject) {
             self.navigationController?.navigationBar.hidden = true
-            
-        
     }
     
     @IBOutlet weak var calender: UITableView!
-
-    //@IBOutlet weak var relevant: UITableView!
+    @IBOutlet weak var buildingScroller: UICollectionView!
     
     var items = ["one","two"]
     var tableData = ["nine","six"]
@@ -105,8 +103,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //self.relevant.backgroundColor = self.view.backgroundColor
         self.calender.separatorStyle = .SingleLine
         
-        //self.relevant.delegate = self
-        //self.relevant.separatorStyle = .None
+        self.buildingScroller.delegate = self
+        self.buildingScroller.dataSource = self
         
         self.navigationItem.setHidesBackButton(true, animated:true);
         _roomsData.updateRoomsInfo();
@@ -129,11 +127,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return 0
             }
         }
-        /*if tableView == relevant {
-            return _favorites.count
-        }*/
         return 0
-        
     }
     
     
@@ -168,13 +162,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var calenderInfoTable = _userCalenderInfo?.getCalenderInfo()
-        //if(tableView == self.calender){
-            let cell = tableView.dequeueReusableCellWithIdentifier("CalenderCellID") as! CalenderCell
-            cell.dateLabelCalender!.font = UIFont(name: "HelveticaNeue-Thin", size: 12.0)
-            cell.titleLabel!.font = UIFont(name: "HelveticaNeue-Thin", size: 20.0)
-            cell.titleLabel!.textColor = UIColor.blackColor()
-            cell.dateLabelCalender!.textColor = UIColor.blackColor()
-            cell.titleLabel!.text =  calenderInfoTable![indexPath.row].title
+        let cell = tableView.dequeueReusableCellWithIdentifier("CalenderCellID") as! CalenderCell
+        cell.dateLabelCalender!.font = UIFont(name: "HelveticaNeue-Thin", size: 12.0)
+        cell.titleLabel!.font = UIFont(name: "HelveticaNeue-Thin", size: 20.0)
+        cell.titleLabel!.textColor = UIColor.blackColor()
+        cell.dateLabelCalender!.textColor = UIColor.blackColor()
+        cell.titleLabel!.text =  calenderInfoTable![indexPath.row].title
         if calenderInfoTable![indexPath.row].location?.componentsSeparatedByString("-").count >= 3 {
             let buidlingName = parseLocationString(calenderInfoTable![indexPath.row].location!)
             let buildingPicString = buildingToImage[buidlingName]
@@ -187,18 +180,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell.dateLabelCalender!.text = calenderInfoTable![indexPath.row].startDate! + "-" + calenderInfoTable![indexPath.row].endDate!
             cell.timeTill.text = calenderInfoTable![indexPath.row].getTimeUntilEventStart()
             return cell
-       // }
-        /*else{
-            let cell = tableView.dequeueReusableCellWithIdentifier("RelevantCellID") as! CalenderCell
-            cell.dateLabelRelavant!.font = UIFont(name: "HelveticaNeue-Thin", size: 16.0)
-            cell.titleLabelRelavant!.font = UIFont(name: "HelveticaNeue-Thin", size: 24.0)
-            cell.dateLabelRelavant!.backgroundColor = self.view.backgroundColor
-            cell.titleLabel!.textColor = UIColor.whiteColor()
-            cell.dateLabelRelavant!.textColor = UIColor(red: 242.0/255, green: 241.0/255, blue: 239.0/255, alpha: 1.0)
-            cell.titleLabelRelavant!.text =  _favorites[indexPath.row].valueForKey("roomName") as? String
-            cell.dateLabelRelavant!.text = "12/13/2015"
-            return cell
-        }*/
     }
     
     
@@ -298,6 +279,28 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             return [deleteAction,editAction]
         }
     }
+    
+    
+    // Here we are implimenting the UICollectionView function needed for the virtical building scroller
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) ->UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("buildingScollerCell", forIndexPath: indexPath) as! BuildingCollectionViewCell
+    cell.buildingButton.setImage(UIImage(named: "R&E"), forState: UIControlState.Normal)
+    
+    return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    return CGSize(width: 75, height: 75)
+    }
+    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
