@@ -162,8 +162,5 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         }
         return true
     }
-
-    
-    
     
 }

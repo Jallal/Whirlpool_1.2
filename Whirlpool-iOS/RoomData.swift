@@ -17,25 +17,41 @@ public class RoomData {
     private var RoomEmail = String()
     private var IsSelected = false;
     private var roomCenter = CLLocationCoordinate2DMake(0,0)
-    private var roomLOcation = String()
-    private var roomCapacity  = String()
+    private var roomLocation = String()
+    private var roomCapacity  = Int()
     private var roomPolycomExt = String()
-    private var roomAvResources = [String]()
+    private var roomAvResources = [String()]
     private var roomOwnership = String()
     private var roomNotes = String()
     private var roomstatus = String()
     private var roomFloor = String()
+    private var roomExt = String()
+     private var roomType = String()
     
     
     
+    
+    public func SetRoomType(type : String){
+        self.roomType = type
+    }
+    public func GetRoomType()->String{
+        return self.roomType
+    }
+    
+    
+    public func SetRoomExt(ext : String){
+        self.roomExt = ext;
+    }
+    public func GetRoomExt()->String{
+        return self.roomExt
+    }
     
     public func SetroomCenter(x : double_t, y : double_t){
-        
         self.roomCenter.latitude  = x;
         self.roomCenter.longitude = y;
-
         
     }
+    
     public func GetroomCenter() -> CLLocationCoordinate2D{
         return self.roomCenter
         
@@ -51,6 +67,12 @@ public class RoomData {
     public func GetIsSelected() -> Bool{
         return self.IsSelected;
         
+    }
+    public func SetRoomStatus(stat : String ){
+        self.roomstatus = stat;
+    }
+    public func GetRoomStatus()->String{
+        return self.roomstatus;
     }
     
     
@@ -74,14 +96,10 @@ public class RoomData {
     }
     
     
-    
-    
     public func SetRoomName(name: String){
         self.RoomName = name
     }
     
-    
-
     
     public func SetRoomEmail(email: String){
         self.RoomEmail = email
@@ -89,17 +107,23 @@ public class RoomData {
     
     
     public func SetRoomLocation(loca: String){
-        self.roomLOcation = loca
+        self.roomLocation = loca
+    }
+    
+    public func GetRoomLocation() -> String{
+        return self.roomLocation
     }
     
     
-    public func SetRoomCapacity(capacity: String){
+    public func SetRoomCapacity(capacity: Int){
         self.roomCapacity = capacity
+    }
+    public func GetRoomCapacity()->Int{
+        return self.roomCapacity
     }
     
     public func SetRoomResources(resources: String){
-        let AvResources = resources.componentsSeparatedByString(",")
-        self.roomAvResources = AvResources
+        self.roomAvResources.append(resources)
     }
     public func GetRoomResources()->[String]{
         return self.roomAvResources
@@ -113,10 +137,6 @@ public class RoomData {
     public func SetRoomNotes(notes: String){
         
         self.roomNotes = notes
-    }
-    
-    public func SetRoomStatus(status: String){
-    self.roomstatus  = status
     }
     
     public func SetRoomPolycomExt( poly : String){

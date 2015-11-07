@@ -23,6 +23,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
+    
+    
+
     @IBOutlet weak var calender: UITableView!
 
     //@IBOutlet weak var relevant: UITableView!
@@ -109,7 +112,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //self.relevant.separatorStyle = .None
         
         self.navigationItem.setHidesBackButton(true, animated:true);
-        _roomsData.updateRoomsInfo();
     
     }
 
@@ -334,6 +336,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 clickedEdit = false
             }
         }
+
         
     }
 
