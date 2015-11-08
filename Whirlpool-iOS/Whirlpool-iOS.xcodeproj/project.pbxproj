@@ -13,7 +13,6 @@
 		421545B51BB8533F00AE1B23 /* RoomInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545AF1BB8533F00AE1B23 /* RoomInfoViewController.swift */; };
 		421545BC1BB85FD600AE1B23 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 421545BB1BB85FD600AE1B23 /* MapKit.framework */; };
 		4254961E1BBBA1B100B8CC5C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4254961D1BBBA1B100B8CC5C /* CoreLocation.framework */; };
-		4279D1D31BDF35480059B0C3 /* RVC_A_01A_ROOMS.json in Resources */ = {isa = PBXBuildFile; fileRef = 4279D1D21BDF35480059B0C3 /* RVC_A_01A_ROOMS.json */; };
 		427BAEDF1BB9F31100B3F63A /* BuildingsMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427BAEDE1BB9F31100B3F63A /* BuildingsMapsViewController.swift */; };
 		4288AAA01BB83093003EC9EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4288AA9F1BB83093003EC9EF /* AppDelegate.swift */; };
 		4288AAA51BB83093003EC9EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4288AAA31BB83093003EC9EF /* Main.storyboard */; };
@@ -36,7 +35,6 @@
 		847B58741BB9BF9800E22862 /* CalenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B58721BB9BF9800E22862 /* CalenderCell.swift */; };
 		847B58751BB9BF9800E22862 /* CalenderEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B58731BB9BF9800E22862 /* CalenderEvent.swift */; };
 		847B58761BB9DA2900E22862 /* CalenderCell.swift in Resources */ = {isa = PBXBuildFile; fileRef = 847B58721BB9BF9800E22862 /* CalenderCell.swift */; };
-		847D91B61BD07B4C0019AEAB /* RVCB2B_P_ROOMS.json in Resources */ = {isa = PBXBuildFile; fileRef = 847D91B51BD07B4C0019AEAB /* RVCB2B_P_ROOMS.json */; };
 		84E2B69E1BDE87BC004D0838 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E2B69D1BDE87BC004D0838 /* FavoritesViewController.swift */; };
 		E8D6C8C38C4578E457FECB6A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 687F69D2BC4BA870FA74ACA3 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -67,7 +65,6 @@
 		421545B81BB85FB200AE1B23 /* Whirlpool-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Whirlpool-iOS.entitlements"; sourceTree = "<group>"; };
 		421545BB1BB85FD600AE1B23 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		4254961D1BBBA1B100B8CC5C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		4279D1D21BDF35480059B0C3 /* RVC_A_01A_ROOMS.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RVC_A_01A_ROOMS.json; sourceTree = "<group>"; };
 		427BAEDE1BB9F31100B3F63A /* BuildingsMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingsMapsViewController.swift; path = ../BuildingsMapsViewController.swift; sourceTree = "<group>"; };
 		4288AA9C1BB83093003EC9EF /* Whirlpool-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Whirlpool-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4288AA9F1BB83093003EC9EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "Whirlpool-iOS/AppDelegate.swift"; sourceTree = "<group>"; };
@@ -98,7 +95,6 @@
 		845E18791BCB1A6900224DBA /* RoomsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomsData.swift; sourceTree = "<group>"; };
 		847B58721BB9BF9800E22862 /* CalenderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderCell.swift; sourceTree = "<group>"; };
 		847B58731BB9BF9800E22862 /* CalenderEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderEvent.swift; sourceTree = "<group>"; };
-		847D91B51BD07B4C0019AEAB /* RVCB2B_P_ROOMS.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RVCB2B_P_ROOMS.json; sourceTree = "<group>"; };
 		84E2B69D1BDE87BC004D0838 /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		EBE3433BF44B93823A77301D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -137,8 +133,6 @@
 		4288AA931BB83093003EC9EF = {
 			isa = PBXGroup;
 			children = (
-				4279D1D21BDF35480059B0C3 /* RVC_A_01A_ROOMS.json */,
-				847D91B51BD07B4C0019AEAB /* RVCB2B_P_ROOMS.json */,
 				42C6AFF21BC4216C00245A2B /* web */,
 				4288AA9F1BB83093003EC9EF /* AppDelegate.swift */,
 				42C01DFA1BB8369A00C2EEAD /* GTLCalendar_Sources.m */,
@@ -348,12 +342,10 @@
 			files = (
 				847B58761BB9DA2900E22862 /* CalenderCell.swift in Resources */,
 				42C01DF81BB8364700C2EEAD /* GTMOAuth2ViewTouch.xib in Resources */,
-				847D91B61BD07B4C0019AEAB /* RVCB2B_P_ROOMS.json in Resources */,
 				4288AAAA1BB83093003EC9EF /* LaunchScreen.storyboard in Resources */,
 				42C6AFF31BC4216D00245A2B /* web in Resources */,
 				4288AAA71BB83093003EC9EF /* Assets.xcassets in Resources */,
 				4288AAA51BB83093003EC9EF /* Main.storyboard in Resources */,
-				4279D1D31BDF35480059B0C3 /* RVC_A_01A_ROOMS.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

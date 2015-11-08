@@ -14,8 +14,8 @@ import Foundation
 
 
 /**
- * The hatter view. Displays an image with a hat drawn over
- * it that we can manipulate.
+ * This class Present the details of a particular room in  a building
+ * show the room information in the loawe half of the screen and the map in at the top of the screen
  */
 
 class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationManagerDelegate,GMSMapViewDelegate,GMSIndoorDisplayDelegate,UIScrollViewDelegate {
@@ -25,7 +25,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     @IBOutlet weak var RoomNameLabel: UILabel!
     @IBOutlet weak var newView: UIView!
     internal var _room = RoomData()
-    //var _roomsData = RoomsData()
+    var CurrentFloor : Int = Int()
     
     @IBOutlet weak var mapPin: UIImageView!
     
@@ -46,7 +46,15 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     }
     
     //The number of floors in the given building
-    var floors = ["4","3","2","1"]
+    var floors = [String](count: _FloorData.getNumberOfFloors()+1, repeatedValue: "")
+    var FloorSize = _FloorData.getNumberOfFloors()
+    
+    func populateFloors(){
+        for index  in (1...FloorSize).reverse(){
+            floors[index] = "\(index)"
+            
+        }
+    }
     
     
     /**
@@ -99,10 +107,12 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     override func viewWillAppear(animated: Bool) {
        
        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-        updateLocation(true)
+       
+        self.populateFloors()
         if _room.GetRoomName() != "" {
             RoomNameLabel.text = _room.GetRoomName()
         }
+         updateLocation(true)
        
     }
     
@@ -113,18 +123,21 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         self.mapView.delegate = self
         self.mapView.clear();
         self.mapView.center = self.view.center
-          _roomsData.getTheGeoJson("RV")// Change this the building being passed
         self.mapPin.hidden = true;
         self.floorPicker.hidden = true
         self.getDirections.hidden = true
-        self.reDraw()
         self.floorPicker.reloadData()
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
+         _roomsData.getTheGeoJson("RV")// Change this the building being passed
+         self.CurrentFloor = 2 // Make sure you fix this later on
     }
     
     
     
     func updateLocation(running : Bool){
+        
+        _FloorData.getRoomsInFloor(self.CurrentFloor)
+        self.reDraw(self.CurrentFloor)
         
        // let status = CLLocationManager.authorizationStatus()
         if running{
@@ -152,7 +165,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         if(CLLocationCoordinate2DIsValid(position)){
             _room.SetIsSelected(true);
             self.mapView.clear();
-            self.reDraw();
+            self.reDraw(self.CurrentFloor);
             mapView.camera = GMSCameraPosition(target: position, zoom: 18, bearing: 0, viewingAngle: 0)
             locationManager.stopUpdatingLocation()
             
@@ -204,8 +217,8 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         
     }
     
-    func updateUIMap(){
-        for room in _roomsData.getAllRooms(){
+    func updateUIMap(floor : Int){
+            for room in _FloorData.getRoomsInFloor(floor ){
             for rect in room.GetRoomCoordinates(){
                 //Label HW and restroom with different colors
                 let polygon = GMSPolygon(path: rect)
@@ -298,16 +311,16 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
            
           
         }
-        self.mapView.clear();
-        self.reDraw();
+         self.mapView.clear();
+        self.reDraw(self.CurrentFloor);
         
     }
     
     
-    func reDraw(){
+    func reDraw(floor : Int){
         dispatch_async(dispatch_get_main_queue()) {
             do {
-                self.updateUIMap()
+                self.updateUIMap(floor)
             }
             catch {
                 print("Failed to update UI")
@@ -338,8 +351,13 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     /* Function to handel selecting a particular floor*/
     func tableView(floorPicker: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
+        if(floorPicker==self.floorPicker){
         floorPicker.deselectRowAtIndexPath(indexPath, animated: true)
-        print(floors[indexPath.row])
+            if let myNumber = NSNumberFormatter().numberFromString(floors[indexPath.row]) {
+                self.updateUIMap(myNumber.integerValue)
+            }
+       
+        }
         
     }
    
@@ -356,16 +374,9 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         
     }
     
-    
-    
-    
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
-        
-        
-        
         if(tableView==self.floorPicker){
             cell!.textLabel!.text = floors[indexPath.row]
             return cell!

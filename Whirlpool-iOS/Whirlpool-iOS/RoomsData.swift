@@ -9,6 +9,8 @@
 import Foundation
 import GoogleMaps
 
+var  _FloorData = FloorData()
+
 public class RoomsData :UIViewController, NSURLConnectionDelegate {
     var Rooms  = [RoomData]();
     
@@ -35,17 +37,6 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
     }
 
     
-    
-    public func getRoombyName(name : String)->RoomData{
-        var newRoom = RoomData()
-        
-       for room in self.getAllRooms(){
-        if(room.GetRoomName()==name){
-            return room
-        }
-       }
-        return newRoom
-    }
     
     
     
@@ -121,6 +112,7 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
     
     
     func getTheGeoJson(building_id : String){
+       
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             let urlPath = "https://whirlpool-indoor-maps.appspot.com/blobstore/ops?building_name=\(building_id)"
             guard let endpoint = NSURL(string: urlPath) else { print("Error creating endpoint");return }
@@ -129,9 +121,17 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
                 do {
                     if let jsonDict = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? NSDictionary {
                           if let features = jsonDict["floors"] as? [[String: AnyObject]]{
+                        
                             for da in  features{
+                                 var floorNumber : Int = Int()
+                                if let floorN = da["floor_num"] as? String{
+                                    if let myNumber = NSNumberFormatter().numberFromString(floorN) {
+                                        floorNumber  = myNumber.integerValue
+                                    }
+                                }
                             
                                 if let cap = da["geojson"] as? NSString{
+                                    
                                     
                                    let file = "file.json"
                                     let text = cap
@@ -147,8 +147,9 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
                                         //reading
                                         do {
                                            //let text2 = try NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding)
-                                            self.parseJson(path,Building_id: building_id);
-                                          
+                                            self.parseJson(path,Building_id: building_id,floorNumber: floorNumber );
+                                             _FloorData.AddRoomsToFloor(floorNumber,rooms: self.getAllRooms())
+                                            
                                         }
                                         catch {/* error handling here */}
                                     }
@@ -177,7 +178,7 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
 
 
     //func parseJson( filename : String,Building_id : String){
-    func parseJson(jsonPath : String,var Building_id : String){
+    func parseJson(jsonPath : String,var Building_id : String, floorNumber : Int){
         
         //self.getTheGeoJson()
         
@@ -280,10 +281,8 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
                             self.addARoom(CurrentRoom)
                             self.updateRoomsInfo(Building_id,room_name: CurrentRoom.GetRoomName(),RoomInformation: CurrentRoom )
                             
-                            
                         }
                     }
-                    
                 }
             }
                 

@@ -53,8 +53,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             clientID: kClientID,
             clientSecret: kClientSecret
         )
-        
-       _roomsData.getTheGeoJson("RV")
+        _roomsData.getTheGeoJson("RV")
          
     }
     
