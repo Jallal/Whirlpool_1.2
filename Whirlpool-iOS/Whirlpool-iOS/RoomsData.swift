@@ -10,10 +10,6 @@ import Foundation
 import GoogleMaps
 
 public class RoomsData :UIViewController, NSURLConnectionDelegate {
-    
-    
-
-    
     var Rooms  = [RoomData]();
     
     public func getAllRooms()-> [RoomData] {
@@ -100,6 +96,9 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
                                     if let type = ro["room_type"] as? String {
                                        RoomInformation.SetRoomType(type)
                                     }
+                                    if let email = ro["email"] as? String {
+                                         RoomInformation.SetRoomEmail(email)
+                                    }
                                
                                     
                                 }
@@ -175,10 +174,6 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
         })
         
 }
-
-
-
-
 
 
     //func parseJson( filename : String,Building_id : String){

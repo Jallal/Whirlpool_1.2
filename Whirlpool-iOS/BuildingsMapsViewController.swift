@@ -10,12 +10,9 @@ import Foundation
 import UIKit
 import GoogleMaps
 class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,UIPopoverPresentationControllerDelegate {
+    
     //The number of floors in the given building
     var floors = ["4","3","2","1"]
-    //The effect
-    var blueEffect: UIBlurEffect = UIBlurEffect ()
-    //The view of the effect
-    var blurEffectView: UIVisualEffectView = UIVisualEffectView()
     //The alert view for notification
     var alertView: UIView = UIView()
     //The button that dismiss the view

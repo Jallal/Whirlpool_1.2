@@ -21,6 +21,7 @@
 		4288AAAA1BB83093003EC9EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4288AAA81BB83093003EC9EF /* LaunchScreen.storyboard */; };
 		4288AAB51BB83093003EC9EF /* Whirlpool_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4288AAB41BB83093003EC9EF /* Whirlpool_iOSTests.swift */; };
 		4288AAC01BB83093003EC9EF /* Whirlpool_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4288AABF1BB83093003EC9EF /* Whirlpool_iOSUITests.swift */; };
+		42AC8C441BEEDD7500ECE6A6 /* FloorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AC8C431BEEDD7500ECE6A6 /* FloorData.swift */; };
 		42B976CD1BC1D5950012D29B /* UserCalenderInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B976CC1BC1D5950012D29B /* UserCalenderInfo.swift */; };
 		42C01DF21BB8351600C2EEAD /* libGTLTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C01DF11BB8351600C2EEAD /* libGTLTouchStaticLib.a */; };
 		42C01DF41BB8352000C2EEAD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C01DF31BB8352000C2EEAD /* Security.framework */; };
@@ -80,6 +81,7 @@
 		4288AABB1BB83093003EC9EF /* Whirlpool-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Whirlpool-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4288AABF1BB83093003EC9EF /* Whirlpool_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Whirlpool_iOSUITests.swift; sourceTree = "<group>"; };
 		4288AAC11BB83093003EC9EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		42AC8C431BEEDD7500ECE6A6 /* FloorData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloorData.swift; sourceTree = "<group>"; };
 		42B976CC1BC1D5950012D29B /* UserCalenderInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCalenderInfo.swift; sourceTree = "<group>"; };
 		42C01DF11BB8351600C2EEAD /* libGTLTouchStaticLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGTLTouchStaticLib.a; path = "../google-api-objectivec-client/Source/build/Debug-iphoneos/libGTLTouchStaticLib.a"; sourceTree = "<group>"; };
 		42C01DF31BB8352000C2EEAD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -174,6 +176,7 @@
 				421545AD1BB8533F00AE1B23 /* LoginViewController.swift */,
 				421545AE1BB8533F00AE1B23 /* SearchViewController.swift */,
 				421545AF1BB8533F00AE1B23 /* RoomInfoViewController.swift */,
+				42AC8C431BEEDD7500ECE6A6 /* FloorData.swift */,
 				6EB781231BCB3C9800166FC2 /* RoomData.swift */,
 				845E18791BCB1A6900224DBA /* RoomsData.swift */,
 				84E2B69D1BDE87BC004D0838 /* FavoritesViewController.swift */,
@@ -429,6 +432,7 @@
 				6EB781241BCB3C9800166FC2 /* RoomData.swift in Sources */,
 				6E062A981BCB30E800BCA209 /* CalendarEventViewController.swift in Sources */,
 				42C01DFC1BB8369A00C2EEAD /* GTLCalendar_Sources.m in Sources */,
+				42AC8C441BEEDD7500ECE6A6 /* FloorData.swift in Sources */,
 				4288AAA01BB83093003EC9EF /* AppDelegate.swift in Sources */,
 				847B58741BB9BF9800E22862 /* CalenderCell.swift in Sources */,
 				84E2B69E1BDE87BC004D0838 /* FavoritesViewController.swift in Sources */,

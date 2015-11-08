@@ -26,8 +26,29 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     @IBOutlet weak var newView: UIView!
     internal var _room = RoomData()
     //var _roomsData = RoomsData()
+    
+    @IBOutlet weak var mapPin: UIImageView!
+    
+    @IBOutlet weak var floorPicker: UITableView!
+  
+    @IBOutlet weak var getDirections: UIButton!
 
 
+    @IBAction func helpButton(sender: AnyObject) {
+        self.floorPicker.hidden = !self.floorPicker.hidden
+        self.getDirections.hidden = !self.getDirections.hidden
+    }
+    @IBAction func getDirections(sender: AnyObject) {
+        
+         self.mapPin.hidden = !self.mapPin.hidden
+        
+        
+    }
+    
+    //The number of floors in the given building
+    var floors = ["4","3","2","1"]
+    
+    
     /**
      * Create the dialog box
      * @param savedInstanceState The saved instance bundle
@@ -93,7 +114,12 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         self.mapView.clear();
         self.mapView.center = self.view.center
           _roomsData.getTheGeoJson("RV")// Change this the building being passed
+        self.mapPin.hidden = true;
+        self.floorPicker.hidden = true
+        self.getDirections.hidden = true
         self.reDraw()
+        self.floorPicker.reloadData()
+        self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
     }
     
     
@@ -165,70 +191,6 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         
     }
 
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return RoomAmenities.count
-        
-    }
-    
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell")
-        let items = _room.GetRoomResources()
-        cell!.textLabel!.text = RoomAmenities[indexPath.row]
-        if(cell!.textLabel!.text=="Capacity"){
-            cell!.detailTextLabel!.text = "\(_room.GetRoomCapacity())"
-            
-        }else if(cell!.textLabel!.text=="Whiteboard"){
-            if(items.contains("White Board")){
-                
-                cell!.detailTextLabel!.text = "Yes"
-            }else{
-                cell!.detailTextLabel!.text = "No"
-            }
-        }else if(cell!.textLabel!.text=="Monitor"){
-            if(items.contains("Monitor")){
-                
-                cell!.detailTextLabel!.text = "Yes"
-            }else{
-                cell!.detailTextLabel!.text = "No"
-            }
-        }else if(cell!.textLabel!.text=="Polycom"){
-            if(items.contains("Polycom")){
-                
-                cell!.detailTextLabel!.text = "Yes"
-            }else{
-                cell!.detailTextLabel!.text = "No"
-            }
-        }else if(cell!.textLabel!.text=="Phone"){
-            if(items.contains("Telephone")){
-                
-                cell!.detailTextLabel!.text = "Yes"
-            }else{
-                cell!.detailTextLabel!.text = "No"
-            }
-            
-        }else if(cell!.textLabel!.text=="TV"){
-            if(items.contains("TV")){
-                
-                cell!.detailTextLabel!.text = "Yes"
-            }else{
-                cell!.detailTextLabel!.text = "No"
-            }
-        }else if(cell!.textLabel!.text=="Video Conference"){
-            
-            if(items.contains("Video Conference")){
-            
-             cell!.detailTextLabel!.text = "Yes"
-            }else{
-                cell!.detailTextLabel!.text = "No"
-            }
-            
-        }
-        
-        return cell!
-        
-    }
     
     
     
@@ -372,7 +334,100 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         return newImage
     }
     
+/******************************************  Table view for floor picker and room info ******************************************************/
+    /* Function to handel selecting a particular floor*/
+    func tableView(floorPicker: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        floorPicker.deselectRowAtIndexPath(indexPath, animated: true)
+        print(floors[indexPath.row])
+        
+    }
+   
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if(tableView==self.floorPicker){
+            
+            return floors.count
+            
+        }else{
+            return RoomAmenities.count
+            
+        }
+        
+    }
     
+    
+    
+    
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell")
+        
+        
+        
+        if(tableView==self.floorPicker){
+            cell!.textLabel!.text = floors[indexPath.row]
+            return cell!
+            
+        }else{
+            let items = _room.GetRoomResources()
+            cell!.textLabel!.text = RoomAmenities[indexPath.row]
+            if(cell!.textLabel!.text=="Capacity"){
+                cell!.detailTextLabel!.text = "\(_room.GetRoomCapacity())"
+                
+            }else if(cell!.textLabel!.text=="Whiteboard"){
+                if(items.contains("White Board")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+            }else if(cell!.textLabel!.text=="Monitor"){
+                if(items.contains("Monitor")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+            }else if(cell!.textLabel!.text=="Polycom"){
+                if(items.contains("Polycom")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+            }else if(cell!.textLabel!.text=="Phone"){
+                if(items.contains("Telephone")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+                
+            }else if(cell!.textLabel!.text=="TV"){
+                if(items.contains("TV")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+            }else if(cell!.textLabel!.text=="Video Conference"){
+                
+                if(items.contains("Video Conference")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+                
+            }
+            
+            return cell!
+            
+        }
+    
+}
 }
 
 
