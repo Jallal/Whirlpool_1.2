@@ -91,6 +91,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         mapPin.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "buttonTapped:"))
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         
+         _roomsData.getTheGeoJson("RV")// Change this the building being passed
         //Draw the indoor map for the building
          self.reDraw()
         
@@ -274,13 +275,14 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         for room in _roomsData.getAllRooms(){
             for rect in room.GetRoomCoordinates(){
                 //Label HW and restroom with different colors
-                var polygon = GMSPolygon(path: rect)
+                let polygon = GMSPolygon(path: rect)
                 if(room.GetIsSelected()){
-                    var position = room.GetroomCenter()
-                    var marker = GMSMarker(position: position)
-                    //marker.appearAnimation = kGMSMarkerAnimationPop
+                    self._room = room
+                    let position = room.GetroomCenter()
+                    let marker = GMSMarker(position: position)
                     marker.icon = UIImage(named: "mapannotation.png")
                     marker.flat = true
+                    //marker.appearAnimation = kGMSMarkerAnimationPop
                     marker.map = self.mapView
                     polygon.fillColor = UIColor(red:(137/255.0), green:196/255.0, blue:244/255.0, alpha:1.0);
                 }else{
@@ -308,80 +310,40 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                 polygon.tappable = true;
                 polygon.map = self.mapView
                 
-                /*******************************************/
-                var drawText : NSString = " Hello"
-                 
-                // we create a UIImage out of it
-                 var inImage = UIImage(named:"wbathroom.png")
-                
-                 // Setup the font specific variables
-                var textColor: UIColor = UIColor.blackColor()
-                var textFont: UIFont = UIFont(name: "Helvetica Bold", size: 12)!
-                
-                //Setup the image context using the passed image.
-                UIGraphicsBeginImageContext(inImage!.size)
-                
-                //Setups up the font attributes that will be later used to dictate how the text should be drawn
-                let textFontAttributes = [
-                    NSFontAttributeName: textFont,
-                    NSForegroundColorAttributeName: textColor,
-                ]
-                
-                //Put the image into a rectangle as large as the original image.
-                inImage!.drawInRect(CGRectMake(0, 0, inImage!.size.width, inImage!.size.height))
-                
-                // Creating a point within the space that is as bit as the image.
-                var rect: CGRect = CGRectMake(0, 0, inImage!.size.width, inImage!.size.height)
-                
-                //Now Draw the text into an image.
-                drawText.drawInRect(rect, withAttributes: textFontAttributes)
-                
-                // Create a new image out of the images we have created
-                var newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-                
-                // End the context now that we have the image we need
-                UIGraphicsEndImageContext()
-                
-                var overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: newImage, zoomLevel:20)
-                overlay.bearing = -10
-                overlay.map = self.mapView
-                
-                //And pass it back up to the caller.
-                //return newImage
-    
-                
-                  /*******************************************/
-                
-                
                 // Add imge to the bathrooms and Exit/entrance
                 if(room.GetRoomName()=="WB"){
-                     var icon = UIImage(named: "wbathroom.jpg")
-                     var overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
-                      overlay.bearing = -10
-                     overlay.map = self.mapView
+                    let icon = UIImage(named: "wbathroom.jpg")
+                    let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
+                    overlay.bearing = -10
+                    overlay.map = self.mapView
                 }else if(room.GetRoomName()=="MB"){
-                    var icon = UIImage(named: "mbathroom.jpg")
-                    var overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
+                    let icon = UIImage(named: "mbathroom.jpg")
+                    let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
                     overlay.bearing = -10
                     overlay.map = self.mapView
                 }else if(room.GetRoomName()=="EXT"){
-                    var icon = UIImage(named: "exit.jpg")
-                    var overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
+                    let icon = UIImage(named: "exit.jpg")
+                    let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
                     overlay.bearing = -10
                     overlay.map = self.mapView
                 }else if(room.GetRoomName()=="UX"){
-                    var icon = UIImage(named: "UX.jpg")
-                    var overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
+                    let icon = UIImage(named: "UX.jpg")
+                    let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
                     overlay.bearing = -10
                     overlay.map = self.mapView
+                }else if(room.GetRoomType()=="C" || room.GetRoomType()=="H" ){
+                    let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: newImage(room.GetRoomName(), size: CGSizeMake(12, 12)), zoomLevel:20)
+                    overlay.bearing = 0
+                    overlay.map = self.mapView
+                    
                 }
+                
+                
                 self.view.setNeedsDisplay()
                 
             }
             
         }
-        
-        
         
     }
 
@@ -424,7 +386,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     /* Drawing the navigation path for the user*/
     func drawRoute() {
         
-        self.BannerView("Are you in the 4th floor Yet ?", button_message:"Yes");
+        //self.BannerView("Are you in the 4th floor Yet ?", button_message:"Yes");
 
         
        /* var path1 = GMSMutablePath()
@@ -462,5 +424,23 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
     }
     
+    func newImage(text: String, size: CGSize) -> UIImage {
+        
+        let data = text.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+        let drawText = NSString(data: data!, encoding: NSUTF8StringEncoding)
+        
+        let textFontAttributes = [
+            NSFontAttributeName: UIFont(name: "Helvetica Bold", size: 4)!,
+            NSForegroundColorAttributeName: UIColor.blackColor(),
+        ]
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        drawText?.drawInRect(CGRectMake(0, 0, size.width, size.height), withAttributes: textFontAttributes)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
+
     
 }

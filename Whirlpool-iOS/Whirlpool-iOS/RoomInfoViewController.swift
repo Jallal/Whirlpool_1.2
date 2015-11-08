@@ -25,7 +25,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     @IBOutlet weak var RoomNameLabel: UILabel!
     @IBOutlet weak var newView: UIView!
     internal var _room = RoomData()
-    var _roomsData = RoomsData()
+    //var _roomsData = RoomsData()
 
 
     /**
@@ -82,7 +82,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         if _room.GetRoomName() != "" {
             RoomNameLabel.text = _room.GetRoomName()
         }
-         _roomsData.getTheGeoJson("RV")
+       
     }
     
     override func viewDidLoad() {
@@ -92,6 +92,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         self.mapView.delegate = self
         self.mapView.clear();
         self.mapView.center = self.view.center
+          _roomsData.getTheGeoJson("RV")// Change this the building being passed
         self.reDraw()
     }
     

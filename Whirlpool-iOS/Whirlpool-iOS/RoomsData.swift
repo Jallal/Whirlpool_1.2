@@ -134,7 +134,7 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
                             
                                 if let cap = da["geojson"] as? NSString{
                                     
-                                   let file = "file.txt"
+                                   let file = "file.json"
                                     let text = cap
                                     if let dir : NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
                                         let path = dir.stringByAppendingPathComponent(file);
@@ -202,9 +202,6 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
                 // Load and serialize the GeoJSON into a dictionary filled with properly-typed objects
                 
                 if let jsonDict = try NSJSONSerialization.JSONObjectWithData(jsonData!, options: []) as? NSDictionary {
-                    
-                    //print(jsonDict);
-                    
                     // Load the `features` array for iteration
                     if let features = jsonDict["features"] as? NSArray {
                         
@@ -284,8 +281,9 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
                                     }
                                 }
                             }
-                            self.updateRoomsInfo(Building_id,room_name: CurrentRoom.GetRoomName(),RoomInformation: CurrentRoom )
+                         
                             self.addARoom(CurrentRoom)
+                            self.updateRoomsInfo(Building_id,room_name: CurrentRoom.GetRoomName(),RoomInformation: CurrentRoom )
                             
                             
                         }
