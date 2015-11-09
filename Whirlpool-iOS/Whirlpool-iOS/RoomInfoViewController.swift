@@ -15,7 +15,7 @@ import Foundation
 
 /**
  * This class Present the details of a particular room in  a building
- * show the room information in the loawe half of the screen and the map in at the top of the screen
+ * show the room information in the lower half of the screen and the map in at the top of the screen
  */
 
 class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationManagerDelegate,GMSMapViewDelegate,GMSIndoorDisplayDelegate,UIScrollViewDelegate {
@@ -58,8 +58,8 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     
     
     /**
-     * Create the dialog box
-     * @param savedInstanceState The saved instance bundle
+     * Allows the Scrolling in the google Maps
+     * adjust the maps size as we chnage the Size
      */
     @IBAction func PanGesture(sender: UIPanGestureRecognizer) {
        
@@ -67,8 +67,10 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         //let screenWidth : CGFloat  = screenSize.width
         let screenHeight : CGFloat  = screenSize.height
-        //View will not go out of the fram of the screen
+        //View will not go out of the frame of the screen
         let MagicNumber : CGFloat = screenSize.height*0.55
+        
+        //Translate the PX to the screen size
         let translation = sender.translationInView(self.newView)
         if let view = sender.view{
             let d: CGFloat = (self.view.center.y + translation.y)
