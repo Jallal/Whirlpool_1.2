@@ -8,7 +8,6 @@
 
 import UIKit
 
-//var UserCalandenerInfo = [CalenaderEvents]()
 var _userCalenderInfo: UserCalenderInfo?
 let service = GTLServiceCalendar()
 var _roomsData = RoomsData()
@@ -34,9 +33,6 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
     
     let output = UITextView()
     
-
-
-    
     // When the view loads, create necessary subviews
     // and initialize the Google Calendar API service
     override public func viewDidLoad() {
@@ -53,6 +49,11 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             clientID: kClientID,
             clientSecret: kClientSecret
         )
+       /* if(KeychainHelper.get(kKeychainItemName) != nil){
+            KeychainHelper.set(kKeychainItemName, value: <#T##NSData#>)
+            
+        }*/
+        
         _roomsData.getTheGeoJson("RV")
          
     }

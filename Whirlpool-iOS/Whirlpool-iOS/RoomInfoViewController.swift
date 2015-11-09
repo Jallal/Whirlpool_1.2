@@ -24,6 +24,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     @IBOutlet weak var roomInfo: UITableView!
     @IBOutlet weak var RoomNameLabel: UILabel!
     @IBOutlet weak var newView: UIView!
+    @IBOutlet weak var helpButton: UIButton!
     internal var _room = RoomData()
     var CurrentFloor : Int = Int()
     
@@ -32,6 +33,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     @IBOutlet weak var floorPicker: UITableView!
   
     @IBOutlet weak var getDirections: UIButton!
+    
 
 
     @IBAction func helpButton(sender: AnyObject) {
@@ -40,9 +42,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     }
     @IBAction func getDirections(sender: AnyObject) {
         
-         self.mapPin.hidden = !self.mapPin.hidden
-        
-        
+         self.mapPin.hidden = !self.mapPin.hidden   
     }
     
     //The number of floors in the given building
@@ -50,16 +50,17 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     var FloorSize = _FloorData.getNumberOfFloors()
     
     func populateFloors(){
+           var i : Int = 0
         for index  in (1...FloorSize).reverse(){
-            floors[index] = "\(index)"
-            
+            floors[i] = "\(index)"
+            i = i+1
         }
     }
     
     
     /**
      * Allows the Scrolling in the google Maps
-     * adjust the maps size as we chnage the Size
+     * adjust the maps size as we chnage the screen Size
      */
     @IBAction func PanGesture(sender: UIPanGestureRecognizer) {
        
@@ -84,6 +85,11 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     }
     
   
+    
+    /**
+     * All the amenities in a room
+     *
+     */
     let locationManager = CLLocationManager()
       var RoomAmenities = ["Capacity","Whiteboard","Monitor","Polycom","Phone","TV","Video Conference"]
     
@@ -92,6 +98,11 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     }
     
     
+    
+    /**
+     * Add a prticular room into your favorite rooms
+     * upon clicking on a button
+     */
     @IBAction func favoriteButton(sender: UIButton) {
         let alert = UIAlertController(title: _room.GetRoomName(), message: "New Favorite Added", preferredStyle: .Alert)
         let attributeString = NSAttributedString(string: "New Favorite", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(15),
@@ -132,16 +143,21 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
          _roomsData.getTheGeoJson("RV")// Change this the building being passed
          self.CurrentFloor = 2 // Make sure you fix this later on
+        self.getDirections.layer.cornerRadius = 0.5 * self.getDirections.bounds.size.width
+        self.helpButton.layer.cornerRadius   = 0.5 * self.getDirections.bounds.size.width
     }
     
     
     
+    
+    /**
+     * Update user location on the map
+     * bool true/false
+     */
     func updateLocation(running : Bool){
-        
+        //Get all the floors in the building
         _FloorData.getRoomsInFloor(self.CurrentFloor)
         self.reDraw(self.CurrentFloor)
-        
-       // let status = CLLocationManager.authorizationStatus()
         if running{
             
             locationManager.startUpdatingLocation()
@@ -153,6 +169,11 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
             self.mapView.myLocationEnabled = false
         }
     }
+    
+    /**
+     * Check if the user Authorize the location acces
+     * Update the user location
+     */
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .AuthorizedWhenInUse {
             locationManager.startUpdatingLocation()
@@ -161,6 +182,12 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         }
     }
     
+    
+    
+    /**
+     * update the location as the user move
+     *
+     */
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         var position = _room.GetroomCenter();
         
@@ -220,6 +247,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     }
     
     func updateUIMap(floor : Int){
+        
             for room in _FloorData.getRoomsInFloor(floor ){
             for rect in room.GetRoomCoordinates(){
                 //Label HW and restroom with different colors
@@ -356,6 +384,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         if(floorPicker==self.floorPicker){
         floorPicker.deselectRowAtIndexPath(indexPath, animated: true)
             if let myNumber = NSNumberFormatter().numberFromString(floors[indexPath.row]) {
+                      self.mapView.clear()
                 self.updateUIMap(myNumber.integerValue)
             }
        
@@ -363,19 +392,23 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         
     }
    
+    
+      /* get the number of raws in each tableView*/
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if(tableView==self.floorPicker){
             
-            return floors.count
+            return floors.count-1
             
         }else{
-            return RoomAmenities.count
+            return RoomAmenities.count-1
             
         }
         
     }
     
+    
+     /* Display the floor picker and and the room details in the each tableView*/
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
@@ -425,15 +458,6 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
                 }else{
                     cell!.detailTextLabel!.text = "No"
                 }
-            }else if(cell!.textLabel!.text=="Video Conference"){
-                
-                if(items.contains("Video Conference")){
-                    
-                    cell!.detailTextLabel!.text = "Yes"
-                }else{
-                    cell!.detailTextLabel!.text = "No"
-                }
-                
             }
             
             return cell!
