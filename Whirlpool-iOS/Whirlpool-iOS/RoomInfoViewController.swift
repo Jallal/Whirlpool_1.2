@@ -13,28 +13,54 @@ import Foundation
 
 
 
-class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationManagerDelegate,GMSMapViewDelegate,GMSIndoorDisplayDelegate {
+/**
+ * The hatter view. Displays an image with a hat drawn over
+ * it that we can manipulate.
+ */
 
-    struct busyTime {
-        let start: NSDate
-        let end: NSDate
-        let startString: String
-        let endString: String
-    }
+class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationManagerDelegate,GMSMapViewDelegate,GMSIndoorDisplayDelegate,UIScrollViewDelegate {
     
     @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var roomInfo: UITableView!
     @IBOutlet weak var RoomNameLabel: UILabel!
+    @IBOutlet weak var newView: UIView!
     internal var _room = RoomData()
-    internal var _freeBusyDayInterval = 31.0
-    internal var _roomFreeBusyTimes = [busyTime]()
+    var _roomsData = RoomsData()
+
+
+    /**
+     * Create the dialog box
+     * @param savedInstanceState The saved instance bundle
+     */
+    @IBAction func PanGesture(sender: UIPanGestureRecognizer) {
+       
+        //Get the size of the screen
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        //let screenWidth : CGFloat  = screenSize.width
+        let screenHeight : CGFloat  = screenSize.height
+        //View will not go out of the fram of the screen
+        let MagicNumber : CGFloat = screenSize.height*0.55
+        let translation = sender.translationInView(self.newView)
+        if let view = sender.view{
+            let d: CGFloat = (self.view.center.y + translation.y)
+            if(((MagicNumber)<=d)&&(d<(screenHeight))){
+        view.center = CGPoint(x:view.center.x,
+               y:view.center.y + translation.y)
+            }
+        }
+        sender.setTranslation(CGPointZero, inView: self.view)
+        
+    }
+    
+  
     let locationManager = CLLocationManager()
-    //var items : Array<String> = []
-      var RoomAmenities = ["Capacity","Whiteboard","Monitor","Polycom","Phone","Floor","VIDEO CONFERENCE"]
+      var RoomAmenities = ["Capacity","Whiteboard","Monitor","Polycom","Phone","TV","Video Conference"]
     
     @IBAction func cancelRoomView(sender: AnyObject) {
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
+    
+    
     @IBAction func favoriteButton(sender: UIButton) {
         let alert = UIAlertController(title: _room.GetRoomName(), message: "New Favorite Added", preferredStyle: .Alert)
         let attributeString = NSAttributedString(string: "New Favorite", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(15),
@@ -46,22 +72,17 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
             sleep(1)
             alert.dismissViewControllerAnimated(true, completion: nil)
         }
-        //items = _room.GetRoomResources();
-        RoomAmenities = _room.GetRoomResources();
-       
-    }
+            }
     
     
     override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+       
+       self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         updateLocation(true)
         if _room.GetRoomName() != "" {
             RoomNameLabel.text = _room.GetRoomName()
         }
-        
-        //freeBusyTimesGetRequest(_room.GetRoomEmail())
-        
-        
+         _roomsData.getTheGeoJson("RV")
     }
     
     override func viewDidLoad() {
@@ -69,13 +90,16 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         self.locationManager.delegate = self
         self.locationManager.requestAlwaysAuthorization()
         self.mapView.delegate = self
+        self.mapView.clear();
+        self.mapView.center = self.view.center
         self.reDraw()
-        
-     
     }
+    
+    
+    
     func updateLocation(running : Bool){
         
-        let status = CLLocationManager.authorizationStatus()
+       // let status = CLLocationManager.authorizationStatus()
         if running{
             
             locationManager.startUpdatingLocation()
@@ -87,7 +111,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
             self.mapView.myLocationEnabled = false
         }
     }
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .AuthorizedWhenInUse {
             locationManager.startUpdatingLocation()
             mapView.myLocationEnabled = true
@@ -96,20 +120,18 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
         var position = _room.GetroomCenter();
-        print("This is the position:   \(position)   ##########################")
         
         if(CLLocationCoordinate2DIsValid(position)){
-             _room.SetIsSelected(true);
+            _room.SetIsSelected(true);
             self.mapView.clear();
             self.reDraw();
-            mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
+            mapView.camera = GMSCameraPosition(target: position, zoom: 18, bearing: 0, viewingAngle: 0)
             locationManager.stopUpdatingLocation()
             
         }else{
             position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
-            mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
+            mapView.camera = GMSCameraPosition(target: position, zoom: 18, bearing: 0, viewingAngle: 0)
             locationManager.stopUpdatingLocation()
         }
       
@@ -118,7 +140,6 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     
@@ -142,73 +163,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         }
         
     }
-    
-    /*func freeBusyTimesGetRequest(roomEmail: String) {
-        var freeBusyTicket = GTLServiceTicket()
-        let requestItem = GTLCalendarFreeBusyRequestItem()
-        requestItem.identifier = roomEmail
-        
-        let now = GTLDateTime(date: NSDate(), timeZone: NSTimeZone.localTimeZone())
-        print(NSTimeZone.localTimeZone())
-        let endOfDay = GTLDateTime(date: NSDate().dateByAddingTimeInterval(60.0 * 60.0 * 24.0 * _freeBusyDayInterval), timeZone: NSTimeZone.localTimeZone())
-        
-        let query = GTLQueryCalendar.queryForFreebusyQuery()
-        query.items = [requestItem]
-        query.timeZone = NSTimeZone.localTimeZone().name
-        query.maxResults = 20
-        query.timeMin = now
-        query.timeMax = endOfDay
-        query.singleEvents = true
-        //query.orderBy = kGTLCalendarOrderByStartTime
-        freeBusyTicket = service.executeQuery(query, completionHandler: { (ticket, object, error) -> Void in
-            if error == nil {
-                let freeBusyResponse = object as! GTLCalendarFreeBusyResponse
-                let responseCal = freeBusyResponse.calendars
-                var properties = responseCal.additionalProperties()
-                let calBusyTimes = properties[roomEmail]?.busy
-                if calBusyTimes! != nil {
-                    for period in calBusyTimes! {
-                        print(period.start as GTLDateTime)
-                        print(period.end as GTLDateTime)
-                        let convStartDate = period.start as GTLDateTime
-                        let convEndDate = period.end as GTLDateTime
-                        let finStartDate = NSDateFormatter.localizedStringFromDate(convStartDate.date, dateStyle: NSDateFormatterStyle.ShortStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
-                        let finEndDate = NSDateFormatter.localizedStringFromDate(convEndDate.date, dateStyle: NSDateFormatterStyle.ShortStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
-                        let tempBusy = busyTime.init(start: convStartDate.date, end: convEndDate.date, startString: finStartDate, endString: finEndDate)
-                        self._roomFreeBusyTimes.append(tempBusy)
-                    }
-                }
-            }
-            else {
-                print("Error: ", error)
-                return
-            }
-            self.roomInfo.reloadData()
-        })
-    }*/
-    
-    
-    
-   /* func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return _roomFreeBusyTimes.count
-        
-    }*/
-    
-    
-    /*func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell")
-            cell?.textLabel?.font = UIFont(name: "HelveticaNeue-Thin", size: 20.0)
-            cell!.textLabel?.textColor = UIColor.blackColor()
-          let cellTextTimeZone = _roomFreeBusyTimes[indexPath.row].startString  + " - " + _roomFreeBusyTimes[indexPath.row].endString
-            cell!.textLabel!.text = cellTextTimeZone
-            return cell!
-        
-    }*/
-    
-    
 
-    
-    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return RoomAmenities.count
@@ -218,32 +173,55 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
-        
-        /*if (cell == nil) {
-        cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "cell")
-        }*/
-        
+        let items = _room.GetRoomResources()
         cell!.textLabel!.text = RoomAmenities[indexPath.row]
         if(cell!.textLabel!.text=="Capacity"){
-            cell!.detailTextLabel!.text = "15"
+            cell!.detailTextLabel!.text = "\(_room.GetRoomCapacity())"
             
         }else if(cell!.textLabel!.text=="Whiteboard"){
-             cell!.detailTextLabel!.text = "Yes"
-            
+            if(items.contains("White Board")){
+                
+                cell!.detailTextLabel!.text = "Yes"
+            }else{
+                cell!.detailTextLabel!.text = "No"
+            }
         }else if(cell!.textLabel!.text=="Monitor"){
-            cell!.detailTextLabel!.text = "NO"
-            
+            if(items.contains("Monitor")){
+                
+                cell!.detailTextLabel!.text = "Yes"
+            }else{
+                cell!.detailTextLabel!.text = "No"
+            }
         }else if(cell!.textLabel!.text=="Polycom"){
-            cell!.detailTextLabel!.text = "Yes"
-            
+            if(items.contains("Polycom")){
+                
+                cell!.detailTextLabel!.text = "Yes"
+            }else{
+                cell!.detailTextLabel!.text = "No"
+            }
         }else if(cell!.textLabel!.text=="Phone"){
-            cell!.detailTextLabel!.text = "Yes"
+            if(items.contains("Telephone")){
+                
+                cell!.detailTextLabel!.text = "Yes"
+            }else{
+                cell!.detailTextLabel!.text = "No"
+            }
             
-        }else if(cell!.textLabel!.text=="Floor"){
-            cell!.detailTextLabel!.text = "2nd floor south"
+        }else if(cell!.textLabel!.text=="TV"){
+            if(items.contains("TV")){
+                
+                cell!.detailTextLabel!.text = "Yes"
+            }else{
+                cell!.detailTextLabel!.text = "No"
+            }
+        }else if(cell!.textLabel!.text=="Video Conference"){
             
-        }else if(cell!.textLabel!.text=="VIDEO CONFERENCE"){
+            if(items.contains("Video Conference")){
+            
              cell!.detailTextLabel!.text = "Yes"
+            }else{
+                cell!.detailTextLabel!.text = "No"
+            }
             
         }
         
@@ -255,64 +233,47 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "bookRoomSeg" {
-            var eventVC = segue.destinationViewController as! CalendarEventViewController
-            
+            let eventVC = segue.destinationViewController as! CalendarEventViewController
             eventVC.guest = _room.GetRoomEmail()
             eventVC.location = _room.GetRoomName()
             
         }
-        
-        if (segue.identifier == "MainNavView") {
-        // initialize new view controller and cast it as your view controller
-        var viewController = segue.destinationViewController as! NavigationMainViewController
-        // your new view controller should have property that will store passed value
-         viewController._room = _room
-         }
         
     }
     
     func updateUIMap(){
         for room in _roomsData.getAllRooms(){
             for rect in room.GetRoomCoordinates(){
-                var polygon = GMSPolygon(path: rect)
+                //Label HW and restroom with different colors
+                let polygon = GMSPolygon(path: rect)
                 if(room.GetIsSelected()){
-                    var position = room.GetroomCenter()
-                    print(position);
-                    var marker = GMSMarker(position: position)
-                    //marker.appearAnimation = kGMSMarkerAnimationPop
-                    // marker.icon = UIImage(named: "restroom.jpg")
+                    self._room = room
+                    self.RoomNameLabel.text = room.GetRoomName()
+                    self.roomInfo.reloadData()
+                    let position = room.GetroomCenter()
+                    let marker = GMSMarker(position: position)
                     marker.icon = UIImage(named: "mapannotation.png")
                     marker.flat = true
+                     //marker.appearAnimation = kGMSMarkerAnimationPop
                     marker.map = self.mapView
                     polygon.fillColor = UIColor(red:(137/255.0), green:196/255.0, blue:244/255.0, alpha:1.0);
                 }else{
                     polygon.fillColor = UIColor(red:(255/255.0), green:249/255.0, blue:236/255.0, alpha:1.0);
                 }
-                
-                if(room.GetRoomName()=="B250"){
-                    var position = room.GetroomCenter()
-                    var restroom = GMSMarker(position: position)
-                    restroom.icon = UIImage(named: "wbathroom.jpg")
-                    restroom.flat = true
-                    restroom.map = self.mapView
-                }
-                if((room.GetRoomName()=="B218")){
-                   polygon.fillColor = UIColor(red: 234/255.0, green: 230/255.0, blue: 245/255.0, alpha: 1.0)//purple color
-                }
-                
-                if((room.GetRoomName()=="B250")||(room.GetRoomName()=="B205")||(room.GetRoomName()=="B218")||(room.GetRoomName()=="B217")){
+                if((room.GetRoomName()=="WB") || (room.GetRoomName()=="MB") ){
                     polygon.fillColor = UIColor(red: 234/255.0, green: 230/255.0, blue: 245/255.0, alpha: 1.0)//purple color
                 }
                 
-                if((room.GetRoomName()=="B241") || (room.GetRoomName()=="B234")||(room.GetRoomName()=="B219")||(room.GetRoomName()=="B251")||(room.GetRoomName()=="B230")){
+                if(room.GetRoomName()=="HW"){
                     polygon.fillColor  = UIColor.whiteColor()
                 }
-                if((room.GetRoomName()=="B236")||(room.GetRoomName()=="B232")||(room.GetRoomName()=="B223")){
-                    polygon.fillColor  = UIColor.whiteColor()
+                if(room.GetRoomStatus()=="Open"){
+                    
+                    polygon.fillColor = UIColor(red: 27/255.0, green: 188/255.0, blue: 155/255.0, alpha: 1.0)// open conferance rooms
                 }
-                
-                if((room.GetRoomName()=="B247") || (room.GetRoomName()=="B233-229")||(room.GetRoomName()=="B235-238")||(room.GetRoomName()=="B245-248")||(room.GetRoomName()=="B222-220")){
-                    polygon.fillColor  = UIColor.whiteColor()
+                if(room.GetRoomStatus()=="Busy"){
+                    
+                    polygon.fillColor = UIColor(red: 211/255.0, green: 84/255.0, blue:0/255.0, alpha: 1.0)// busy conferance rooms
                 }
                 
                 polygon.strokeColor = UIColor(red:(108/255.0), green:(122/255.0), blue:(137/255.0), alpha:1.0);
@@ -320,11 +281,42 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
                 polygon.title = room.GetRoomName();
                 polygon.tappable = true;
                 polygon.map = self.mapView
+                
+                // Add imge to the bathrooms and Exit/entrance
+                if(room.GetRoomName()=="WB"){
+                    let icon = UIImage(named: "wbathroom.jpg")
+                    let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
+                    overlay.bearing = -10
+                    overlay.map = self.mapView
+                }else if(room.GetRoomName()=="MB"){
+                    let icon = UIImage(named: "mbathroom.jpg")
+                    let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
+                    overlay.bearing = -10
+                    overlay.map = self.mapView
+                }else if(room.GetRoomName()=="EXT"){
+                    let icon = UIImage(named: "exit.jpg")
+                    let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
+                    overlay.bearing = -10
+                    overlay.map = self.mapView
+                }else if(room.GetRoomName()=="UX"){
+                    let icon = UIImage(named: "UX.jpg")
+                    let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
+                    overlay.bearing = -10
+                    overlay.map = self.mapView
+                }else if(room.GetRoomType()=="C" || room.GetRoomType()=="H" ){
+                    let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: newImage(room.GetRoomName(), size: CGSizeMake(12, 12)), zoomLevel:20)
+                    overlay.bearing = 0
+                    overlay.map = self.mapView
+                    
+                }
+                
+                
                 self.view.setNeedsDisplay()
                 
             }
             
         }
+        
         
         
     }
@@ -340,6 +332,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
                 }
                 
             }
+           
           
         }
         self.mapView.clear();
@@ -360,5 +353,28 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         
     }
     
+    func newImage(text: String, size: CGSize) -> UIImage {
+        
+        let data = text.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+        let drawText = NSString(data: data!, encoding: NSUTF8StringEncoding)
+        
+        let textFontAttributes = [
+            NSFontAttributeName: UIFont(name: "Helvetica Bold", size: 4)!,
+            NSForegroundColorAttributeName: UIColor.blackColor(),
+        ]
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        drawText?.drawInRect(CGRectMake(0, 0, size.width, size.height), withAttributes: textFontAttributes)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
+    
     
 }
+
+
+
+
+

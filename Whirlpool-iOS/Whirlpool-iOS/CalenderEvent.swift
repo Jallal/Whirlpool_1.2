@@ -85,7 +85,12 @@ class CalenderEvent {
             //Return the minutes specifically if it is less than an hour
             if time < 1.0 {
                 let finalTime = Int(time * 100)
-                return NSString(format: "%i min", finalTime) as String
+                if finalTime < 0 {
+                return NSString(format: "Now") as String
+                }
+                else {
+                    return NSString(format: "%i min", finalTime) as String
+                }
             }
                 //If it is greater than an hour return the interval for time of .5 hour intervals
             else{
@@ -98,7 +103,6 @@ class CalenderEvent {
                     return NSString(format: "%i hr", finalTime) as String
                 }
             }
-            
         }
     }
     

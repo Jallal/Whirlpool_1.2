@@ -14,9 +14,7 @@ let service = GTLServiceCalendar()
 var _roomsData = RoomsData()
 
 public class LoginViewController: UIViewController , NSXMLParserDelegate{
-    
-    
-    //var _userCalenderInfo: UserCalenderInfo?
+    var AllFiles = ["RVCB2B_P_ROOMS","RVC_A_01A_ROOMS"]
     
     @IBOutlet weak var GoogleView: UIView!
     private let kKeychainItemName = "Google Calendar API"
@@ -55,10 +53,9 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             clientID: kClientID,
             clientSecret: kClientSecret
         )
-        _roomsData.updateRoomsInfo();
-        _roomsData.parseJson();
-
         
+       _roomsData.getTheGeoJson("RV")
+         
     }
     
     func httpCall(){
@@ -117,6 +114,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
                 completion: nil
             )
         }
+        
     }
     
     // Construct a query and get a list of upcoming events from the user calendar
@@ -276,6 +274,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
     }
     
     
+    
     func pushRoomDataToDatabase(){
         for room in _roomsData.getAllRooms() {
             let roomLongName = room.GetRoomName()
@@ -284,7 +283,6 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             if splitRoomName.count >= 4 {
                 let locTemp = getAbbr(splitRoomName[2].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
                 let roomTemp = splitRoomName[3].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-                _roomsData.insertroominfo(locTemp, room: roomTemp, floor: "2", status: "Busy", email: room.GetRoomEmail(), ownership: "Online", resources: "TV", capacity: "5")
             }
         }
     }

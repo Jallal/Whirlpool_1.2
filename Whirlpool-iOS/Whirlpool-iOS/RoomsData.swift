@@ -9,11 +9,8 @@
 import Foundation
 import GoogleMaps
 
-public class RoomsData {
-    
-    
+public class RoomsData :UIViewController, NSURLConnectionDelegate {
     var Rooms  = [RoomData]();
-   
     
     public func getAllRooms()-> [RoomData] {
         return self.Rooms
@@ -57,77 +54,55 @@ public class RoomsData {
         case ConversionFailed = "ERROR: conversion from JSON failed"
     }
     
-    func updateRoomsInfo() {
+    
+    func updateRoomsInfo(building_id : String ,room_name : String,RoomInformation : RoomData) {
+        
+        
          dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-        let urlPath =  "https://webdev.cse.msu.edu/~elhazzat/wim/room-load.php"
+        let urlPath = "https://whirlpool-indoor-maps.appspot.com/room?building_name=\(building_id)&room_name=\(room_name)"
         guard let endpoint = NSURL(string: urlPath) else { print("Error creating endpoint");return }
         let request = NSMutableURLRequest(URL:endpoint)
         NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
             do {
                 
                 do {
-                    
-                    if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as?  NSArray {
-                        for room in (json as? NSArray)! {
-                            var RoomInformation  = RoomData();
-                             var count = 0;
-                            for ro in (room as? NSArray)!  {
-                                if(count==0){
-                                    RoomInformation.SetRoomLocation(ro as! String)
- 
-                                }
-                                else if(count==1){
-                                     RoomInformation.SetRoomName(ro as! String)
-                                    
-                                }
-                                else if(count==2){
-                                    RoomInformation.SetRoomCapacity(ro as! String)
-                                    
-                                }
-                                else if(count==3){
-                                        RoomInformation.SetRoomPolycomExt(ro as! String)
-                                    
-                                }
-                                else if(count==4){
-                                     RoomInformation.SetRoomResources(ro as! String)
-                                    
-                                }
-                                else if(count==5){
-                                    RoomInformation.SetRoomOwnership(ro as! String)
-                                    
-                                }
-                                else if(count==6){
-                                     RoomInformation.SetRoomNotes(ro as! String)
-                                    
-                                }
-                                else if(count==7){
-                                    RoomInformation.SetRoomStatus(ro as! String)
-                                    
-                                }
-                                else if(count==8){
-                                      RoomInformation.SetRoomFloor(ro as! String)
-                                    
-                                }
-                                else if(count==9){
-                                     RoomInformation.SetRoomEmail(ro as! String)
-                                    
-                                }
-                                count = count+1
-                                
+                
+                    if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as?  NSDictionary {
+                        if let features = json["amenities"] as? NSArray {
+                             for resource in features {
+                                RoomInformation.SetRoomResources((resource as? String)!)
                             }
-                            
-                            self.addARoom(RoomInformation);
                         }
                         
-                    } else {
-                        let jsonStr = NSString(data: data!, encoding: NSUTF8StringEncoding)    // No error thrown, but not NSDictionary
-                        print("Error could not parse JSON: \(jsonStr)")
+                        
+                            if let rows = json["rooms"] as? [[String: AnyObject]] {
+                                for ro in rows {
+                                
+                                    if let cap = ro["capacity"] as? Int {
+                                        RoomInformation.SetRoomCapacity(cap)
+                                    }
+                                    if let ext = ro["extension"] as? String {
+                                        RoomInformation.SetRoomExt(ext);
+                                    }
+                                    if let stat = ro["occupancy_status"] as? String {
+                                        RoomInformation.SetRoomStatus(stat)
+                                    }
+                                    if let name = ro["room_name"] as? String {
+                                         RoomInformation.SetRoomName(name)
+                                    }
+                                    if let loc = ro["building_name"] as? String {
+                                       RoomInformation.SetRoomLocation(loc)
+                                    }
+                                    if let type = ro["room_type"] as? String {
+                                       RoomInformation.SetRoomType(type)
+                                    }
+                               
+                                    
+                                }
+                        }
                     }
-                } catch let parseError {
-                    print(parseError)                                                          // Log the error thrown by `JSONObjectWithData`
-                    let jsonStr = NSString(data: data!, encoding: NSUTF8StringEncoding)
-                    print("Error could not parse JSON: '\(jsonStr)'")
-                }
+                
+                    }
             } catch let error as JSONError {
                 print(error.rawValue)
             } catch {
@@ -139,54 +114,81 @@ public class RoomsData {
         
     }
     
-func insertroominfo( loc: String,room: String,floor:String,status:String,email:String,ownership:String,resources:String,capacity: String){
-        var bodyData = "location=\(loc)&room=\(room)&floor=\(floor)&status=\(status)&email=\(email)&ownership=\(ownership)&resources=\(resources)&capacity=\(capacity)"
-    //var bodyData = ["location" :loc, "room": room, "floor" : floor, "status" : status, "email": email, "ownership":ownership, "resources": resources, "capacity":capacity]
-    
-    
-        let URL: NSURL = NSURL(string: "https://webdev.cse.msu.edu/~elhazzat/wim/room-insert.php")!
-        let request:NSMutableURLRequest = NSMutableURLRequest(URL:URL)
-        request.HTTPMethod = "POST"
-        request.HTTPBody = bodyData.dataUsingEncoding(NSUTF8StringEncoding);
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue())
-            {
-                (response, data, error) in
-                print(response)
-                print(data)
-                var output = NSString(data: data!, encoding: NSUTF8StringEncoding) // new output variable
-                //var array = self.JSONParseArray(output)
-        }
-        
-    }
     
     
     
-    
-    func updateRoomStatus( value : Bool, email : String,room: String,location : String){
-        var bodyData = "?status=\(value)&email=\(email)&room=\(room)&location=\(location)"
-        let URL: NSURL = NSURL(string: "https://webdev.cse.msu.edu/~elhazzat/wim/room-save.php")!
-        let request:NSMutableURLRequest = NSMutableURLRequest(URL:URL)
-        request.HTTPMethod = "POST"
-        request.HTTPBody = bodyData.dataUsingEncoding(NSUTF8StringEncoding);
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue())
-            {
-                (response, data, error) in
+    func getTheGeoJson(building_id : String){
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            let urlPath = "https://whirlpool-indoor-maps.appspot.com/blobstore/ops?building_name=\(building_id)"
+            guard let endpoint = NSURL(string: urlPath) else { print("Error creating endpoint");return }
+            let request = NSMutableURLRequest(URL:endpoint)
+            NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
+                do {
+                    if let jsonDict = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? NSDictionary {
+                          if let features = jsonDict["floors"] as? [[String: AnyObject]]{
+                            for da in  features{
+                            
+                                if let cap = da["geojson"] as? NSString{
+                                    
+                                   let file = "file.txt"
+                                    let text = cap
+                                    if let dir : NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
+                                        let path = dir.stringByAppendingPathComponent(file);
+                                        
+                                        //writing
+                                        do {
+                                            try text.writeToFile(path, atomically: false, encoding: NSUTF8StringEncoding)
+                                        }
+                                        catch {/* error handling here */}
+                                        
+                                        //reading
+                                        do {
+                                           //let text2 = try NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding)
+                                            self.parseJson(path,Building_id: building_id);
+                                        }
+                                        catch {/* error handling here */}
+                                    }
+                              
+                                }
+                                
+                            }
+                           
+                            
+                        
+                        }
+                        
+                    }
+                } catch let error as NSError {
+                    // error handling
+                } catch {
+                    print(error)
+                }
                 
-                var output = NSString(data: data!, encoding: NSUTF8StringEncoding) // new output variable
-                //var array = self.JSONParseArray(output)
-        }
+                }.resume()
+        })
         
-    }
-    
-    func parseJson( ){
+}
+
+
+
+
+
+
+    //func parseJson( filename : String,Building_id : String){
+    func parseJson(jsonPath : String,var Building_id : String){
+        
+        //self.getTheGeoJson()
+        
+        
         // Parsing GeoJSON can be CPU intensive, do it on a background thread
+        //var Building_id : String =  "RV"
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             
             // Get the path for example.geojson in the app's bundle
             
-            let jsonPath = NSBundle.mainBundle().pathForResource("RVCB2B_P_ROOMS", ofType: "json")
-            let jsonData = NSData(contentsOfFile: jsonPath!)
+            //let jsonPath = NSBundle.mainBundle().pathForResource(filename, ofType: "json")
+            let jsonData = NSData(contentsOfFile: jsonPath)
             
             do {
                 
@@ -200,12 +202,12 @@ func insertroominfo( loc: String,room: String,floor:String,status:String,email:S
                     if let features = jsonDict["features"] as? NSArray {
                         
                         for feature in features {
-                            var RoomInformation  = RoomData();
+                            var CurrentRoom = RoomData();
                             if let feature = feature as? NSDictionary {
                                 if let  property = feature["properties"] as? NSDictionary {
                                     
                                     if let roomNum = property["room"]{
-                                        RoomInformation.SetRoomName(roomNum as! String)
+                                        CurrentRoom.SetRoomName(roomNum as! String)
                                         
                                     }
                                     
@@ -264,8 +266,8 @@ func insertroominfo( loc: String,room: String,floor:String,status:String,email:S
                                                     
                                                     
                                                 }
-                                                RoomInformation.SetroomCenter((minX+maxX)/2, y: ((minY+maxY)/2))
-                                                RoomInformation.SetRoomCoordinates(rec)
+                                                CurrentRoom.SetroomCenter((minX+maxX)/2, y: ((minY+maxY)/2))
+                                                CurrentRoom.SetRoomCoordinates(rec)
                                             }
                                             
                                             
@@ -275,7 +277,10 @@ func insertroominfo( loc: String,room: String,floor:String,status:String,email:S
                                     }
                                 }
                             }
-                            self.addARoom(RoomInformation)
+                            self.updateRoomsInfo(Building_id,room_name: CurrentRoom.GetRoomName(),RoomInformation: CurrentRoom )
+                            self.addARoom(CurrentRoom)
+                            
+                            
                         }
                     }
                     
@@ -293,4 +298,7 @@ func insertroominfo( loc: String,room: String,floor:String,status:String,email:S
             
         })
       }
-}
+    
+    
+    
+   }

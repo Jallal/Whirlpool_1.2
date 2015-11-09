@@ -33,7 +33,6 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
         searchbar.barTintColor = UIColor.whiteColor()
         searchbar.translucent = false
         self.navigationController?.navigationBar.hidden = true
-        _roomsData.updateRoomsInfo();
        
     }
     
