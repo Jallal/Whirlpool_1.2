@@ -11,16 +11,18 @@ import UIKit
 import GoogleMaps
 class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,UIPopoverPresentationControllerDelegate {
     
-    //The number of floors in the given building
-    var floors = [String](count: _FloorData.getNumberOfFloors()+1, repeatedValue: "")
-    //The alert view for notification
+   //The alert view for notification
     var alertView: UIView = UIView()
     //The button that dismiss the view
     var ok_button : UIButton = UIButton()
     //the message on the notification view
     var  label   : UILabel   = UILabel();
-     var CurrentFloor : Int = Int()
-
+    //The room being passed
+    internal var _room = RoomData()
+    var CurrentFloor : Int = Int()
+    var CurrentBuilding : String = String()
+    var  NumberOfFloor  : Int = Int()
+    var floors   =  [String()]
     @IBOutlet weak var helpButton: UIButton!
     @IBOutlet weak var getDirections: UIButton!
     //origin marker during navigation
@@ -29,8 +31,12 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     var destinationMarker: GMSMarker!
     //The rout between start and end postions
     var routePolyline: GMSPolyline!
-    //The room being passed
-    internal var _room = RoomData()
+    
+
+   
+    
+    //internal var Floors = _FloorData
+    
     //the picker for the floors
    @IBOutlet weak var floorPicker: UITableView!
     
@@ -55,15 +61,25 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     @IBOutlet weak var mapView: GMSMapView!
     
     let locationManager = CLLocationManager()
-    var FloorSize = _FloorData.getNumberOfFloors()
+    
+    //The number of floors in the given building
     
     func populateFloors(){
+        
+        print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+        print(NumberOfFloor)
+        
         var i : Int = 0
-        for index  in (1...FloorSize).reverse(){
-            floors[i] = "\(index)"
+        if(self.NumberOfFloor != 0){
+        for index  in (1...NumberOfFloor).reverse(){
+            floors.append("\(index)")
             i = i+1
         }
+        }
     }
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,21 +111,31 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         label.font = UIFont(name:"Heiti SC", size: 14)
         label.tintColor = UIColor.blackColor()
         self.view.backgroundColor = UIColor.whiteColor()
-        self.populateFloors()
         self.floorPicker.reloadData()
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
-        _roomsData.getTheGeoJson("RV")// Change this the building being passed
-        self.CurrentFloor = 2 // Make sure you fix this later on
+        
         self.getDirections.layer.cornerRadius = 0.5 * self.getDirections.bounds.size.width
         self.helpButton.layer.cornerRadius   = 0.5 * self.getDirections.bounds.size.width
+   
+     
+        
+
         
         
     }
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-        self.populateFloors()
         updateLocation(true)
+        /******************************************************************************/
+        /*************************** UPDATE THE  BUILDING NAME AND THE FLOORB******************************/
+        self.CurrentFloor = 1 // Make sure you fix this later on
+        self.CurrentBuilding = "GHQ"
+        _roomsData.getTheGeoJson(CurrentBuilding)// Change this the building being passed
+        self.NumberOfFloor = (_BuildinfData.getNumberOfFloorsInBuilding(CurrentBuilding)-1)
+        self.populateFloors()
+
+ 
         
     }
     
@@ -169,7 +195,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     /* The actual updating of the user location*/
     func updateLocation(running : Bool){
         //Get all the floors in the building
-        _FloorData.getRoomsInFloor(self.CurrentFloor)
         self.reDraw(self.CurrentFloor)
     
         let status = CLLocationManager.authorizationStatus()
@@ -274,8 +299,10 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
 /* Function the handels drawing the floor plan of each building*/
     func updateUIMap(floor : Int){
         
-        for room in _FloorData.getRoomsInFloor(floor ){
-            for rect in room.GetRoomCoordinates(){
+        var allFloors = _BuildinfData.getAllFloorsInBuilding(CurrentBuilding)
+        for floorClass in allFloors {
+            for room in floorClass.getRoomsInFloor(floor){
+                for rect in room.GetRoomCoordinates(){
                 //Label HW and restroom with different colors
                 let polygon = GMSPolygon(path: rect)
                 if(room.GetIsSelected()){
@@ -345,6 +372,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                 
             }
             
+        }
         }
         
         

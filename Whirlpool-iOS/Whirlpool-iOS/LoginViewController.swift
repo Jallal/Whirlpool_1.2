@@ -54,7 +54,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             
         }*/
         
-        _roomsData.getTheGeoJson("RV")
+       _roomsData.getTheGeoJson("GHQ")// Change this the building being passed 
          
     }
     

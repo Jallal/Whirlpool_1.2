@@ -9,7 +9,7 @@
 import Foundation
 import GoogleMaps
 
-var  _FloorData = FloorData()
+var  _BuildinfData = BuildingData()
 
 public class RoomsData :UIViewController, NSURLConnectionDelegate {
     var Rooms  = [RoomData]();
@@ -28,6 +28,7 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
 
     
     public func getRoomWithName(roomName: String)-> RoomData {
+      
         for room in Rooms {
             if room.GetRoomName() == roomName {
                 return room
@@ -120,6 +121,7 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
             NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
                 do {
                     if let jsonDict = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? NSDictionary {
+                        var Floors = Array<FloorData>()
                           if let features = jsonDict["floors"] as? [[String: AnyObject]]{
                         
                             for da in  features{
@@ -147,8 +149,10 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
                                         //reading
                                         do {
                                            //let text2 = try NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding)
+                                            var Floor  = FloorData()
                                             self.parseJson(path,Building_id: building_id,floorNumber: floorNumber );
-                                             _FloorData.AddRoomsToFloor(floorNumber,rooms: self.getAllRooms())
+                                             Floor.AddRoomsToFloor(floorNumber,rooms: self.getAllRooms())
+                                             Floors.append(Floor)
                                             
                                         }
                                         catch {/* error handling here */}
@@ -163,6 +167,8 @@ public class RoomsData :UIViewController, NSURLConnectionDelegate {
                             
                         
                         }
+                        _BuildinfData.linkBuildingToFloors(building_id,Allfloors: Floors)
+
                         
                     }
                 } catch let error as NSError {

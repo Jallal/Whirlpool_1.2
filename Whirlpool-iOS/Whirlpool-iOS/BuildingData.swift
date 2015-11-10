@@ -17,22 +17,17 @@ import GoogleMaps
 
 public class  BuildingData {
     
-    var addFloorTobuilding = Array<FloorData>(count: 4, repeatedValue: FloorData())
-    
-    var AllBuilding  = Array<BuildingInfo>(count: 4, repeatedValue: BuildingInfo())
-    
+    var AllBuilding  = Array<BuildingInfo>()
     var Building  = BuildingInfo()
     
     
-    func AddFloorToBuilding(floor : FloorData ){
-        addFloorTobuilding.append(floor)
+    func linkBuildingToFloors(builing_id : String, Allfloors : Array<FloorData> ){
+        Building.name  = builing_id
+        Building.Floors = Allfloors
+        self.AllBuilding.append(Building)
     }
     
-    func linkBuildingToFloors(builing_id : String, floors : Array<FloorData>){
-        Building.name  = builing_id
-        Building.Floors = floors
-        AllBuilding.append(Building)
-    }
+    
     
     func getAllFloorsInBuilding(name : String )-> Array<FloorData>{
         
@@ -42,17 +37,19 @@ public class  BuildingData {
             }
         }
         return Array<FloorData>()//Check for empty name on return of this function
-
-        
     }
     
     
-    
-    
-    
-    
-    
-    
+    func getNumberOfFloorsInBuilding(name : String) -> Int{
+        for build in AllBuilding {
+            if  build.name == name {
+                return   build.Floors.count
+            }
+        }
+        
+        return 0
+        
+    } 
     
     
 }

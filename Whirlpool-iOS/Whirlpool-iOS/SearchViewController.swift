@@ -33,15 +33,11 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
         searchbar.barTintColor = UIColor.whiteColor()
         searchbar.translucent = false
         self.navigationController?.navigationBar.hidden = true
-       
     }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        //self.tableview.dataSource = self
-        //self.tableview.delegate = self
-       
          self.filteredRooms = _roomsData.getAllRooms()
          tableview.reloadData()
     }
