@@ -100,7 +100,8 @@ class BuildingsData {
     
     
     
-    // Possible errors from parsing JSON
+    
+      // Possible errors from parsing JSON
     enum JSONError: String, ErrorType {
         case NoData = "ERROR: no data"
         case ConversionFailed = "ERROR: conversion from JSON failed"
@@ -110,10 +111,12 @@ class BuildingsData {
     
     
      /* This function get all the floors with their rooms in a particular building @Param : building Id*/
-    func GetAllFloorsInBuilding(building_id : String) ->Array<FloorData> {
+    func GetAllFloorsInBuilding(building_id : String) -> Building{
         var FloorCount = 0
-        var Floors = Array<FloorData>()
+        var building = Building(buildingName: building_id, buildingAbbr: building_id, numberOfFloors: 3, numberOfWings: 0)
+
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+           
             let urlPath = "https://whirlpool-indoor-maps.appspot.com/blobstore/ops?building_name=\(building_id)"
             guard let endpoint = NSURL(string: urlPath) else { print("Error creating endpoint");return }
             let request = NSMutableURLRequest(URL:endpoint)
@@ -148,16 +151,17 @@ class BuildingsData {
                                         
                                         //reading
                                         do {
-                                            var Floor  = FloorData()
-                                            var AllRoomsInFloor  = self.GetAllTheRoomsForAbuilding(path,Building_id: building_id)
+                                            let Floor  = FloorData()
+                                            let AllRoomsInFloor  = self.GetAllTheRoomsForAbuilding(path,Building_id: building_id)
                                             Floor.AddRoomsToFloor(floorNumber,rooms:AllRoomsInFloor)
-                                            Floors.append(Floor)
-                                            
+                                            building.appendFloor(Floor)
+                                            building.SetNumberOfFloors(FloorCount)
                                         }
                                         catch {
                                              print("GeoJSON parsing failed")
                                         }
                                     }
+                                    
                                     
                                 }
                                 
@@ -166,9 +170,10 @@ class BuildingsData {
                             
                             
                         }
-                        
-                        
+                    
                     }
+                   
+                   
                 } catch let error as NSError {
                     
                 } catch {
@@ -177,7 +182,7 @@ class BuildingsData {
                 
                 }.resume()
         })
-        return Floors;
+        return building
     }
     
     
@@ -185,10 +190,9 @@ class BuildingsData {
     /* This function will get all the rooms in a floor of a building requires the building id and the file path*/
 
     func GetAllTheRoomsForAbuilding(jsonPath : String,Building_id : String) -> RoomsData {
-        
         // Parsing GeoJSON can be CPU intensive, do it on a background thread
         //var Building_id : String =  "RV"
-           var roomsdata = RoomsData()
+           let roomsdata = RoomsData()
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             
             // Get the path for example.geojson in the app's bundle
@@ -206,7 +210,7 @@ class BuildingsData {
                     if let features = jsonDict["features"] as? NSArray {
                         
                         for feature in features {
-                            var CurrentRoom = RoomData();
+                            let CurrentRoom = RoomData();
                             if let feature = feature as? NSDictionary {
                                 if let  property = feature["properties"] as? NSDictionary {
                                     
@@ -234,7 +238,7 @@ class BuildingsData {
                                             var minY : double_t = 400
                                             
                                             for location in locations {
-                                                var rec = GMSMutablePath()
+                                                let rec = GMSMutablePath()
                                                 
                                                 for var i = 0; i < location.count; i++ {
                                                     var lat = 0 as Double
@@ -281,9 +285,9 @@ class BuildingsData {
                                     }
                                 }
                             }
-                            
+                            roomsdata.updateRoomsInfo(Building_id,room_name: CurrentRoom.GetRoomName(),RoomInformation: CurrentRoom )
                            roomsdata.addARoom(CurrentRoom)
-                           roomsdata.updateRoomsInfo(Building_id,room_name: CurrentRoom.GetRoomName(),RoomInformation: CurrentRoom )
+                           
                             
                         }
                     }
@@ -301,10 +305,21 @@ class BuildingsData {
             }
             
         })
-        
         return roomsdata
     }
     
+    public func getBuildingByName(name : String) -> Building {
+
+        for build in _build{
+            if(build._buildingAbbr==name){
+                return build
+            }
+        }
+        return Building(buildingName: "", buildingAbbr: "", numberOfFloors: 0, numberOfWings: 0)
+        
+    }
+    
+
     
     
 }
