@@ -8,12 +8,26 @@
 
 import UIKit
 
+public extension UIColor {
+    func convertImage() -> UIImage {
+        let rect : CGRect = CGRectMake(0, 0, 1, 1)
+        UIGraphicsBeginImageContext(rect.size)
+        let context : CGContextRef = UIGraphicsGetCurrentContext()!
+        
+        CGContextSetFillColorWithColor(context, self.CGColor)
+        CGContextFillRect(context, rect)
+        
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+}
 
 protocol selectedRoomDataDelagate {
     func userSelectedRoom(roomData: RoomData)
 }
 
-class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplayDelegate  {
+class SearchViewController: UIViewController,UISearchBarDelegate, UISearchControllerDelegate  {
     
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var searchbar: UISearchBar!
@@ -25,26 +39,27 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
     var roomDelagate: selectedRoomDataDelagate? = nil   //Data delgate to pass back the room choosen to the main page
     
     
-    
     override func viewWillAppear(animated: Bool) {
-        self.searchDisplayController?.active = true
-        searchbar.becomeFirstResponder()
-//        searchbar.backgroundColor = UIColor(colorLiteralRed: 250.0/250.0, green: 213.0/250.0, blue: 101.0/250.0, alpha: 1)
-        searchbar.barTintColor = UIColor(colorLiteralRed: 250.0/250.0, green: 213.0/250.0, blue: 101.0/250.0, alpha: 1)
-        searchbar.translucent = false
-        self.navigationController?.navigationBar.hidden = true
-       
+        //self.searchDisplayController?.active = true
+        UIApplication.sharedApplication().statusBarHidden = true
     }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        //self.tableview.dataSource = self
-        //self.tableview.delegate = self
-       
+        searchbar.tintColor = UIColor.whiteColor()
+        searchbar.setShowsCancelButton(false, animated: false)
+        searchbar.backgroundImage = UIColor(red: 250.0/250.0, green: 213.0/250.0, blue: 101.0/250.0, alpha: 1).convertImage()
+        searchbar.barTintColor = UIColor(red: 251.0/255.0, green: 225.0/255.0, blue: 131.0/255.0, alpha: 1)
+        let textFieldInsideSearchBar = searchbar.valueForKey("searchField") as? UITextField
+        let textFieldInsideSearchBarLabel = textFieldInsideSearchBar!.valueForKey("placeholderLabel") as? UILabel
+        textFieldInsideSearchBarLabel?.textColor = UIColor.whiteColor()
+        textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
+        textFieldInsideSearchBar?.backgroundColor = UIColor(red: 251.0/255.0, green: 225.0/255.0, blue: 131.0/255.0, alpha: 1)
          self.filteredRooms = _roomsData.getAllRooms()
          tableview.reloadData()
     }
+    
     
     
     override func didReceiveMemoryWarning()
@@ -67,6 +82,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
     func userSelectedRoomToSend(roomData: RoomData) {
         if (roomDelagate != nil) {
             roomDelagate!.userSelectedRoom(roomData)
+            UIApplication.sharedApplication().statusBarHidden = false
             self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
@@ -97,7 +113,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
         
         var room : RoomData
         
-        if (tableView == self.searchDisplayController?.searchResultsTableView)
+        if (tableView == searchDisplayController?.searchResultsTableView)
         {
             room = filteredRooms[indexPath.row]
         }
@@ -129,7 +145,6 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
         
         _roomToPass = room
         userSelectedRoomToSend(_roomToPass)
-        //performSegueWithIdentifier("RoomInfo", sender: self)
         
     }
     
@@ -145,8 +160,8 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
     {
         
         self.filteredRooms = _roomsData.getAllRooms().filter({( room : RoomData) -> Bool in
-            var categoryMatch = (scope == "Title")
-            var stringMatch = room.GetRoomName().rangeOfString(searchText)
+            let categoryMatch = (scope == "Title")
+            let stringMatch = room.GetRoomName().rangeOfString(searchText)
             return categoryMatch && (stringMatch != nil)
             
         })
@@ -154,26 +169,22 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
         
     }
     
-    func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String!) -> Bool
+    func searchDisplayController(controller: UISearchController, shouldReloadTableForSearchString searchString: String)-> Bool
     {
-        
         self.filterContenctsForSearchText(searchString, scope: "Title")
         return true
-        
-        
     }
     
     
-    func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchScope searchOption: Int) -> Bool
+    func searchDisplayController(controller: UISearchController, shouldReloadTableForSearchScope searchOption: Int) -> Bool
     {
-        
         self.filterContenctsForSearchText(self.searchDisplayController!.searchBar.text!, scope: "Title")
         return true
-        
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar){
         //self.navigationController?.popToRootViewControllerAnimated(true)
+        UIApplication.sharedApplication().statusBarHidden = false
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -182,7 +193,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
         if (segue.identifier == "RoomInfo") {
             
             // initialize new view controller and cast it as your view controller
-            var viewController = segue.destinationViewController as! RoomInfoViewController
+            let viewController = segue.destinationViewController as! RoomInfoViewController
             // your new view controller should have property that will store passed value
             viewController._room = _roomToPass
         }

@@ -53,9 +53,14 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             self.buildingScroller.reloadData()
         });
     }
-    func clickOnSearch(button: UIButton){
+    @IBAction func clickedOnSearch(sender: AnyObject) {
         performSegueWithIdentifier("popUpSearchSeg", sender: self)
     }
+    
+    
+//    func clickOnSearch(button: UIButton){
+//        performSegueWithIdentifier("popUpSearchSeg", sender: self)
+//    }
     func buildingInfoHasBeenLoaded(){
         //Dont need to do anything with buildng info on main page at moment, just need to implement to conform
         //to the delagate
@@ -89,11 +94,17 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
         //Create the search button in the title view spot. Cant be done in Storyboard
-        let button =  UIButton(type: UIButtonType.Custom) as UIButton
-        button.frame = CGRectMake(0, 0, 600, 22) as CGRect
-        button.setImage(UIImage(named:"Search.png"), forState: UIControlState.Normal)
-        button.addTarget(self, action: Selector("clickOnSearch:"), forControlEvents: UIControlEvents.TouchUpInside)
-        self.navigationItem.titleView = button
+//        let button =  UIButton(type: UIButtonType.Custom) as UIButton
+//        button.frame = CGRectMake(0, 0, 600, 22) as CGRect
+//        button.setImage(UIImage(named:"Search.png"), forState: UIControlState.Normal)
+//        button.addTarget(self, action: Selector("clickOnSearch:"), forControlEvents: UIControlEvents.TouchUpInside)
+        let date = NSDate()
+        let dayFormatter = NSDateFormatter()
+        dayFormatter.dateFormat = "EEEE"
+        let day = dayFormatter.stringFromDate(date)
+        self.title = day + "'s Events"
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
         self.calender.dataSource = self
         self.calender.delegate = self
         self.calender.backgroundColor = self.view.backgroundColor
@@ -166,7 +177,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return screenSize.height * 0.14
+        return screenSize.height * 0.18
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -194,7 +205,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         })
         
         deleteAction.backgroundColor = UIColor(patternImage: UIImage(named: "Delete + Shape.png")!)
-        let editAction = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "\t" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+        let editAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "\t" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
             self.clickedEdit = true
             self.editingEventToPass = _userCalenderInfo?.getCalenderInfo()[indexPath.row]
             self.performSegueWithIdentifier("eventHandleSeg", sender: self)
@@ -203,7 +214,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         editAction.backgroundColor = UIColor(patternImage: UIImage(named: "Edit + Shape.png")!)
         let locationToParseForRoom =  _userCalenderInfo!.getCalenderInfo()[indexPath.row].location
         if checkIfRoomLocation(locationToParseForRoom!) != String() {
-            let navigationAction = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "\t") { (action: UITableViewRowAction!, indexPath: NSIndexPath!) -> Void in
+            let navigationAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "\t") { (action: UITableViewRowAction!, indexPath: NSIndexPath!) -> Void in
                 let locationToParseForRoom =  _userCalenderInfo!.getCalenderInfo()[indexPath.row].location
                 let potentialRoom = self.checkIfRoomLocation(locationToParseForRoom!)
                     self._roomToPass.SetRoomName(potentialRoom)

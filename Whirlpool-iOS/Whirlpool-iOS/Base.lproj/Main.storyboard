@@ -20,18 +20,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qeh-7v-J8b">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qeh-7v-J8b">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search Rooms" translucent="NO" id="BFu-El-dd7">
+                                <searchBar key="tableHeaderView" opaque="NO" clipsSubviews="YES" contentMode="redraw" searchBarStyle="prominent" placeholder="Search Rooms" showsCancelButton="YES" translucent="NO" id="BFu-El-dd7">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <animations/>
+                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <textInputTraits key="textInputTraits"/>
-                                    <scopeButtonTitles>
-                                        <string>Title</string>
-                                    </scopeButtonTitles>
                                     <connections>
                                         <outlet property="delegate" destination="YJe-nc-tF6" id="Xse-Rh-Ab5"/>
                                     </connections>
@@ -41,11 +39,11 @@
                                         <rect key="frame" x="0.0" y="72" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="vX8-LR-6Xm" id="xj9-od-gSG">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Title" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="none" minimumScaleFactor="0.5" id="VES-vj-BUL">
-                                                    <rect key="frame" x="15" y="0.0" width="570" height="49.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="570" height="50"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -69,7 +67,9 @@
                         <constraints>
                             <constraint firstItem="qeh-7v-J8b" firstAttribute="height" secondItem="Tcb-Lh-cyc" secondAttribute="height" id="8pl-8F-NCW"/>
                             <constraint firstItem="qeh-7v-J8b" firstAttribute="width" secondItem="Tcb-Lh-cyc" secondAttribute="width" id="C1A-rr-5cd"/>
+                            <constraint firstItem="qeh-7v-J8b" firstAttribute="top" secondItem="XKX-Xa-uq0" secondAttribute="bottom" id="SUz-ea-7wd"/>
                             <constraint firstItem="qeh-7v-J8b" firstAttribute="centerX" secondItem="Tcb-Lh-cyc" secondAttribute="centerX" id="U9b-uu-8oN"/>
+                            <constraint firstItem="JyC-mY-9qZ" firstAttribute="top" secondItem="qeh-7v-J8b" secondAttribute="bottom" id="aAu-iY-Vfx"/>
                             <constraint firstItem="qeh-7v-J8b" firstAttribute="centerY" secondItem="Tcb-Lh-cyc" secondAttribute="centerY" id="wK6-VF-H2n"/>
                         </constraints>
                     </view>
@@ -252,7 +252,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Whirlpool Default - L" translatesAutoresizingMaskIntoConstraints="NO" id="9FP-Gr-ocn">
-                                                    <rect key="frame" x="30" y="0.0" width="70" height="70"/>
+                                                    <rect key="frame" x="23" y="8" width="54" height="54"/>
                                                     <animations/>
                                                 </imageView>
                                             </subviews>
@@ -266,11 +266,11 @@
                                                 <constraint firstItem="Hno-L5-NvR" firstAttribute="leading" secondItem="ajO-sG-DOV" secondAttribute="leadingMargin" constant="107" id="UpO-bh-p6a"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Hno-L5-NvR" secondAttribute="trailing" constant="47" id="WGO-h4-70L"/>
                                                 <constraint firstItem="BfO-6m-IhH" firstAttribute="top" secondItem="ajO-sG-DOV" secondAttribute="topMargin" constant="14" id="Xjj-bp-x5S"/>
-                                                <constraint firstItem="9FP-Gr-ocn" firstAttribute="centerY" secondItem="ajO-sG-DOV" secondAttribute="centerY" id="a0m-qh-a89"/>
-                                                <constraint firstItem="9FP-Gr-ocn" firstAttribute="centerY" secondItem="BfO-6m-IhH" secondAttribute="centerY" id="a8q-lJ-4Wi"/>
+                                                <constraint firstItem="9FP-Gr-ocn" firstAttribute="centerY" secondItem="ajO-sG-DOV" secondAttribute="centerY" constant="0.25" id="a0m-qh-a89"/>
+                                                <constraint firstItem="9FP-Gr-ocn" firstAttribute="centerY" secondItem="BfO-6m-IhH" secondAttribute="centerY" constant="0.5" id="a8q-lJ-4Wi"/>
                                                 <constraint firstItem="Hno-L5-NvR" firstAttribute="leading" secondItem="BfO-6m-IhH" secondAttribute="leading" id="bAg-Za-j1b"/>
                                                 <constraint firstItem="Hno-L5-NvR" firstAttribute="top" secondItem="NuT-Pz-Bwp" secondAttribute="bottom" constant="25" id="cRI-ad-d1a"/>
-                                                <constraint firstItem="BfO-6m-IhH" firstAttribute="leading" secondItem="9FP-Gr-ocn" secondAttribute="trailing" constant="15" id="w9E-xC-J6Z"/>
+                                                <constraint firstItem="BfO-6m-IhH" firstAttribute="leading" secondItem="9FP-Gr-ocn" secondAttribute="trailing" constant="38" id="w9E-xC-J6Z"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
@@ -362,7 +362,7 @@
                     <navigationItem key="navigationItem" id="3tS-LY-nbQ">
                         <nil key="title"/>
                         <leftBarButtonItems>
-                            <barButtonItem image="Hamburger Menu" id="482-LB-EIZ">
+                            <barButtonItem image="Hamburger 2.0" id="482-LB-EIZ">
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </barButtonItem>
                             <barButtonItem image="Star Nav Bar" id="uWn-UF-lwI">
@@ -375,18 +375,11 @@
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="1wF-nj-8Z7">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="XUh-wD-jIK">
-                                <rect key="frame" x="447" y="7" width="133" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <animations/>
-                                <state key="normal" title="Buildings">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="9rI-gr-NXP" kind="show" id="WgC-dg-TZZ"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="Jnk-jk-bfL">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="clickedOnSearch:" destination="0FE-9H-6N7" id="xZt-65-8Kv"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
@@ -748,16 +741,16 @@
                         <viewControllerLayoutGuide type="bottom" id="qi9-Rn-eWx"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="HmC-MI-LrU">
-                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="60y-Wl-ImA" customClass="GMSMapView">
-                                <rect key="frame" x="-4" y="0.0" width="604" height="536"/>
+                                <rect key="frame" x="-4" y="0.0" width="604" height="600"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eun-21-5NG">
-                                <rect key="frame" x="526" y="417" width="50" height="50"/>
+                                <rect key="frame" x="526" y="481" width="50" height="50"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.24601283076804725" green="0.23316284410265686" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -771,7 +764,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DZj-Xh-hdD">
-                                <rect key="frame" x="526" y="355" width="50" height="50"/>
+                                <rect key="frame" x="526" y="419" width="50" height="50"/>
                                 <animations/>
                                 <color key="backgroundColor" red="1" green="0.16750804516944395" blue="0.35456892939796292" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -784,7 +777,7 @@
                                     <action selector="getDirections:" destination="9rI-gr-NXP" eventType="touchUpInside" id="GrO-2x-C1p"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y2D-om-kpF">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Current Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y2D-om-kpF">
                                 <rect key="frame" x="-3" y="2" width="605" height="40"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.77354236577181212" alpha="1" colorSpace="calibratedWhite"/>
@@ -796,14 +789,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="start" translatesAutoresizingMaskIntoConstraints="NO" id="5Ic-ZL-uKD">
-                                <rect key="frame" x="257" y="231" width="86" height="75"/>
+                                <rect key="frame" x="257" y="231" width="86" height="139"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="86" id="eAX-gV-4oO"/>
                                 </constraints>
                             </imageView>
                             <tableView autoresizesSubviews="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" preservesSuperviewLayoutMargins="YES" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" style="grouped" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="40" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="tb2-2t-ibB">
-                                <rect key="frame" x="527" y="152" width="47" height="176"/>
+                                <rect key="frame" x="527" y="152" width="47" height="240"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -899,10 +892,10 @@
         <image name="Add Event Button" width="74" height="73"/>
         <image name="Calendar Background" width="100" height="110"/>
         <image name="Cancel" width="60" height="60"/>
-        <image name="Hamburger Menu" width="26" height="19"/>
+        <image name="Hamburger 2.0" width="20" height="18"/>
         <image name="Star Nav Bar" width="26" height="26"/>
-        <image name="Whirlpool Default" width="40" height="41"/>
-        <image name="Whirlpool Default - L" width="70" height="72"/>
+        <image name="Whirlpool Default" width="52" height="52"/>
+        <image name="Whirlpool Default - L" width="60" height="60"/>
         <image name="start" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
