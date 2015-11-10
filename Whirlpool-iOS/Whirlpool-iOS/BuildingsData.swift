@@ -10,72 +10,45 @@
 import Foundation
 
 protocol buildingsLoadedDelegate {
-    func buildingsHaveBeenLoaded()
+    func buildingAbbsHaveBeenLoaded()
+    func buildingInfoHasBeenLoaded()
 }
 
 class BuildingsData {
-    var _buildingNames = [Building]()
+    var _buildings = [Building]()
     var _buildingAbbr = [String]()
     var _amountOfBuildings: Int?
-    var buildingDelegate: buildingsLoadedDelegate? = nil
+    var _buildingDelegate: buildingsLoadedDelegate? = nil
     let BUILDINGS_URL = "https://whirlpool-indoor-maps.appspot.com/buildings"
     let BUILDING_URL =  "https://whirlpool-indoor-maps.appspot.com/building?building_name="
     
+    //This init is used just to populate the abbreviations of buildings
     init(delegate: buildingsLoadedDelegate){
-        //fillBuildingData()
-        buildingDelegate = delegate
+        _buildingDelegate = delegate
         request(BUILDINGS_URL) { (response) -> Void in
             self._amountOfBuildings = response["count"] as? Int
             self.parseOutBuildingInfo(response)
-            self.buildingDelegate?.buildingsHaveBeenLoaded()
+            self._buildingDelegate?.buildingAbbsHaveBeenLoaded()
         }
     }
     
-//    //method to fetch all the whirlpool building names and abbreviations
-//    func fillBuildingData(){
-//        let url = NSURL(string: BUILDINGS_URL)
-//        let request = NSMutableURLRequest(URL: url!)
-//        request.HTTPMethod = "GET"
-//        let jsonData = NSMutableData()
-//        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue()) { (response:NSURLResponse?, data: NSData?, error:NSError?) -> Void in
-//            if data != nil {
-//                jsonData.appendData(data!)
-//                do {
-//                    if let jsonResult = try NSJSONSerialization.JSONObjectWithData(jsonData, options: [])  as? [String: AnyObject]{
-//                        self.parseOutBuildingInfo(jsonResult)
-//                    }
-//                } catch let parseError {
-//                    print(parseError)
-//                }
-//            }
-//            else {
-//                print(error)
-//            }
-//        }
-//    }
-
-//    //function to fetch all the attributes associated with a whirlpool building
-//    func setupBuildingProperties(buildingAbb: String){
-//        let url = NSURL(string:  BUILDING_URL + buildingAbb)
-//        let request = NSMutableURLRequest(URL: url!)
-//        request.HTTPMethod = "GET"
-//        let jsonData = NSMutableData()
-//        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue()) { (response:NSURLResponse?, data: NSData?, error:NSError?) -> Void in
-//            if data != nil {
-//                jsonData.appendData(data!)
-//                do {
-//                    if let jsonResult = try NSJSONSerialization.JSONObjectWithData(jsonData, options: [])  as? [String: AnyObject]{
-//                        self.addBuildingToArrayFromDB(jsonResult)
-//                    }
-//                } catch let parseError {
-//                    print(parseError)
-//                }
-//            }
-//            else {
-//                print(error)
-//            }
-//        }
-//    }
+    //This init is used to grab data for a building by abbreviation, checks abbreviation passed in after gettting proper abbreviations from database
+    init(delegate: buildingsLoadedDelegate, buildingAbb: String){
+        _buildingDelegate = delegate
+        request(BUILDINGS_URL) { (response) -> Void in
+            self._amountOfBuildings = response["count"] as? Int
+            self.parseOutBuildingInfo(response)
+            self._buildingDelegate?.buildingAbbsHaveBeenLoaded()
+            if self._buildingAbbr.contains(buildingAbb) {
+                self.request(self.BUILDING_URL+buildingAbb) { (response) -> Void in
+                    self.addBuildingToArrayFromDB(response)
+                    //call the protocol func here thats implimented in your class that you wanted
+                    //This tell the class that the building objects are done being populated
+                    self._buildingDelegate?.buildingInfoHasBeenLoaded()
+                }
+            }
+        }
+    }
     
     func request( destination : String, successHandler: (response: [String: AnyObject]) -> Void){
         let request = NSMutableURLRequest(URL: NSURL(string: destination as String)!)
@@ -114,7 +87,10 @@ class BuildingsData {
         }
     }
     
+    //Use this function for when the building is done being pulled to store its info to an array after creating a building object.
     func addBuildingToArrayFromDB(buildingInfo: [String: AnyObject]){
         print(buildingInfo)
+        //Parse the building info here
+        //Call createBuilding and the returned building add to the array. (_buildings)
     }
 }

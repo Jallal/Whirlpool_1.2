@@ -48,7 +48,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         _roomToPass = favRoom
         performSegueWithIdentifier("relevantSeg", sender: self)
     }
-    func buildingsHaveBeenLoaded(){
+    func buildingAbbsHaveBeenLoaded(){
         dispatch_async(dispatch_get_main_queue(),{
             self.buildingScroller.reloadData()
         });
@@ -56,7 +56,10 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     func clickOnSearch(button: UIButton){
         performSegueWithIdentifier("popUpSearchSeg", sender: self)
     }
-    
+    func buildingInfoHasBeenLoaded(){
+        //Dont need to do anything with buildng info on main page at moment, just need to implement to conform
+        //to the delagate
+    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)

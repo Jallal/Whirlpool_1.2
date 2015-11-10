@@ -16,9 +16,9 @@ protocol selectedRoomDataDelagate {
 class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplayDelegate  {
     
     @IBOutlet weak var tableview: UITableView!
-    
-    
     @IBOutlet weak var searchbar: UISearchBar!
+    
+    
     var filteredRooms = [RoomData]()
     var _roomToPass = RoomData()
     let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -29,8 +29,8 @@ class SearchViewController: UIViewController,UISearchBarDelegate,UISearchDisplay
     override func viewWillAppear(animated: Bool) {
         self.searchDisplayController?.active = true
         searchbar.becomeFirstResponder()
-        searchbar.backgroundColor = UIColor.clearColor()
-        searchbar.barTintColor = UIColor.whiteColor()
+//        searchbar.backgroundColor = UIColor(colorLiteralRed: 250.0/250.0, green: 213.0/250.0, blue: 101.0/250.0, alpha: 1)
+        searchbar.barTintColor = UIColor(colorLiteralRed: 250.0/250.0, green: 213.0/250.0, blue: 101.0/250.0, alpha: 1)
         searchbar.translucent = false
         self.navigationController?.navigationBar.hidden = true
        

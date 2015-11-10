@@ -43,19 +43,6 @@ class CalenderEvent {
         self.event = event
     }
     
-    
-    func getTitle()->String{
-        return "needs implimentation"
-    }
-    
-    func getDate()->String{
-        return "12/11/2015 - 12/12/2015"
-    }
-    
-    func getType()->UIColor{
-        return UIColor.whiteColor()
-    }
-    
     func getStartTimeDateObject()->GTLDateTime! {
         return event.start.dateTime
     }

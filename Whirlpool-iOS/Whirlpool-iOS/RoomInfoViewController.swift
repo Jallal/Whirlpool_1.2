@@ -14,8 +14,8 @@ import Foundation
 
 
 /**
- * The hatter view. Displays an image with a hat drawn over
- * it that we can manipulate.
+ * This class Present the details of a particular room in  a building
+ * show the room information in the lower half of the screen and the map in at the top of the screen
  */
 
 class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationManagerDelegate,GMSMapViewDelegate,GMSIndoorDisplayDelegate,UIScrollViewDelegate {
@@ -24,13 +24,43 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     @IBOutlet weak var roomInfo: UITableView!
     @IBOutlet weak var RoomNameLabel: UILabel!
     @IBOutlet weak var newView: UIView!
+    @IBOutlet weak var helpButton: UIButton!
     internal var _room = RoomData()
-    var _roomsData = RoomsData()
+    var CurrentFloor : Int = Int()
+    
+    @IBOutlet weak var mapPin: UIImageView!
+    
+    @IBOutlet weak var floorPicker: UITableView!
+  
+    @IBOutlet weak var getDirections: UIButton!
+    
 
 
+    @IBAction func helpButton(sender: AnyObject) {
+        self.floorPicker.hidden = !self.floorPicker.hidden
+        self.getDirections.hidden = !self.getDirections.hidden
+    }
+    @IBAction func getDirections(sender: AnyObject) {
+        
+         self.mapPin.hidden = !self.mapPin.hidden   
+    }
+    
+    //The number of floors in the given building
+    var floors = [String](count: _FloorData.getNumberOfFloors()+1, repeatedValue: "")
+    var FloorSize = _FloorData.getNumberOfFloors()
+    
+    func populateFloors(){
+           var i : Int = 0
+        for index  in (1...FloorSize).reverse(){
+            floors[i] = "\(index)"
+            i = i+1
+        }
+    }
+    
+    
     /**
-     * Create the dialog box
-     * @param savedInstanceState The saved instance bundle
+     * Allows the Scrolling in the google Maps
+     * adjust the maps size as we chnage the screen Size
      */
     @IBAction func PanGesture(sender: UIPanGestureRecognizer) {
        
@@ -38,8 +68,10 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         //let screenWidth : CGFloat  = screenSize.width
         let screenHeight : CGFloat  = screenSize.height
-        //View will not go out of the fram of the screen
+        //View will not go out of the frame of the screen
         let MagicNumber : CGFloat = screenSize.height*0.55
+        
+        //Translate the PX to the screen size
         let translation = sender.translationInView(self.newView)
         if let view = sender.view{
             let d: CGFloat = (self.view.center.y + translation.y)
@@ -53,6 +85,11 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     }
     
   
+    
+    /**
+     * All the amenities in a room
+     *
+     */
     let locationManager = CLLocationManager()
       var RoomAmenities = ["Capacity","Whiteboard","Monitor","Polycom","Phone","TV","Video Conference"]
     
@@ -61,6 +98,11 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     }
     
     
+    
+    /**
+     * Add a prticular room into your favorite rooms
+     * upon clicking on a button
+     */
     @IBAction func favoriteButton(sender: UIButton) {
         let alert = UIAlertController(title: _room.GetRoomName(), message: "New Favorite Added", preferredStyle: .Alert)
         let attributeString = NSAttributedString(string: "New Favorite", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(15),
@@ -78,11 +120,13 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     override func viewWillAppear(animated: Bool) {
        
        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-        updateLocation(true)
+       
+        self.populateFloors()
         if _room.GetRoomName() != "" {
             RoomNameLabel.text = _room.GetRoomName()
         }
-         _roomsData.getTheGeoJson("RV")
+         updateLocation(true)
+       
     }
     
     override func viewDidLoad() {
@@ -92,14 +136,28 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         self.mapView.delegate = self
         self.mapView.clear();
         self.mapView.center = self.view.center
-        self.reDraw()
+        self.mapPin.hidden = true;
+        self.floorPicker.hidden = true
+        self.getDirections.hidden = true
+        self.floorPicker.reloadData()
+        self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
+         _roomsData.getTheGeoJson("RV")// Change this the building being passed
+         self.CurrentFloor = 2 // Make sure you fix this later on
+        self.getDirections.layer.cornerRadius = 0.5 * self.getDirections.bounds.size.width
+        self.helpButton.layer.cornerRadius   = 0.5 * self.getDirections.bounds.size.width
     }
     
     
     
+    
+    /**
+     * Update user location on the map
+     * bool true/false
+     */
     func updateLocation(running : Bool){
-        
-       // let status = CLLocationManager.authorizationStatus()
+        //Get all the floors in the building
+        _FloorData.getRoomsInFloor(self.CurrentFloor)
+        self.reDraw(self.CurrentFloor)
         if running{
             
             locationManager.startUpdatingLocation()
@@ -111,6 +169,11 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
             self.mapView.myLocationEnabled = false
         }
     }
+    
+    /**
+     * Check if the user Authorize the location acces
+     * Update the user location
+     */
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .AuthorizedWhenInUse {
             locationManager.startUpdatingLocation()
@@ -119,13 +182,19 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         }
     }
     
+    
+    
+    /**
+     * update the location as the user move
+     *
+     */
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         var position = _room.GetroomCenter();
         
         if(CLLocationCoordinate2DIsValid(position)){
             _room.SetIsSelected(true);
             self.mapView.clear();
-            self.reDraw();
+            self.reDraw(self.CurrentFloor);
             mapView.camera = GMSCameraPosition(target: position, zoom: 18, bearing: 0, viewingAngle: 0)
             locationManager.stopUpdatingLocation()
             
@@ -165,70 +234,6 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     }
 
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return RoomAmenities.count
-        
-    }
-    
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell")
-        let items = _room.GetRoomResources()
-        cell!.textLabel!.text = RoomAmenities[indexPath.row]
-        if(cell!.textLabel!.text=="Capacity"){
-            cell!.detailTextLabel!.text = "\(_room.GetRoomCapacity())"
-            
-        }else if(cell!.textLabel!.text=="Whiteboard"){
-            if(items.contains("White Board")){
-                
-                cell!.detailTextLabel!.text = "Yes"
-            }else{
-                cell!.detailTextLabel!.text = "No"
-            }
-        }else if(cell!.textLabel!.text=="Monitor"){
-            if(items.contains("Monitor")){
-                
-                cell!.detailTextLabel!.text = "Yes"
-            }else{
-                cell!.detailTextLabel!.text = "No"
-            }
-        }else if(cell!.textLabel!.text=="Polycom"){
-            if(items.contains("Polycom")){
-                
-                cell!.detailTextLabel!.text = "Yes"
-            }else{
-                cell!.detailTextLabel!.text = "No"
-            }
-        }else if(cell!.textLabel!.text=="Phone"){
-            if(items.contains("Telephone")){
-                
-                cell!.detailTextLabel!.text = "Yes"
-            }else{
-                cell!.detailTextLabel!.text = "No"
-            }
-            
-        }else if(cell!.textLabel!.text=="TV"){
-            if(items.contains("TV")){
-                
-                cell!.detailTextLabel!.text = "Yes"
-            }else{
-                cell!.detailTextLabel!.text = "No"
-            }
-        }else if(cell!.textLabel!.text=="Video Conference"){
-            
-            if(items.contains("Video Conference")){
-            
-             cell!.detailTextLabel!.text = "Yes"
-            }else{
-                cell!.detailTextLabel!.text = "No"
-            }
-            
-        }
-        
-        return cell!
-        
-    }
-    
     
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -241,8 +246,9 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         
     }
     
-    func updateUIMap(){
-        for room in _roomsData.getAllRooms(){
+    func updateUIMap(floor : Int){
+        
+            for room in _FloorData.getRoomsInFloor(floor ){
             for rect in room.GetRoomCoordinates(){
                 //Label HW and restroom with different colors
                 let polygon = GMSPolygon(path: rect)
@@ -335,16 +341,16 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
            
           
         }
-        self.mapView.clear();
-        self.reDraw();
+         self.mapView.clear();
+        self.reDraw(self.CurrentFloor);
         
     }
     
     
-    func reDraw(){
+    func reDraw(floor : Int){
         dispatch_async(dispatch_get_main_queue()) {
             do {
-                self.updateUIMap()
+                self.updateUIMap(floor)
             }
             catch {
                 print("Failed to update UI")
@@ -371,7 +377,94 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         return newImage
     }
     
+/******************************************  Table view for floor picker and room info ******************************************************/
+    /* Function to handel selecting a particular floor*/
+    func tableView(floorPicker: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        if(floorPicker==self.floorPicker){
+        floorPicker.deselectRowAtIndexPath(indexPath, animated: true)
+            if let myNumber = NSNumberFormatter().numberFromString(floors[indexPath.row]) {
+                      self.mapView.clear()
+                self.updateUIMap(myNumber.integerValue)
+            }
+       
+        }
+        
+    }
+   
     
+      /* get the number of raws in each tableView*/
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if(tableView==self.floorPicker){
+            
+            return floors.count-1
+            
+        }else{
+            return RoomAmenities.count-1
+            
+        }
+        
+    }
+    
+    
+     /* Display the floor picker and and the room details in the each tableView*/
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell")
+        if(tableView==self.floorPicker){
+            cell!.textLabel!.text = floors[indexPath.row]
+            return cell!
+            
+        }else{
+            let items = _room.GetRoomResources()
+            cell!.textLabel!.text = RoomAmenities[indexPath.row]
+            if(cell!.textLabel!.text=="Capacity"){
+                cell!.detailTextLabel!.text = "\(_room.GetRoomCapacity())"
+                
+            }else if(cell!.textLabel!.text=="Whiteboard"){
+                if(items.contains("White Board")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+            }else if(cell!.textLabel!.text=="Monitor"){
+                if(items.contains("Monitor")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+            }else if(cell!.textLabel!.text=="Polycom"){
+                if(items.contains("Polycom")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+            }else if(cell!.textLabel!.text=="Phone"){
+                if(items.contains("Telephone")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+                
+            }else if(cell!.textLabel!.text=="TV"){
+                if(items.contains("TV")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+            }
+            
+            return cell!
+            
+        }
+    
+}
 }
 
 

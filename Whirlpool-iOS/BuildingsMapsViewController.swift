@@ -10,19 +10,18 @@ import Foundation
 import UIKit
 import GoogleMaps
 class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,UIPopoverPresentationControllerDelegate {
+    
     //The number of floors in the given building
-    var floors = ["4","3","2","1"]
-    //The effect
-    var blueEffect: UIBlurEffect = UIBlurEffect ()
-    //The view of the effect
-    var blurEffectView: UIVisualEffectView = UIVisualEffectView()
+    var floors = [String](count: _FloorData.getNumberOfFloors()+1, repeatedValue: "")
     //The alert view for notification
     var alertView: UIView = UIView()
     //The button that dismiss the view
     var ok_button : UIButton = UIButton()
     //the message on the notification view
     var  label   : UILabel   = UILabel();
+     var CurrentFloor : Int = Int()
 
+    @IBOutlet weak var helpButton: UIButton!
     @IBOutlet weak var getDirections: UIButton!
     //origin marker during navigation
     var originMarker: GMSMarker!
@@ -56,32 +55,23 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     @IBOutlet weak var mapView: GMSMapView!
     
     let locationManager = CLLocationManager()
+    var FloorSize = _FloorData.getNumberOfFloors()
+    
+    func populateFloors(){
+        var i : Int = 0
+        for index  in (1...FloorSize).reverse(){
+            floors[i] = "\(index)"
+            i = i+1
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        /***************************************/
-         var position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
-        if(CLLocationCoordinate2DIsValid(position)){
-            _room.SetIsSelected(true);
-            self.mapView.clear();
-            self.reDraw();
-            position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
-            mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
-            
-            locationManager.stopUpdatingLocation()
-            
-        }else{
-             position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
-            mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
-            locationManager.stopUpdatingLocation()
-        }
-         /***************************************/
         self.floorPicker.reloadData()
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
         self.locationManager.delegate = self
         self.locationManager.requestAlwaysAuthorization()
         self.mapView.delegate = self
-        
         //the pin to help locat the user
         self.mapPin.hidden = true;
         self.floorPicker.hidden = true
@@ -90,17 +80,8 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         mapPin.userInteractionEnabled = true
         mapPin.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "buttonTapped:"))
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-        
-        //Draw the indoor map for the building
-         self.reDraw()
-        
         //Get the windows size infomation
-        
         let screenSize: CGRect = UIScreen.mainScreen().bounds
-        let screenWidth = screenSize.width
-        let screenHeight = screenSize.height
-    
-        
         //the notification windows to help the user navigate the building
         alertView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 60))
         alertView.backgroundColor = UIColor(red:(244/255.0), green:(179/255.0), blue:(80/255.0), alpha:1.0);
@@ -114,9 +95,27 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         label.font = UIFont(name:"Heiti SC", size: 14)
         label.tintColor = UIColor.blackColor()
         self.view.backgroundColor = UIColor.whiteColor()
+        self.populateFloors()
+        self.floorPicker.reloadData()
+        self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
+        _roomsData.getTheGeoJson("RV")// Change this the building being passed
+        self.CurrentFloor = 2 // Make sure you fix this later on
+        self.getDirections.layer.cornerRadius = 0.5 * self.getDirections.bounds.size.width
+        self.helpButton.layer.cornerRadius   = 0.5 * self.getDirections.bounds.size.width
         
         
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+        self.populateFloors()
+        updateLocation(true)
+        
+    }
+    
+   
+    
+
     
     
     /* The function that handels dismissing the notification during navigation*/
@@ -149,8 +148,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     var position = _room.GetroomCenter();
     if(CLLocationCoordinate2DIsValid(position)){
         _room.SetIsSelected(true);
-        self.mapView.clear();
-        self.reDraw();
         mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
         locationManager.stopUpdatingLocation()
         
@@ -164,15 +161,16 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     /* After the view has appeared we update the user location*/
     override func viewDidAppear(animated: Bool) {
-        
         super.viewDidAppear(animated)
-        
         updateLocation(true)
     }
     
     
     /* The actual updating of the user location*/
     func updateLocation(running : Bool){
+        //Get all the floors in the building
+        _FloorData.getRoomsInFloor(self.CurrentFloor)
+        self.reDraw(self.CurrentFloor)
     
         let status = CLLocationManager.authorizationStatus()
         if running{
@@ -237,7 +235,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     /* Get the number of floors to be displayed*/
     func tableView(floorPicker: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return floors.count
+        return (floors.count-1)
         
     }
     
@@ -252,10 +250,14 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     /* Function to handel selecting a particular floor*/
     func tableView(floorPicker: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        floorPicker.deselectRowAtIndexPath(indexPath, animated: true)
-        print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-        print(floors[indexPath.row])
-        print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+            floorPicker.deselectRowAtIndexPath(indexPath, animated: true)
+            if let myNumber = NSNumberFormatter().numberFromString(floors[indexPath.row]) {
+                self.mapView.clear()
+                self.updateUIMap(myNumber.integerValue)
+            }
+            
+        
+
         
     }
     
@@ -270,17 +272,19 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     
 /* Function the handels drawing the floor plan of each building*/
-    func updateUIMap(){
-        for room in _roomsData.getAllRooms(){
+    func updateUIMap(floor : Int){
+        
+        for room in _FloorData.getRoomsInFloor(floor ){
             for rect in room.GetRoomCoordinates(){
                 //Label HW and restroom with different colors
-                var polygon = GMSPolygon(path: rect)
+                let polygon = GMSPolygon(path: rect)
                 if(room.GetIsSelected()){
-                    var position = room.GetroomCenter()
-                    var marker = GMSMarker(position: position)
-                    //marker.appearAnimation = kGMSMarkerAnimationPop
+                    self._room = room
+                    let position = room.GetroomCenter()
+                    let marker = GMSMarker(position: position)
                     marker.icon = UIImage(named: "mapannotation.png")
                     marker.flat = true
+                    //marker.appearAnimation = kGMSMarkerAnimationPop
                     marker.map = self.mapView
                     polygon.fillColor = UIColor(red:(137/255.0), green:196/255.0, blue:244/255.0, alpha:1.0);
                 }else{
@@ -308,73 +312,35 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                 polygon.tappable = true;
                 polygon.map = self.mapView
                 
-                /*******************************************/
-                var drawText : NSString = " Hello"
-                 
-                // we create a UIImage out of it
-                 var inImage = UIImage(named:"wbathroom.png")
-                
-                 // Setup the font specific variables
-                var textColor: UIColor = UIColor.blackColor()
-                var textFont: UIFont = UIFont(name: "Helvetica Bold", size: 12)!
-                
-                //Setup the image context using the passed image.
-                UIGraphicsBeginImageContext(inImage!.size)
-                
-                //Setups up the font attributes that will be later used to dictate how the text should be drawn
-                let textFontAttributes = [
-                    NSFontAttributeName: textFont,
-                    NSForegroundColorAttributeName: textColor,
-                ]
-                
-                //Put the image into a rectangle as large as the original image.
-                inImage!.drawInRect(CGRectMake(0, 0, inImage!.size.width, inImage!.size.height))
-                
-                // Creating a point within the space that is as bit as the image.
-                var rect: CGRect = CGRectMake(0, 0, inImage!.size.width, inImage!.size.height)
-                
-                //Now Draw the text into an image.
-                drawText.drawInRect(rect, withAttributes: textFontAttributes)
-                
-                // Create a new image out of the images we have created
-                var newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-                
-                // End the context now that we have the image we need
-                UIGraphicsEndImageContext()
-                
-                var overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: newImage, zoomLevel:20)
-                overlay.bearing = -10
-                overlay.map = self.mapView
-                
-                //And pass it back up to the caller.
-                //return newImage
-    
-                
-                  /*******************************************/
-                
-                
                 // Add imge to the bathrooms and Exit/entrance
                 if(room.GetRoomName()=="WB"){
-                     var icon = UIImage(named: "wbathroom.jpg")
-                     var overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
-                      overlay.bearing = -10
-                     overlay.map = self.mapView
+                    let icon = UIImage(named: "wbathroom.jpg")
+                    let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
+                    overlay.bearing = -10
+                    overlay.map = self.mapView
                 }else if(room.GetRoomName()=="MB"){
-                    var icon = UIImage(named: "mbathroom.jpg")
-                    var overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
+                    let icon = UIImage(named: "mbathroom.jpg")
+                    let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
                     overlay.bearing = -10
                     overlay.map = self.mapView
                 }else if(room.GetRoomName()=="EXT"){
-                    var icon = UIImage(named: "exit.jpg")
-                    var overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
+                    let icon = UIImage(named: "exit.jpg")
+                    let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
                     overlay.bearing = -10
                     overlay.map = self.mapView
                 }else if(room.GetRoomName()=="UX"){
-                    var icon = UIImage(named: "UX.jpg")
-                    var overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
+                    let icon = UIImage(named: "UX.jpg")
+                    let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
                     overlay.bearing = -10
                     overlay.map = self.mapView
+                }else if(room.GetRoomType()=="C" || room.GetRoomType()=="H" ){
+                    let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: newImage(room.GetRoomName(), size: CGSizeMake(12, 12)), zoomLevel:20)
+                    overlay.bearing = 0
+                    overlay.map = self.mapView
+                    
                 }
+                
+                
                 self.view.setNeedsDisplay()
                 
             }
@@ -387,31 +353,28 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
 
 /* Function to detect the user has tapped on a particular room in the floor*/
     func mapView(mapView: GMSMapView!, didTapOverlay overlay: GMSOverlay!) {
-          print("**********************************");
-        print(overlay.title);
-         print("**********************************");
         if((overlay.title) != nil){
             for room in _roomsData.getAllRooms(){
                 if(room.GetRoomName() == overlay.title){
                     room.SetIsSelected(true);
                 }else{
                     room.SetIsSelected(false);
-                } 
+                }
                 
             }
-            self.mapView.clear();
-            self.reDraw();
+            
+            
         }
+        self.mapView.clear();
+        self.reDraw(self.CurrentFloor);
         
     }
     
     
-    
-    /* Redraw function to redraw the map when needed*/
-    func reDraw(){
+    func reDraw(floor : Int){
         dispatch_async(dispatch_get_main_queue()) {
             do {
-                self.updateUIMap()
+                self.updateUIMap(floor)
             }
             catch {
                 print("Failed to update UI")
@@ -424,7 +387,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     /* Drawing the navigation path for the user*/
     func drawRoute() {
         
-        self.BannerView("Are you in the 4th floor Yet ?", button_message:"Yes");
+        //self.BannerView("Are you in the 4th floor Yet ?", button_message:"Yes");
 
         
        /* var path1 = GMSMutablePath()
@@ -462,5 +425,23 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
     }
     
+    func newImage(text: String, size: CGSize) -> UIImage {
+        
+        let data = text.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+        let drawText = NSString(data: data!, encoding: NSUTF8StringEncoding)
+        
+        let textFontAttributes = [
+            NSFontAttributeName: UIFont(name: "Helvetica Bold", size: 4)!,
+            NSForegroundColorAttributeName: UIColor.blackColor(),
+        ]
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        drawText?.drawInRect(CGRectMake(0, 0, size.width, size.height), withAttributes: textFontAttributes)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
+
     
 }
