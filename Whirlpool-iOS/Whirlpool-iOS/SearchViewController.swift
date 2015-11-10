@@ -40,24 +40,16 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
     
     
     override func viewWillAppear(animated: Bool) {
-        //self.searchDisplayController?.active = true
         UIApplication.sharedApplication().statusBarHidden = true
+        self.navigationController?.navigationBar.hidden = true
     }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        searchbar.tintColor = UIColor.whiteColor()
-        searchbar.setShowsCancelButton(false, animated: false)
-        searchbar.backgroundImage = UIColor(red: 250.0/250.0, green: 213.0/250.0, blue: 101.0/250.0, alpha: 1).convertImage()
-        searchbar.barTintColor = UIColor(red: 251.0/255.0, green: 225.0/255.0, blue: 131.0/255.0, alpha: 1)
-        let textFieldInsideSearchBar = searchbar.valueForKey("searchField") as? UITextField
-        let textFieldInsideSearchBarLabel = textFieldInsideSearchBar!.valueForKey("placeholderLabel") as? UILabel
-        textFieldInsideSearchBarLabel?.textColor = UIColor.whiteColor()
-        textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
-        textFieldInsideSearchBar?.backgroundColor = UIColor(red: 251.0/255.0, green: 225.0/255.0, blue: 131.0/255.0, alpha: 1)
-         self.filteredRooms = _roomsData.getAllRooms()
-         tableview.reloadData()
+        self.setUpSearchBarAppearence()
+        self.filteredRooms = _roomsData.getAllRooms()
+        tableview.reloadData()
     }
     
     
@@ -85,6 +77,18 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
             UIApplication.sharedApplication().statusBarHidden = false
             self.dismissViewControllerAnimated(true, completion: nil)
         }
+    }
+    
+    func setUpSearchBarAppearence(){
+        searchbar.tintColor = UIColor.whiteColor()
+        searchbar.setShowsCancelButton(false, animated: false)
+        searchbar.backgroundImage = UIColor(red: 250.0/250.0, green: 213.0/250.0, blue: 101.0/250.0, alpha: 1).convertImage()
+        searchbar.barTintColor = UIColor(red: 251.0/255.0, green: 225.0/255.0, blue: 131.0/255.0, alpha: 1)
+        let textFieldInsideSearchBar = searchbar.valueForKey("searchField") as? UITextField
+        let textFieldInsideSearchBarLabel = textFieldInsideSearchBar!.valueForKey("placeholderLabel") as? UILabel
+        textFieldInsideSearchBarLabel?.textColor = UIColor.whiteColor()
+        textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
+        textFieldInsideSearchBar?.backgroundColor = UIColor(red: 251.0/255.0, green: 225.0/255.0, blue: 131.0/255.0, alpha: 1)
     }
     
     // MARK: - Table View

@@ -27,6 +27,9 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     @IBOutlet weak var helpButton: UIButton!
     internal var _room = RoomData()
     var CurrentFloor : Int = Int()
+    var CurrentBuilding : String = String()
+    var  NumberOfFloor  : Int = Int()
+    var floors   =  [String()]
     
     @IBOutlet weak var mapPin: UIImageView!
     
@@ -46,12 +49,10 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     }
     
     //The number of floors in the given building
-    var floors = [String](count: _FloorData.getNumberOfFloors()+1, repeatedValue: "")
-    var FloorSize = _FloorData.getNumberOfFloors()
-    
+
     func populateFloors(){
            var i : Int = 0
-        for index  in (1...FloorSize).reverse(){
+        for index  in (1...NumberOfFloor).reverse(){
             floors[i] = "\(index)"
             i = i+1
         }
@@ -131,6 +132,10 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        /******************************************************************************/
+        /*************************** UPDATE THE  BUILDING NAME AND THE FLOORB******************************/
+        self.CurrentFloor = 2 // Make sure you fix this later on
+        self.CurrentBuilding = "GHQ"
         self.locationManager.delegate = self
         self.locationManager.requestAlwaysAuthorization()
         self.mapView.delegate = self
@@ -141,11 +146,14 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         self.getDirections.hidden = true
         self.floorPicker.reloadData()
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
-         _roomsData.getTheGeoJson("RV")// Change this the building being passed
-         self.CurrentFloor = 2 // Make sure you fix this later on
         self.getDirections.layer.cornerRadius = 0.5 * self.getDirections.bounds.size.width
         self.helpButton.layer.cornerRadius   = 0.5 * self.getDirections.bounds.size.width
+        //self.floors = [String](count: (_BuildinfData.getNumberOfFloorsInBuilding(CurrentBuilding)+1), repeatedValue: "")
+        //self.NumberOfFloor = _BuildinfData.getNumberOfFloorsInBuilding(CurrentBuilding)
+
     }
+    
+    
     
     
     
@@ -156,7 +164,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
      */
     func updateLocation(running : Bool){
         //Get all the floors in the building
-        _FloorData.getRoomsInFloor(self.CurrentFloor)
+        //_FloorData.getRoomsInFloor(self.CurrentFloor)
         self.reDraw(self.CurrentFloor)
         if running{
             
@@ -195,11 +203,12 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
             _room.SetIsSelected(true);
             self.mapView.clear();
             self.reDraw(self.CurrentFloor);
+            position = CLLocationCoordinate2D(latitude: 42.1508511406335, longitude: -86.4427788105087)
             mapView.camera = GMSCameraPosition(target: position, zoom: 18, bearing: 0, viewingAngle: 0)
             locationManager.stopUpdatingLocation()
             
         }else{
-            position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
+            position = CLLocationCoordinate2D(latitude: 42.1508511406335, longitude: -86.4427788105087)
             mapView.camera = GMSCameraPosition(target: position, zoom: 18, bearing: 0, viewingAngle: 0)
             locationManager.stopUpdatingLocation()
         }
@@ -247,8 +256,9 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     }
     
     func updateUIMap(floor : Int){
-        
-            for room in _FloorData.getRoomsInFloor(floor ){
+         /*var allFloors = _BuildinfData.getAllFloorsInBuilding(CurrentBuilding)
+        for floorClass in allFloors {
+            for room in floorClass.getRoomsInFloor(floor){
             for rect in room.GetRoomCoordinates(){
                 //Label HW and restroom with different colors
                 let polygon = GMSPolygon(path: rect)
@@ -322,8 +332,9 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
             }
             
         }
-        
-        
+    }
+    
+        */
         
     }
     

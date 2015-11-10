@@ -10,24 +10,41 @@ import Foundation
 import GoogleMaps
 
 
+struct FloorInfo {
+    var number : Int = Int()
+    var rooms: RoomsData = RoomsData()
+}
+
 public class FloorData {
+    
+    var AllFloors  = Array<FloorInfo>()
+    var floor  = FloorInfo()
 
-    var buildingFloors = Array<Array<RoomData>>(count: 3, repeatedValue: Array<RoomData>())
 
     
-    func getRoomsInFloor(floor : Int)->Array<RoomData>{
-        return buildingFloors[floor]
-    }
-
-    
-    func AddRoomsToFloor(floor: Int, rooms : Array<RoomData> ){
-      self.buildingFloors[floor]=rooms
-
+    func getRoomsInFloor(floor : Int)-> RoomsData{
         
+        for fl in AllFloors {
+            if  fl.number == floor{
+                return fl.rooms
+            }
+        }
+          return RoomsData()
     }
     
-    func getNumberOfFloors()->Int{
-        return self.buildingFloors.count
+    
+
+    
+    func AddRoomsToFloor(f: Int, rooms : RoomsData ){
+        floor.number = f
+        floor.rooms = rooms
+        self.AllFloors.append(floor)
+    }
+    
+    
+    
+    func getNumberOfFloors()->Int {
+        return  self.AllFloors.count
     }
     
     

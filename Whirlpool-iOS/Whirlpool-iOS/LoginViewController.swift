@@ -53,9 +53,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             KeychainHelper.set(kKeychainItemName, value: <#T##NSData#>)
             
         }*/
-        
-        _roomsData.getTheGeoJson("RV")
-         
+                 
     }
     
     func httpCall(){
