@@ -12,7 +12,7 @@ import GoogleMaps
 
 struct FloorInfo {
     var number : Int = Int()
-    var rooms: Array<RoomData> = Array<RoomData>()
+    var rooms: RoomsData = RoomsData()
 }
 
 public class FloorData {
@@ -22,20 +22,20 @@ public class FloorData {
 
 
     
-    func getRoomsInFloor(floor : Int)->Array<RoomData>{
+    func getRoomsInFloor(floor : Int)-> RoomsData{
         
         for fl in AllFloors {
             if  fl.number == floor{
                 return fl.rooms
             }
         }
-          return Array<RoomData>()
+          return RoomsData()
     }
     
     
 
     
-    func AddRoomsToFloor(f: Int, rooms : Array<RoomData> ){
+    func AddRoomsToFloor(f: Int, rooms : RoomsData ){
         floor.number = f
         floor.rooms = rooms
         self.AllFloors.append(floor)

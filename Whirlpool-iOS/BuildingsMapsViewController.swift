@@ -131,9 +131,9 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         /*************************** UPDATE THE  BUILDING NAME AND THE FLOORB******************************/
         self.CurrentFloor = 1 // Make sure you fix this later on
         self.CurrentBuilding = "GHQ"
-        _roomsData.getTheGeoJson(CurrentBuilding)// Change this the building being passed
-        self.NumberOfFloor = (_BuildinfData.getNumberOfFloorsInBuilding(CurrentBuilding)-1)
-        self.populateFloors()
+       // _roomsData.getTheGeoJson(CurrentBuilding)// Change this the building being passed
+        //self.NumberOfFloor = (_BuildinfData.getNumberOfFloorsInBuilding(CurrentBuilding)-1)
+        //self.populateFloors()
 
  
         
@@ -299,7 +299,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
 /* Function the handels drawing the floor plan of each building*/
     func updateUIMap(floor : Int){
         
-        var allFloors = _BuildinfData.getAllFloorsInBuilding(CurrentBuilding)
+       /* var allFloors = _BuildinfData.getAllFloorsInBuilding(CurrentBuilding)
         for floorClass in allFloors {
             for room in floorClass.getRoomsInFloor(floor){
                 for rect in room.GetRoomCoordinates(){
@@ -375,7 +375,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         }
         }
         
-        
+        */
         
     }
 

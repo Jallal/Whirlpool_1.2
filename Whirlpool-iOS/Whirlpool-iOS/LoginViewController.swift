@@ -53,9 +53,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             KeychainHelper.set(kKeychainItemName, value: <#T##NSData#>)
             
         }*/
-        
-       _roomsData.getTheGeoJson("GHQ")// Change this the building being passed 
-         
+                 
     }
     
     func httpCall(){
@@ -272,6 +270,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             
         }
     }
+    
     
     
     func pushRoomDataToDatabase(){

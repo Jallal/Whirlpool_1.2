@@ -43,19 +43,6 @@ class CalenderEvent {
         self.event = event
     }
     
-    
-    func getTitle()->String{
-        return "needs implimentation"
-    }
-    
-    func getDate()->String{
-        return "12/11/2015 - 12/12/2015"
-    }
-    
-    func getType()->UIColor{
-        return UIColor.whiteColor()
-    }
-    
     func getStartTimeDateObject()->GTLDateTime! {
         return event.start.dateTime
     }
@@ -85,7 +72,12 @@ class CalenderEvent {
             //Return the minutes specifically if it is less than an hour
             if time < 1.0 {
                 let finalTime = Int(time * 100)
-                return NSString(format: "%i min", finalTime) as String
+                if finalTime < 0 {
+                return NSString(format: "Now") as String
+                }
+                else {
+                    return NSString(format: "%i min", finalTime) as String
+                }
             }
                 //If it is greater than an hour return the interval for time of .5 hour intervals
             else{
@@ -98,7 +90,6 @@ class CalenderEvent {
                     return NSString(format: "%i hr", finalTime) as String
                 }
             }
-            
         }
     }
     

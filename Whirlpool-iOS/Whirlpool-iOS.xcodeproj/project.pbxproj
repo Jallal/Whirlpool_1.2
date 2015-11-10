@@ -12,6 +12,7 @@
 		421545B41BB8533F00AE1B23 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545AE1BB8533F00AE1B23 /* SearchViewController.swift */; };
 		421545B51BB8533F00AE1B23 /* RoomInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545AF1BB8533F00AE1B23 /* RoomInfoViewController.swift */; };
 		421545BC1BB85FD600AE1B23 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 421545BB1BB85FD600AE1B23 /* MapKit.framework */; };
+		4254796D1BF1781900AC1661 /* NavigationFULLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254796C1BF1781900AC1661 /* NavigationFULLViewController.swift */; };
 		4254961E1BBBA1B100B8CC5C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4254961D1BBBA1B100B8CC5C /* CoreLocation.framework */; };
 		427BAEDF1BB9F31100B3F63A /* BuildingsMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427BAEDE1BB9F31100B3F63A /* BuildingsMapsViewController.swift */; };
 		4288AAA01BB83093003EC9EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4288AA9F1BB83093003EC9EF /* AppDelegate.swift */; };
@@ -21,7 +22,6 @@
 		4288AAB51BB83093003EC9EF /* Whirlpool_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4288AAB41BB83093003EC9EF /* Whirlpool_iOSTests.swift */; };
 		4288AAC01BB83093003EC9EF /* Whirlpool_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4288AABF1BB83093003EC9EF /* Whirlpool_iOSUITests.swift */; };
 		428C22261BF038C9007A6F13 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428C22251BF038C9007A6F13 /* KeychainHelper.swift */; };
-		428C22281BF063A1007A6F13 /* BuildingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428C22271BF063A1007A6F13 /* BuildingData.swift */; };
 		42AC8C441BEEDD7500ECE6A6 /* FloorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AC8C431BEEDD7500ECE6A6 /* FloorData.swift */; };
 		42B976CD1BC1D5950012D29B /* UserCalenderInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B976CC1BC1D5950012D29B /* UserCalenderInfo.swift */; };
 		42C01DF21BB8351600C2EEAD /* libGTLTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C01DF11BB8351600C2EEAD /* libGTLTouchStaticLib.a */; };
@@ -31,6 +31,9 @@
 		42C01DFC1BB8369A00C2EEAD /* GTLCalendar_Sources.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C01DFA1BB8369A00C2EEAD /* GTLCalendar_Sources.m */; };
 		42C6AFF31BC4216D00245A2B /* web in Resources */ = {isa = PBXBuildFile; fileRef = 42C6AFF21BC4216C00245A2B /* web */; };
 		6E062A981BCB30E800BCA209 /* CalendarEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E062A971BCB30E800BCA209 /* CalendarEventViewController.swift */; };
+		6E2B8C491BED8655002B6E95 /* BuildingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2B8C481BED8655002B6E95 /* BuildingCollectionViewCell.swift */; };
+		6E6C6C721BEECE0B00D408D9 /* BuildingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C6C711BEECE0B00D408D9 /* BuildingData.swift */; };
+		6E6C6C741BEEF39E00D408D9 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C6C731BEEF39E00D408D9 /* Building.swift */; };
 		6E83A9771BD2D6BE00306C86 /* FavoriteModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E83A9751BD2D6BE00306C86 /* FavoriteModel.xcdatamodeld */; };
 		6EB781241BCB3C9800166FC2 /* RoomData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB781231BCB3C9800166FC2 /* RoomData.swift */; };
 		845E187A1BCB1A6900224DBA /* RoomsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E18791BCB1A6900224DBA /* RoomsData.swift */; };
@@ -66,6 +69,7 @@
 		421545AF1BB8533F00AE1B23 /* RoomInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomInfoViewController.swift; sourceTree = "<group>"; };
 		421545B81BB85FB200AE1B23 /* Whirlpool-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Whirlpool-iOS.entitlements"; sourceTree = "<group>"; };
 		421545BB1BB85FD600AE1B23 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		4254796C1BF1781900AC1661 /* NavigationFULLViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationFULLViewController.swift; sourceTree = "<group>"; };
 		4254961D1BBBA1B100B8CC5C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		427BAEDE1BB9F31100B3F63A /* BuildingsMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingsMapsViewController.swift; path = ../BuildingsMapsViewController.swift; sourceTree = "<group>"; };
 		4288AA9C1BB83093003EC9EF /* Whirlpool-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Whirlpool-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,7 +85,6 @@
 		4288AABF1BB83093003EC9EF /* Whirlpool_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Whirlpool_iOSUITests.swift; sourceTree = "<group>"; };
 		4288AAC11BB83093003EC9EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		428C22251BF038C9007A6F13 /* KeychainHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
-		428C22271BF063A1007A6F13 /* BuildingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildingData.swift; sourceTree = "<group>"; };
 		42AC8C431BEEDD7500ECE6A6 /* FloorData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloorData.swift; sourceTree = "<group>"; };
 		42B976CC1BC1D5950012D29B /* UserCalenderInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCalenderInfo.swift; sourceTree = "<group>"; };
 		42C01DF11BB8351600C2EEAD /* libGTLTouchStaticLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGTLTouchStaticLib.a; path = "../google-api-objectivec-client/Source/build/Debug-iphoneos/libGTLTouchStaticLib.a"; sourceTree = "<group>"; };
@@ -94,6 +97,9 @@
 		42C6AFF21BC4216C00245A2B /* web */ = {isa = PBXFileReference; lastKnownFileType = folder; path = web; sourceTree = "<group>"; };
 		687F69D2BC4BA870FA74ACA3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E062A971BCB30E800BCA209 /* CalendarEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarEventViewController.swift; sourceTree = "<group>"; };
+		6E2B8C481BED8655002B6E95 /* BuildingCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildingCollectionViewCell.swift; sourceTree = "<group>"; };
+		6E6C6C711BEECE0B00D408D9 /* BuildingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildingData.swift; sourceTree = "<group>"; };
+		6E6C6C731BEEF39E00D408D9 /* Building.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
 		6E83A9761BD2D6BE00306C86 /* FavoriteModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoriteModel.xcdatamodel; sourceTree = "<group>"; };
 		6EB781231BCB3C9800166FC2 /* RoomData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RoomData.swift; path = ../RoomData.swift; sourceTree = "<group>"; };
 		845E18791BCB1A6900224DBA /* RoomsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomsData.swift; sourceTree = "<group>"; };
@@ -165,6 +171,7 @@
 		4288AA9E1BB83093003EC9EF /* Whirlpool-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				4254796C1BF1781900AC1661 /* NavigationFULLViewController.swift */,
 				6E062A971BCB30E800BCA209 /* CalendarEventViewController.swift */,
 				42B976CC1BC1D5950012D29B /* UserCalenderInfo.swift */,
 				427BAEDE1BB9F31100B3F63A /* BuildingsMapsViewController.swift */,
@@ -176,10 +183,12 @@
 				421545AE1BB8533F00AE1B23 /* SearchViewController.swift */,
 				421545AF1BB8533F00AE1B23 /* RoomInfoViewController.swift */,
 				42AC8C431BEEDD7500ECE6A6 /* FloorData.swift */,
-				428C22271BF063A1007A6F13 /* BuildingData.swift */,
 				6EB781231BCB3C9800166FC2 /* RoomData.swift */,
 				845E18791BCB1A6900224DBA /* RoomsData.swift */,
 				84E2B69D1BDE87BC004D0838 /* FavoritesViewController.swift */,
+				6E2B8C481BED8655002B6E95 /* BuildingCollectionViewCell.swift */,
+				6E6C6C711BEECE0B00D408D9 /* BuildingData.swift */,
+				6E6C6C731BEEF39E00D408D9 /* Building.swift */,
 				4288AAA31BB83093003EC9EF /* Main.storyboard */,
 				4288AAA61BB83093003EC9EF /* Assets.xcassets */,
 				4288AAA81BB83093003EC9EF /* LaunchScreen.storyboard */,
@@ -425,17 +434,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				421545B51BB8533F00AE1B23 /* RoomInfoViewController.swift in Sources */,
+				6E6C6C741BEEF39E00D408D9 /* Building.swift in Sources */,
 				421545B41BB8533F00AE1B23 /* SearchViewController.swift in Sources */,
 				845E187A1BCB1A6900224DBA /* RoomsData.swift in Sources */,
-				428C22281BF063A1007A6F13 /* BuildingData.swift in Sources */,
 				6EB781241BCB3C9800166FC2 /* RoomData.swift in Sources */,
 				6E062A981BCB30E800BCA209 /* CalendarEventViewController.swift in Sources */,
 				42C01DFC1BB8369A00C2EEAD /* GTLCalendar_Sources.m in Sources */,
+				6E6C6C721BEECE0B00D408D9 /* BuildingData.swift in Sources */,
 				42AC8C441BEEDD7500ECE6A6 /* FloorData.swift in Sources */,
 				4288AAA01BB83093003EC9EF /* AppDelegate.swift in Sources */,
 				847B58741BB9BF9800E22862 /* CalenderCell.swift in Sources */,
 				84E2B69E1BDE87BC004D0838 /* FavoritesViewController.swift in Sources */,
+				4254796D1BF1781900AC1661 /* NavigationFULLViewController.swift in Sources */,
 				421545B31BB8533F00AE1B23 /* LoginViewController.swift in Sources */,
+				6E2B8C491BED8655002B6E95 /* BuildingCollectionViewCell.swift in Sources */,
 				427BAEDF1BB9F31100B3F63A /* BuildingsMapsViewController.swift in Sources */,
 				421545B21BB8533F00AE1B23 /* MainViewController.swift in Sources */,
 				847B58751BB9BF9800E22862 /* CalenderEvent.swift in Sources */,

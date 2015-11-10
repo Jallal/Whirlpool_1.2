@@ -149,7 +149,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         self.getDirections.layer.cornerRadius = 0.5 * self.getDirections.bounds.size.width
         self.helpButton.layer.cornerRadius   = 0.5 * self.getDirections.bounds.size.width
         //self.floors = [String](count: (_BuildinfData.getNumberOfFloorsInBuilding(CurrentBuilding)+1), repeatedValue: "")
-        self.NumberOfFloor = _BuildinfData.getNumberOfFloorsInBuilding(CurrentBuilding)
+        //self.NumberOfFloor = _BuildinfData.getNumberOfFloorsInBuilding(CurrentBuilding)
 
     }
     
@@ -256,7 +256,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     }
     
     func updateUIMap(floor : Int){
-         var allFloors = _BuildinfData.getAllFloorsInBuilding(CurrentBuilding)
+         /*var allFloors = _BuildinfData.getAllFloorsInBuilding(CurrentBuilding)
         for floorClass in allFloors {
             for room in floorClass.getRoomsInFloor(floor){
             for rect in room.GetRoomCoordinates(){
@@ -334,7 +334,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         }
     }
     
-        
+        */
         
     }
     
