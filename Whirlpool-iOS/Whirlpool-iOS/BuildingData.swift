@@ -100,18 +100,17 @@ class BuildingsData {
     
     
     
-    
+    // Possible errors from parsing JSON
     enum JSONError: String, ErrorType {
         case NoData = "ERROR: no data"
         case ConversionFailed = "ERROR: conversion from JSON failed"
     }
     
     
-
     
     
-    
-    func getTheGeoJson(building_id : String) ->Array<FloorData> {
+     /* This function get all the floors with their rooms in a particular building @Param : building Id*/
+    func GetAllFloorsInBuilding(building_id : String) ->Array<FloorData> {
         var FloorCount = 0
         var Floors = Array<FloorData>()
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
@@ -134,8 +133,6 @@ class BuildingsData {
                                 }
                                 
                                 if let cap = da["geojson"] as? NSString{
-                                    
-                                    
                                     let file = "file.json"
                                     let text = cap
                                     if let dir : NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
@@ -145,18 +142,21 @@ class BuildingsData {
                                         do {
                                             try text.writeToFile(path, atomically: false, encoding: NSUTF8StringEncoding)
                                         }
-                                        catch {/* error handling here */}
+                                        catch {
+                                           print("GeoJSON parsing failed")
+                                        }
                                         
                                         //reading
                                         do {
-                                            //let text2 = try NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding)
                                             var Floor  = FloorData()
-                                            var Builingrooms  = self.parseJson(path,Building_id: building_id)
-                                            Floor.AddRoomsToFloor(floorNumber,rooms:Builingrooms)
+                                            var AllRoomsInFloor  = self.GetAllTheRoomsForAbuilding(path,Building_id: building_id)
+                                            Floor.AddRoomsToFloor(floorNumber,rooms:AllRoomsInFloor)
                                             Floors.append(Floor)
                                             
                                         }
-                                        catch {/* error handling here */}
+                                        catch {
+                                             print("GeoJSON parsing failed")
+                                        }
                                     }
                                     
                                 }
@@ -170,7 +170,7 @@ class BuildingsData {
                         
                     }
                 } catch let error as NSError {
-                    // error handling
+                    
                 } catch {
                     print(error)
                 }
@@ -182,9 +182,9 @@ class BuildingsData {
     
     
     
-    
+    /* This function will get all the rooms in a floor of a building requires the building id and the file path*/
 
-    func parseJson(jsonPath : String,Building_id : String) -> RoomsData {
+    func GetAllTheRoomsForAbuilding(jsonPath : String,Building_id : String) -> RoomsData {
         
         // Parsing GeoJSON can be CPU intensive, do it on a background thread
         //var Building_id : String =  "RV"
