@@ -12,7 +12,7 @@ import GoogleMaps
 
 public class RoomData {
 
-    private var coordinates  = [GMSMutablePath()];
+    private var coordinates  = [GMSMutablePath]()
     private var RoomName = String()
     private var RoomEmail = String()
     private var IsSelected = false;
@@ -46,7 +46,9 @@ public class RoomData {
         return self.roomExt
     }
     
-    public func SetroomCenter(x : double_t, y : double_t){
+    public func SetroomCenter(minX: Double, minY:Double,maxX:Double,maxY:Double){
+        let x = (minX+maxX)/2
+        let y = (minY+maxY)/2
         self.roomCenter.latitude  = x;
         self.roomCenter.longitude = y;
         

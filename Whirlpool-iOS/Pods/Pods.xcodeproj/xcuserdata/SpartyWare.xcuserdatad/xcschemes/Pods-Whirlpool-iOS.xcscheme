@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '9353BD4A145F6B9D152E316B'
-               BlueprintName = 'Pods'
+               BlueprintIdentifier = 'DD6060F2295BD9115EA99090'
+               BlueprintName = 'Pods-Whirlpool-iOS'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Pods.framework'>
+               BuildableName = 'Pods_Whirlpool_iOS.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

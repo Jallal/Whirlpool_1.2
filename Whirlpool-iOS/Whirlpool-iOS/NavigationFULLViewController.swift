@@ -24,7 +24,7 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
         self.locationManager.delegate = self
         self.locationManager.requestAlwaysAuthorization()
         self.mapView.delegate = self
-        parseJson( );
+        //parseJson( );
         
     }
     
@@ -96,124 +96,124 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
     }
     
     
-    func parseJson( ){
-        
-        // Parsing GeoJSON can be CPU intensive, do it on a background thread
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-            
-            // Get the path for example.geojson in the app's bundle
-            
-            let jsonPath = NSBundle.mainBundle().pathForResource("RVCB2B_P_ROOMS", ofType: "json")
-            let jsonData = NSData(contentsOfFile: jsonPath!)
-            
-            do {
-                
-                // Load and serialize the GeoJSON into a dictionary filled with properly-typed objects
-                
-                if let jsonDict = try NSJSONSerialization.JSONObjectWithData(jsonData!, options: []) as? NSDictionary {
-                    
-                    //print(jsonDict);
-                    
-                    // Load the `features` array for iteration
-                    if let features = jsonDict["features"] as? NSArray {
-                        
-                        for feature in features {
-                            var RoomInformation  = RoomData();
-                            if let feature = feature as? NSDictionary {
-                                if let  property = feature["properties"] as? NSDictionary {
-                                    
-                                    if let roomNum = property["room"]{
-                                        RoomInformation.SetRoomName(roomNum as! String)
-                                        
-                                    }
-                                    
-                                }
-                                if let geometry = feature["geometry"] as? NSDictionary {
-                                    
-                                    
-                                    if geometry["type"] as? String == "Polygon" {
-                                        
-                                        // Create an array to hold the formatted coordinates for our line
-                                        
-                                        //var coordinates: [CLLocationCoordinate2D] = []
-                                        
-                                        if let locations = geometry["coordinates"] as? NSArray {
-                                            
-                                            // Iterate over line coordinates, stored in GeoJSON as many lng, lat arrays
-                                            var maxX : double_t = -400
-                                            var maxY : double_t = -400
-                                            var minX : double_t = 400
-                                            var minY : double_t = 400
-                                            
-                                            for location in locations {
-                                                var rec = GMSMutablePath()
-                                                
-                                                for var i = 0; i < location.count; i++ {
-                                                    var lat = 0 as Double
-                                                    for var j = 0; j < location[i].count; j++ {
-                                                        
-                                                        if (j+1 == location[i].count){
-                                                            rec.addCoordinate(CLLocationCoordinate2DMake(location[i][j].doubleValue,lat))
-                                                            if(maxX < location[i][j].doubleValue){
-                                                                maxX = location[i][j].doubleValue
-                                                            }
-                                                            if(maxY < lat){
-                                                                maxY = lat
-                                                            }
-                                                            if(minX > location[i][j].doubleValue){
-                                                                minX = location[i][j].doubleValue
-                                                            }
-                                                            if(minY > lat){
-                                                                minY = lat
-                                                            }
-                                                            
-                                                        }
-                                                        else{
-                                                            lat = location[i][j].doubleValue
-                                                            if(maxY <  lat){
-                                                                maxY = lat
-                                                            }
-                                                            if(minY >  lat){
-                                                                minY = lat
-                                                            }
-                                                            
-                                                        }
-                                                    }
-
-                                                    
-                                                }
-                                                RoomInformation.SetroomCenter((minX+maxX)/2, y: ((minY+maxY)/2))
-                                                RoomInformation.SetRoomCoordinates(rec)
-                                            }
-                                            
-                                            
-                                        }
-                                        
-                                        
-                                    }
-                                }
-                            }
-                            self.roomdata.addARoom(RoomInformation)
-                        }
-                    }
-                    
-                }
-                self.reDraw()
-            }
-                
-                
-            catch
-                
-            {
-                
-                print("GeoJSON parsing failed")
-                
-            }
-            
-        })
-        
-    }
+//    func parseJson( ){
+//        
+//        // Parsing GeoJSON can be CPU intensive, do it on a background thread
+//        
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+//            
+//            // Get the path for example.geojson in the app's bundle
+//            
+//            let jsonPath = NSBundle.mainBundle().pathForResource("RVCB2B_P_ROOMS", ofType: "json")
+//            let jsonData = NSData(contentsOfFile: jsonPath!)
+//            
+//            do {
+//                
+//                // Load and serialize the GeoJSON into a dictionary filled with properly-typed objects
+//                
+//                if let jsonDict = try NSJSONSerialization.JSONObjectWithData(jsonData!, options: []) as? NSDictionary {
+//                    
+//                    //print(jsonDict);
+//                    
+//                    // Load the `features` array for iteration
+//                    if let features = jsonDict["features"] as? NSArray {
+//                        
+//                        for feature in features {
+//                            var RoomInformation  = RoomData();
+//                            if let feature = feature as? NSDictionary {
+//                                if let  property = feature["properties"] as? NSDictionary {
+//                                    
+//                                    if let roomNum = property["room"]{
+//                                        RoomInformation.SetRoomName(roomNum as! String)
+//                                        
+//                                    }
+//                                    
+//                                }
+//                                if let geometry = feature["geometry"] as? NSDictionary {
+//                                    
+//                                    
+//                                    if geometry["type"] as? String == "Polygon" {
+//                                        
+//                                        // Create an array to hold the formatted coordinates for our line
+//                                        
+//                                        //var coordinates: [CLLocationCoordinate2D] = []
+//                                        
+//                                        if let locations = geometry["coordinates"] as? NSArray {
+//                                            
+//                                            // Iterate over line coordinates, stored in GeoJSON as many lng, lat arrays
+//                                            var maxX : double_t = -400
+//                                            var maxY : double_t = -400
+//                                            var minX : double_t = 400
+//                                            var minY : double_t = 400
+//                                            
+//                                            for location in locations {
+//                                                var rec = GMSMutablePath()
+//                                                
+//                                                for var i = 0; i < location.count; i++ {
+//                                                    var lat = 0 as Double
+//                                                    for var j = 0; j < location[i].count; j++ {
+//                                                        
+//                                                        if (j+1 == location[i].count){
+//                                                            rec.addCoordinate(CLLocationCoordinate2DMake(location[i][j].doubleValue,lat))
+//                                                            if(maxX < location[i][j].doubleValue){
+//                                                                maxX = location[i][j].doubleValue
+//                                                            }
+//                                                            if(maxY < lat){
+//                                                                maxY = lat
+//                                                            }
+//                                                            if(minX > location[i][j].doubleValue){
+//                                                                minX = location[i][j].doubleValue
+//                                                            }
+//                                                            if(minY > lat){
+//                                                                minY = lat
+//                                                            }
+//                                                            
+//                                                        }
+//                                                        else{
+//                                                            lat = location[i][j].doubleValue
+//                                                            if(maxY <  lat){
+//                                                                maxY = lat
+//                                                            }
+//                                                            if(minY >  lat){
+//                                                                minY = lat
+//                                                            }
+//                                                            
+//                                                        }
+//                                                    }
+//
+//                                                    
+//                                                }
+//                                                RoomInformation.SetroomCenter((minX+maxX)/2, y: ((minY+maxY)/2))
+//                                                RoomInformation.SetRoomCoordinates(rec)
+//                                            }
+//                                            
+//                                            
+//                                        }
+//                                        
+//                                        
+//                                    }
+//                                }
+//                            }
+//                            self.roomdata.addARoom(RoomInformation)
+//                        }
+//                    }
+//                    
+//                }
+//                self.reDraw()
+//            }
+//                
+//                
+//            catch
+//                
+//            {
+//                
+//                print("GeoJSON parsing failed")
+//                
+//            }
+//            
+//        })
+//        
+//    }
     
     
     func updateUIMap(){

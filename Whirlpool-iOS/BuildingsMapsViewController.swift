@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import GoogleMaps
-class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,UIPopoverPresentationControllerDelegate {
+class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,UIPopoverPresentationControllerDelegate, buildingsLoadedDelegate {
     
    //The alert view for notification
     var alertView: UIView = UIView()
@@ -22,7 +22,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     var CurrentFloor : Int = Int()
     var CurrentBuilding : String = String()
     var  NumberOfFloor  : Int = Int()
-    var floors   =  [String()]
+    var floors   =  [String]()
     @IBOutlet weak var helpButton: UIButton!
     @IBOutlet weak var getDirections: UIButton!
     //origin marker during navigation
@@ -31,7 +31,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     var destinationMarker: GMSMarker!
     //The rout between start and end postions
     var routePolyline: GMSPolyline!
-    
+    var _buildings:BuildingsData!
 
    
     
@@ -79,10 +79,17 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     }
     
     
+    func buildingAbbsHaveBeenLoaded(){
+
+    }
+    func buildingInfoHasBeenLoaded(){
+        print( _buildings._buildings["GHQ"]?._floors)
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        _buildings = BuildingsData(delegate: self, buildingAbb: "GHQ")
         self.floorPicker.reloadData()
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
         self.locationManager.delegate = self

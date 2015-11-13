@@ -57,6 +57,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         performSegueWithIdentifier("popUpSearchSeg", sender: self)
     }
     
+    @IBOutlet weak var OpenHamburger: UIBarButtonItem!
     
 //    func clickOnSearch(button: UIButton){
 //        performSegueWithIdentifier("popUpSearchSeg", sender: self)
@@ -93,11 +94,11 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Create the search button in the title view spot. Cant be done in Storyboard
-//        let button =  UIButton(type: UIButtonType.Custom) as UIButton
-//        button.frame = CGRectMake(0, 0, 600, 22) as CGRect
-//        button.setImage(UIImage(named:"Search.png"), forState: UIControlState.Normal)
-//        button.addTarget(self, action: Selector("clickOnSearch:"), forControlEvents: UIControlEvents.TouchUpInside)
+        if self.revealViewController() != nil {
+            OpenHamburger.target = self.revealViewController()
+            OpenHamburger.action = "revealToggle:"
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
         let date = NSDate()
         let dayFormatter = NSDateFormatter()
         dayFormatter.dateFormat = "EEEE"
