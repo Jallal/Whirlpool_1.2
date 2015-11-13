@@ -146,14 +146,14 @@ class BuildingsData {
                 (_maxX, _maxY, _minX, _minY) = (-180.0,-90.0,180.0,90.0)
                 let room = RoomData()
                 room.SetRoomName(roomName!)
+                 var rec = GMSMutablePath()
                 for y in 0...(geoJsonInfo[JSON_FEATURES][x][JSON_GEOM][JSON_COORD][0].count - 1) {
-                    let long = geoJsonInfo[JSON_FEATURES][x][JSON_GEOM][JSON_COORD][0][y][0].double!    // coordinates for room look like [[[long,lat],[long,lat]]]
-                    let lat = geoJsonInfo[JSON_FEATURES][x][JSON_GEOM][JSON_COORD][0][y][1].double!
+                    let  lat = geoJsonInfo[JSON_FEATURES][x][JSON_GEOM][JSON_COORD][0][y][1].double!    // coordinates for room look like [[[long,lat],[long,lat]]]
+                    let  long  = geoJsonInfo[JSON_FEATURES][x][JSON_GEOM][JSON_COORD][0][y][0].double!
                     determineMaxMin(long,maxY: lat, minX: long, minY: lat)
-                    let point = GMSMutablePath()
-                    point.addCoordinate(CLLocationCoordinate2D(latitude: lat,longitude: long))
-                    room.SetRoomCoordinates(point)
+                    rec.addCoordinate(CLLocationCoordinate2D(latitude: lat,longitude: long))
                 }
+                room.SetRoomCoordinates(rec)
                 room.SetroomCenter(_minX, minY: _minY, maxX: _maxX, maxY: _maxY)
                 floorsRooms.append(room)
             }
@@ -171,4 +171,23 @@ class BuildingsData {
     func checkJsonResponseSuccess(response: JSON)-> Bool{
         return response[JSON_SUCCESS].bool!
     }
+    
+    func getBuildingByName(name : String)-> Building {
+        for build in self._buildings{
+            
+            if(build.0==name){
+
+                return build.1
+            }
+        }
+
+        return Building(buildingAbbr: name, numberOfFloors: 0, numberOfWings: 0)
+        
+    }
+    
+    func getBuildsData() -> BuildingsData{
+        return self
+    }
+    
+    
 }

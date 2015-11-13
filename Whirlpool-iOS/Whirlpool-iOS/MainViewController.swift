@@ -53,6 +53,13 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             self.buildingScroller.reloadData()
         });
     }
+    func buildingInfoHasBeenLoaded(){
+    //print( _buildings._buildings["GHQ"]?._floors)
+        print("%%%%%%%%%% WE ARE ALL SET%%%%%%%%%%%%%%%%%")
+    self.buildings =    self.buildings.getBuildsData()
+
+    }
+    
     @IBAction func clickedOnSearch(sender: AnyObject) {
         performSegueWithIdentifier("popUpSearchSeg", sender: self)
     }
@@ -62,10 +69,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
 //    func clickOnSearch(button: UIButton){
 //        performSegueWithIdentifier("popUpSearchSeg", sender: self)
 //    }
-    func buildingInfoHasBeenLoaded(){
-        //Dont need to do anything with buildng info on main page at moment, just need to implement to conform
-        //to the delagate
-    }
+
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -90,6 +94,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }
+        self.buildings = BuildingsData(delegate: self, buildingAbb: "GHQ")
     }
     
     override func viewDidLoad() {
@@ -258,6 +263,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
+        
         if segue.identifier == "relevantSeg" {
             let roomVC = segue.destinationViewController as! RoomInfoViewController
             let room = _roomsData.getRoomWithName(_roomToPass.GetRoomName())
@@ -290,5 +296,13 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
                 clickedEdit = false
             }
         }
+        
+        if segue.identifier == "buildingMaps" {
+            let BuildingVC = segue.destinationViewController as! BuildingsMapsViewController
+            let building  = self.buildings._buildings["GHQ"]
+            print(building?._floors.count)
+            BuildingVC._building = building
+            
+    }
     }
 }

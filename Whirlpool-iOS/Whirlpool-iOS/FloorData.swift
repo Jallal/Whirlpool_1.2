@@ -11,10 +11,16 @@ import GoogleMaps
 
 
 
+struct FloorInfo {
+    var rooms: RoomsData = RoomsData()
+    var floorNumber = Int()
+}
+
 public class FloorData {
 
-    var _rooms:[RoomData]
-    var _floorNumber:Int!
+   var _rooms  = Array<RoomData>()
+   var _floorNumber:Int!
+
     var _floorWing:String!
     
     init(floorNumber: Int, floorWing: String){
@@ -29,6 +35,26 @@ public class FloorData {
     
     func appendRoom(room: RoomData){
         _rooms.append(room)
+    }
+    
+    func getRoomsInFloor(Floor : Int)->[RoomData] {
+        
+        if(self._floorNumber == Floor){
+            
+            return self._rooms
+            
+        }else{
+            return [RoomData] ()
+        }
+        
+        
+    }
+    
+    func getRoomsInFloor()-> Array<RoomData>{
+        
+       return  _rooms
+        
+        
     }
     
     
