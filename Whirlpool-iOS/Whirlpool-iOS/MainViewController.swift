@@ -55,7 +55,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     func buildingInfoHasBeenLoaded(){
     //print( _buildings._buildings["GHQ"]?._floors)
-        print("%%%%%%%%%% WE ARE ALL SET %%%%%%%%%%%%%%%%%")
     }
     
     @IBAction func clickedOnSearch(sender: AnyObject) {
@@ -92,7 +91,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }
-        self.buildings = BuildingsData(delegate: self, buildingAbb: "GHQ")
+        //self.buildings = BuildingsData(delegate: self, buildingAbb: "GHQ")
     }
     
     override func viewDidLoad() {
@@ -297,8 +296,11 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         if segue.identifier == "buildingMaps" {
             let BuildingVC = segue.destinationViewController as! BuildingsMapsViewController
-            let building  = self.buildings._buildings["GHQ"]
-            BuildingVC._building = building
+            /************* PASS ANY DATA YOU WOULD LIKE TP THE MAPS *****/
+            let buildingABR = "GHQ"
+            BuildingVC.CurrentBuilding = buildingABR
+            BuildingVC._room  = RoomData()
+            BuildingVC.CurrentFloor = 1
             
     }
     }

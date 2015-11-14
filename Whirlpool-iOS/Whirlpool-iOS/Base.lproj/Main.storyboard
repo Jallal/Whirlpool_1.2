@@ -647,7 +647,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-3365" y="-2474"/>
+            <point key="canvasLocation" x="-3437" y="-2510"/>
         </scene>
         <!--Add Event-->
         <scene sceneID="o7y-Ko-00H">
@@ -1017,7 +1017,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-2753" y="-2575"/>
+            <point key="canvasLocation" x="-2775" y="-2510"/>
         </scene>
         <!--Reveal View Controller-->
         <scene sceneID="jra-bs-y9l">

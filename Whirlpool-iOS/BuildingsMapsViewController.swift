@@ -11,7 +11,7 @@ import GoogleMaps
 import CoreData
 import Foundation
 
-class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,UIPopoverPresentationControllerDelegate{
+class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,UIPopoverPresentationControllerDelegate, buildingsLoadedDelegate{
     
    //The alert view for notification
     var alertView: UIView = UIView()
@@ -33,7 +33,21 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     var destinationMarker: GMSMarker!
     //The rout between start and end postions
     var routePolyline: GMSPolyline!
+    var _buildins : BuildingsData!
     var _building : Building!
+    
+    func buildingAbbsHaveBeenLoaded(){
+
+    }
+    func buildingInfoHasBeenLoaded(){
+        //print( _buildings._buildings["GHQ"]?._floors)
+        print("%%%%%%%%%% WE ARE ALL SET %%%%%%%%%%%%%%%%%")
+        self._building = self._buildins._buildings[self.CurrentBuilding]
+        self.NumberOfFloor = self._building.getNumberOfFloors()
+        self.populateFloors()
+        self.floorPicker.reloadData()
+        self.reDraw(CurrentFloor)
+    }
     
     
     @IBAction func pan(sender: UIPanGestureRecognizer) {
@@ -137,8 +151,11 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.CurrentFloor = 2 // Make sure you fix this later on
-        self.CurrentBuilding = self._building._buildingAbbr
+        /***********************   MAKE SURE YOU UPDATE THIS VARIABLES******************************/
+        self.CurrentFloor = 1 // Make sure you fix this later on
+        self.CurrentBuilding = "GHQ"
+        self._buildins = BuildingsData(delegate: self, buildingAbb: self.CurrentBuilding)
+        /*******************************************************************************************/
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
         self.locationManager.delegate = self
         self.locationManager.requestAlwaysAuthorization()
@@ -169,10 +186,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
         self.getDirections.layer.cornerRadius = 0.5 * self.getDirections.bounds.size.width
         self.helpButton.layer.cornerRadius   = 0.5 * self.getDirections.bounds.size.width
-        self.NumberOfFloor = self._building.getNumberOfFloors()
-        self.populateFloors()
-        self.floorPicker.reloadData()
-        self.reDraw(CurrentFloor)
+
     
     }
     
@@ -180,7 +194,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
      
         //updateLocation(true)
-        self.reDraw(CurrentFloor)
+        //self.reDraw(CurrentFloor)
         self.floorPicker.reloadData()
         if _room.GetRoomName() != "" {
             self.roomLabel.text = _room.GetRoomName()
