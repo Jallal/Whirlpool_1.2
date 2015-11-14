@@ -92,7 +92,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }
-        self.buildings = BuildingsData(delegate: self, buildingAbb: "RV")
+        self.buildings = BuildingsData(delegate: self, buildingAbb: "GHQ")
     }
     
     override func viewDidLoad() {
@@ -297,7 +297,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         if segue.identifier == "buildingMaps" {
             let BuildingVC = segue.destinationViewController as! BuildingsMapsViewController
-            let building  = self.buildings._buildings["RV"]
+            let building  = self.buildings._buildings["GHQ"]
             BuildingVC._building = building
             
     }

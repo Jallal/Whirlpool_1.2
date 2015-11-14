@@ -16,7 +16,7 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
     @IBOutlet weak var mapView: GMSMapView!
     //var _roomToPass = RoomData()
    // var allTheRooms = _roomsData.getAllRooms();
-    var roomdata  =  RoomsData();
+    //var roomdata  =  RoomsData();
     let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
@@ -97,7 +97,7 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
     
     
     func updateUIMap(){
-        for room in self.roomdata.getAllRooms(){
+       /* for room in self.roomdata.getAllRooms(){
             for rect in room.GetRoomCoordinates(){
                 var polygon = GMSPolygon(path: rect)
                 if(room.GetIsSelected()){
@@ -169,7 +169,7 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
                 
             }
             
-        }
+        }*/
         
         
         
@@ -178,7 +178,7 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
 
     
     func mapView(mapView: GMSMapView!, didTapOverlay overlay: GMSOverlay!) {
-        print("*************************************************")
+        /*print("*************************************************")
         print(overlay.title)
         if((overlay.title) != nil){
             for room in self.roomdata.getAllRooms(){
@@ -191,7 +191,7 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
             }
             self.mapView.clear();
             self.reDraw();
-        }
+        }*/
         
     }
     

@@ -6,9 +6,11 @@
 //  Copyright © 2015 MSU. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import GoogleMaps
+import CoreData
+import Foundation
+
 class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,UIPopoverPresentationControllerDelegate{
     
    //The alert view for notification
@@ -32,9 +34,65 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     //The rout between start and end postions
     var routePolyline: GMSPolyline!
     var _building : Building!
-
-   
     
+    
+    @IBAction func pan(sender: UIPanGestureRecognizer) {
+        //Get the size of the screen
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        //let screenWidth : CGFloat  = screenSize.width
+        let screenHeight : CGFloat  = screenSize.height
+        //View will not go out of the frame of the screen
+        let MagicNumber : CGFloat = screenSize.height*0.70
+        
+        //Translate the PX to the screen size
+        let translation = sender.translationInView(self.buttomView)
+        if let view = sender.view{
+            let d: CGFloat = (self.buttomView.center.y + translation.y)
+            if(((MagicNumber)<=d)&&(d<(screenHeight+20))){
+            self.buttomView.center = CGPoint(x:self.buttomView.center.x,
+                y:self.buttomView.center.y + translation.y)
+            }
+        }
+        sender.setTranslation(CGPointZero, inView: self.buttomView)
+    
+    }
+    
+    /**
+     * Add a prticular room into your favorite rooms
+     * upon clicking on a button
+     */
+    @IBAction func favoriteButton(sender: UIButton) {
+        let alert = UIAlertController(title: _room.GetRoomName(), message: "New Favorite Added", preferredStyle: .Alert)
+        let attributeString = NSAttributedString(string: "New Favorite", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(15),
+            NSBackgroundColorDocumentAttribute: UIColor.blueColor()])
+        alert.setValue(attributeString, forKey: "attributedMessage")
+        //Add to favorite Data Core right here
+        self.saveFavoriteRoom(_room)
+        presentViewController(alert, animated: true) { () -> Void in
+            sleep(1)
+            alert.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+    
+    
+    
+    
+    @IBAction func book(sender: AnyObject) {
+        
+        
+        
+    }
+    
+    /**
+    * All the amenities in a room
+    *
+    */
+    let locationManager = CLLocationManager()
+    var RoomAmenities = ["Capacity","Whiteboard","Monitor","Polycom","Phone","TV","Video Conference"]
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var roomLabel: UILabel!
+    
+    @IBOutlet weak var buttomView: UIView!
     //internal var Floors = _FloorData
     
     //the picker for the floors
@@ -51,6 +109,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     @IBAction func getDirections(sender: AnyObject) {
       self.mapPin.hidden = !self.mapPin.hidden
+     self.buttomView.hidden = !self.buttomView.hidden
         
     }
     // The pin that helps locat the user
@@ -60,15 +119,10 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     //The map object
     @IBOutlet weak var mapView: GMSMapView!
     
-    let locationManager = CLLocationManager()
     
     //The number of floors in the given building
     
     func populateFloors(){
-        
-        print("&&&&&&&&&&&&&&&&&&&&&&NUMBER OF FLOORS WE HAVE &&&&&&&&&&&&&&&&&&&&&&&&&&&&")
-        print(NumberOfFloor)
-        
         var i : Int = 0
         if(self.NumberOfFloor != 0){
         for index  in (1...NumberOfFloor).reverse(){
@@ -77,11 +131,14 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         }
         }
     }
+
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.CurrentFloor = 2 // Make sure you fix this later on
+        self.CurrentBuilding = self._building._buildingAbbr
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
         self.locationManager.delegate = self
         self.locationManager.requestAlwaysAuthorization()
@@ -121,9 +178,13 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-        updateLocation(true)
+     
+        //updateLocation(true)
         self.reDraw(CurrentFloor)
         self.floorPicker.reloadData()
+        if _room.GetRoomName() != "" {
+            self.roomLabel.text = _room.GetRoomName()
+        }
  
     }
     
@@ -156,9 +217,8 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
    // var position = _room.GetroomCenter();
- var position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
+     var position = CLLocationCoordinate2D(latitude: 42.1508511406335, longitude: -86.4427788105087)
     if(CLLocationCoordinate2DIsValid(position)){
-        _room.SetIsSelected(true);
         mapView.camera = GMSCameraPosition(target: position, zoom: 17.7, bearing: 0, viewingAngle: 0)
         mapView.mapType = GoogleMaps.kGMSTypeNone
         locationManager.stopUpdatingLocation()
@@ -174,6 +234,9 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     /* After the view has appeared we update the user location*/
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        if _room.GetRoomName() != "" {
+            roomLabel.text = _room.GetRoomName()
+        }
         updateLocation(true)
     }
     
@@ -222,7 +285,11 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                    for room in floorClass.getRoomsInFloor(){
                     for rect in room.GetRoomCoordinates(){
                         if(GMSGeometryContainsLocation(coordinate,rect, true)){
-                            self.Address.text = room.GetRoomLocation()+" "+room.GetRoomName()
+                            
+                            var lines = ["Building : \(self.CurrentBuilding)","Floor : \(self.CurrentFloor)"," Room : \(room.GetRoomName())"]
+                            self.Address.text = lines.joinWithSeparator(", ")
+                            
+                            
                         }
                     }
                     }
@@ -244,29 +311,89 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     /* Get the number of floors to be displayed*/
     func tableView(floorPicker: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (floors.count)
+        
+        if(floorPicker == self.floorPicker){
+            
+            return floors.count
+            
+        }else{
+            return RoomAmenities.count
+            
+        }
         
     }
     
-    /* Display the the floor picker numbers*/
-    func tableView(floorPicker: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = floorPicker.dequeueReusableCellWithIdentifier("cell")
+    /* Display the floor picker and and the room details in the each tableView*/
+    func tableView(tableViews: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        cell!.textLabel!.text = floors[indexPath.row]
-        return cell!
-        
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell")
+        if(tableViews == self.floorPicker){
+            print(floors[indexPath.row])
+            cell!.textLabel!.text = floors[indexPath.row]
+            return cell!
+            
+        }else{
+            let items = _room.GetRoomResources()
+            cell!.textLabel!.text = RoomAmenities[indexPath.row]
+            if(cell!.textLabel!.text=="Capacity"){
+                cell!.detailTextLabel!.text = "\(_room.GetRoomCapacity())"
+                
+            }else if(cell!.textLabel!.text=="Whiteboard"){
+                if(items.contains("White Board")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+            }else if(cell!.textLabel!.text=="Monitor"){
+                if(items.contains("Monitor")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+            }else if(cell!.textLabel!.text=="Polycom"){
+                if(items.contains("Polycom")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+            }else if(cell!.textLabel!.text=="Phone"){
+                if(items.contains("Telephone")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+                
+            }else if(cell!.textLabel!.text=="TV"){
+                if(items.contains("TV")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+            }
+            
+            return cell!
+            
+        }
     }
+
     /* Function to handel selecting a particular floor*/
     func tableView(floorPicker: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
+        if(floorPicker==self.floorPicker){
+            
             floorPicker.deselectRowAtIndexPath(indexPath, animated: true)
             if let myNumber = NSNumberFormatter().numberFromString(floors[indexPath.row]) {
                 self.mapView.clear()
-                self.reDraw(myNumber.integerValue)
+                self.CurrentFloor = myNumber.integerValue
+                self.reDraw(self.CurrentFloor)
             }
             
-        
-
+        }
         
     }
     
@@ -290,6 +417,8 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                 let polygon = GMSPolygon(path: rect)
                 if(room.GetIsSelected()){
                     self._room = room
+                    self.roomLabel.text = room.GetRoomName()
+                    self.tableView.reloadData()
                     let marker = GMSMarker(position: room.GetroomCenter())
                     marker.icon = UIImage(named: "mapannotation.png")
                     marker.flat = true
@@ -315,16 +444,13 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                     polygon.fillColor = UIColor(red: 211/255.0, green: 84/255.0, blue:0/255.0, alpha: 1.0)// busy conferance rooms
                 }
                 
-            
+               
                 polygon.strokeColor = UIColor(red:(108/255.0), green:(122/255.0), blue:(137/255.0), alpha:1.0);
                 polygon.strokeWidth = 0.5
                 polygon.title = room.GetRoomName();
                 polygon.tappable = true;
                 polygon.map = self.mapView
-                self.view.setNeedsDisplay()
-                    
-        
-                    
+                
                     
                 // Add imge to the bathrooms and Exit/entrance
                 if(room.GetRoomName()=="WB"){
@@ -337,7 +463,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                     let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
                     overlay.bearing = -10
                     overlay.map = self.mapView
-                }else if(room.GetRoomName()=="B225"){
+                }else if(room.GetRoomName()=="EXT"){
                     let icon = UIImage(named: "exit.jpg")
                     let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
                     overlay.bearing = -10
@@ -354,14 +480,13 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                     
                 }
 
-                   
 
             }
             
         }
         }
         }
-        
+      self.view.setNeedsDisplay()
         
     }
 
@@ -402,7 +527,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     /* Drawing the navigation path for the user*/
     func drawRoute() {
         
-        //self.BannerView("Are you in the 4th floor Yet ?", button_message:"Yes");
+        self.BannerView("Elevator and Stairs are to your left", button_message:"Yes");
 
         /*let file: NSFileHandle? = NSFileHandle(forReadingAtPath: filepath1)
         
@@ -460,7 +585,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
         let textFontAttributes = [
             NSFontAttributeName: UIFont(name: "Helvetica Bold", size: 4)!,
-            NSForegroundColorAttributeName: UIColor.redColor(),
+            NSForegroundColorAttributeName: UIColor.blackColor(),
         ]
         
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
@@ -469,6 +594,37 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         UIGraphicsEndImageContext()
         
         return newImage
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "bookRoomSeg" {
+            let eventVC = segue.destinationViewController as! CalendarEventViewController
+            eventVC.guest = _room.GetRoomEmail()
+            eventVC.location = _room.GetRoomName()
+            
+        }
+        
+    }
+    
+    func saveFavoriteRoom(room: RoomData){
+        let appDelagate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelagate.managedObjectContext
+        
+        
+        let entity = NSEntityDescription.entityForName("Favorites", inManagedObjectContext: managedContext)
+        
+        let favoriteRoom = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
+        
+        favoriteRoom.setValue(room.GetRoomName(), forKey: "roomName")
+        favoriteRoom.setValue(room.GetRoomEmail(), forKey: "roomEmail")
+        
+        //4
+        do {
+            try managedContext.save()
+        } catch let error as NSError  {
+            print("Could not save \(error), \(error.userInfo)")
+        }
+        
     }
 
     
