@@ -55,9 +55,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     func buildingInfoHasBeenLoaded(){
     //print( _buildings._buildings["GHQ"]?._floors)
-        print("%%%%%%%%%% WE ARE ALL SET%%%%%%%%%%%%%%%%%")
-    self.buildings =    self.buildings.getBuildsData()
-
+        print("%%%%%%%%%% WE ARE ALL SET %%%%%%%%%%%%%%%%%")
     }
     
     @IBAction func clickedOnSearch(sender: AnyObject) {
@@ -94,7 +92,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }
-        self.buildings = BuildingsData(delegate: self, buildingAbb: "GHQ")
+        self.buildings = BuildingsData(delegate: self, buildingAbb: "RV")
     }
     
     override func viewDidLoad() {
@@ -265,12 +263,12 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         
         if segue.identifier == "relevantSeg" {
-            let roomVC = segue.destinationViewController as! RoomInfoViewController
+            /*let roomVC = segue.destinationViewController as! RoomInfoViewController
             let room = _roomsData.getRoomWithName(_roomToPass.GetRoomName())
             if room.GetRoomName() != String(){
                 roomVC._room = room
             }
-            _roomToPass = RoomData()
+            _roomToPass = RoomData()*/
         }
         if segue.identifier == "searchSegToRoom" {
             let roomVC = segue.destinationViewController as! RoomInfoViewController
@@ -299,8 +297,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         if segue.identifier == "buildingMaps" {
             let BuildingVC = segue.destinationViewController as! BuildingsMapsViewController
-            let building  = self.buildings._buildings["GHQ"]
-            print(building?._floors.count)
+            let building  = self.buildings._buildings["RV"]
             BuildingVC._building = building
             
     }

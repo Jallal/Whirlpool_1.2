@@ -81,7 +81,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.CurrentFloor = 1 // Make sure you fix this later on
+        self.CurrentFloor = 2 // Make sure you fix this later on
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
         self.locationManager.delegate = self
         self.locationManager.requestAlwaysAuthorization()
@@ -115,14 +115,14 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         self.NumberOfFloor = self._building.getNumberOfFloors()
         self.populateFloors()
         self.floorPicker.reloadData()
-        self.updateUIMap(CurrentFloor)
+        self.reDraw(CurrentFloor)
     
     }
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         updateLocation(true)
-        self.updateUIMap(CurrentFloor)
+        self.reDraw(CurrentFloor)
         self.floorPicker.reloadData()
  
     }
@@ -143,7 +143,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     }
     
       /* The function that handels asking the user for authorization to use the current location*/
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .AuthorizedWhenInUse {
             locationManager.startUpdatingLocation()
             mapView.myLocationEnabled = true
@@ -156,12 +156,11 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
    // var position = _room.GetroomCenter();
-   var position =  CLLocationCoordinate2D(latitude: 42.1508511406335, longitude: -86.4427788105087)
+ var position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
     if(CLLocationCoordinate2DIsValid(position)){
         _room.SetIsSelected(true);
         mapView.camera = GMSCameraPosition(target: position, zoom: 17.7, bearing: 0, viewingAngle: 0)
         mapView.mapType = GoogleMaps.kGMSTypeNone
-        mapView.myLocationEnabled = false
         locationManager.stopUpdatingLocation()
         
     }else{
@@ -219,16 +218,14 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         geocoder.reverseGeocodeCoordinate(coordinate) { response, error in
             
             if(!self.mapPin.hidden){
-                
-                
-                for room in _roomsData.getAllRooms(){
-                   
+                for floorClass in self._building.getFloors() {
+                   for room in floorClass.getRoomsInFloor(){
                     for rect in room.GetRoomCoordinates(){
                         if(GMSGeometryContainsLocation(coordinate,rect, true)){
                             self.Address.text = room.GetRoomLocation()+" "+room.GetRoomName()
                         }
                     }
-                    
+                    }
                 }
             }else{
                 let address = response?.firstResult()
@@ -265,7 +262,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             floorPicker.deselectRowAtIndexPath(indexPath, animated: true)
             if let myNumber = NSNumberFormatter().numberFromString(floors[indexPath.row]) {
                 self.mapView.clear()
-                self.updateUIMap(myNumber.integerValue)
+                self.reDraw(myNumber.integerValue)
             }
             
         
@@ -285,25 +282,20 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
 /* Function the handels drawing the floor plan of each building*/
     func updateUIMap(floor : Int){
-       
-       
         for floorClass in self._building.getFloors() {
             if(floorClass._floorNumber==floor){
-            
             for room in floorClass.getRoomsInFloor(){
-                
                 for rect in room.GetRoomCoordinates(){
                 //Label HW and restroom with different colors
                 let polygon = GMSPolygon(path: rect)
                 if(room.GetIsSelected()){
                     self._room = room
-                    let position = room.GetroomCenter()
-                    let marker = GMSMarker(position: position)
+                    let marker = GMSMarker(position: room.GetroomCenter())
                     marker.icon = UIImage(named: "mapannotation.png")
                     marker.flat = true
-                    //marker.appearAnimation = kGMSMarkerAnimationPop
-                    marker.map = self.mapView
+                    marker.appearAnimation =   GoogleMaps.kGMSMarkerAnimationPop
                     polygon.fillColor = UIColor(red:(137/255.0), green:196/255.0, blue:244/255.0, alpha:1.0);
+                    marker.map = self.mapView
                 }else{
                     polygon.fillColor = UIColor(red:(255/255.0), green:249/255.0, blue:236/255.0, alpha:1.0);
                 }
@@ -323,13 +315,17 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                     polygon.fillColor = UIColor(red: 211/255.0, green: 84/255.0, blue:0/255.0, alpha: 1.0)// busy conferance rooms
                 }
                 
-                    
+            
                 polygon.strokeColor = UIColor(red:(108/255.0), green:(122/255.0), blue:(137/255.0), alpha:1.0);
                 polygon.strokeWidth = 0.5
                 polygon.title = room.GetRoomName();
                 polygon.tappable = true;
                 polygon.map = self.mapView
-                
+                self.view.setNeedsDisplay()
+                    
+        
+                    
+                    
                 // Add imge to the bathrooms and Exit/entrance
                 if(room.GetRoomName()=="WB"){
                     let icon = UIImage(named: "wbathroom.jpg")
@@ -341,7 +337,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                     let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
                     overlay.bearing = -10
                     overlay.map = self.mapView
-                }else if(room.GetRoomName()=="EXT"){
+                }else if(room.GetRoomName()=="B225"){
                     let icon = UIImage(named: "exit.jpg")
                     let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
                     overlay.bearing = -10
@@ -357,7 +353,9 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                     overlay.map = self.mapView
                     
                 }
-                
+
+                   
+
             }
             
         }
@@ -369,21 +367,19 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
 
 /* Function to detect the user has tapped on a particular room in the floor*/
     func mapView(mapView: GMSMapView!, didTapOverlay overlay: GMSOverlay!) {
-        if((overlay.title) != nil){
-            for room in _roomsData.getAllRooms(){
-                if(room.GetRoomName() == overlay.title){
-                    room.SetIsSelected(true);
-                }else{
-                    room.SetIsSelected(false);
-                }
+        for floorClass in self._building.getFloors() {
+                
+                for room in floorClass.getRoomsInFloor(){
+                    if(room.GetRoomName() == overlay.title){
+                        room.SetIsSelected(true);
+                    }else{
+                        room.SetIsSelected(false);
+                    }
                 
             }
-            
-            
         }
         self.mapView.clear();
         self.reDraw(self.CurrentFloor);
-        
     }
     
     
@@ -391,6 +387,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         dispatch_async(dispatch_get_main_queue()) {
             do {
                 self.updateUIMap(floor)
+
             }
             catch {
                 print("Failed to update UI")
@@ -400,11 +397,24 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     }
     
     
+    
+    
     /* Drawing the navigation path for the user*/
     func drawRoute() {
         
         //self.BannerView("Are you in the 4th floor Yet ?", button_message:"Yes");
 
+        /*let file: NSFileHandle? = NSFileHandle(forReadingAtPath: filepath1)
+        
+        if file == nil {
+            print("File open failed")
+        } else {
+            file?.seekToFileOffset(10)
+            let databuffer = file?.readDataOfLength(5)
+            file?.closeFile()
+        }
+        print(file)*/
+    
         
        /* var path1 = GMSMutablePath()
        path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124842505816, longitude: -86.4693117141724))
@@ -450,7 +460,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
         let textFontAttributes = [
             NSFontAttributeName: UIFont(name: "Helvetica Bold", size: 4)!,
-            NSForegroundColorAttributeName: UIColor.blackColor(),
+            NSForegroundColorAttributeName: UIColor.redColor(),
         ]
         
         UIGraphicsBeginImageContextWithOptions(size, false, 0)

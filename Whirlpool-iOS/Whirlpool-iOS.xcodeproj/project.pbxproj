@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		31AC50537D72DB57AF9032D4 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D776F4B22839756CB1EF82E /* Pods.framework */; };
+		420864BC1BF7012D00D3B7B9 /* ghq_nw_f4_nav.txt in Resources */ = {isa = PBXBuildFile; fileRef = 420864B91BF7012D00D3B7B9 /* ghq_nw_f4_nav.txt */; };
+		420864BD1BF7012D00D3B7B9 /* ghq_nw_f2_nav.txt in Resources */ = {isa = PBXBuildFile; fileRef = 420864BA1BF7012D00D3B7B9 /* ghq_nw_f2_nav.txt */; };
+		420864BE1BF7012D00D3B7B9 /* ghq_nw_f3_nav.txt in Resources */ = {isa = PBXBuildFile; fileRef = 420864BB1BF7012D00D3B7B9 /* ghq_nw_f3_nav.txt */; };
+		420864C11BF7013D00D3B7B9 /* riverview_f2_nav_coords.txt in Resources */ = {isa = PBXBuildFile; fileRef = 420864BF1BF7013D00D3B7B9 /* riverview_f2_nav_coords.txt */; };
+		420864C21BF7013D00D3B7B9 /* riverview_a_f1_nav.txt in Resources */ = {isa = PBXBuildFile; fileRef = 420864C01BF7013D00D3B7B9 /* riverview_a_f1_nav.txt */; };
 		421545B21BB8533F00AE1B23 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545AC1BB8533F00AE1B23 /* MainViewController.swift */; };
 		421545B31BB8533F00AE1B23 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545AD1BB8533F00AE1B23 /* LoginViewController.swift */; };
 		421545B41BB8533F00AE1B23 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545AE1BB8533F00AE1B23 /* SearchViewController.swift */; };
@@ -66,6 +71,11 @@
 
 /* Begin PBXFileReference section */
 		0C8F9174D8A94754789191A5 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		420864B91BF7012D00D3B7B9 /* ghq_nw_f4_nav.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ghq_nw_f4_nav.txt; sourceTree = "<group>"; };
+		420864BA1BF7012D00D3B7B9 /* ghq_nw_f2_nav.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ghq_nw_f2_nav.txt; sourceTree = "<group>"; };
+		420864BB1BF7012D00D3B7B9 /* ghq_nw_f3_nav.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ghq_nw_f3_nav.txt; sourceTree = "<group>"; };
+		420864BF1BF7013D00D3B7B9 /* riverview_f2_nav_coords.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = riverview_f2_nav_coords.txt; sourceTree = "<group>"; };
+		420864C01BF7013D00D3B7B9 /* riverview_a_f1_nav.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = riverview_a_f1_nav.txt; sourceTree = "<group>"; };
 		421545AC1BB8533F00AE1B23 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		421545AD1BB8533F00AE1B23 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		421545AE1BB8533F00AE1B23 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +162,11 @@
 		4288AA931BB83093003EC9EF = {
 			isa = PBXGroup;
 			children = (
+				420864B91BF7012D00D3B7B9 /* ghq_nw_f4_nav.txt */,
+				420864BA1BF7012D00D3B7B9 /* ghq_nw_f2_nav.txt */,
+				420864BB1BF7012D00D3B7B9 /* ghq_nw_f3_nav.txt */,
+				420864BF1BF7013D00D3B7B9 /* riverview_f2_nav_coords.txt */,
+				420864C01BF7013D00D3B7B9 /* riverview_a_f1_nav.txt */,
 				42C6AFF21BC4216C00245A2B /* web */,
 				4288AA9F1BB83093003EC9EF /* AppDelegate.swift */,
 				42C01DFA1BB8369A00C2EEAD /* GTLCalendar_Sources.m */,
@@ -378,10 +393,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				847B58761BB9DA2900E22862 /* CalenderCell.swift in Resources */,
+				420864C21BF7013D00D3B7B9 /* riverview_a_f1_nav.txt in Resources */,
 				42C01DF81BB8364700C2EEAD /* GTMOAuth2ViewTouch.xib in Resources */,
 				4288AAAA1BB83093003EC9EF /* LaunchScreen.storyboard in Resources */,
+				420864BC1BF7012D00D3B7B9 /* ghq_nw_f4_nav.txt in Resources */,
 				6E6775D21BF2CF3D007F2658 /* Main.storyboard in Resources */,
 				42C6AFF31BC4216D00245A2B /* web in Resources */,
+				420864BE1BF7012D00D3B7B9 /* ghq_nw_f3_nav.txt in Resources */,
+				420864BD1BF7012D00D3B7B9 /* ghq_nw_f2_nav.txt in Resources */,
+				420864C11BF7013D00D3B7B9 /* riverview_f2_nav_coords.txt in Resources */,
 				4288AAA71BB83093003EC9EF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

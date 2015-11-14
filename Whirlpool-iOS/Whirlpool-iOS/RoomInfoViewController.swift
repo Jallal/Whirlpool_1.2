@@ -340,8 +340,12 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     
     
     func mapView(mapView: GMSMapView!, didTapOverlay overlay: GMSOverlay!) {
-        if((overlay.title) != nil){
-            for room in _roomsData.getAllRooms(){
+        /*print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+        print(overlay.title)
+        
+        for floorClass in self._building.getFloors() {
+            
+            for room in floorClass.getRoomsInFloor(){
                 if(room.GetRoomName() == overlay.title){
                     room.SetIsSelected(true);
                 }else{
@@ -349,11 +353,9 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
                 }
                 
             }
-           
-          
         }
-         self.mapView.clear();
-        self.reDraw(self.CurrentFloor);
+        self.mapView.clear();
+        self.reDraw(self.CurrentFloor);*/
         
     }
     

@@ -10,7 +10,7 @@ import UIKit
 
 var _userCalenderInfo: UserCalenderInfo?
 let service = GTLServiceCalendar()
-var _roomsData = RoomsData()
+
 
 public class LoginViewController: UIViewController , NSXMLParserDelegate{
     var AllFiles = ["RVCB2B_P_ROOMS","RVC_A_01A_ROOMS"]
@@ -264,7 +264,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
                 let newRoom = RoomData()
                 newRoom.SetRoomEmail(resEmail)
                 newRoom.SetRoomName(tempResName)
-                _roomsData.addARoom(newRoom)
+               // _roomsData.addARoom(newRoom)
             }
             
             
@@ -274,7 +274,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
     
     
     func pushRoomDataToDatabase(){
-        for room in _roomsData.getAllRooms() {
+        /*for room in _roomsData.getAllRooms() {
             let roomLongName = room.GetRoomName()
             var splitRoomName = roomLongName.componentsSeparatedByString("-")
             
@@ -282,7 +282,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
                 let locTemp = getAbbr(splitRoomName[2].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
                 let roomTemp = splitRoomName[3].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
             }
-        }
+        }*/
     }
     
     func getAbbr(location: String)->String{
