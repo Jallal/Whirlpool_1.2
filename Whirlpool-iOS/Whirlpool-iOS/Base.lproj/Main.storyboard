@@ -661,80 +661,149 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Location" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dxq-AL-tYz">
-                                <rect key="frame" x="142" y="169" width="288" height="30"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ULO-0a-HtK">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="go" enablesReturnKeyAutomatically="YES"/>
-                            </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Event Description" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9vs-VH-8F3">
-                                <rect key="frame" x="142" y="207" width="288" height="47"/>
-                                <animations/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                            </textView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mdq-fy-eeU">
-                                <rect key="frame" x="142" y="125" width="288" height="30"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="go"/>
-                            </textField>
-                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="b50-hP-ZAl">
-                                <rect key="frame" x="0.0" y="308" width="600" height="91"/>
-                                <animations/>
-                                <date key="date" timeIntervalSinceReferenceDate="465797367.98325098">
-                                    <!--2015-10-06 04:09:27 +0000-->
-                                </date>
-                                <connections>
-                                    <action selector="MyDatePicker:" destination="pfZ-AQ-pez" eventType="valueChanged" id="gnM-0O-sqG"/>
-                                </connections>
-                            </datePicker>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YrX-O2-EJf">
-                                <rect key="frame" x="75" y="412" width="525" height="44"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
-                                <color key="textColor" red="0.16862745100000001" green="0.33725490200000002" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ends: " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kaY-Hs-dUT">
-                                <rect key="frame" x="0.0" y="412" width="58" height="44"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
-                                <color key="textColor" red="0.16862745100000001" green="0.33725490200000002" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Starts:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HI7-NT-lyu">
-                                <rect key="frame" x="1" y="256" width="67" height="44"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
-                                <color key="textColor" red="0.16862745098039217" green="0.33725490196078434" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="tG5-Rp-gFM">
-                                <rect key="frame" x="0.0" y="456" width="600" height="80"/>
-                                <animations/>
-                                <date key="date" timeIntervalSinceReferenceDate="467497376.09731501">
-                                    <!--2015-10-25 20:22:56 +0000-->
-                                </date>
-                                <connections>
-                                    <action selector="datePickerEndTimeAction:" destination="pfZ-AQ-pez" eventType="valueChanged" id="aSI-nz-Oty"/>
-                                </connections>
-                            </datePicker>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Tf-t1-rzO">
-                                <rect key="frame" x="82" y="256" width="518" height="44"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
-                                <color key="textColor" red="0.16862745100000001" green="0.33725490200000002" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Calendar Background" translatesAutoresizingMaskIntoConstraints="NO" id="trA-CZ-SEl">
-                                <rect key="frame" x="236" y="20" width="100" height="97"/>
-                                <animations/>
-                            </imageView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="addEventCell" id="UYx-XP-nyv" customClass="AddEventTableViewCell" customModule="Whirlpool_iOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UYx-XP-nyv" id="CRG-4i-ii0">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ESi-7v-Qwr">
+                                                    <rect key="frame" x="15" y="4" width="34" height="34"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="34" id="JNQ-gG-2dF"/>
+                                                        <constraint firstAttribute="height" constant="34" id="YGZ-S3-RT9"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter Title" translatesAutoresizingMaskIntoConstraints="NO" id="FqD-QE-OGj">
+                                                    <rect key="frame" x="57" y="3" width="500" height="38"/>
+                                                    <animations/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" red="0.4392156862745098" green="0.50980392156862742" blue="0.51764705882352946" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                                </textView>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="FqD-QE-OGj" firstAttribute="top" secondItem="CRG-4i-ii0" secondAttribute="topMargin" constant="-5" id="AwW-rM-PwV"/>
+                                                <constraint firstItem="ESi-7v-Qwr" firstAttribute="top" secondItem="CRG-4i-ii0" secondAttribute="topMargin" constant="-4" id="Hc3-h2-2X8"/>
+                                                <constraint firstItem="ESi-7v-Qwr" firstAttribute="leading" secondItem="CRG-4i-ii0" secondAttribute="leadingMargin" constant="7" id="NyW-AI-SvL"/>
+                                                <constraint firstItem="FqD-QE-OGj" firstAttribute="leading" secondItem="ESi-7v-Qwr" secondAttribute="trailing" constant="8" id="OGO-K3-miZ"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="FqD-QE-OGj" secondAttribute="trailing" constant="35" id="Sb2-FA-KtU"/>
+                                                <constraint firstItem="FqD-QE-OGj" firstAttribute="bottom" secondItem="ESi-7v-Qwr" secondAttribute="bottom" constant="3" id="bG4-HG-heh"/>
+                                                <constraint firstItem="FqD-QE-OGj" firstAttribute="top" secondItem="CRG-4i-ii0" secondAttribute="topMargin" constant="-5" id="g9W-pO-RmO"/>
+                                                <constraint firstItem="FqD-QE-OGj" firstAttribute="top" secondItem="CRG-4i-ii0" secondAttribute="top" constant="3" id="x7x-uZ-o9d"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="AwW-rM-PwV"/>
+                                                    <exclude reference="x7x-uZ-o9d"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="cellImage" destination="ESi-7v-Qwr" id="WUF-ug-Knc"/>
+                                            <outlet property="cellInputText" destination="FqD-QE-OGj" id="Orc-Tv-aP0"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="datePickerCell" rowHeight="220" id="Xcp-2i-Oxw" customClass="PickerTableViewCell" customModule="Whirlpool_iOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="600" height="220"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xcp-2i-Oxw" id="HgH-8G-KiO">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="219.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FAn-or-xnz">
+                                                    <rect key="frame" x="101" y="32" width="300" height="21"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="300" id="uof-z6-6ND"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <datePicker contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="RtX-xU-bYy">
+                                                    <rect key="frame" x="0.0" y="61" width="600" height="150"/>
+                                                    <animations/>
+                                                    <date key="date" timeIntervalSinceReferenceDate="469155010.18565798">
+                                                        <!--2015-11-14 00:50:10 +0000-->
+                                                    </date>
+                                                </datePicker>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Time Symbol" translatesAutoresizingMaskIntoConstraints="NO" id="4KL-c9-wN4">
+                                                    <rect key="frame" x="15" y="20" width="34" height="34"/>
+                                                    <animations/>
+                                                </imageView>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="RtX-xU-bYy" firstAttribute="top" secondItem="4KL-c9-wN4" secondAttribute="bottom" constant="7" id="IfZ-RZ-zI7"/>
+                                                <constraint firstItem="RtX-xU-bYy" firstAttribute="width" secondItem="HgH-8G-KiO" secondAttribute="width" id="NHT-T6-NWz"/>
+                                                <constraint firstItem="FAn-or-xnz" firstAttribute="leading" secondItem="4KL-c9-wN4" secondAttribute="trailing" constant="52" id="UsY-MR-pcs"/>
+                                                <constraint firstItem="4KL-c9-wN4" firstAttribute="top" secondItem="HgH-8G-KiO" secondAttribute="topMargin" constant="12" id="bgp-cP-arK"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="RtX-xU-bYy" secondAttribute="bottom" constant="0.5" id="dwa-yb-XvK"/>
+                                                <constraint firstItem="RtX-xU-bYy" firstAttribute="centerX" secondItem="HgH-8G-KiO" secondAttribute="centerX" id="iJh-NM-1xS"/>
+                                                <constraint firstItem="FAn-or-xnz" firstAttribute="top" secondItem="HgH-8G-KiO" secondAttribute="topMargin" constant="24" id="kdr-uw-9a5"/>
+                                                <constraint firstItem="4KL-c9-wN4" firstAttribute="leading" secondItem="HgH-8G-KiO" secondAttribute="leadingMargin" constant="7" id="lc1-HA-zP2"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="TimeImage" destination="4KL-c9-wN4" id="kte-lX-ggo"/>
+                                            <outlet property="datePicker" destination="RtX-xU-bYy" id="sYe-HP-oM4"/>
+                                            <outlet property="datePickerCellLabel" destination="FAn-or-xnz" id="g3c-Sf-ZPN"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="aUN-oC-tMg" customClass="PickerTableViewCell" customModule="Whirlpool_iOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="292" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aUN-oC-tMg" id="brl-dO-3jI">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="alD-4O-8hB">
+                                        <rect key="frame" x="0.0" y="336" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="alD-4O-8hB" id="o9o-2o-6Rs">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="RyM-Y0-oBR">
+                                        <rect key="frame" x="0.0" y="380" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RyM-Y0-oBR" id="fER-jN-uwz">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                </prototypes>
+                                <sections/>
+                            </tableView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ULO-0a-HtK" firstAttribute="height" secondItem="qab-bI-OCe" secondAttribute="height" id="5cM-3y-bgM"/>
+                            <constraint firstItem="ULO-0a-HtK" firstAttribute="centerX" secondItem="qab-bI-OCe" secondAttribute="centerX" id="HGU-Hi-LI2"/>
+                            <constraint firstItem="ULO-0a-HtK" firstAttribute="width" secondItem="qab-bI-OCe" secondAttribute="width" id="hCi-qZ-Xx3"/>
+                            <constraint firstItem="ULO-0a-HtK" firstAttribute="centerY" secondItem="qab-bI-OCe" secondAttribute="centerY" id="thN-yc-KwM"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Add Event" id="Yzc-ii-MUC">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Lm7-08-Q6x">
@@ -751,14 +820,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="EndEvent" destination="YrX-O2-EJf" id="Y2J-ly-cZd"/>
+                        <outlet property="addEventTableView" destination="ULO-0a-HtK" id="MgQ-9a-Ny7"/>
                         <outlet property="addOrEditEventButton" destination="2br-i5-w0L" id="WUh-a4-raI"/>
-                        <outlet property="eventDatePickerEnd" destination="tG5-Rp-gFM" id="C67-eu-RSS"/>
-                        <outlet property="eventDatePickerStart" destination="b50-hP-ZAl" id="29d-VX-PFd"/>
-                        <outlet property="eventDescription" destination="9vs-VH-8F3" id="BOT-yy-To6"/>
-                        <outlet property="eventLocation" destination="dxq-AL-tYz" id="Spz-mY-UtP"/>
-                        <outlet property="eventTitle" destination="Mdq-fy-eeU" id="0mf-aY-L79"/>
-                        <outlet property="startEvent" destination="8Tf-t1-rzO" id="xgB-0P-R9I"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LSJ-a7-XAY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -946,10 +1009,10 @@
     </scenes>
     <resources>
         <image name="Add Event Button" width="74" height="73"/>
-        <image name="Calendar Background" width="100" height="110"/>
         <image name="Cancel" width="60" height="60"/>
         <image name="Hamburger 2.0" width="20" height="18"/>
         <image name="Star Nav Bar" width="26" height="26"/>
+        <image name="Time Symbol" width="34" height="34"/>
         <image name="Whirlpool Default" width="52" height="52"/>
         <image name="Whirlpool Default - L" width="60" height="60"/>
         <image name="start" width="256" height="256"/>
