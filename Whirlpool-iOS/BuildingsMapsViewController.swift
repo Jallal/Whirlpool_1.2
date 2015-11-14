@@ -79,26 +79,9 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     }
     
     
-    /*func buildingAbbsHaveBeenLoaded(){
-
-    }*/
-    /*func buildingInfoHasBeenLoaded(){
-        //print( _buildings._buildings["GHQ"]?._floors)
-        self.building = self._buildings.getBuildingByName("GHQ")
-        self.populateFloors()
-        self.floorPicker.reloadData()
-    }*/
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        /******************************************************************************/
-        /*************************** UPDATE THE  BUILDING NAME AND THE FLOORB******************************/
         self.CurrentFloor = 1 // Make sure you fix this later on
-       // self.CurrentBuilding = "GHQ"
-       // self._buildings = BuildingsData(delegate: self, buildingAbb:  self.CurrentBuilding)
-        /******************************************************************************/
-       
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
         self.locationManager.delegate = self
         self.locationManager.requestAlwaysAuthorization()
@@ -140,14 +123,9 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         updateLocation(true)
         self.updateUIMap(CurrentFloor)
-       self.floorPicker.reloadData()
+        self.floorPicker.reloadData()
  
-        
     }
-    
-   
-    
-
     
     
     /* The function that handels dismissing the notification during navigation*/
@@ -181,12 +159,14 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
    var position =  CLLocationCoordinate2D(latitude: 42.1508511406335, longitude: -86.4427788105087)
     if(CLLocationCoordinate2DIsValid(position)){
         _room.SetIsSelected(true);
-        mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
+        mapView.camera = GMSCameraPosition(target: position, zoom: 17.7, bearing: 0, viewingAngle: 0)
+        mapView.mapType = GoogleMaps.kGMSTypeNone
+        mapView.myLocationEnabled = false
         locationManager.stopUpdatingLocation()
         
     }else{
         position = CLLocationCoordinate2D(latitude: 42.1508511406335, longitude: -86.4427788105087)
-        mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
+        mapView.camera = GMSCameraPosition(target: position, zoom: 17.7,bearing: 0, viewingAngle: 0)
         locationManager.stopUpdatingLocation()
     }
 
@@ -267,7 +247,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     /* Get the number of floors to be displayed*/
     func tableView(floorPicker: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (floors.count-1)
+        return (floors.count)
         
     }
     
@@ -402,12 +382,12 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             
         }
         self.mapView.clear();
-        //self.reDraw(self.CurrentFloor);
+        self.reDraw(self.CurrentFloor);
         
     }
     
     
-    /*func reDraw(floor : Int){
+    func reDraw(floor : Int){
         dispatch_async(dispatch_get_main_queue()) {
             do {
                 self.updateUIMap(floor)
@@ -417,7 +397,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             }
         }
         
-    }*/
+    }
     
     
     /* Drawing the navigation path for the user*/
@@ -460,6 +440,8 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
         
     }
+    
+    
     
     func newImage(text: String, size: CGSize) -> UIImage {
         

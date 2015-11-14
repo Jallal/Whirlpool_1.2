@@ -11,10 +11,6 @@ import GoogleMaps
 
 
 
-struct FloorInfo {
-    var rooms: RoomsData = RoomsData()
-    var floorNumber = Int()
-}
 
 public class FloorData {
 

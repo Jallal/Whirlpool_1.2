@@ -172,22 +172,8 @@ class BuildingsData {
         return response[JSON_SUCCESS].bool!
     }
     
-    func getBuildingByName(name : String)-> Building {
-        for build in self._buildings{
-            
-            if(build.0==name){
 
-                return build.1
-            }
-        }
+    
 
-        return Building(buildingAbbr: name, numberOfFloors: 0, numberOfWings: 0)
-        
-    }
-    
-    func getBuildsData() -> BuildingsData{
-        return self
-    }
-    
     
 }
