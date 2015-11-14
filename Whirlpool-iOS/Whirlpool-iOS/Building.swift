@@ -29,4 +29,8 @@ class Building {
         return _floors
     }
     
+    func getNumberOfFloors() -> Int{
+      return  _floors.count
+    }
+    
 }

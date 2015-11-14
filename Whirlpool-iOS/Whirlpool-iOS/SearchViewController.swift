@@ -48,7 +48,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
     {
         super.viewDidLoad()
         self.setUpSearchBarAppearence()
-        self.filteredRooms = _roomsData.getAllRooms()
+        //self.filteredRooms = _roomsData.getAllRooms()
         tableview.reloadData()
     }
     
@@ -163,12 +163,12 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
     func filterContenctsForSearchText(searchText: String, scope: String = "Title")
     {
         
-        self.filteredRooms = _roomsData.getAllRooms().filter({( room : RoomData) -> Bool in
+        /*self.filteredRooms = _roomsData.getAllRooms().filter({( room : RoomData) -> Bool in
             let categoryMatch = (scope == "Title")
             let stringMatch = room.GetRoomName().rangeOfString(searchText)
             return categoryMatch && (stringMatch != nil)
             
-        })
+        })*/
         
         
     }

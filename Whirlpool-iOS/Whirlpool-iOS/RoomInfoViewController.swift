@@ -63,7 +63,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
      * Allows the Scrolling in the google Maps
      * adjust the maps size as we chnage the screen Size
      */
-    @IBAction func PanGesture(sender: UIPanGestureRecognizer) {
+    /*@IBAction func PanGesture(sender: UIPanGestureRecognizer) {
        
         //Get the size of the screen
         let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -83,7 +83,7 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
         }
         sender.setTranslation(CGPointZero, inView: self.view)
         
-    }
+    }*/
     
   
     
@@ -340,8 +340,12 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
     
     
     func mapView(mapView: GMSMapView!, didTapOverlay overlay: GMSOverlay!) {
-        if((overlay.title) != nil){
-            for room in _roomsData.getAllRooms(){
+        /*print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+        print(overlay.title)
+        
+        for floorClass in self._building.getFloors() {
+            
+            for room in floorClass.getRoomsInFloor(){
                 if(room.GetRoomName() == overlay.title){
                     room.SetIsSelected(true);
                 }else{
@@ -349,11 +353,9 @@ class RoomInfoViewController: UIViewController,NSXMLParserDelegate,CLLocationMan
                 }
                 
             }
-           
-          
         }
-         self.mapView.clear();
-        self.reDraw(self.CurrentFloor);
+        self.mapView.clear();
+        self.reDraw(self.CurrentFloor);*/
         
     }
     
