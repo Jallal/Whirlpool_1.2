@@ -829,7 +829,7 @@
                                 </variation>
                             </imageView>
                             <tableView autoresizesSubviews="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" style="grouped" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="40" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="tb2-2t-ibB">
-                                <rect key="frame" x="527" y="92" width="47" height="172"/>
+                                <rect key="frame" x="532" y="74" width="47" height="228"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -838,12 +838,22 @@
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="cell" rowHeight="40" id="9bs-na-H4X">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="cell" textLabel="ozB-YP-On8" rowHeight="40" style="IBUITableViewCellStyleDefault" id="9bs-na-H4X">
                                         <rect key="frame" x="0.0" y="146" width="47" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" tableViewCell="9bs-na-H4X" id="3QR-C1-BLj">
                                             <rect key="frame" x="0.0" y="0.0" width="47" height="40"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ozB-YP-On8">
+                                                    <rect key="frame" x="15" y="0.0" width="17" height="40"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                             <animations/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -960,9 +970,9 @@
                         <constraints>
                             <constraint firstItem="5Ic-ZL-uKD" firstAttribute="top" secondItem="y2D-om-kpF" secondAttribute="bottom" constant="205" id="0MG-3Q-xcb"/>
                             <constraint firstItem="y2D-om-kpF" firstAttribute="centerX" secondItem="HmC-MI-LrU" secondAttribute="centerX" id="0OM-HU-2v9"/>
-                            <constraint firstItem="DZj-Xh-hdD" firstAttribute="top" secondItem="tb2-2t-ibB" secondAttribute="bottom" constant="49" id="25k-gL-MuF"/>
+                            <constraint firstItem="DZj-Xh-hdD" firstAttribute="top" secondItem="tb2-2t-ibB" secondAttribute="bottom" constant="11" id="25k-gL-MuF"/>
                             <constraint firstItem="qi9-Rn-eWx" firstAttribute="top" secondItem="SqD-OQ-6As" secondAttribute="bottom" id="7IU-0a-Wq3"/>
-                            <constraint firstItem="tb2-2t-ibB" firstAttribute="trailing" secondItem="DZj-Xh-hdD" secondAttribute="trailing" id="7fo-AI-Ykj"/>
+                            <constraint firstItem="tb2-2t-ibB" firstAttribute="trailing" secondItem="DZj-Xh-hdD" secondAttribute="trailing" constant="5" id="7fo-AI-Ykj"/>
                             <constraint firstItem="60y-Wl-ImA" firstAttribute="top" secondItem="HmC-MI-LrU" secondAttribute="top" id="7tV-Xw-Ahb"/>
                             <constraint firstItem="eun-21-5NG" firstAttribute="centerX" secondItem="DZj-Xh-hdD" secondAttribute="centerX" id="9Yl-tM-dkd"/>
                             <constraint firstItem="SqD-OQ-6As" firstAttribute="top" secondItem="y2D-om-kpF" secondAttribute="bottom" constant="260" id="AU0-D7-pv3"/>
@@ -976,12 +986,12 @@
                             <constraint firstItem="60y-Wl-ImA" firstAttribute="leading" secondItem="HmC-MI-LrU" secondAttribute="leadingMargin" constant="-24" id="MNp-L5-I7Z"/>
                             <constraint firstItem="5Ic-ZL-uKD" firstAttribute="centerY" secondItem="60y-Wl-ImA" secondAttribute="centerY" id="MsA-2N-6Kd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="DZj-Xh-hdD" secondAttribute="trailing" constant="6" id="NTT-Mn-cev"/>
-                            <constraint firstItem="tb2-2t-ibB" firstAttribute="leading" secondItem="DZj-Xh-hdD" secondAttribute="leading" id="Oep-H8-L6O"/>
+                            <constraint firstItem="tb2-2t-ibB" firstAttribute="leading" secondItem="DZj-Xh-hdD" secondAttribute="leading" constant="5" id="Oep-H8-L6O"/>
                             <constraint firstAttribute="bottom" secondItem="DZj-Xh-hdD" secondAttribute="bottom" constant="179" id="R8r-wr-fqt"/>
                             <constraint firstItem="eun-21-5NG" firstAttribute="trailing" secondItem="DZj-Xh-hdD" secondAttribute="trailing" constant="1" id="Twn-fX-90H"/>
-                            <constraint firstItem="tb2-2t-ibB" firstAttribute="top" secondItem="y2D-om-kpF" secondAttribute="bottom" constant="47" id="Wjg-Dj-cQ2"/>
+                            <constraint firstItem="tb2-2t-ibB" firstAttribute="top" secondItem="y2D-om-kpF" secondAttribute="bottom" constant="29" id="Wjg-Dj-cQ2"/>
                             <constraint firstItem="60y-Wl-ImA" firstAttribute="bottom" secondItem="qi9-Rn-eWx" secondAttribute="top" id="aDb-IB-7wu"/>
-                            <constraint firstItem="tb2-2t-ibB" firstAttribute="centerY" secondItem="HmC-MI-LrU" secondAttribute="centerY" constant="-90" id="dEY-j2-eRR"/>
+                            <constraint firstItem="tb2-2t-ibB" firstAttribute="centerY" secondItem="HmC-MI-LrU" secondAttribute="centerY" constant="-80" id="dEY-j2-eRR"/>
                             <constraint firstItem="5Ic-ZL-uKD" firstAttribute="leading" secondItem="HmC-MI-LrU" secondAttribute="leading" constant="266" id="f3p-ju-ugL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="SqD-OQ-6As" secondAttribute="trailing" constant="-20" id="jLS-dB-rxh"/>
                             <constraint firstAttribute="trailing" secondItem="60y-Wl-ImA" secondAttribute="trailing" id="p0f-Vt-uTF"/>
@@ -1017,7 +1027,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-2775" y="-2510"/>
+            <point key="canvasLocation" x="-2793" y="-2634"/>
         </scene>
         <!--Reveal View Controller-->
         <scene sceneID="jra-bs-y9l">

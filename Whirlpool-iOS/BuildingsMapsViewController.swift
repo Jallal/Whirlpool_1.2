@@ -36,6 +36,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     var _buildins : BuildingsData!
     var _building : Building!
     
+    
     func buildingAbbsHaveBeenLoaded(){
 
     }
@@ -118,6 +119,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         self.floorPicker.hidden = !self.floorPicker.hidden
         self.Address.hidden = !self.Address.hidden
         self.getDirections.hidden = !self.getDirections.hidden
+        self.floorPicker.reloadData()
         
     }
     
@@ -153,7 +155,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         super.viewDidLoad()
         /***********************   MAKE SURE YOU UPDATE THIS VARIABLES******************************/
         self.CurrentFloor = 1 // Make sure you fix this later on
-        self.CurrentBuilding = "GHQ"
         self._buildins = BuildingsData(delegate: self, buildingAbb: self.CurrentBuilding)
         /*******************************************************************************************/
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
@@ -193,9 +194,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
      
-        //updateLocation(true)
-        //self.reDraw(CurrentFloor)
-        self.floorPicker.reloadData()
+        updateLocation(true)
         if _room.GetRoomName() != "" {
             self.roomLabel.text = _room.GetRoomName()
         }
