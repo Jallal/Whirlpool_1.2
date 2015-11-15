@@ -30,14 +30,12 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
     var selectedIndexPath:NSIndexPath?
     var startDate:NSDate?
     var endDate:NSDate?
+    var eventTitle:String?
+    var locationTitle:String?
+    var descriptionTitle:String?
 
     @IBAction func buttonCancel(sender: AnyObject) {
-        if let startCell = eventStartCell {
-            startCell.checkAndDeregister()
-        }
-        if let endCell = eventEndCell {
-            endCell.checkAndDeregister()
-        }
+        checkObservers()
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     @IBAction func buttonAddEvent(sender: AnyObject) {
@@ -49,9 +47,18 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
             let newEvent = createAnEvent()
             addNewEvent(newEvent)
         }
+        checkObservers()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    func checkObservers(){
+        if let startCell = eventStartCell {
+            startCell.checkAndDeregister()
+        }
+        if let endCell = eventEndCell {
+            endCell.checkAndDeregister()
+        }
+    }
     
     override func viewWillAppear(animated: Bool) {
         
@@ -75,12 +82,11 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
     
     
     internal func setViewToEditing(){
-//        self.title = "Editing Event"
-//        eventTitle.text = editingEvent?.title
-//        eventLocation.text = editingEvent?.location
-//        eventDescription.text = editingEvent?.event.descriptionProperty
-//        eventDatePickerStart.date = (editingEvent?.event.start.dateTime.date)!
-//        eventDatePickerEnd.date = (editingEvent?.event.end.dateTime.date)!
+        startDate = editingEvent?.event.start.dateTime.date!
+        endDate = editingEvent?.event.end.dateTime.date!
+        eventTitle = editingEvent?.title
+        locationTitle = editingEvent?.location
+        descriptionTitle = editingEvent?.event.descriptionProperty
     }
     
     //Create an event to add to the calender
@@ -166,20 +172,36 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func checkCells(){
         if eventEndCell != nil {
             endDate = eventEndCell.datePicker.date
         }
         if eventStartCell != nil {
             startDate = eventStartCell.datePicker.date
         }
+        if eventTitleCell != nil {
+            eventTitle = eventTitleCell.cellInputText.text
+        }
+        if eventLocationCell != nil {
+            locationTitle = eventLocationCell.cellInputText.text
+        }
+        if eventDescriptionCell != nil {
+            descriptionTitle = eventDescriptionCell.cellInputText.text
+        }
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        checkCells()
         switch indexPath.row{
         case 0:
             let cell = tableView.dequeueReusableCellWithIdentifier("addEventCell", forIndexPath: indexPath) as! AddEventTableViewCell
             cell.cellInputText.text = "Enter Title"
             eventTitleCell = cell
             eventTitleCell.setCellInputTextHeight()
-            return cell
+            if eventTitle != nil {
+                eventTitleCell.cellInputText.text = eventTitle
+            }
+            return eventTitleCell
         case 1:
                 let cell = tableView.dequeueReusableCellWithIdentifier("datePickerCell", forIndexPath: indexPath) as! PickerTableViewCell
                 cell.datePickerCellLabel.text = "Start"
@@ -209,14 +231,22 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
             let cell = tableView.dequeueReusableCellWithIdentifier("addEventCell", forIndexPath: indexPath) as! AddEventTableViewCell
             cell.cellInputText.text = "Location"
             eventLocationCell = cell
+            eventLocationCell.cellImage.image = UIImage(named: "Location.png")
             eventLocationCell.setCellInputTextHeight()
-            return cell
+            if locationTitle != nil {
+                eventLocationCell.cellInputText.text = locationTitle
+            }
+            return eventLocationCell
         case 4:
             let cell = tableView.dequeueReusableCellWithIdentifier("addEventCell", forIndexPath: indexPath) as! AddEventTableViewCell
             cell.cellInputText.text = "Add Note"
             eventDescriptionCell = cell
+            eventDescriptionCell.cellImage.image = UIImage(named: "Add Note.png")
             eventDescriptionCell.setCellInputTextHeight()
-            return cell
+            if descriptionTitle != nil {
+                eventDescriptionCell.cellInputText.text = descriptionTitle
+            }
+            return eventDescriptionCell
         default:
             return UITableViewCell()
         }

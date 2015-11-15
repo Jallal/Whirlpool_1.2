@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 
-class MainViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate,UITabBarDelegate, selectedRoomDataDelagate, selectedFavoriteDelagate, buildingsLoadedDelegate, UICollectionViewDelegateFlowLayout {
+class MainViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate,UITabBarDelegate, selectedRoomDataDelagate, selectedFavoriteDelagate, buildingsLoadedDelegate, UICollectionViewDelegateFlowLayout{
     
     let buildingToImageLarge = ["Benson Road":"BEN - L.png", "BHTC":"BHTC - L.png",
     "Edgewater":"ETC - L.png", "GHQ":"GHQ - L.png", "Harbortown": "HBT - L.png",
@@ -46,6 +46,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     func userSelectedFavorite(favRoom: RoomData) {
         _roomToPass = favRoom
+        print(_roomToPass.GetRoomName())
         performSegueWithIdentifier("relevantSeg", sender: self)
     }
     func buildingAbbsHaveBeenLoaded(){
@@ -66,7 +67,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
 //    func clickOnSearch(button: UIButton){
 //        performSegueWithIdentifier("popUpSearchSeg", sender: self)
 //    }
-
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
