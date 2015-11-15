@@ -221,6 +221,9 @@ class BuildingsData {
                                     if let email = ro["email"] as? String {
                                         RoomInformation.SetRoomEmail(email)
                                     }
+                                    print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+                                    print(RoomInformation.GetRoomCapacity())
+                                     print(RoomInformation.GetRoomEmail())
                                     
                                 }
 

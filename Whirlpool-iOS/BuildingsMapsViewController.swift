@@ -48,6 +48,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         self.populateFloors()
         self.floorPicker.reloadData()
         self.reDraw(CurrentFloor)
+        
     }
     
     
@@ -154,7 +155,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         /***********************   MAKE SURE YOU UPDATE THIS VARIABLES******************************/
-        self.CurrentFloor = 1 // Make sure you fix this later on
+        self.CurrentFloor = 2 // Make sure you fix this later on
         self._buildins = BuildingsData(delegate: self, buildingAbb: self.CurrentBuilding)
         /*******************************************************************************************/
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
@@ -229,17 +230,28 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
       /* This function focus the camera on the given room if no room is given will default to a bird view of the map */
     
    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-   // var position = _room.GetroomCenter();
-     var position = CLLocationCoordinate2D(latitude: 42.1508511406335, longitude: -86.4427788105087)
+    var position =  self._room.GetroomCenter()
+    
+    if((position.latitude != 0) && (position.longitude != 0)){
+        position = CLLocationCoordinate2D(latitude: self._room.GetroomCenter().latitude, longitude: self._room.GetroomCenter().longitude)
+        self._room.SetIsSelected(true)
+        
+    }else if(self._building != nil){
+        
+       self._room  = self._building.getARoomInBuilding(self.CurrentBuilding)
+       position = CLLocationCoordinate2D(latitude: self._room.GetroomCenter().latitude, longitude: self._room.GetroomCenter().longitude)
+    }
+    if((position.latitude != 0) && (position.longitude != 0)){
+    
     if(CLLocationCoordinate2DIsValid(position)){
         mapView.camera = GMSCameraPosition(target: position, zoom: 17.7, bearing: 0, viewingAngle: 0)
-        mapView.mapType = GoogleMaps.kGMSTypeNone
+       mapView.mapType = GoogleMaps.kGMSTypeNone
         locationManager.stopUpdatingLocation()
         
     }else{
-        position = CLLocationCoordinate2D(latitude: 42.1508511406335, longitude: -86.4427788105087)
         mapView.camera = GMSCameraPosition(target: position, zoom: 17.7,bearing: 0, viewingAngle: 0)
         locationManager.stopUpdatingLocation()
+    }
     }
 
     }
@@ -397,10 +409,16 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     /* Function to handel selecting a particular floor*/
     func tableView(floorPicker: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
+        
+        
+        
         if(floorPicker==self.floorPicker){
             
-            floorPicker.deselectRowAtIndexPath(indexPath, animated: true)
+            //floorPicker.deselectRowAtIndexPath(indexPath, animated: true)
             if let myNumber = NSNumberFormatter().numberFromString(floors[indexPath.row]) {
+                
+                var selectedCell:UITableViewCell = floorPicker.cellForRowAtIndexPath(indexPath)!
+                selectedCell.contentView.backgroundColor = UIColor(red:(255/255.0), green:127/255.0, blue:80/255.0, alpha:1.0);
                 self.mapView.clear()
                 self.CurrentFloor = myNumber.integerValue
                 self.reDraw(self.CurrentFloor)
@@ -408,6 +426,12 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             
         }
         
+    }
+    
+    
+     func tableView(floorPicker: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        var cellToDeSelect:UITableViewCell = floorPicker.cellForRowAtIndexPath(indexPath)!
+        cellToDeSelect.contentView.backgroundColor = UIColor.clearColor()
     }
     
     
