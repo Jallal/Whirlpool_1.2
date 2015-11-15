@@ -31,7 +31,6 @@ class FavoriteViewController: UIViewController, UITableViewDataSource, UITableVi
     func userSelectedFavorite(favRoom: RoomData) {
         if favoriteRoomDelagate != nil {
             favoriteRoomDelagate?.userSelectedFavorite(favRoom)
-            self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
     

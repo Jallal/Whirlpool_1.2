@@ -9,7 +9,8 @@
 import UIKit
 
 var _userCalenderInfo: UserCalenderInfo?
-let service = GTLServiceCalendar()
+var service = GTLServiceCalendar()
+var googleAuth = GTMOAuth2Authentication()
 
 
 public class LoginViewController: UIViewController , NSXMLParserDelegate{
@@ -44,11 +45,12 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
         
         self.GoogleView.addSubview(output);
         
-        GTMOAuth2ViewControllerTouch.authForGoogleFromKeychainForName(
+        let auth = GTMOAuth2ViewControllerTouch.authForGoogleFromKeychainForName(
             kKeychainItemName,
             clientID: kClientID,
             clientSecret: kClientSecret
         )
+        googleAuth = auth
        /* if(KeychainHelper.get(kKeychainItemName) != nil){
             KeychainHelper.set(kKeychainItemName, value: <#T##NSData#>)
             

@@ -42,6 +42,7 @@
 		6E6775D41BF4307E007F2658 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E6775D31BF4307E007F2658 /* SwiftyJSON.framework */; };
 		6E6775D81BF6AED2007F2658 /* PickTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6775D71BF6AED2007F2658 /* PickTableViewCell.swift */; };
 		6E6775DA1BF6C216007F2658 /* AddEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6775D91BF6C216007F2658 /* AddEventTableViewCell.swift */; };
+		6E6775DC1BF7DF33007F2658 /* HamburgerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6775DB1BF7DF33007F2658 /* HamburgerTableViewController.swift */; };
 		6E6C6C721BEECE0B00D408D9 /* BuildingsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C6C711BEECE0B00D408D9 /* BuildingsData.swift */; };
 		6E6C6C741BEEF39E00D408D9 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C6C731BEEF39E00D408D9 /* Building.swift */; };
 		6E83A9771BD2D6BE00306C86 /* FavoriteModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E83A9751BD2D6BE00306C86 /* FavoriteModel.xcdatamodeld */; };
@@ -117,6 +118,7 @@
 		6E6775D31BF4307E007F2658 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "Pods/../build/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
 		6E6775D71BF6AED2007F2658 /* PickTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickTableViewCell.swift; sourceTree = "<group>"; };
 		6E6775D91BF6C216007F2658 /* AddEventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventTableViewCell.swift; sourceTree = "<group>"; };
+		6E6775DB1BF7DF33007F2658 /* HamburgerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HamburgerTableViewController.swift; sourceTree = "<group>"; };
 		6E6C6C711BEECE0B00D408D9 /* BuildingsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildingsData.swift; sourceTree = "<group>"; };
 		6E6C6C731BEEF39E00D408D9 /* Building.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
 		6E83A9761BD2D6BE00306C86 /* FavoriteModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoriteModel.xcdatamodel; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				6E83A9751BD2D6BE00306C86 /* FavoriteModel.xcdatamodeld */,
 				6E6775D71BF6AED2007F2658 /* PickTableViewCell.swift */,
 				6E6775D91BF6C216007F2658 /* AddEventTableViewCell.swift */,
+				6E6775DB1BF7DF33007F2658 /* HamburgerTableViewController.swift */,
 			);
 			path = "Whirlpool-iOS";
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				42B976CD1BC1D5950012D29B /* UserCalenderInfo.swift in Sources */,
 				6E6775DA1BF6C216007F2658 /* AddEventTableViewCell.swift in Sources */,
 				6E6775CF1BF2C866007F2658 /* SWRevealViewController.m in Sources */,
+				6E6775DC1BF7DF33007F2658 /* HamburgerTableViewController.swift in Sources */,
 				6E83A9771BD2D6BE00306C86 /* FavoriteModel.xcdatamodeld in Sources */,
 				428C22261BF038C9007A6F13 /* KeychainHelper.swift in Sources */,
 			);
