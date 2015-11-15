@@ -296,8 +296,8 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         if segue.identifier == "buildingMaps" {
             let BuildingVC = segue.destinationViewController as! BuildingsMapsViewController
-            /************* PASS ANY DATA YOU WOULD LIKE TP THE MAPS *****/
-            let buildingABR = "GHQ"
+            /************* PASS ANY DATA YOU WOULD LIKE TO THE MAPS *****/
+            let buildingABR = "RV"
             BuildingVC.CurrentBuilding = buildingABR
             BuildingVC._room  = RoomData()
             BuildingVC.CurrentFloor = 1

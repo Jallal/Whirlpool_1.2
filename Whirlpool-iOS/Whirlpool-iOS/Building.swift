@@ -33,4 +33,29 @@ class Building {
       return  _floors.count
     }
     
+    
+    
+    func getARoomInBuilding(building_id : String) -> RoomData{
+        
+        var myRoom = RoomData()
+        
+        if(self._buildingAbbr == building_id){
+            
+            for floor in self.getFloors(){
+                var rooms =  floor.getRoomsInFloor()
+                
+                for room in rooms{
+                    
+                    myRoom = room
+                    return  myRoom
+                }
+                
+                
+                }
+            }
+        
+       return myRoom
+    }
+    
+    
 }
