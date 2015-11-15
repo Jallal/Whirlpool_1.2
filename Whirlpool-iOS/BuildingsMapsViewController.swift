@@ -47,7 +47,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         self.NumberOfFloor = self._building.getNumberOfFloors()
         self.populateFloors()
         self.floorPicker.reloadData()
-        self.reDraw(CurrentFloor)
+        self.Invalidate(CurrentFloor)
         
     }
     
@@ -256,7 +256,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
 
     }
     
-    /* After the view has appeared we update the user location*/
+    /* ***********After the view has appeared we update the user location**************************/
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         if _room.GetRoomName() != "" {
@@ -266,7 +266,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     }
     
     
-    /* The actual updating of the user location*/
+    /**************The actual updating of the user location****************************/
     func updateLocation(running : Bool){
         //Get all the floors in the building
         //self.reDraw(self.CurrentFloor)
@@ -334,117 +334,8 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             }
         }
     
-    /* Get the number of floors to be displayed*/
-    func tableView(floorPicker: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if(floorPicker == self.floorPicker){
-            
-            return floors.count
-            
-        }else{
-            return RoomAmenities.count
-            
-        }
-        
-    }
     
-    /* Display the floor picker and and the room details in the each tableView*/
-    func tableView(tableViews: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell")
-        if(tableViews == self.floorPicker){
-            print(floors[indexPath.row])
-            cell!.textLabel!.text = floors[indexPath.row]
-            return cell!
-            
-        }else{
-            let items = _room.GetRoomResources()
-            cell!.textLabel!.text = RoomAmenities[indexPath.row]
-            if(cell!.textLabel!.text=="Capacity"){
-                cell!.detailTextLabel!.text = "\(_room.GetRoomCapacity())"
-                
-            }else if(cell!.textLabel!.text=="Whiteboard"){
-                if(items.contains("White Board")){
-                    
-                    cell!.detailTextLabel!.text = "Yes"
-                }else{
-                    cell!.detailTextLabel!.text = "No"
-                }
-            }else if(cell!.textLabel!.text=="Monitor"){
-                if(items.contains("Monitor")){
-                    
-                    cell!.detailTextLabel!.text = "Yes"
-                }else{
-                    cell!.detailTextLabel!.text = "No"
-                }
-            }else if(cell!.textLabel!.text=="Polycom"){
-                if(items.contains("Polycom")){
-                    
-                    cell!.detailTextLabel!.text = "Yes"
-                }else{
-                    cell!.detailTextLabel!.text = "No"
-                }
-            }else if(cell!.textLabel!.text=="Phone"){
-                if(items.contains("Telephone")){
-                    
-                    cell!.detailTextLabel!.text = "Yes"
-                }else{
-                    cell!.detailTextLabel!.text = "No"
-                }
-                
-            }else if(cell!.textLabel!.text=="TV"){
-                if(items.contains("TV")){
-                    
-                    cell!.detailTextLabel!.text = "Yes"
-                }else{
-                    cell!.detailTextLabel!.text = "No"
-                }
-            }
-            
-            return cell!
-            
-        }
-    }
-
-    /* Function to handel selecting a particular floor*/
-    func tableView(floorPicker: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
-    {
-        
-        
-        
-        if(floorPicker==self.floorPicker){
-            
-            //floorPicker.deselectRowAtIndexPath(indexPath, animated: true)
-            if let myNumber = NSNumberFormatter().numberFromString(floors[indexPath.row]) {
-                
-                var selectedCell:UITableViewCell = floorPicker.cellForRowAtIndexPath(indexPath)!
-                selectedCell.contentView.backgroundColor = UIColor(red:(255/255.0), green:127/255.0, blue:80/255.0, alpha:1.0);
-                self.mapView.clear()
-                self.CurrentFloor = myNumber.integerValue
-                self.reDraw(self.CurrentFloor)
-            }
-            
-        }
-        
-    }
-    
-    
-     func tableView(floorPicker: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        var cellToDeSelect:UITableViewCell = floorPicker.cellForRowAtIndexPath(indexPath)!
-        cellToDeSelect.contentView.backgroundColor = UIColor.clearColor()
-    }
-    
-    
-    /* Drawing the route after clicking on the Icon */
-    func buttonTapped(sender: UITapGestureRecognizer) {
-        if (sender.state == .Ended) {
-            self.drawRoute();
-            mapPin.hidden = true;
-        }
-    }
-    
-    
-/* Function the handels drawing the floor plan of each building*/
+/**************Function the handels drawing the floor plan of each building****************************************/
     func updateUIMap(floor : Int){
         for floorClass in self._building.getFloors() {
             if(floorClass._floorNumber==floor){
@@ -527,7 +418,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
     }
 
-/* Function to detect the user has tapped on a particular room in the floor*/
+/**************Function to detect the user has tapped on a particular room in the floor**********************/
     func mapView(mapView: GMSMapView!, didTapOverlay overlay: GMSOverlay!) {
         for floorClass in self._building.getFloors() {
                 
@@ -541,11 +432,14 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             }
         }
         self.mapView.clear();
-        self.reDraw(self.CurrentFloor);
+        self.Invalidate(self.CurrentFloor);
     }
     
     
-    func reDraw(floor : Int){
+    /******************************  Redraw  function  *************************/
+
+    
+    func Invalidate(floor : Int){
         dispatch_async(dispatch_get_main_queue()) {
             do {
                 self.updateUIMap(floor)
@@ -561,7 +455,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     
     
-    /* Drawing the navigation path for the user*/
+    /****************************** Drawing the navigation path for the user*************************/
     func drawRoute() {
         
         self.BannerView("Elevator and Stairs are to your left", button_message:"Yes");
@@ -591,8 +485,15 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         polyline.map = mapView;*/
     }
     
+    func buttonTapped(sender: UITapGestureRecognizer) {
+        if (sender.state == .Ended) {
+            self.drawRoute();
+            mapPin.hidden = true;
+        }
+    }
     
-    /* The banner view for notifying the user and guiding them through floors*/
+    
+    /****************** The banner view for notifying the user and guiding them through floors****************************/
     func BannerView(label_message : String,button_message : String){
         self.ok_button.setTitle(button_message, forState: UIControlState.Normal)
         self.label.text = label_message
@@ -614,7 +515,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     }
     
     
-    
+     /********************************* CREAT A NEW IMAGE FOR GoogleMaps****************************************/
     func newImage(text: String, size: CGSize) -> UIImage {
         
         let data = text.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
@@ -633,6 +534,9 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         return newImage
     }
     
+    
+    
+     /********************************* SAGUES****************************************/
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "bookRoomSeg" {
             let eventVC = segue.destinationViewController as! CalendarEventViewController
@@ -642,6 +546,9 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         }
         
     }
+    
+    
+    /*********************************ADD ROOM TO FAVORITE****************************************/
     
     func saveFavoriteRoom(room: RoomData){
         let appDelagate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -662,6 +569,109 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             print("Could not save \(error), \(error.userInfo)")
         }
         
+    }
+    
+    
+    
+    /*********************************ROOM INFO TABLE AND FLOOR PICKER TABLE ***********************/
+    /* Get the number of floors to be displayed*/
+    func tableView(floorPicker: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if(floorPicker == self.floorPicker){
+            
+            return floors.count
+            
+        }else{
+            return RoomAmenities.count
+            
+        }
+        
+    }
+    
+    /* Display the floor picker and and the room details in the each tableView*/
+    func tableView(tableViews: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell")
+        if(tableViews == self.floorPicker){
+            print(floors[indexPath.row])
+            cell!.textLabel!.text = floors[indexPath.row]
+            return cell!
+            
+        }else{
+            let items = _room.GetRoomResources()
+            cell!.textLabel!.text = RoomAmenities[indexPath.row]
+            if(cell!.textLabel!.text=="Capacity"){
+                cell!.detailTextLabel!.text = "\(_room.GetRoomCapacity())"
+                
+            }else if(cell!.textLabel!.text=="Whiteboard"){
+                if(items.contains("White Board")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+            }else if(cell!.textLabel!.text=="Monitor"){
+                if(items.contains("Monitor")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+            }else if(cell!.textLabel!.text=="Polycom"){
+                if(items.contains("Polycom")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+            }else if(cell!.textLabel!.text=="Phone"){
+                if(items.contains("Telephone")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+                
+            }else if(cell!.textLabel!.text=="TV"){
+                if(items.contains("TV")){
+                    
+                    cell!.detailTextLabel!.text = "Yes"
+                }else{
+                    cell!.detailTextLabel!.text = "No"
+                }
+            }
+            
+            return cell!
+            
+        }
+    }
+    
+    /* Function to handel selecting a particular floor*/
+    func tableView(floorPicker: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        
+        
+        
+        if(floorPicker==self.floorPicker){
+            
+            //floorPicker.deselectRowAtIndexPath(indexPath, animated: true)
+            if let myNumber = NSNumberFormatter().numberFromString(floors[indexPath.row]) {
+                
+                var selectedCell:UITableViewCell = floorPicker.cellForRowAtIndexPath(indexPath)!
+                selectedCell.contentView.backgroundColor = UIColor(red:(255/255.0), green:127/255.0, blue:80/255.0, alpha:1.0);
+                self.mapView.clear()
+                self.CurrentFloor = myNumber.integerValue
+                self.Invalidate(self.CurrentFloor)
+            }
+            
+        }
+        
+    }
+    
+    
+    func tableView(floorPicker: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        var cellToDeSelect:UITableViewCell = floorPicker.cellForRowAtIndexPath(indexPath)!
+        cellToDeSelect.contentView.backgroundColor = UIColor.clearColor()
     }
 
     
