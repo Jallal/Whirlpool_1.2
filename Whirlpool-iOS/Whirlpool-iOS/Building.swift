@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class Building {
     let _buildingAbbr: String
     let _numberOfFloors: Int
     let _numberOfWings: Int
     var _floors = [FloorData]()
-    
+    var _rooms = [RoomData]()
     
     init(buildingAbbr: String, numberOfFloors: Int, numberOfWings: Int){
         self._buildingAbbr = buildingAbbr
@@ -55,6 +56,29 @@ class Building {
             }
         
        return myRoom
+    }
+    
+    func getARoomInBuilding(building_id : String, roomName: String) -> RoomData{
+        
+        var myRoom = RoomData()
+        
+        if(self._buildingAbbr == building_id){
+            
+            for floor in self.getFloors(){
+                var rooms =  floor.getRoomsInFloor()
+                
+                for room in rooms{
+                    
+                    if (roomName == room.GetRoomName()){
+                        return room
+                    }
+                }
+                
+                
+            }
+        }
+        
+        return myRoom
     }
     
     

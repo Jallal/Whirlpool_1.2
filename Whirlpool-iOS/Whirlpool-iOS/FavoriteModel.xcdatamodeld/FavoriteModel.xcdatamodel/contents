@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="15A284" minimumToolsVersion="Xcode 7.0">
-    <entity name="Favorites" syncable="YES">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="14E46" minimumToolsVersion="Xcode 7.0">
+    <entity name="Whirlpool_favorites_table" syncable="YES">
+        <attribute name="buildingAbb" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="roomEmail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="roomName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Favorites" positionX="-63" positionY="-18" width="128" height="75"/>
+        <element name="Whirlpool_favorites_table" positionX="-63" positionY="-18" width="128" height="90"/>
     </elements>
 </model>

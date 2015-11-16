@@ -33,7 +33,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     var destinationMarker: GMSMarker!
     //The rout between start and end postions
     var routePolyline: GMSPolyline!
-    var _buildins : BuildingsData!
+    var _buildings : BuildingsData!
     var _building : Building!
     var _StartingLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     
@@ -44,11 +44,20 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     func buildingInfoHasBeenLoaded(){
         //print( _buildings._buildings["GHQ"]?._floors)
         print("%%%%%%%%%% WE ARE ALL SET %%%%%%%%%%%%%%%%%")
-        self._building = self._buildins._buildings[self.CurrentBuilding]
-        self.NumberOfFloor = self._building.getNumberOfFloors()
-        self.populateFloors()
-        self.floorPicker.reloadData()
-        self.Invalidate(CurrentFloor)
+        if (self._buildings._buildings[CurrentBuilding] != nil){
+            self._building = self._buildings._buildings[self.CurrentBuilding]
+            self.NumberOfFloor = self._building.getNumberOfFloors()
+            self.populateFloors()
+            self.floorPicker.reloadData()
+            self.Invalidate(CurrentFloor)
+            if _room.GetRoomName() != String() {
+                _room = self._building.getARoomInBuilding(CurrentBuilding, roomName: _room.GetRoomName())
+                dispatch_async(dispatch_get_main_queue(),{
+                    self._room.SetIsSelected(true)
+                    self.Invalidate(self._room.GetRoomFloor())
+                });
+            }
+        }
         
     }
     
@@ -79,15 +88,17 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
      * upon clicking on a button
      */
     @IBAction func favoriteButton(sender: UIButton) {
-        let alert = UIAlertController(title: _room.GetRoomName(), message: "New Favorite Added", preferredStyle: .Alert)
-        let attributeString = NSAttributedString(string: "New Favorite", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(15),
-            NSBackgroundColorDocumentAttribute: UIColor.blueColor()])
-        alert.setValue(attributeString, forKey: "attributedMessage")
-        //Add to favorite Data Core right here
-        self.saveFavoriteRoom(_room)
-        presentViewController(alert, animated: true) { () -> Void in
-            sleep(1)
-            alert.dismissViewControllerAnimated(true, completion: nil)
+        if _room.GetRoomName() != String() {
+            let alert = UIAlertController(title: _room.GetRoomName(), message: "New Favorite Added", preferredStyle: .Alert)
+            let attributeString = NSAttributedString(string: "New Favorite", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(15),
+                NSBackgroundColorDocumentAttribute: UIColor.blueColor()])
+            alert.setValue(attributeString, forKey: "attributedMessage")
+            //Add to favorite Data Core right here
+            self.saveFavoriteRoom(_room)
+            presentViewController(alert, animated: true) { () -> Void in
+                sleep(1)
+                alert.dismissViewControllerAnimated(true, completion: nil)
+            }
         }
     }
     
@@ -105,7 +116,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     *
     */
     let locationManager = CLLocationManager()
-    var RoomAmenities = ["Capacity","Whiteboard","Monitor","Polycom","Phone","TV","Video Conference"]
+    var RoomAmenities = ["Capacity","Whiteboard","Monitor","Polycom","Phone","TV"]
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var roomLabel: UILabel!
     
@@ -159,7 +170,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         super.viewDidLoad()
         /***********************   MAKE SURE YOU UPDATE THIS VARIABLES******************************/
         self.CurrentFloor = 2 // Make sure you fix this later on
-        self._buildins = BuildingsData(delegate: self, buildingAbb: self.CurrentBuilding)
+        self._buildings = BuildingsData(delegate: self, buildingAbb: self.CurrentBuilding)
         /*******************************************************************************************/
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
         self.locationManager.delegate = self
@@ -571,7 +582,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
         favoriteRoom.setValue(room.GetRoomName(), forKey: "roomName")
         favoriteRoom.setValue(room.GetRoomEmail(), forKey: "roomEmail")
-        
+        favoriteRoom.setValue(CurrentBuilding, forKey: "buildingAbb")
         //4
         do {
             try managedContext.save()
