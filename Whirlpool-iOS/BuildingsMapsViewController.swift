@@ -35,6 +35,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     var routePolyline: GMSPolyline!
     var _buildins : BuildingsData!
     var _building : Building!
+    var _StartingLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     
     
     func buildingAbbsHaveBeenLoaded(){
@@ -147,6 +148,8 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             i = i+1
         }
         }
+         print("^^^^^^^^^^ FLOORS&&&&&&&&&&&&&&&&&")
+        print(floors)
     }
 
 
@@ -299,6 +302,8 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     /* Updating the user's address and location as we moved through the building*/
     
     func reverseGeocodeCoordinate(coordinate: CLLocationCoordinate2D) {
+        
+        self._StartingLocation = coordinate
         // 1
         let geocoder = GMSGeocoder()
         
@@ -452,37 +457,42 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
     }
     
-    
+    func distanceInMetersFrom(otherCoord : CLLocationCoordinate2D) -> CLLocationDistance {
+        let firstLoc = CLLocation(latitude: self._StartingLocation.latitude, longitude: self._StartingLocation.longitude)
+        let secondLoc = CLLocation(latitude: otherCoord.latitude, longitude: otherCoord.longitude)
+        return firstLoc.distanceFromLocation(secondLoc)
+    }
     
     
     /****************************** Drawing the navigation path for the user*************************/
     func drawRoute() {
-        
-        self.BannerView("Elevator and Stairs are to your left", button_message:"Yes");
+        var graph = SwiftGraph()
+        var getPath =   Path()
 
-        /*let file: NSFileHandle? = NSFileHandle(forReadingAtPath: filepath1)
         
-        if file == nil {
-            print("File open failed")
-        } else {
-            file?.seekToFileOffset(10)
-            let databuffer = file?.readDataOfLength(5)
-            file?.closeFile()
+        let walkingSpeed = 1.4
+        let distance  = self.distanceInMetersFrom(self._room.GetroomCenter())//distance in meters
+        let totalDistance = Double(round(distance*3.28084)) // distance in feets
+        let totalTime = Double(round((distance/walkingSpeed)/60))
+        self.BannerView("\(totalTime)  Minutes  (\(totalDistance)  ft)", button_message:"Yes");
+        
+        /******************/
+        graph.readFromFile()
+        //getPath.processDijkstra(0, des: 60)
+        var myPath = getPath.traverseGraphBFS(60,end: 128)
+        
+        
+        var path1 = GMSMutablePath()
+        //path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124842505816, longitude: -86.4693117141724))
+        for node in myPath{
+            path1.addCoordinate(CLLocationCoordinate2D(latitude: node.lat, longitude: node.long))
+            
         }
-        print(file)*/
-    
-        
-       /* var path1 = GMSMutablePath()
-       path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124842505816, longitude: -86.4693117141724))
-         path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124501762335, longitude: -86.4693019911647))
-         path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.112486240324, longitude: -86.4691266417503))
-         path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1125648350986, longitude: -86.4691413938999))
-         path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1125710530355, longitude: -86.4691202715039))
         var polyline = GMSPolyline(path: path1)
         polyline.strokeColor = UIColor.blueColor()
         polyline.strokeWidth = 2.0
         polyline.geodesic = true
-        polyline.map = mapView;*/
+        polyline.map = mapView;
     }
     
     func buttonTapped(sender: UITapGestureRecognizer) {
@@ -593,8 +603,8 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
         if(tableViews == self.floorPicker){
-            print(floors[indexPath.row])
             cell!.textLabel!.text = floors[indexPath.row]
+             cell!.detailTextLabel!.text  = ""
             return cell!
             
         }else{
@@ -649,9 +659,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     /* Function to handel selecting a particular floor*/
     func tableView(floorPicker: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        
-        
-        
         if(floorPicker==self.floorPicker){
             
             //floorPicker.deselectRowAtIndexPath(indexPath, animated: true)

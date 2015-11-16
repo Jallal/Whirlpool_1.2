@@ -68,6 +68,12 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
 //        performSegueWithIdentifier("popUpSearchSeg", sender: self)
 //    }
     
+    
+ 
+
+
+  
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.buildings = BuildingsData(delegate: self)
@@ -92,10 +98,16 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             print("Could not fetch \(error), \(error.userInfo)")
         }
         //self.buildings = BuildingsData(delegate: self, buildingAbb: "GHQ")
+        
+  
+        
+    
     }
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if self.revealViewController() != nil {
             OpenHamburger.target = self.revealViewController()
             OpenHamburger.action = "revealToggle:"
@@ -297,7 +309,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         if segue.identifier == "buildingMaps" {
             let BuildingVC = segue.destinationViewController as! BuildingsMapsViewController
             /************* PASS ANY DATA YOU WOULD LIKE TO THE MAPS *****/
-            let buildingABR = "RV"
+            let buildingABR = "GHQ"
             BuildingVC.CurrentBuilding = buildingABR
             BuildingVC._room  = RoomData()
             BuildingVC.CurrentFloor = 1
