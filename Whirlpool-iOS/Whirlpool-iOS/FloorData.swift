@@ -34,23 +34,15 @@ public class FloorData {
     }
     
     func getRoomsInFloor(Floor : Int)->[RoomData] {
-        
         if(self._floorNumber == Floor){
-            
             return self._rooms
-            
         }else{
             return [RoomData] ()
         }
-        
-        
     }
     
     func getRoomsInFloor()-> Array<RoomData>{
-        
        return  _rooms
-        
-        
     }
     
     

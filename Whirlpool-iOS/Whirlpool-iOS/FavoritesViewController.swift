@@ -45,7 +45,7 @@ class FavoriteViewController: UIViewController, UITableViewDataSource, UITableVi
         let managedContext = appDelegate.managedObjectContext
         
         //2
-        let fetchRequest = NSFetchRequest(entityName: "Favorites")
+        let fetchRequest = NSFetchRequest(entityName: "Whirlpool_favorites_table")
         
         //3
         do {

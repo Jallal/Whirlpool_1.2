@@ -35,7 +35,7 @@ class HamburgerTableViewController: UITableViewController, selectedFavoriteDelag
 
     func userSelectedFavorite(favRoom: RoomData) {
         print(favRoom.GetRoomName())
-        _roomToPass = favRoom
+        FAVORITE_ROOM_SELECTED = favRoom
         var revealController = self.revealViewController()
         revealController.setFrontViewPosition(FrontViewPosition.Left, animated: true)
         self.dismissViewControllerAnimated(true, completion: nil)

@@ -10,7 +10,9 @@ import UIKit
 import CoreData
 
 
-class MainViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate,UITabBarDelegate, selectedRoomDataDelagate, selectedFavoriteDelagate, buildingsLoadedDelegate, UICollectionViewDelegateFlowLayout{
+var FAVORITE_ROOM_SELECTED:RoomData?
+
+class MainViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate,UITabBarDelegate, selectedRoomDataDelagate,selectedFavoriteDelagate, buildingsLoadedDelegate, UICollectionViewDelegateFlowLayout, buildingButtonTappedDelegate{
     
     let buildingToImageLarge = ["Benson Road":"BEN - L.png", "BHTC":"BHTC - L.png",
     "Edgewater":"ETC - L.png", "GHQ":"GHQ - L.png", "Harbortown": "HBT - L.png",
@@ -35,6 +37,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     var specificSearchedRoom: RoomData? = nil
     var clickedEdit = false
     var editingEventToPass: CalenderEvent?
+    var _buildingAbb:String?
     @IBOutlet weak var calender: UITableView!
     @IBOutlet weak var buildingScroller: UICollectionView!
     @IBAction func favoriteListButton(sender: AnyObject) {
@@ -58,19 +61,21 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     //print( _buildings._buildings["GHQ"]?._floors)
     }
     
+    func buildingSelected(buildingAbb:String) {
+        _buildingAbb = buildingAbb
+        performSegueWithIdentifier("buildingMaps", sender: self)
+    }
+    
     @IBAction func clickedOnSearch(sender: AnyObject) {
         performSegueWithIdentifier("popUpSearchSeg", sender: self)
     }
     
     @IBOutlet weak var OpenHamburger: UIBarButtonItem!
     
-//    func clickOnSearch(button: UIButton){
-//        performSegueWithIdentifier("popUpSearchSeg", sender: self)
-//    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.buildings = BuildingsData(delegate: self)
+        self.buildings = BuildingsData(delegate: self) //Grabs the abbreviations
         self.calender.reloadData()
         //Check to see if we are coming from the search page and we need to segue to room info page
         if searchedForRoom == true {
@@ -81,7 +86,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         //2
-        let fetchRequest = NSFetchRequest(entityName: "Favorites")
+        let fetchRequest = NSFetchRequest(entityName: "Whirlpool_favorites_table")
         //3
         do {
             let results =
@@ -100,6 +105,9 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             OpenHamburger.target = self.revealViewController()
             OpenHamburger.action = "revealToggle:"
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+        if FAVORITE_ROOM_SELECTED != nil {
+            performSegueWithIdentifier("relevantSeg", sender: self)
         }
         let date = NSDate()
         let dayFormatter = NSDateFormatter()
@@ -250,6 +258,8 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("buildingScollerCell", forIndexPath: indexPath) as! BuildingCollectionViewCell
         let picName = buildings._buildingAbbr[indexPath.row] + ".png"
         cell.buildingButton.setImage(UIImage(named: picName), forState: UIControlState.Normal)
+        cell.buildingAbb = buildings._buildingAbbr[indexPath.row]
+        cell.buildingButtonDelegate = self
         return cell
     }
     
@@ -262,18 +272,19 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         
         if segue.identifier == "relevantSeg" {
-            /*let roomVC = segue.destinationViewController as! RoomInfoViewController
-            let room = _roomsData.getRoomWithName(_roomToPass.GetRoomName())
-            if room.GetRoomName() != String(){
-                roomVC._room = room
+            let buildingVC = segue.destinationViewController as! BuildingsMapsViewController
+            let room = FAVORITE_ROOM_SELECTED
+            if room!.GetRoomName() != String(){
+                buildingVC._room = room!
             }
-            _roomToPass = RoomData()*/
+            FAVORITE_ROOM_SELECTED = nil
         }
         if segue.identifier == "searchSegToRoom" {
-            let roomVC = segue.destinationViewController as! RoomInfoViewController
+            let buildingVC = segue.destinationViewController as! BuildingsMapsViewController
             let room = specificSearchedRoom!
             specificSearchedRoom = nil
-            roomVC._room = room
+            buildingVC._room = room
+            buildingVC.CurrentBuilding = room.GetBuildingOfRoom()
         }
         
         if segue.identifier == "popUpSearchSeg" {
@@ -297,8 +308,9 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         if segue.identifier == "buildingMaps" {
             let BuildingVC = segue.destinationViewController as! BuildingsMapsViewController
             /************* PASS ANY DATA YOU WOULD LIKE TO THE MAPS *****/
-            let buildingABR = "RV"
-            BuildingVC.CurrentBuilding = buildingABR
+//            let buildingABR = "GHQ"
+            print(_buildingAbb)
+            BuildingVC.CurrentBuilding = _buildingAbb!
             BuildingVC._room  = RoomData()
             BuildingVC.CurrentFloor = 1
             

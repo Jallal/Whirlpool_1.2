@@ -24,9 +24,10 @@ public class RoomData {
     private var roomOwnership = String()
     private var roomNotes = String()
     private var roomstatus = String()
-    private var roomFloor = String()
+    private var roomFloor: Int?
     private var roomExt = String()
-     private var roomType = String()
+    private var roomType = String()
+    private var roomsBuilding = String()
     
     
     
@@ -116,6 +117,10 @@ public class RoomData {
         return self.roomLocation
     }
     
+    public func GetBuildingOfRoom()->String{
+        return self.roomsBuilding
+    }
+    
     
     public func SetRoomCapacity(capacity: Int){
         self.roomCapacity = capacity
@@ -144,10 +149,16 @@ public class RoomData {
     public func SetRoomPolycomExt( poly : String){
         self.roomPolycomExt = poly
     }
-    public func SetRoomFloor(floor : String){
+    public func SetRoomFloor(floor : Int){
         self.roomFloor = floor
     }
+    public func GetRoomFloor()->Int{
+        return self.roomFloor!
+    }
     
+    public func SetRoomBuildingName(buildingAbb:String){
+        self.roomsBuilding = buildingAbb
+    }
     
    
     
