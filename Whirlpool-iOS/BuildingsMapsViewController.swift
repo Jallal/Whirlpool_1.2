@@ -606,6 +606,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         if(tableViews == self.floorPicker){
             print(floors[indexPath.row])
             cell!.textLabel!.text = floors[indexPath.row]
+            cell!.detailTextLabel!.text = ""
             return cell!
             
         }else{
