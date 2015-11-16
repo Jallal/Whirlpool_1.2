@@ -96,7 +96,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         //3
         do {
             let results =
-            try managedContext.executeFetchRequest(fetchRequest)
+           try managedContext.executeFetchRequest(fetchRequest)
             _favorites = results as! [NSManagedObject]
             self.calender.reloadData()
         } catch let error as NSError {
