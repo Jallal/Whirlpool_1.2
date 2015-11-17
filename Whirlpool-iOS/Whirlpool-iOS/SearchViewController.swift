@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 public extension UIColor {
     func convertImage() -> UIImage {
@@ -32,23 +33,31 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var searchbar: UISearchBar!
     
-    
+    var searchActive = false
+    let getAllRoomsRequest = "https://whirlpool-indoor-maps.appspot.com/room"
     var filteredRooms = [RoomData]()
     var _roomToPass = RoomData()
     let screenSize: CGRect = UIScreen.mainScreen().bounds
+    var _buildings: BuildingsData?
     var roomDelagate: selectedRoomDataDelagate? = nil   //Data delgate to pass back the room choosen to the main page
-    
+    var allRooms = [RoomData]()
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarHidden = true
         self.navigationController?.navigationBar.hidden = true
+        request(getAllRoomsRequest) { (response) -> Void in
+            self.parseRoomsAndBuildings(response)
+            self.allRooms = self.filteredRooms
+            dispatch_async(dispatch_get_main_queue(),{
+                self.tableview.reloadData()
+            });
+        }
     }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         self.setUpSearchBarAppearence()
-        //self.filteredRooms = _roomsData.getAllRooms()
         tableview.reloadData()
     }
     
@@ -106,7 +115,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
         }
         else
         {
-            return self.filteredRooms.count
+            return self.allRooms.count
         }
     }
     
@@ -123,7 +132,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
         }
         else
         {
-            room = filteredRooms[indexPath.row]
+            room = allRooms[indexPath.row]
         }
         cell!.textLabel?.text = room.GetRoomName()
         return cell!
@@ -143,7 +152,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
         }
         else
         {
-            room = filteredRooms[indexPath.row]
+            room = allRooms[indexPath.row]
         }
         
         
@@ -160,48 +169,75 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
     
     // MARK: - Search Methods
     
-    func filterContenctsForSearchText(searchText: String, scope: String = "Title")
+    func filterContentsForSearchText(searchText: String, scope: String = "Title")
     {
         
-        /*self.filteredRooms = _roomsData.getAllRooms().filter({( room : RoomData) -> Bool in
+        self.filteredRooms = allRooms.filter({ (room: RoomData) -> Bool in
             let categoryMatch = (scope == "Title")
-            let stringMatch = room.GetRoomName().rangeOfString(searchText)
+            let stringMatch = room.GetRoomName().rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
             return categoryMatch && (stringMatch != nil)
-            
-        })*/
+        })
         
         
     }
     
     func searchDisplayController(controller: UISearchController, shouldReloadTableForSearchString searchString: String)-> Bool
     {
-        self.filterContenctsForSearchText(searchString, scope: "Title")
+        self.filterContentsForSearchText(searchString, scope: "Title")
         return true
     }
     
     
     func searchDisplayController(controller: UISearchController, shouldReloadTableForSearchScope searchOption: Int) -> Bool
     {
-        self.filterContenctsForSearchText(self.searchDisplayController!.searchBar.text!, scope: "Title")
+        self.filterContentsForSearchText(self.searchDisplayController!.searchBar.text!, scope: "Title")
         return true
     }
+
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar){
-        //self.navigationController?.popToRootViewControllerAnimated(true)
         UIApplication.sharedApplication().statusBarHidden = false
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?){
-        print(segue.identifier)
-        if (segue.identifier == "RoomInfo") {
+    func request( destination : String, successHandler: (response: JSON) -> Void){
+        let request = NSMutableURLRequest(URL: NSURL(string: destination as String)!)
+        request.HTTPMethod = "GET"
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+            data, response, error in
             
-            // initialize new view controller and cast it as your view controller
-            let viewController = segue.destinationViewController as! RoomInfoViewController
-            // your new view controller should have property that will store passed value
-            viewController._room = _roomToPass
+            if error != nil {
+                print("error=\(error)")
+                return
+            }
+            do {
+                let readableJSON = JSON(data: data!, options: NSJSONReadingOptions.MutableContainers, error: nil)
+                successHandler(response: readableJSON)
+            }
         }
-        
+        task.resume()
+    }
+    
+    func parseRoomsAndBuildings(response: JSON){
+        for i in 0...response.count-1{
+            for x in 0...response[i]["rooms"].count-1{
+                let room = response[i]["rooms"][x] as JSON
+                createRoomFromJSON(room)
+            }
+        }
+    }
+    
+    func createRoomFromJSON(roomJson:JSON){
+        let room = RoomData()
+        room.SetRoomName(roomJson["room_name"].stringValue)
+        room.SetRoomEmail(roomJson["email"].stringValue)
+        room.SetRoomCapacity(roomJson["capacity"].intValue)
+        room.SetRoomStatus(roomJson["occupancy_status"].stringValue)
+        room.SetRoomExt(roomJson["extension"].stringValue)
+        room.SetRoomType(roomJson["room_type"].stringValue)
+        room.SetRoomLocation(roomJson["resource_name"].stringValue)
+        room.SetRoomBuildingName(roomJson["building_name"].stringValue)
+        filteredRooms.append(room)
     }
     
     

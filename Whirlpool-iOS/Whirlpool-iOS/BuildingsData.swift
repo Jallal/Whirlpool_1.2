@@ -64,7 +64,9 @@ class BuildingsData {
                 self.request(self.BUILDING_URL+buildingAbb) { (response) -> Void in //Grab the building data for the abbreviation
                     self.addBuildingToArrayFromDB(response)
                     self.request(self.BUILDING_GEOJSON_URL + buildingAbb) { (response) -> Void in   //Grab the Geojson for the floors in the building
-                        self.parseBuildingData(response)
+                        if response["count"].int > 0 {
+                            self.parseBuildingData(response)
+                        }
                         //call the protocol func here thats implimented in your class that you wanted
                         //This tell the class that the building objects are done being populated
                         self._buildingDelegate?.buildingInfoHasBeenLoaded()
@@ -129,13 +131,13 @@ class BuildingsData {
     //This sets the floor to the proper building object and also calls parse through rooms to create rooms from the geojson
     func setFloorOfBuilding(floorNum: Int, floorWing: String, jsonBuildingAndFloorData: JSON, buildingAbb: String,iteration: Int){
         let floor = FloorData(floorNumber: floorNum, floorWing: floorWing)
-        let floorsRooms = parseGeoJsonOfEachFloor(jsonBuildingAndFloorData[JSON_FLOORS][iteration], buildingAbb: buildingAbb)
+        let floorsRooms = parseGeoJsonOfEachFloor(jsonBuildingAndFloorData[JSON_FLOORS][iteration], buildingAbb: buildingAbb, floorNum:floorNum)
         floor.setRooms(floorsRooms)
         _buildings[buildingAbb]?.appendFloor(floor)
     }
     
     //This is parsing out all the rooms and their coordinates and returning a list to add the rooms to the specific floor
-    func parseGeoJsonOfEachFloor(jsonBuildingAndFloorData: JSON, buildingAbb: String)->[RoomData]{
+    func parseGeoJsonOfEachFloor(jsonBuildingAndFloorData: JSON, buildingAbb: String, floorNum: Int)->[RoomData]{
         let strData = jsonBuildingAndFloorData["geojson"].string!.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
         let geoJsonInfo = JSON(data: strData!, options: NSJSONReadingOptions.MutableContainers, error: nil)
         var floorsRooms = [RoomData]()
@@ -147,7 +149,7 @@ class BuildingsData {
             if roomType == "Polygon" {
                 (_maxX, _maxY, _minX, _minY) = (-180.0,-90.0,180.0,90.0)
                 room.SetRoomName(roomName!)
-                 var rec = GMSMutablePath()
+                 let rec = GMSMutablePath()
                 for y in 0...(geoJsonInfo[JSON_FEATURES][x][JSON_GEOM][JSON_COORD][0].count - 1) {
                     let  lat = geoJsonInfo[JSON_FEATURES][x][JSON_GEOM][JSON_COORD][0][y][1].double!    // coordinates for room look like [[[long,lat],[long,lat]]]
                     let  long  = geoJsonInfo[JSON_FEATURES][x][JSON_GEOM][JSON_COORD][0][y][0].double!                    
@@ -155,6 +157,7 @@ class BuildingsData {
                     rec.addCoordinate(CLLocationCoordinate2D(latitude: lat,longitude: long))
                 }
                 room.SetRoomCoordinates(rec)
+                room.SetRoomFloor(floorNum)
                 room.SetroomCenter(_minX, minY: _minY, maxX: _maxX, maxY: _maxY)
                 floorsRooms.append(room)
             }
