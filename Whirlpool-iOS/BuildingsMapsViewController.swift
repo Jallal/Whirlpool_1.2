@@ -26,7 +26,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     var  NumberOfFloor  : Int = Int()
     var floors   =  [String]()
     @IBOutlet weak var helpButton: UIButton!
-    @IBOutlet weak var getDirections: UIButton!
     //origin marker during navigation
     var originMarker: GMSMarker!
     //distination marker for navigation
@@ -37,6 +36,10 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     var _building : Building!
     var _StartingLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     
+    @IBAction func cancelMapScreen(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    @IBOutlet weak var BottomMapView: UIView!
     
     func buildingAbbsHaveBeenLoaded(){
 
@@ -131,7 +134,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
         self.floorPicker.hidden = !self.floorPicker.hidden
         self.Address.hidden = !self.Address.hidden
-        self.getDirections.hidden = !self.getDirections.hidden
         self.floorPicker.reloadData()
         
     }
@@ -180,7 +182,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         self.mapPin.hidden = true;
         self.floorPicker.hidden = true
         self.Address.hidden = true
-        self.getDirections.hidden = true
         mapPin.userInteractionEnabled = true
         mapPin.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "buttonTapped:"))
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
@@ -200,14 +201,14 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         label.tintColor = UIColor.blackColor()
         self.view.backgroundColor = UIColor.whiteColor()
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
-        self.getDirections.layer.cornerRadius = 0.5 * self.getDirections.bounds.size.width
-        self.helpButton.layer.cornerRadius   = 0.5 * self.getDirections.bounds.size.width
 
     
     }
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 148.0/255.0, green: 157.0/255.0, blue: 250.0/255.0, alpha: 1)
+        self.BottomMapView.backgroundColor = UIColor(red: 148.0/255.0, green: 157.0/255.0, blue: 250.0/255.0, alpha: 1)
      
         updateLocation(true)
         if _room.GetRoomName() != "" {
@@ -327,7 +328,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                     for rect in room.GetRoomCoordinates(){
                         if(GMSGeometryContainsLocation(coordinate,rect, true)){
                             
-                            var lines = ["Building : \(self.CurrentBuilding)","Floor : \(self.CurrentFloor)"," Room : \(room.GetRoomName())"]
+                            let lines = ["Building : \(self.CurrentBuilding)","Floor : \(self.CurrentFloor)"," Room : \(room.GetRoomName())"]
                             self.Address.text = lines.joinWithSeparator(", ")
                             
                             
@@ -364,7 +365,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                     self.roomLabel.text = room.GetRoomName()
                     self.tableView.reloadData()
                     let marker = GMSMarker(position: room.GetroomCenter())
-                    marker.icon = UIImage(named: "mapannotation.png")
+                    marker.icon = UIImage(named: "Location End.png")
                     marker.flat = true
                     marker.appearAnimation =   GoogleMaps.kGMSMarkerAnimationPop
                     polygon.fillColor = UIColor(red:(137/255.0), green:196/255.0, blue:244/255.0, alpha:1.0);
@@ -461,9 +462,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                 self.updateUIMap(floor)
 
             }
-            catch {
-                print("Failed to update UI")
-            }
         }
         
     }
@@ -509,7 +507,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     func buttonTapped(sender: UITapGestureRecognizer) {
         if (sender.state == .Ended) {
             self.drawRoute();
-            mapPin.hidden = true;
         }
     }
     
@@ -576,7 +573,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         let managedContext = appDelagate.managedObjectContext
         
         
-        let entity = NSEntityDescription.entityForName("Favorites", inManagedObjectContext: managedContext)
+        let entity = NSEntityDescription.entityForName("Whirlpool_favorites_table", inManagedObjectContext: managedContext)
         
         let favoriteRoom = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
         
@@ -675,7 +672,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             //floorPicker.deselectRowAtIndexPath(indexPath, animated: true)
             if let myNumber = NSNumberFormatter().numberFromString(floors[indexPath.row]) {
                 
-                var selectedCell:UITableViewCell = floorPicker.cellForRowAtIndexPath(indexPath)!
+                let selectedCell:UITableViewCell = floorPicker.cellForRowAtIndexPath(indexPath)!
                 selectedCell.contentView.backgroundColor = UIColor(red:(255/255.0), green:127/255.0, blue:80/255.0, alpha:1.0);
                 self.mapView.clear()
                 self.CurrentFloor = myNumber.integerValue
@@ -688,7 +685,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     
     func tableView(floorPicker: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        var cellToDeSelect:UITableViewCell = floorPicker.cellForRowAtIndexPath(indexPath)!
+        let cellToDeSelect:UITableViewCell = floorPicker.cellForRowAtIndexPath(indexPath)!
         cellToDeSelect.contentView.backgroundColor = UIColor.clearColor()
     }
 

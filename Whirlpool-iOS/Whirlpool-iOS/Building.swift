@@ -43,7 +43,7 @@ class Building {
         if(self._buildingAbbr == building_id){
             
             for floor in self.getFloors(){
-                var rooms =  floor.getRoomsInFloor()
+                let rooms =  floor.getRoomsInFloor()
                 
                 for room in rooms{
                     
@@ -60,12 +60,12 @@ class Building {
     
     func getARoomInBuilding(building_id : String, roomName: String) -> RoomData{
         
-        var myRoom = RoomData()
+        let myRoom = RoomData()
         
         if(self._buildingAbbr == building_id){
             
             for floor in self.getFloors(){
-                var rooms =  floor.getRoomsInFloor()
+                let rooms =  floor.getRoomsInFloor()
                 
                 for room in rooms{
                     

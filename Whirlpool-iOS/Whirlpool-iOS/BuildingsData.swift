@@ -149,7 +149,7 @@ class BuildingsData {
             if roomType == "Polygon" {
                 (_maxX, _maxY, _minX, _minY) = (-180.0,-90.0,180.0,90.0)
                 room.SetRoomName(roomName!)
-                 var rec = GMSMutablePath()
+                 let rec = GMSMutablePath()
                 for y in 0...(geoJsonInfo[JSON_FEATURES][x][JSON_GEOM][JSON_COORD][0].count - 1) {
                     let  lat = geoJsonInfo[JSON_FEATURES][x][JSON_GEOM][JSON_COORD][0][y][1].double!    // coordinates for room look like [[[long,lat],[long,lat]]]
                     let  long  = geoJsonInfo[JSON_FEATURES][x][JSON_GEOM][JSON_COORD][0][y][0].double!                    

@@ -91,8 +91,6 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
                     else{
                         print("Darn xml parser")
                     }
-                } catch let error as NSError {
-                    print("error: ", error )
                 }
                 
             }

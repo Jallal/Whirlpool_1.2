@@ -221,7 +221,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
     func parseRoomsAndBuildings(response: JSON){
         for i in 0...response.count-1{
             for x in 0...response[i]["rooms"].count-1{
-                var room = response[i]["rooms"][x] as JSON
+                let room = response[i]["rooms"][x] as JSON
                 createRoomFromJSON(room)
             }
         }
@@ -238,18 +238,6 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
         room.SetRoomLocation(roomJson["resource_name"].stringValue)
         room.SetRoomBuildingName(roomJson["building_name"].stringValue)
         filteredRooms.append(room)
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?){
-        print(segue.identifier)
-        if (segue.identifier == "RoomInfo") {
-            
-            // initialize new view controller and cast it as your view controller
-            let viewController = segue.destinationViewController as! RoomInfoViewController
-            // your new view controller should have property that will store passed value
-            viewController._room = _roomToPass
-        }
-        
     }
     
     

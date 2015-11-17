@@ -20,12 +20,10 @@ class FavoriteViewController: UIViewController, UITableViewDataSource, UITableVi
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var _favorites = [NSManagedObject]()
     var favoriteRoomDelagate: selectedFavoriteDelagate? = nil
-    
-    
-    @IBAction func cancelFavoriteViewButton(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBOutlet weak var favNavBar: UINavigationBar!
+    @IBAction func cancelHit(sender: AnyObject) {
+            self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
     @IBOutlet weak var relevant: UITableView!
     
     func userSelectedFavorite(favRoom: RoomData) {
@@ -37,6 +35,9 @@ class FavoriteViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
+        self.view.backgroundColor = UIColor(red: 251.0/255.0, green: 137.0/255.0, blue: 127.0/255.0, alpha: 1)
+        self.favNavBar.barTintColor = UIColor(red: 251.0/255.0, green: 137.0/255.0, blue: 127.0/255.0, alpha: 1)
+        
         //1
         let appDelegate =
         UIApplication.sharedApplication().delegate as! AppDelegate
@@ -64,6 +65,8 @@ class FavoriteViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        self.favNavBar.titleTextAttributes = titleDict as? [String : AnyObject]
         self.relevant.backgroundColor = self.view.backgroundColor
         self.relevant.separatorStyle = .SingleLine
         

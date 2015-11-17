@@ -40,9 +40,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     var _buildingAbb:String?
     @IBOutlet weak var calender: UITableView!
     @IBOutlet weak var buildingScroller: UICollectionView!
-    @IBAction func favoriteListButton(sender: AnyObject) {
-        self.navigationController?.navigationBar.hidden = true
-    }
     func userSelectedRoom(roomData: RoomData) {
             specificSearchedRoom = roomData
             performSegueWithIdentifier("searchSegToRoom", sender: self)
@@ -58,7 +55,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         });
     }
     func buildingInfoHasBeenLoaded(){
-    //print( _buildings._buildings["GHQ"]?._floors)
     }
     
     func buildingSelected(buildingAbb:String) {
@@ -83,10 +79,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         super.viewWillAppear(animated)
         self.buildings = BuildingsData(delegate: self) //Grabs the abbreviations
         self.calender.reloadData()
-        //Check to see if we are coming from the search page and we need to segue to room info page
-        if searchedForRoom == true {
-            performSegueWithIdentifier("RoomInfo", sender: self)
-        }
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 70.0/255.0, green: 136.0/255.0, blue: 239.0/255.0, alpha: 1)
         //1
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -102,11 +94,9 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }
-        //self.buildings = BuildingsData(delegate: self, buildingAbb: "GHQ")
-        
-  
-        
-    
+        if FAVORITE_ROOM_SELECTED != nil {
+            performSegueWithIdentifier("relevantSeg", sender: self)
+        }
     }
     
 
@@ -117,9 +107,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             OpenHamburger.target = self.revealViewController()
             OpenHamburger.action = "revealToggle:"
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
-        if FAVORITE_ROOM_SELECTED != nil {
-            performSegueWithIdentifier("relevantSeg", sender: self)
         }
         let date = NSDate()
         let dayFormatter = NSDateFormatter()
@@ -320,8 +307,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         if segue.identifier == "buildingMaps" {
             let BuildingVC = segue.destinationViewController as! BuildingsMapsViewController
             /************* PASS ANY DATA YOU WOULD LIKE TO THE MAPS *****/
-//            let buildingABR = "GHQ"
-            print(_buildingAbb)
             BuildingVC.CurrentBuilding = _buildingAbb!
             BuildingVC._room  = RoomData()
             BuildingVC.CurrentFloor = 1

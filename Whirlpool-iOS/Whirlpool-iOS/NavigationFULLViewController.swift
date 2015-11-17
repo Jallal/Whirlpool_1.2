@@ -28,7 +28,7 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
         
     }
     
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .AuthorizedWhenInUse {
             locationManager.startUpdatingLocation()
             mapView.myLocationEnabled = true
@@ -41,7 +41,7 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
         var location :CLLocation = locations.first!
         
         
-        var position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
+        let position = CLLocationCoordinate2D(latitude: 42.1124531749125, longitude: -86.4693216079577)
         mapView.camera = GMSCameraPosition(target: position, zoom: 20, bearing: 0, viewingAngle: 0)
         //mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 20, bearing: 0, viewingAngle: 0)
         locationManager.stopUpdatingLocation()
@@ -55,7 +55,7 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
     
     func updateLocation(running : Bool){
         
-        let status = CLLocationManager.authorizationStatus()
+//        let status = CLLocationManager.authorizationStatus()
         if running{
             locationManager.startUpdatingLocation()
             self.mapView.myLocationEnabled = true
@@ -200,9 +200,6 @@ class NavigationFULLViewController: UIViewController, CLLocationManagerDelegate 
         dispatch_async(dispatch_get_main_queue()) {
             do {
                 self.updateUIMap()
-            }
-            catch {
-                print("Failed to update UI")
             }
         }
         
