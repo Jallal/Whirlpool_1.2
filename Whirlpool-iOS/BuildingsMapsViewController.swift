@@ -615,7 +615,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
         if(tableViews == self.floorPicker){
             cell!.textLabel!.text = floors[indexPath.row]
-             cell!.detailTextLabel!.text  = ""
+            cell!.detailTextLabel!.text = ""
             return cell!
             
         }else{
