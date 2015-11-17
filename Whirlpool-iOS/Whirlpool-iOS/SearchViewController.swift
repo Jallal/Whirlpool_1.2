@@ -38,7 +38,6 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
     var filteredRooms = [RoomData]()
     var _roomToPass = RoomData()
     let screenSize: CGRect = UIScreen.mainScreen().bounds
-    var _buildings: BuildingsData?
     var roomDelagate: selectedRoomDataDelagate? = nil   //Data delgate to pass back the room choosen to the main page
     var allRooms = [RoomData]()
     
@@ -80,9 +79,15 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
         alert.show()
     }
     
+    func clearData(){
+        filteredRooms = []
+        allRooms = []
+    }
+    
     func userSelectedRoomToSend(roomData: RoomData) {
         if (roomDelagate != nil) {
             roomDelagate!.userSelectedRoom(roomData)
+            clearData()
             UIApplication.sharedApplication().statusBarHidden = false
             self.dismissViewControllerAnimated(true, completion: nil)
         }
@@ -190,6 +195,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
     
     func searchDisplayController(controller: UISearchController, shouldReloadTableForSearchScope searchOption: Int) -> Bool
     {
+        clearData()
         self.filterContentsForSearchText(self.searchDisplayController!.searchBar.text!, scope: "Title")
         return true
     }

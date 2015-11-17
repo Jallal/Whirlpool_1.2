@@ -553,34 +553,33 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UYx-XP-nyv" id="CRG-4i-ii0">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter Title" translatesAutoresizingMaskIntoConstraints="NO" id="FqD-QE-OGj">
-                                                    <rect key="frame" x="57" y="3" width="500" height="38"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" text="Enter Title" translatesAutoresizingMaskIntoConstraints="NO" id="FqD-QE-OGj">
+                                                    <rect key="frame" x="83" y="3" width="450" height="38"/>
                                                     <animations/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="500" id="EaB-k5-9ap"/>
+                                                        <constraint firstAttribute="width" constant="450" id="EaB-k5-9ap"/>
                                                     </constraints>
                                                     <color key="textColor" red="0.4392156862745098" green="0.50980392156862742" blue="0.51764705882352946" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                                 </textView>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ESi-7v-Qwr">
-                                                    <rect key="frame" x="15" y="5" width="34" height="34"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ESi-7v-Qwr">
+                                                    <rect key="frame" x="30" y="5" width="34" height="34"/>
                                                     <animations/>
                                                 </imageView>
                                             </subviews>
                                             <animations/>
                                             <constraints>
-                                                <constraint firstItem="ESi-7v-Qwr" firstAttribute="leading" secondItem="CRG-4i-ii0" secondAttribute="leadingMargin" constant="7" id="90d-G3-F0X"/>
+                                                <constraint firstItem="ESi-7v-Qwr" firstAttribute="leading" secondItem="CRG-4i-ii0" secondAttribute="leadingMargin" constant="22" id="90d-G3-F0X"/>
                                                 <constraint firstItem="FqD-QE-OGj" firstAttribute="centerY" secondItem="ESi-7v-Qwr" secondAttribute="centerY" id="FLe-c5-nxv"/>
                                                 <constraint firstItem="ESi-7v-Qwr" firstAttribute="top" secondItem="CRG-4i-ii0" secondAttribute="topMargin" constant="-3" id="JWl-Ze-0fn"/>
                                                 <constraint firstItem="FqD-QE-OGj" firstAttribute="top" secondItem="CRG-4i-ii0" secondAttribute="topMargin" constant="-5" id="fU7-Fy-tMV"/>
-                                                <constraint firstItem="FqD-QE-OGj" firstAttribute="centerY" secondItem="CRG-4i-ii0" secondAttribute="centerY" id="hcq-TV-DcF"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="FqD-QE-OGj" secondAttribute="trailing" constant="35" id="w9i-bn-eGI"/>
-                                                <constraint firstItem="FqD-QE-OGj" firstAttribute="leading" secondItem="ESi-7v-Qwr" secondAttribute="trailing" constant="8" id="xzh-pP-CSi"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="FqD-QE-OGj" secondAttribute="trailing" constant="59" id="w9i-bn-eGI"/>
+                                                <constraint firstItem="FqD-QE-OGj" firstAttribute="leading" secondItem="ESi-7v-Qwr" secondAttribute="trailing" constant="19" id="xzh-pP-CSi"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
@@ -770,7 +769,7 @@
                                 <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="cell" textLabel="ozB-YP-On8" rowHeight="40" style="IBUITableViewCellStyleDefault" id="9bs-na-H4X">
-                                        <rect key="frame" x="0.0" y="146" width="47" height="40"/>
+                                        <rect key="frame" x="0.0" y="145.5" width="47" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" tableViewCell="9bs-na-H4X" id="3QR-C1-BLj">
                                             <rect key="frame" x="0.0" y="0.0" width="47" height="40"/>
