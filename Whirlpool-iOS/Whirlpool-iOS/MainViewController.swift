@@ -268,9 +268,16 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
                 let cell = tableView.cellForRowAtIndexPath(indexPath) as! CalenderCell
                 if cell.building != nil {
                     //let regex = try! NSRegularExpression(pattern: "[ABC]\\d{3}-\\d{2}$|[ABC]\\d{3}", options: .CaseInsensitive)
-                    var match = self.matchesForRegexInText("[ABC]\\d{3}-\\d{2}$|[ABC]\\d{3}", text: potentialRoom)
-                    self._roomToPass.SetRoomName(match[0])
-                    self._roomToPass.SetRoomBuildingName(cell.building!)
+                    if cell.building == "RV"{
+                        var match = self.matchesForRegexInText("[ABC]\\d{3}-\\d{2}$|[ABC]\\d{3}", text: potentialRoom)
+                        self._roomToPass.SetRoomName(match[0])
+                        self._roomToPass.SetRoomBuildingName(cell.building!)
+                    }
+                    if cell.building == "GHQ"{
+                        var match = self.matchesForRegexInText("(N\\d{3}-\\d{2}$|N\\d{3})", text: potentialRoom)
+                        self._roomToPass.SetRoomName(match[0])
+                        self._roomToPass.SetRoomBuildingName(cell.building!)
+                    }
                     self.performSegueWithIdentifier("eventNavSeg", sender: self)
                 }
             }
