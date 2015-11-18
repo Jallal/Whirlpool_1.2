@@ -17,6 +17,8 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
      * All the amenities in a room
      *
      */
+    //Remove this variable only for beta
+    var count = 0
     let locationManager = CLLocationManager()
     var _StartingLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     var RoomAmenities = ["Capacity","Whiteboard","Monitor","Polycom","Phone","TV"]
@@ -129,13 +131,13 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     @IBAction func helpButton(sender: AnyObject) {
         
         self.floorPicker.hidden = !self.floorPicker.hidden
-        self.Address.hidden = !self.Address.hidden
         self.floorPicker.reloadData()
         
     }
     
     @IBAction func getDirections(sender: AnyObject) {
         self.mapPin.hidden = !self.mapPin.hidden
+         self.Address.hidden = !self.Address.hidden
         self.buttomView.hidden = !self.buttomView.hidden
         
     }
@@ -491,8 +493,8 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     /****************************** Drawing the navigation path for the user*************************/
     func drawRoute() {
-        var graph = SwiftGraph()
-        var getPath =   Path()
+        //let graph = SwiftGraph()
+        //let getPath =   Path()
 
         
         let walkingSpeed = 1.4
@@ -501,23 +503,43 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         let totalTime = Double(round((distance/walkingSpeed)/60))
         self.BannerView("\(totalTime)  Minutes  (\(totalDistance)  ft)", button_message:"GO");
         
-        /******************/
+        /*/******************/
         graph.readFromFile()
         //getPath.processDijkstra(0, des: 60)
-        var myPath = getPath.traverseGraphBFS(60,end: 128)
+        let myPath = getPath.traverseGraphBFS(60,end: 128)
         
         
-        var path1 = GMSMutablePath()
+        let path1 = GMSMutablePath()
         //path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124842505816, longitude: -86.4693117141724))
         for node in myPath{
             path1.addCoordinate(CLLocationCoordinate2D(latitude: node.lat, longitude: node.long))
             
-        }
-        var polyline = GMSPolyline(path: path1)
+        }*/
+        
+        if(self.count==0){
+        //First path delete after
+        let path1 = GMSMutablePath()
+        //path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124842505816, longitude: -86.4693117141724))
+         path1.addCoordinate(CLLocationCoordinate2D(latitude: 0, longitude: 0))
+        let polyline = GMSPolyline(path: path1)
         polyline.strokeColor = UIColor.blueColor()
         polyline.strokeWidth = 2.0
         polyline.geodesic = true
         polyline.map = mapView;
+        self.count = self.count+1
+        }else{
+            //second path delete after
+            let path1 = GMSMutablePath()
+            //path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124842505816, longitude: -86.4693117141724))
+            path1.addCoordinate(CLLocationCoordinate2D(latitude: 0, longitude: 0))
+            let polyline = GMSPolyline(path: path1)
+            polyline.strokeColor = UIColor.blueColor()
+            polyline.strokeWidth = 2.0
+            polyline.geodesic = true
+            polyline.map = mapView;
+            self.count = self.count+1
+
+        }
     }
     
     func buttonTapped(sender: UITapGestureRecognizer) {
