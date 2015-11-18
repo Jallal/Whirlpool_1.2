@@ -45,8 +45,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
 
     }
     func buildingInfoHasBeenLoaded(){
-        //print( _buildings._buildings["GHQ"]?._floors)
-        print("%%%%%%%%%% WE ARE ALL SET %%%%%%%%%%%%%%%%%")
         if (self._buildings._buildings[CurrentBuilding] != nil){
             self._building = self._buildings._buildings[self.CurrentBuilding]
             self.NumberOfFloor = self._building.getNumberOfFloors()
@@ -327,9 +325,11 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                    for room in floorClass.getRoomsInFloor(){
                     for rect in room.GetRoomCoordinates(){
                         if(GMSGeometryContainsLocation(coordinate,rect, true)){
+                            if(self.CurrentFloor == room.GetRoomFloor()){
                             
                             let lines = ["Building : \(self.CurrentBuilding)","Floor : \(self.CurrentFloor)"," Room : \(room.GetRoomName())"]
                             self.Address.text = lines.joinWithSeparator(", ")
+                            }
                             
                             
                         }
@@ -406,6 +406,23 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                 }else if(room.GetRoomName()=="MB"){
                     let icon = UIImage(named: "mbathroom.jpg")
                     let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
+                    overlay.bearing = -15
+                    overlay.map = self.mapView
+                }else if(room.GetRoomName()=="STR"){
+                    let icon = UIImage(named: "STR.png")
+                    let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
+                    overlay.bearing = -15
+                    overlay.map = self.mapView
+                    
+                }else if(room.GetRoomName()=="ELV"){
+                    let icon = UIImage(named: "ELV.png")
+                    let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
+                    overlay.bearing = -10
+                    overlay.map = self.mapView
+                    
+                }else if(room.GetRoomName()=="MB"){
+                    let icon = UIImage(named: "mbathroom.jpg")
+                    let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
                     overlay.bearing = -10
                     overlay.map = self.mapView
                 }else if(room.GetRoomName()=="EXT"){
@@ -422,9 +439,9 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                     let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: newImage(room.GetRoomName(), size: CGSizeMake(12, 12)), zoomLevel:20)
                     overlay.bearing = 0
                     overlay.map = self.mapView
+                    }
                     
-                }
-
+        
 
             }
             
@@ -483,7 +500,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         let distance  = self.distanceInMetersFrom(self._room.GetroomCenter())//distance in meters
         let totalDistance = Double(round(distance*3.28084)) // distance in feets
         let totalTime = Double(round((distance/walkingSpeed)/60))
-        self.BannerView("\(totalTime)  Minutes  (\(totalDistance)  ft)", button_message:"Yes");
+        self.BannerView("\(totalTime)  Minutes  (\(totalDistance)  ft)", button_message:"GO");
         
         /******************/
         graph.readFromFile()
