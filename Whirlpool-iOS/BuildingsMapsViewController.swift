@@ -67,8 +67,8 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             self.floorPicker.reloadData()
             self.Invalidate(CurrentFloor)
             if _room.GetRoomName() != String() {
-                _room = self._building.getARoomInBuilding(CurrentBuilding, roomName: _room.GetRoomName())
-                dispatch_async(dispatch_get_main_queue(),{
+               dispatch_async(dispatch_get_main_queue(),{
+                    self._room = self._building.getARoomInBuilding(self.CurrentBuilding, roomName: self._room.GetRoomName())
                     self._room.SetIsSelected(true)
                     self.Invalidate(self._room.GetRoomFloor())
                 });
@@ -145,7 +145,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         /***********************   MAKE SURE YOU UPDATE THIS VARIABLES******************************/
-        self.CurrentFloor = 2 // Make sure you fix this later on
+        self.CurrentFloor = 1 // Make sure you fix this later on
         self._buildings = BuildingsData(delegate: self, buildingAbb: self.CurrentBuilding)
         /*******************************************************************************************/
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
@@ -368,6 +368,9 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                 if((room.GetRoomName()=="WB") || (room.GetRoomName()=="MB") ){
                     polygon.fillColor = UIColor(red: 234/255.0, green: 230/255.0, blue: 245/255.0, alpha: 1.0)//purple color
                 }
+                 if((room.GetRoomName()=="STR") || (room.GetRoomName()=="ELV") ){
+                    polygon.fillColor = UIColor(red:(244/255.0), green:(179/255.0), blue:(80/255.0), alpha:1.0)//orange
+                }
                 
                 if(room.GetRoomName()=="HW"){
                     polygon.fillColor  = UIColor.whiteColor()
@@ -402,6 +405,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                     overlay.map = self.mapView
                 }else if(room.GetRoomName()=="STR"){
                     let icon = UIImage(named: "STR.png")
+                    //UIColor(red:(244/255.0), green:(179/255.0), blue:(80/255.0), alpha:1.0);
                     let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
                     overlay.bearing = -15
                     overlay.map = self.mapView
@@ -623,6 +627,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             cell!.textLabel!.text = floors[indexPath.row]
             cell!.detailTextLabel!.text = ""
             return cell!
+           // var RoomAmenities = ["Capacity","Whiteboard","Monitor","Polycom","Phone","TV"]
             
         }else{
             let items = _room.GetRoomResources()
