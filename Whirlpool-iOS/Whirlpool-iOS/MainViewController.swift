@@ -269,7 +269,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        
+        buildings = nil
         if segue.identifier == "relevantSeg" {
             let buildingVC = segue.destinationViewController as! BuildingsMapsViewController
             let room = FAVORITE_ROOM_SELECTED

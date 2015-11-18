@@ -13,7 +13,14 @@ import Foundation
 
 class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,UIPopoverPresentationControllerDelegate, buildingsLoadedDelegate{
     
-   //The alert view for notification
+    /**
+     * All the amenities in a room
+     *
+     */
+    let locationManager = CLLocationManager()
+    var _StartingLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    var RoomAmenities = ["Capacity","Whiteboard","Monitor","Polycom","Phone","TV"]
+    //The alert view for notification
     var alertView: UIView = UIView()
     //The button that dismiss the view
     var ok_button : UIButton = UIButton()
@@ -25,7 +32,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     var CurrentBuilding : String = String()
     var  NumberOfFloor  : Int = Int()
     var floors   =  [String]()
-    @IBOutlet weak var helpButton: UIButton!
     //origin marker during navigation
     var originMarker: GMSMarker!
     //distination marker for navigation
@@ -34,15 +40,24 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     var routePolyline: GMSPolyline!
     var _buildings : BuildingsData!
     var _building : Building!
-    var _StartingLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    
+    @IBOutlet weak var helpButton: UIButton!
+    // The pin that helps locat the user
+    @IBOutlet weak var mapPin: UIImageView!
+    //Current location for the user
+    @IBOutlet weak var Address: UILabel!
+    //The map object
+    @IBOutlet weak var mapView: GMSMapView!
+    @IBOutlet weak var BottomMapView: UIView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var roomLabel: UILabel!
+    @IBOutlet weak var buttomView: UIView!
+    //the picker for the floors
+    @IBOutlet weak var floorPicker: UITableView!
     
     @IBAction func cancelMapScreen(sender: AnyObject) {
+        self._buildings = nil
         self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    @IBOutlet weak var BottomMapView: UIView!
-    
-    func buildingAbbsHaveBeenLoaded(){
-
     }
     func buildingInfoHasBeenLoaded(){
         if (self._buildings._buildings[CurrentBuilding] != nil){
@@ -62,7 +77,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
     }
     
-    
     @IBAction func pan(sender: UIPanGestureRecognizer) {
         //Get the size of the screen
         let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -76,12 +90,12 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         if let view = sender.view{
             let d: CGFloat = (self.buttomView.center.y + translation.y)
             if(((MagicNumber)<=d)&&(d<(screenHeight+20))){
-            self.buttomView.center = CGPoint(x:self.buttomView.center.x,
-                y:self.buttomView.center.y + translation.y)
+                self.buttomView.center = CGPoint(x:self.buttomView.center.x,
+                    y:self.buttomView.center.y + translation.y)
             }
         }
         sender.setTranslation(CGPointZero, inView: self.buttomView)
-    
+        
     }
     
     /**
@@ -103,30 +117,11 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         }
     }
     
-    
-    
-    
     @IBAction func book(sender: AnyObject) {
         
         
         
     }
-    
-    /**
-    * All the amenities in a room
-    *
-    */
-    let locationManager = CLLocationManager()
-    var RoomAmenities = ["Capacity","Whiteboard","Monitor","Polycom","Phone","TV"]
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var roomLabel: UILabel!
-    
-    @IBOutlet weak var buttomView: UIView!
-    //internal var Floors = _FloorData
-    
-    //the picker for the floors
-   @IBOutlet weak var floorPicker: UITableView!
-    
     
     @IBAction func helpButton(sender: AnyObject) {
         
@@ -137,34 +132,15 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     }
     
     @IBAction func getDirections(sender: AnyObject) {
-      self.mapPin.hidden = !self.mapPin.hidden
-     self.buttomView.hidden = !self.buttomView.hidden
+        self.mapPin.hidden = !self.mapPin.hidden
+        self.buttomView.hidden = !self.buttomView.hidden
         
     }
-    // The pin that helps locat the user
-    @IBOutlet weak var mapPin: UIImageView!
-    //Current location for the user
-    @IBOutlet weak var Address: UILabel!
-    //The map object
-    @IBOutlet weak var mapView: GMSMapView!
     
-    
-    //The number of floors in the given building
-    
-    func populateFloors(){
-        var i : Int = 0
-        if(self.NumberOfFloor != 0){
-        for index  in (1...NumberOfFloor).reverse(){
-            floors.append("\(index)")
-            i = i+1
-        }
-        }
-         print("^^^^^^^^^^ FLOORS&&&&&&&&&&&&&&&&&")
-        print(floors)
+    func buildingAbbsHaveBeenLoaded(){
+
     }
 
-
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -215,6 +191,22 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
  
     }
     
+    //Destroy objects in here before leaving the view to free up memory
+    func clearMemory(){
+        self._building = nil
+        self._buildings = nil
+    }
+    
+    //The number of floors in the given building
+    func populateFloors(){
+        var i : Int = 0
+        if(self.NumberOfFloor != 0){
+            for index  in (1...NumberOfFloor).reverse(){
+                floors.append("\(index)")
+                i = i+1
+            }
+        }
+    }
     
     /* The function that handels dismissing the notification during navigation*/
     func onClick_ok(){
