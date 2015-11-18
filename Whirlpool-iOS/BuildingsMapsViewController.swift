@@ -151,7 +151,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         /***********************   MAKE SURE YOU UPDATE THIS VARIABLES******************************/
-        self.CurrentFloor = 1 // Make sure you fix this later on
         self._buildings = BuildingsData(delegate: self, buildingAbb: self.CurrentBuilding)
         /*******************************************************************************************/
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
@@ -233,11 +232,13 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     if((position.latitude != 0) && (position.longitude != 0)){
         position = CLLocationCoordinate2D(latitude: self._room.GetroomCenter().latitude, longitude: self._room.GetroomCenter().longitude)
         self._room.SetIsSelected(true)
+        self.CurrentFloor = self._room.GetRoomFloor()
         
     }else if(self._building != nil){
         
        self._room  = self._building.getARoomInBuilding(self.CurrentBuilding)
        position = CLLocationCoordinate2D(latitude: self._room.GetroomCenter().latitude, longitude: self._room.GetroomCenter().longitude)
+        self.CurrentFloor = self._room.GetRoomFloor()
     }
     if((position.latitude != 0) && (position.longitude != 0)){
     
@@ -755,7 +756,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             polyline.geodesic = true
             polyline.map = mapView;
           self.count = self.count+1
-            self.BannerView("Are you in the 4th ?", button_message:"YES");
+            self.BannerView("Are you in the 4th floor?", button_message:"YES");
             
         }else if(self.count==2){
             let path1 = GMSMutablePath()
