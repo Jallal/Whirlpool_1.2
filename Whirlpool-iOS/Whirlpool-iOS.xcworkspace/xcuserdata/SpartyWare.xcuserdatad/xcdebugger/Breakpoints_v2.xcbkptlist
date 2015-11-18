@@ -10,45 +10,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BuildingsMapsViewController.swift"
-            timestampString = "469504716.279959"
+            timestampString = "469515165.434764"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "434"
-            endingLineNumber = "434"
+            startingLineNumber = "443"
+            endingLineNumber = "443"
             landmarkName = "updateUIMap(_:)"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Whirlpool_iOS.BuildingsMapsViewController.updateUIMap (Whirlpool_iOS.BuildingsMapsViewController)(Swift.Int) -&gt; ()"
-                  moduleName = "Whirlpool-iOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/SpartyWare/Documents/XcodeProjects/Whirlpool_1.2/Whirlpool-iOS/BuildingsMapsViewController.swift"
-                  timestampString = "469512040.362633"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "434"
-                  endingLineNumber = "434"
-                  offsetFromSymbolStart = "7976">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Whirlpool_iOS.BuildingsMapsViewController.updateUIMap (Whirlpool_iOS.BuildingsMapsViewController)(Swift.Int) -&gt; ()"
-                  moduleName = "Whirlpool-iOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/SpartyWare/Documents/XcodeProjects/Whirlpool_1.2/Whirlpool-iOS/BuildingsMapsViewController.swift"
-                  timestampString = "469512040.362823"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "434"
-                  endingLineNumber = "434"
-                  offsetFromSymbolStart = "7992">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -57,29 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Whirlpool-iOS/MainViewController.swift"
-            timestampString = "469510812.116091"
+            filePath = "BuildingsMapsViewController.swift"
+            timestampString = "469520103.900721"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
-            landmarkName = "viewWillAppear(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Whirlpool-iOS/MainViewController.swift"
-            timestampString = "469511848.58499"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "viewWillAppear(_:)"
+            startingLineNumber = "628"
+            endingLineNumber = "628"
+            landmarkName = "prepareForSegue(_:sender:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

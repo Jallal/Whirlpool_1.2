@@ -80,6 +80,12 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     @IBOutlet weak var OpenHamburger: UIBarButtonItem!
     
     
+    
+ 
+
+
+  
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.buildings = BuildingsData(delegate: self) //Grabs the abbreviations
@@ -93,7 +99,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         //3
         do {
             let results =
-            try managedContext.executeFetchRequest(fetchRequest)
+           try managedContext.executeFetchRequest(fetchRequest)
             _favorites = results as! [NSManagedObject]
             self.calender.reloadData()
         } catch let error as NSError {
@@ -104,8 +110,10 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
     }
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if self.revealViewController() != nil {
             OpenHamburger.target = self.revealViewController()
             OpenHamburger.action = "revealToggle:"

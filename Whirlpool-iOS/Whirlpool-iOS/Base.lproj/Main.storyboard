@@ -736,7 +736,7 @@
                                 </variation>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y2D-om-kpF">
-                                <rect key="frame" x="0.0" y="1" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="1" width="600" height="37"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.77354236577181212" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -769,14 +769,14 @@
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="cell" textLabel="ozB-YP-On8" rowHeight="40" style="IBUITableViewCellStyleDefault" id="9bs-na-H4X">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="cell" rowHeight="40" style="IBUITableViewCellStyleDefault" id="9bs-na-H4X">
                                         <rect key="frame" x="0.0" y="145.5" width="47" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" tableViewCell="9bs-na-H4X" id="3QR-C1-BLj">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" id="pka-aW-Wjx">
                                             <rect key="frame" x="0.0" y="0.0" width="47" height="40"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ozB-YP-On8">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aNG-3x-tf6">
                                                     <rect key="frame" x="15" y="0.0" width="17" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
@@ -786,12 +786,8 @@
                                                 </label>
                                             </subviews>
                                             <animations/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </tableViewCellContentView>
                                         <animations/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="tintColor" red="0.1620561636" green="0.2273020942" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>
@@ -900,14 +896,14 @@
                             <constraint firstAttribute="trailingMargin" secondItem="tb2-2t-ibB" secondAttribute="trailing" constant="1" id="6XH-5n-h1O"/>
                             <constraint firstItem="qi9-Rn-eWx" firstAttribute="top" secondItem="SqD-OQ-6As" secondAttribute="bottom" id="7IU-0a-Wq3"/>
                             <constraint firstItem="60y-Wl-ImA" firstAttribute="top" secondItem="HmC-MI-LrU" secondAttribute="top" id="7tV-Xw-Ahb"/>
-                            <constraint firstItem="SqD-OQ-6As" firstAttribute="top" secondItem="y2D-om-kpF" secondAttribute="bottom" constant="260" id="AU0-D7-pv3"/>
+                            <constraint firstItem="SqD-OQ-6As" firstAttribute="top" secondItem="y2D-om-kpF" secondAttribute="bottom" constant="267" id="AU0-D7-pv3"/>
                             <constraint firstItem="y2D-om-kpF" firstAttribute="leading" secondItem="HmC-MI-LrU" secondAttribute="leadingMargin" constant="-20" id="EOH-9T-bbD"/>
                             <constraint firstItem="qi9-Rn-eWx" firstAttribute="top" secondItem="eun-21-5NG" secondAttribute="bottom" constant="108" id="Ez4-xj-ySC"/>
                             <constraint firstItem="y2D-om-kpF" firstAttribute="top" secondItem="hpT-RI-zUT" secondAttribute="bottom" constant="1" id="FRw-PM-H8Y"/>
                             <constraint firstItem="SqD-OQ-6As" firstAttribute="top" secondItem="tb2-2t-ibB" secondAttribute="bottom" constant="3" id="KvX-zh-nan"/>
                             <constraint firstItem="60y-Wl-ImA" firstAttribute="leading" secondItem="HmC-MI-LrU" secondAttribute="leadingMargin" constant="-24" id="MNp-L5-I7Z"/>
                             <constraint firstItem="SqD-OQ-6As" firstAttribute="centerX" secondItem="HmC-MI-LrU" secondAttribute="centerX" id="Vin-og-bXZ"/>
-                            <constraint firstItem="tb2-2t-ibB" firstAttribute="top" secondItem="y2D-om-kpF" secondAttribute="bottom" constant="29" id="Wjg-Dj-cQ2"/>
+                            <constraint firstItem="tb2-2t-ibB" firstAttribute="top" secondItem="y2D-om-kpF" secondAttribute="bottom" constant="36" id="Wjg-Dj-cQ2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eun-21-5NG" secondAttribute="trailing" constant="5" id="Zi1-DE-Zij"/>
                             <constraint firstItem="60y-Wl-ImA" firstAttribute="bottom" secondItem="qi9-Rn-eWx" secondAttribute="top" id="aDb-IB-7wu"/>
                             <constraint firstItem="tb2-2t-ibB" firstAttribute="centerY" secondItem="HmC-MI-LrU" secondAttribute="centerY" constant="-80" id="dEY-j2-eRR"/>
@@ -1011,10 +1007,10 @@
         <image name="Time Symbol" width="24" height="24"/>
         <image name="Whirlpool Default" width="52" height="52"/>
         <image name="Whirlpool Default - L" width="60" height="60"/>
-        <image name="info" width="1024" height="1024"/>
+        <image name="info" width="36" height="46"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="9Va-hr-BZG"/>
-        <segue reference="OV2-DF-bGW"/>
+        <segue reference="dRV-Fk-sZx"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -48,7 +48,7 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
             addNewEvent(newEvent)
         }
         checkObservers()
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func checkObservers(){
