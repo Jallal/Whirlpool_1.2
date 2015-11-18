@@ -12,6 +12,17 @@ import CoreData
 
 var FAVORITE_ROOM_SELECTED:RoomData?
 
+extension String {
+    func stringByTrimmingLeadingAndTrailingWhitespace() -> String {
+        let leadingAndTrailingWhitespacePattern = "([ABC]\\d{3}-\\d{2}$|[ABC]\\d{3})"
+        
+         let regex = try! NSRegularExpression(pattern: leadingAndTrailingWhitespacePattern, options: NSRegularExpressionOptions.CaseInsensitive)
+            let range = NSMakeRange(0, self.characters.count)
+            let trimmedString = regex.stringByReplacingMatchesInString(self, options: .ReportProgress, range:range, withTemplate:"$1")
+            return trimmedString
+    }
+}
+
 class MainViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate,UITabBarDelegate, selectedRoomDataDelagate,selectedFavoriteDelagate, buildingsLoadedDelegate, UICollectionViewDelegateFlowLayout, buildingButtonTappedDelegate{
     
     let buildingToImageLarge = ["Benson Road":"BEN - L.png", "BHTC":"BHTC - L.png",
@@ -154,6 +165,21 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
     }
     
+    func matchesForRegexInText(regex: String!, text: String!) -> [String] {
+        
+        do {
+            let regex = try NSRegularExpression(pattern: regex, options: [])
+            let nsString = text as NSString
+            let results = regex.matchesInString(text,
+                options: [], range: NSMakeRange(0, nsString.length))
+            return results.map { nsString.substringWithRange($0.range)}
+        } catch let error as NSError {
+            print("invalid regex: \(error.localizedDescription)")
+            return []
+        }
+    }
+
+    
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var calenderInfoTable = _userCalenderInfo?.getCalenderInfo()
         let cell = tableView.dequeueReusableCellWithIdentifier("CalenderCellID") as! CalenderCell
@@ -165,6 +191,8 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         if calenderInfoTable![indexPath.row].location?.componentsSeparatedByString("-").count >= 3 {
             let buidlingName = parseLocationString(calenderInfoTable![indexPath.row].location!)
             let buildingPicString = buildingToImageLarge[buidlingName]
+            let buildingAbb = buildingPicString?.stringByReplacingOccurrencesOfString(" - L.png", withString: "")
+            cell.building = buildingAbb
             cell.buildingImage.image = UIImage(named: buildingPicString!)
         }
         else {
@@ -219,8 +247,14 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             let navigationAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "\t") { (action: UITableViewRowAction!, indexPath: NSIndexPath!) -> Void in
                 let locationToParseForRoom =  _userCalenderInfo!.getCalenderInfo()[indexPath.row].location
                 let potentialRoom = self.checkIfRoomLocation(locationToParseForRoom!)
-                    self._roomToPass.SetRoomName(potentialRoom)
-                    self.performSegueWithIdentifier("relevantSeg", sender: self)
+                let cell = tableView.cellForRowAtIndexPath(indexPath) as! CalenderCell
+                if cell.building != nil {
+                    //let regex = try! NSRegularExpression(pattern: "[ABC]\\d{3}-\\d{2}$|[ABC]\\d{3}", options: .CaseInsensitive)
+                    var match = self.matchesForRegexInText("[ABC]\\d{3}-\\d{2}$|[ABC]\\d{3}", text: potentialRoom)
+                    self._roomToPass.SetRoomName(match[0])
+                    self._roomToPass.SetRoomBuildingName(cell.building!)
+                    self.performSegueWithIdentifier("eventNavSeg", sender: self)
+                }
             }
             navigationAction.backgroundColor = UIColor(patternImage: UIImage(named: "Navigate + Shape.png")!)
             return [deleteAction,editAction, navigationAction]
@@ -237,9 +271,9 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if buildings._buildingAbbr.count != 0 {
-            return buildings._buildingAbbr.count
-        }
+            if buildings._buildingAbbr.count != 0 {
+                return buildings._buildingAbbr.count
+            }
         else{
             return 0
         }
@@ -261,12 +295,19 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        buildings = nil
+        if segue.identifier == "eventNavSeg"{
+            let buildingVC = segue.destinationViewController as! BuildingsMapsViewController
+            buildingVC._room = _roomToPass
+            buildingVC.CurrentBuilding = _roomToPass.GetBuildingOfRoom()
+            
+        }
+        
         if segue.identifier == "relevantSeg" {
             let buildingVC = segue.destinationViewController as! BuildingsMapsViewController
             let room = FAVORITE_ROOM_SELECTED
             if room!.GetRoomName() != String(){
                 buildingVC._room = room!
+                buildingVC.CurrentBuilding = room!.GetBuildingOfRoom()
             }
             FAVORITE_ROOM_SELECTED = nil
         }

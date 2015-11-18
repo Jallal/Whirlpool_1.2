@@ -17,6 +17,7 @@ class CalenderCell: UITableViewCell {
     @IBOutlet weak var titleLabelRelavant: UILabel?
     @IBOutlet weak var buildingImage: UIImageView!
     @IBOutlet weak var timeTill: UILabel!
+    var building:String?
 
     
     

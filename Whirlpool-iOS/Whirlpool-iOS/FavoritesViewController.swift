@@ -135,6 +135,7 @@ class FavoriteViewController: UIViewController, UITableViewDataSource, UITableVi
         if (tableView == self.relevant)
         {
             room.SetRoomName((_favorites[indexPath.row].valueForKey("roomName") as? String)!)
+            room.SetRoomBuildingName((_favorites[indexPath.row].valueForKey("buildingAbb") as? String)!)
             userSelectedFavorite(room)
         }
     }

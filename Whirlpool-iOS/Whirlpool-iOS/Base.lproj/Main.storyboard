@@ -91,7 +91,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-1510" y="-2581"/>
+            <point key="canvasLocation" x="-1234" y="-2581"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="6oW-nn-1c8">
@@ -526,6 +526,7 @@
                         <segue destination="9rI-gr-NXP" kind="show" identifier="buildingMaps" id="ntx-bz-kGd"/>
                         <segue destination="9rI-gr-NXP" kind="show" identifier="relevantSeg" id="gjk-Na-klc"/>
                         <segue destination="9rI-gr-NXP" kind="show" identifier="searchSegToRoom" id="PHW-3T-xbM"/>
+                        <segue destination="9rI-gr-NXP" kind="show" identifier="eventNavSeg" id="9Va-hr-BZG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JrC-xa-pFe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -865,7 +866,7 @@
                                         <animations/>
                                         <state key="normal" image="BookRoom"/>
                                         <connections>
-                                            <action selector="book:" destination="9rI-gr-NXP" eventType="touchUpInside" id="OoB-Yh-pIa"/>
+                                            <action selector="bookRoom:" destination="9rI-gr-NXP" eventType="touchUpInside" id="uxf-RF-9Oa"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -935,6 +936,7 @@
                     <connections>
                         <outlet property="Address" destination="y2D-om-kpF" id="qJW-dc-YhG"/>
                         <outlet property="BottomMapView" destination="SqD-OQ-6As" id="qth-W5-evM"/>
+                        <outlet property="bookingButton" destination="NoS-GW-2lX" id="Tyq-kp-UQC"/>
                         <outlet property="buttomView" destination="SqD-OQ-6As" id="vw3-6B-8gs"/>
                         <outlet property="floorPicker" destination="tb2-2t-ibB" id="yUB-9l-Z2u"/>
                         <outlet property="helpButton" destination="eun-21-5NG" id="box-KJ-f9U"/>
@@ -942,6 +944,7 @@
                         <outlet property="mapView" destination="60y-Wl-ImA" id="V48-Cv-dyy"/>
                         <outlet property="roomLabel" destination="o5v-He-Zak" id="rnj-m3-v63"/>
                         <outlet property="tableView" destination="kTu-L8-HhY" id="gaP-Bk-GDR"/>
+                        <segue destination="pfZ-AQ-pez" kind="show" identifier="bookRoomSeg" id="dRV-Fk-sZx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="afH-dV-Bq7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -951,7 +954,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-2651" y="-2510"/>
+            <point key="canvasLocation" x="-2241" y="-2581"/>
         </scene>
         <!--Reveal View Controller-->
         <scene sceneID="jra-bs-y9l">
@@ -1011,6 +1014,7 @@
         <image name="info" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PHW-3T-xbM"/>
+        <segue reference="9Va-hr-BZG"/>
+        <segue reference="OV2-DF-bGW"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -65,7 +65,9 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         super.viewWillAppear(animated)
         self.addEventTableView.delegate = self
         self.addEventTableView.dataSource = self
-        
+        if self.location != String(){
+            locationTitle = self.location
+        }
         if editingEventBool {
             setViewToEditing()
         }

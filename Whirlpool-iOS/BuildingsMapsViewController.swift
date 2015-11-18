@@ -10,6 +10,7 @@ import UIKit
 import GoogleMaps
 import CoreData
 import Foundation
+import SwiftyJSON
 
 class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegate,GMSMapViewDelegate,UIPopoverPresentationControllerDelegate, buildingsLoadedDelegate{
     
@@ -40,6 +41,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     var _buildings : BuildingsData!
     var _building : Building!
     @IBOutlet weak var helpButton: UIButton!
+    @IBOutlet weak var bookingButton: UIButton!
     // The pin that helps locat the user
     @IBOutlet weak var mapPin: UIImageView!
     //Current location for the user
@@ -84,7 +86,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
      * upon clicking on a button
      */
     @IBAction func favoriteButton(sender: UIButton) {
-        if _room.GetRoomName() != String() {
+        if _room.GetRoomName() != String() && _room.GetRoomEmail() != String() && CurrentBuilding != String() {
             let alert = UIAlertController(title: _room.GetRoomName(), message: "New Favorite Added", preferredStyle: .Alert)
             let attributeString = NSAttributedString(string: "New Favorite", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(15),
                 NSBackgroundColorDocumentAttribute: UIColor.blueColor()])
@@ -98,10 +100,35 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         }
     }
     
-    @IBAction func book(sender: AnyObject) {
-        
-        
-        
+    @IBAction func bookRoom(sender: AnyObject) {
+        findRoomInfo(_room.GetRoomName()) { (response) -> Void in
+            let room = self.parseRoomJson(response)
+            if room.GetRoomEmail() != String() {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self._room = room
+                    self.performSegueWithIdentifier("bookRoomSeg", sender: self)
+                })
+            }
+        }
+    }
+    
+    func parseRoomJson(roomInfo: JSON)->RoomData{
+        if roomInfo["rooms"][0]["room_name"].stringValue == _room.GetRoomName() {
+            let room = RoomData()
+            room.SetRoomName(roomInfo["rooms"][0]["room_name"].stringValue)
+            room.SetRoomEmail(roomInfo["rooms"][0]["email"].stringValue)
+            room.SetRoomLocation(roomInfo["rooms"][0]["resource_name"].stringValue)
+            room.SetRoomCapacity(roomInfo["rooms"][0]["capacity"].intValue)
+            room.SetRoomExt(roomInfo["rooms"][0]["extension"].stringValue)
+            room.SetRoomType(roomInfo["rooms"][0]["room_type"].stringValue)
+            room.SetRoomBuildingName(roomInfo["rooms"][0]["building_name"].stringValue)
+            room.SetRoomStatus(roomInfo["rooms"][0]["occupancy_status"].stringValue)
+            for i in 0...roomInfo["amenities"].count-1{
+                room.SetRoomResources(roomInfo["amenities"][i].stringValue)
+            }
+            return room
+        }
+        return RoomData()
     }
     
     @IBAction func helpButton(sender: AnyObject) {
@@ -356,6 +383,8 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                     marker.appearAnimation =   GoogleMaps.kGMSMarkerAnimationPop
                     polygon.fillColor = UIColor(red:(137/255.0), green:196/255.0, blue:244/255.0, alpha:1.0);
                     marker.map = self.mapView
+                    bookingButton.hidden = ((room.GetRoomType() == "C") ? false: true)
+                    
                 }else{
                     polygon.fillColor = UIColor(red:(255/255.0), green:249/255.0, blue:236/255.0, alpha:1.0);
                 }
@@ -374,8 +403,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                     
                     polygon.fillColor = UIColor(red: 211/255.0, green: 84/255.0, blue:0/255.0, alpha: 1.0)// busy conferance rooms
                 }
-                
-               
                 polygon.strokeColor = UIColor(red:(108/255.0), green:(122/255.0), blue:(137/255.0), alpha:1.0);
                 polygon.strokeWidth = 0.5
                 polygon.title = room.GetRoomName();
@@ -540,7 +567,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         if segue.identifier == "bookRoomSeg" {
             let eventVC = segue.destinationViewController as! CalendarEventViewController
             eventVC.guest = _room.GetRoomEmail()
-            eventVC.location = _room.GetRoomName()
+            eventVC.location = _room.GetRoomLocation()
             
         }
         
@@ -568,6 +595,28 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             print("Could not save \(error), \(error.userInfo)")
         }
         
+    }
+    
+    
+    
+    /******************************Request Info on Room****************************************/
+     
+    func findRoomInfo(roomName: String, successHandler: (response: JSON) -> Void){
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://whirlpool-indoor-maps.appspot.com/room?building_name=\(CurrentBuilding)&room_name=\(roomName)" as String)!)
+        request.HTTPMethod = "GET"
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(error)")
+                return
+            }
+            do {
+                let readableJSON = JSON(data: data!, options: NSJSONReadingOptions.MutableContainers, error: nil)
+                successHandler(response: readableJSON)
+            }
+        }
+        task.resume()
     }
     
     
