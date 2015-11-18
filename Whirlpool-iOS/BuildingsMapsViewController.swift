@@ -61,11 +61,14 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     }
     func buildingInfoHasBeenLoaded(){
         if (self._buildings._buildings[CurrentBuilding] != nil){
-            self._building = self._buildings._buildings[self.CurrentBuilding]
-            self.NumberOfFloor = self._building.getNumberOfFloors()
-            self.populateFloors()
-            self.floorPicker.reloadData()
-            self.Invalidate(CurrentFloor)
+            
+            dispatch_async(dispatch_get_main_queue(),{
+                self._building = self._buildings._buildings[self.CurrentBuilding]
+                self.NumberOfFloor = self._building.getNumberOfFloors()
+                self.populateFloors()
+                self.floorPicker.reloadData()
+                self.Invalidate(self.CurrentFloor)
+            });
             if _room.GetRoomName() != String() {
                dispatch_async(dispatch_get_main_queue(),{
                     self._room = self._building.getARoomInBuilding(self.CurrentBuilding, roomName: self._room.GetRoomName())
