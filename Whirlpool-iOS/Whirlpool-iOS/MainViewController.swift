@@ -49,8 +49,11 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     var clickedEdit = false
     var editingEventToPass: CalenderEvent?
     var _buildingAbb:String?
+    var refreshControl:UIRefreshControl!
+    var daysToGrab = 1.0
     @IBOutlet weak var calender: UITableView!
     @IBOutlet weak var buildingScroller: UICollectionView!
+    
     func userSelectedRoom(roomData: RoomData) {
             specificSearchedRoom = roomData
             performSegueWithIdentifier("searchSegToRoom", sender: self)
@@ -113,7 +116,10 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        self.calender.addSubview(refreshControl)
         if self.revealViewController() != nil {
             OpenHamburger.target = self.revealViewController()
             OpenHamburger.action = "revealToggle:"
@@ -137,6 +143,10 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func refresh(sender: AnyObject){
+        fetchEvents()
     }
     
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -354,4 +364,78 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             
     }
     }
+    
+    // Construct a query and get a list of upcoming events from the user calendar
+    public func fetchEvents(){
+        let query = GTLQueryCalendar.queryForEventsListWithCalendarId("primary")
+        query.maxResults = 10
+        query.timeMin = GTLDateTime(date: NSDate(), timeZone: NSTimeZone.localTimeZone())
+        query.timeMax = GTLDateTime(date: NSDate().dateByAddingTimeInterval(60.0*60.0*24.0*daysToGrab), timeZone: NSTimeZone.localTimeZone())
+        query.singleEvents = true
+        query.orderBy = kGTLCalendarOrderByStartTime
+        service.executeQuery(
+            query,
+            delegate: self,
+            didFinishSelector: "displayResultWithTicket:finishedWithObject:error:"
+        )
+        
+    }
+    
+    // Display the start dates and event summaries in the UITextView
+    public func displayResultWithTicket(
+        ticket: GTLServiceTicket,
+        finishedWithObject events : GTLCalendarEvents?,
+        error : NSError?) {
+            
+            if let error = error {
+                showAlertLogin("Error", message: error.localizedDescription)
+                return
+            }
+            
+            var eventString = ""
+            if events?.items() != nil {
+                _userCalenderInfo = UserCalenderInfo()
+                if events!.items().count > 0 {
+                    for event in events!.items() as! [GTLCalendarEvent] {
+                        var location =  String()
+                        if event.location != nil{
+                            location = event.location
+                        }
+                        let start : GTLDateTime! = event.start.dateTime ?? event.start.date
+                        let startingString = NSDateFormatter()
+                        startingString.dateFormat = "hh:mm a"
+                        let startString = startingString.stringFromDate(start.date)
+                        
+                        /***********************************/
+                        let EndDate   : GTLDateTime! = event.end.dateTime ?? event.end.date
+                        
+                        let endingString = NSDateFormatter()
+                        endingString.dateFormat = "hh:mm a"
+                        
+                        let endString = startingString.stringFromDate(EndDate.date)
+                        /***********************************/
+                        
+                        eventString += "\(startString) - \(event.summary)\n"
+                        
+                        _userCalenderInfo!.addEventToCalender(CalenderEvent(CalenderEventSummary: event.summary,EventStartDate:startString,EventEndDate:endString,EventLocation :location, event:event ))
+                    }
+                } else {
+                    eventString = "No upcoming events found."
+                }
+            }
+            self.calender.reloadData()
+            self.refreshControl.endRefreshing()
+    }
+    
+    func showAlertLogin(title : String, message: String) {
+        let alert = UIAlertView(
+            title: title,
+            message: message,
+            delegate: nil,
+            cancelButtonTitle: "OK"
+        )
+        alert.show()
+    }
+    
+    
 }
