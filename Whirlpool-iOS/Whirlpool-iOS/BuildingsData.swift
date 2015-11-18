@@ -144,6 +144,7 @@ class BuildingsData {
         for x in 0...(geoJsonInfo[JSON_FEATURES].count - 1) {
             let roomName = geoJsonInfo[JSON_FEATURES][x][JSON_PROP][JSON_ROOM].string
             var room = RoomData()
+            if(roomName != nil){
             self.updateRoomsInfo(buildingAbb, room_name: roomName!, RoomInformation: &room)
             let roomType = geoJsonInfo[JSON_FEATURES][x][JSON_GEOM][JSON_TYPE].string
             if roomType == "Polygon" {
@@ -160,6 +161,7 @@ class BuildingsData {
                 room.SetRoomFloor(floorNum)
                 room.SetroomCenter(_minX, minY: _minY, maxX: _maxX, maxY: _maxY)
                 floorsRooms.append(room)
+            }
             }
         }
         return floorsRooms

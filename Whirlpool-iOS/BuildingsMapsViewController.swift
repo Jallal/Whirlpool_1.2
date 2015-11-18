@@ -21,6 +21,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     var count = 0
     let locationManager = CLLocationManager()
     var _StartingLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    var _EndNav = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     var RoomAmenities = ["Capacity","Whiteboard","Monitor","Polycom","Phone","TV"]
     //The alert view for notification
     var alertView: UIView = UIView()
@@ -138,7 +139,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     @IBAction func getDirections(sender: AnyObject) {
         self.mapPin.hidden = !self.mapPin.hidden
          self.Address.hidden = !self.Address.hidden
-        self.buttomView.hidden = !self.buttomView.hidden
+        self.buttomView.hidden = true
         
     }
     
@@ -212,20 +213,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             }
         }
     }
-    
-    /* The function that handels dismissing the notification during navigation*/
-    func onClick_ok(){
-        self.alertView.alpha = 0
-        self.ok_button.alpha = 0
-         self.label.alpha = 0
-        
-        UIView.animateWithDuration(1, animations: {
-            self.alertView.removeFromSuperview()
-            self.ok_button.removeFromSuperview()
-            self.label.removeFromSuperview()
-        })
-        
-    }
+
     
       /* The function that handels asking the user for authorization to use the current location*/
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
@@ -361,6 +349,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                     self._room = room
                     self.roomLabel.text = room.GetRoomName()
                     self.tableView.reloadData()
+                    self._EndNav = room.GetroomCenter()
                     let marker = GMSMarker(position: room.GetroomCenter())
                     marker.icon = UIImage(named: "Location End.png")
                     marker.flat = true
@@ -515,31 +504,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             path1.addCoordinate(CLLocationCoordinate2D(latitude: node.lat, longitude: node.long))
             
         }*/
-        
-        if(self.count==0){
-        //First path delete after
-        let path1 = GMSMutablePath()
-        //path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124842505816, longitude: -86.4693117141724))
-         path1.addCoordinate(CLLocationCoordinate2D(latitude: 0, longitude: 0))
-        let polyline = GMSPolyline(path: path1)
-        polyline.strokeColor = UIColor.blueColor()
-        polyline.strokeWidth = 2.0
-        polyline.geodesic = true
-        polyline.map = mapView;
-        self.count = self.count+1
-        }else{
-            //second path delete after
-            let path1 = GMSMutablePath()
-            //path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124842505816, longitude: -86.4693117141724))
-            path1.addCoordinate(CLLocationCoordinate2D(latitude: 0, longitude: 0))
-            let polyline = GMSPolyline(path: path1)
-            polyline.strokeColor = UIColor.blueColor()
-            polyline.strokeWidth = 2.0
-            polyline.geodesic = true
-            polyline.map = mapView;
-            self.count = self.count+1
-
-        }
     }
     
     func buttonTapped(sender: UITapGestureRecognizer) {
@@ -726,6 +690,94 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     func tableView(floorPicker: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         let cellToDeSelect:UITableViewCell = floorPicker.cellForRowAtIndexPath(indexPath)!
         cellToDeSelect.contentView.backgroundColor = UIColor.clearColor()
+    }
+    
+    
+    /* The function that handels dismissing the notification during navigation*/
+    func onClick_ok(){
+        self.alertView.alpha = 0
+        self.ok_button.alpha = 0
+        self.label.alpha = 0
+        
+        UIView.animateWithDuration(1, animations: {
+            self.alertView.removeFromSuperview()
+            self.ok_button.removeFromSuperview()
+            self.label.removeFromSuperview()
+        })
+        
+        
+        /**********FOR BETA ONLY DELETE AFTER************************/
+        
+        if(self.count==0){
+            //First path delete after
+            let path1 = GMSMutablePath()
+            self.mapPin.hidden = true
+            var pos = CLLocationCoordinate2D(latitude: 42.1509546410316, longitude: -86.4426585495948)
+            let marker = GMSMarker(position: pos)
+            marker.icon = UIImage(named: "Location Start.png")
+            marker.flat = true
+            marker.appearAnimation =   GoogleMaps.kGMSMarkerAnimationPop
+            marker.map = self.mapView
+            path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1509546410316, longitude: -86.4426585495948))
+            path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1509434984867, longitude: -86.4426260814071))
+            path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1503253097604, longitude: -86.4431135728955))
+            path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1503205869443, longitude: -86.4431202784181))
+            //path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1502276219665, longitude: -86.4429026842117))
+            path1.addCoordinate(self._EndNav)
+            
+            //path1.addCoordinate()
+            let polyline = GMSPolyline(path: path1)
+            polyline.strokeColor = UIColor.blueColor()
+            polyline.strokeWidth = 2.0
+            polyline.geodesic = true
+            polyline.map = mapView;
+        self.count = self.count+1
+        }else if(self.count==1){
+             self.mapPin.hidden = true
+            let path1 = GMSMutablePath()
+            var pos = CLLocationCoordinate2D(latitude: 42.1509546410316, longitude: -86.4426585495948)
+            let marker = GMSMarker(position: pos)
+            marker.icon = UIImage(named: "Location Start.png")
+            marker.flat = true
+            marker.appearAnimation =   GoogleMaps.kGMSMarkerAnimationPop
+            marker.map = self.mapView
+            path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1509546410316, longitude: -86.4426585495948))
+            path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1509434984867, longitude: -86.4426260814071))
+            path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1508602285437, longitude: -86.4426897838712))
+            path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.150797589589, longitude: -86.4427484571934))
+            path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.150775146142, longitude: -86.4426991913735))
+            
+            //path1.addCoordinate(self._EndNav)
+            //path1.addCoordinate()
+            let polyline = GMSPolyline(path: path1)
+            polyline.strokeColor = UIColor.blueColor()
+            polyline.strokeWidth = 2.0
+            polyline.geodesic = true
+            polyline.map = mapView;
+          self.count = self.count+1
+            self.BannerView("Are you in the 4th ?", button_message:"YES");
+            
+        }else if(self.count==2){
+            let path1 = GMSMutablePath()
+            self.CurrentFloor = 4
+            path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.150775146142, longitude: -86.4426991913735))
+            path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1508057923128, longitude: -86.4427491277456))
+            path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1510165770928, longitude: -86.4425855129957))
+            //path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1510250132536, longitude: -86.4426209733147))
+            path1.addCoordinate(self._EndNav)
+            
+            //path1.addCoordinate(self._EndNav)
+            //path1.addCoordinate()
+            let polyline = GMSPolyline(path: path1)
+            polyline.strokeColor = UIColor.blueColor()
+            polyline.strokeWidth = 2.0
+            polyline.geodesic = true
+            polyline.map = mapView;
+            self.count = 0
+    }
+    
+        
+        
     }
 
     
