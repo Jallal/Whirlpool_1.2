@@ -177,6 +177,10 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.mapView.settings.compassButton = true
+        self.mapView.buildingsEnabled = false
+        self.mapView.indoorEnabled = false
+        
         /***********************   MAKE SURE YOU UPDATE THIS VARIABLES******************************/
         self._buildings = BuildingsData(delegate: self, buildingAbb: self.CurrentBuilding)
         /*******************************************************************************************/
@@ -264,11 +268,15 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     var position =  self._room.GetroomCenter()
+    //mapView.setMinZoom(17, maxZoom: 22)
+    //if(mapView.maxZoom<24){
     
+ 
     if((position.latitude != 0) && (position.longitude != 0)){
         position = CLLocationCoordinate2D(latitude: self._room.GetroomCenter().latitude, longitude: self._room.GetroomCenter().longitude)
         self._room.SetIsSelected(true)
         self.CurrentFloor = self._room.GetRoomFloor()
+        
         
     }else if(self._building != nil){
         
@@ -280,14 +288,18 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     if(CLLocationCoordinate2DIsValid(position)){
         mapView.camera = GMSCameraPosition(target: position, zoom: 17.7, bearing: 0, viewingAngle: 0)
-       mapView.mapType = GoogleMaps.kGMSTypeNone
+       mapView.mapType = GoogleMaps.kGMSTypeNormal
+      
         locationManager.stopUpdatingLocation()
         
     }else{
         mapView.camera = GMSCameraPosition(target: position, zoom: 17.7,bearing: 0, viewingAngle: 0)
         locationManager.stopUpdatingLocation()
+
     }
     }
+    
+    
 
     }
     
@@ -402,7 +414,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                     polygon.fillColor = UIColor(red: 234/255.0, green: 230/255.0, blue: 245/255.0, alpha: 1.0)//purple color
                 }
                  if((room.GetRoomName()=="STR") || (room.GetRoomName()=="ELV") ){
-                    polygon.fillColor = UIColor(red:(244/255.0), green:(179/255.0), blue:(80/255.0), alpha:1.0)//orange
+                    polygon.fillColor = UIColor(red: 234/255.0, green: 230/255.0, blue: 245/255.0, alpha: 1.0)//purple color
                 }
                 
                 if(room.GetRoomName()=="HW"){
@@ -512,31 +524,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     }
     
     
-    /****************************** Drawing the navigation path for the user*************************/
-    func drawRoute() {
-        //let graph = SwiftGraph()
-        //let getPath =   Path()
-
-        
-        let walkingSpeed = 1.4
-        let distance  = self.distanceInMetersFrom(self._room.GetroomCenter())//distance in meters
-        let totalDistance = Double(round(distance*3.28084)) // distance in feets
-        let totalTime = Double(round((distance/walkingSpeed)/60))
-        self.BannerView("\(totalTime)  Minutes  (\(totalDistance)  ft)", button_message:"GO");
-        
-        /*/******************/
-        graph.readFromFile()
-        //getPath.processDijkstra(0, des: 60)
-        let myPath = getPath.traverseGraphBFS(60,end: 128)
-        
-        
-        let path1 = GMSMutablePath()
-        //path1.addCoordinate(CLLocationCoordinate2D(latitude: 42.1124842505816, longitude: -86.4693117141724))
-        for node in myPath{
-            path1.addCoordinate(CLLocationCoordinate2D(latitude: node.lat, longitude: node.long))
-            
-        }*/
-    }
     
     func buttonTapped(sender: UITapGestureRecognizer) {
         if (sender.state == .Ended) {
@@ -747,6 +734,27 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     }
     
     
+    
+    
+    /****************************** Drawing the navigation path for the user*************************/
+    func drawRoute() {
+        let graph = SwiftGraph()
+        let getPath =   Path()
+        let walkingSpeed = 1.4
+        let distance  = self.distanceInMetersFrom(self._room.GetroomCenter())//distance in meters
+        let totalDistance = Double(round(distance*3.28084)) // distance in feets
+        let totalTime = Double(round((distance/walkingSpeed)/60))
+        self.BannerView("\(totalTime)  Minutes  (\(totalDistance)  ft)", button_message:"GO");
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
     /* The function that handels dismissing the notification during navigation*/
     func onClick_ok(){
         self.alertView.alpha = 0
@@ -759,7 +767,46 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             self.label.removeFromSuperview()
         })
         
+        var graph =  SwiftGraph()
+        graph.readFromFile()
+        var myPath = Path ()
         
+        let path = myPath.traverseGraphBFS(self._StartingLocation,end: self._EndNav, startingFloor: 2,EndingFloor: 2)
+        
+        
+        let path1 = GMSMutablePath()
+        self.mapPin.hidden = true
+        var pos = self._StartingLocation
+        let marker = GMSMarker(position: pos)
+        marker.icon = UIImage(named: "Location Start.png")
+        marker.flat = true
+        marker.appearAnimation =   GoogleMaps.kGMSMarkerAnimationPop
+        marker.map = self.mapView
+        for node in path{
+            path1.addCoordinate(CLLocationCoordinate2D(latitude: node.lat, longitude: node.long))
+            
+        }
+        path1.addCoordinate(self._EndNav)
+        let polyline = GMSPolyline(path: path1)
+        polyline.strokeColor = UIColor.blueColor()
+        polyline.strokeWidth = 2.0
+        polyline.geodesic = true
+        polyline.map = mapView;
+    
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*
         /**********FOR BETA ONLY DELETE AFTER************************/
         
         if(self.count==0){
@@ -785,11 +832,11 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             polyline.strokeWidth = 2.0
             polyline.geodesic = true
             polyline.map = mapView;
-        self.count = self.count+1
+            self.count = self.count+1
         }else if(self.count==1){
-             self.mapPin.hidden = true
+            self.mapPin.hidden = true
             let path1 = GMSMutablePath()
-            var pos = CLLocationCoordinate2D(latitude: 42.1509546410316, longitude: -86.4426585495948)
+            let pos = CLLocationCoordinate2D(latitude: 42.1509546410316, longitude: -86.4426585495948)
             let marker = GMSMarker(position: pos)
             marker.icon = UIImage(named: "Location Start.png")
             marker.flat = true
@@ -808,7 +855,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             polyline.strokeWidth = 2.0
             polyline.geodesic = true
             polyline.map = mapView;
-          self.count = self.count+1
+            self.count = self.count+1
             self.BannerView("Are you in the 4th floor?", button_message:"YES");
             
         }else if(self.count==2){
@@ -828,11 +875,10 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             polyline.geodesic = true
             polyline.map = mapView;
             self.count = 0
-    }
-    
+        }*/
         
         
+        
     }
-
     
 }

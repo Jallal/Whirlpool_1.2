@@ -29,117 +29,76 @@ class Path {
     
     
     
-    func getVertexById(id : Int)-> Vertex{
+    func getVertex(inout start: Vertex,can:Bool )-> Vertex{
+        print("***********************************")
+        print(start.lat)
+        print(start.long)
+        var smallestLatDifference : Double  = 1000;
+        var smallestLongDifference : Double = 1000
+        for ver in canvas{
+            var value1 = (ver.lat-start.lat)
+             var value2 = (ver.long-start.long)
+            if ((value1 < smallestLatDifference)&&(value2 < smallestLongDifference) ){
+              start  = ver;
+            }
+        }
+        
+      return  start
+    }
+    
+      func getVertex(inout Id:Vertex)-> Vertex{
         
         for ver in canvas{
             
-            if (ver.key == id){
-                
-                return ver
+            if(ver.key==Id.key){
+                Id.key = ver.key
+                Id.lat = ver.lat
+                Id.long = ver.long
+                return Id
             }
         }
-    
-      return  Vertex()
+        return Id
     }
     
-    func traverseGraphBFS(start: Int, end : Int)-> Array<Vertex> {
     
-    var startingv : Vertex = self.getVertexById(start)
+    func traverseGraphBFS(start: CLLocationCoordinate2D, end : CLLocationCoordinate2D,startingFloor: Int, EndingFloor: Int)-> Array<Vertex> {
+        
+        var st = Vertex(key: -1,lat: start.latitude,long: start.longitude,visited: false)
+        var ed  = Vertex(key: -1,lat: end.latitude,long: end.longitude,visited: false)
+        
+   var StartingNav : Vertex = self.getVertex(&st,can: true)
+        var EndingNav : Vertex = self.getVertex(&ed,can:true)
         
         var myPath = Array<Vertex> ()
     
     //establish a new queue 
     var graphQueue: Queue<Vertex> = Queue<Vertex>()
     //queue a starting vertex 
-    graphQueue.enQueue(startingv)
-   myPath.append(self.getVertexById(startingv.key))
+    graphQueue.enQueue(StartingNav)
+   myPath.append(self.getVertex(&StartingNav))
     while(!graphQueue.isEmpty()) {
         //traverse the next queued vertex 
         var vitem = graphQueue.deQueue() as Vertex!
         //add unvisited vertices to the queue 
         for e in vitem.neighbors {
-            var v = self.getVertexById(e.neighbor.key)
+            var v = self.getVertex(&e.neighbor)
             if v.visited == false {
+                 v.visited = true
                 print("adding vertex: \(e.neighbor.key)")
-                if(v.key==end){
+                if(v.key==EndingNav.key){
                     return myPath
                 }
                 graphQueue.enQueue(v)
                 myPath.append(v)
             }
         }
-        vitem.visited = true
+        //vitem.visited = true
         print("traversed vertex: \(vitem.key)")
     }
     //end while
     print("graph traversal complete..")
         return myPath
     }
-    
-    
-    
-    
-    /*func processDijkstra(sou : Int, des: Int) -> Path? {
-        
-        var source = self.getVertexById(sou)
-        var  destination = self.getVertexById(des)
-        
-        
-        var frontier: Array = Array<Path>()
-        var finalPaths: Array = Array<Path>()
-        
-        
-        
-        for e in source.neighbors {
-            var newPath: Path = Path()
-            var dist = e.neighbor.key
-            newPath.destination = self.getVertexById(dist)
-            newPath.previous = nil
-            newPath.total = e.weight
-            frontier.append(newPath)
-        }
-        
-        
-        var bestPath: Path = Path()
-        
-        while(frontier.count != 0) {
-                bestPath = Path()
-            var x: Int = 0
-            var pathIndex: Int = 0
-            for (x = 0; x < frontier.count; x++) {
-                var itemPath: Path = frontier[x]
-                if (bestPath.total == nil) || (itemPath.total < bestPath.total) {
-                    bestPath = itemPath
-                    pathIndex = x
-                }
-            }
-            
-            
-            for e in bestPath.destination.neighbors {
-                var newPath: Path = Path()
-                newPath.destination = self.getVertexById(e.neighbor.key) 
-                newPath.previous = bestPath
-                newPath.total = bestPath.total + e.weight
-                ActualPath.append(newPath.destination)
-                print(newPath.destination.key)
-                frontier.append(newPath)
-            }
-            //preserve the bestPath 
-            finalPaths.append(bestPath)
-            //remove the bestPath from the frontier 
-            frontier.removeAtIndex(pathIndex) }
-
-        var shortestPath: Path! = Path()
-        for itemPath in finalPaths {
-            if (itemPath.destination.key == destination.key) {
-                if (shortestPath.total == nil) || (itemPath.total < shortestPath.total) {
-                    
-                    shortestPath = itemPath
-                }
-            }
-        }
-        return shortestPath
-    }*/
     
 }
 
@@ -152,6 +111,14 @@ public class Vertex {
     var neighbors: Array<Edge>
     
     init() {
+        self.neighbors = Array<Edge>()
+    }
+    
+    init(key:Int,lat:Double,long:Double,visited:Bool) {
+        self.key = key
+        self.lat = lat
+        self.long = long
+        self.visited = visited
         self.neighbors = Array<Edge>()
     }
 }
@@ -188,7 +155,7 @@ public class SwiftGraph {
     public func readFromFile(){
         
         
-        let file = "ghq_nw_f2_nav"
+        let file = "ghq_nw_f4_nav"
         
         if let filepath = NSBundle.mainBundle().pathForResource(file, ofType: "txt") {
             do {
