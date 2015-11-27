@@ -32,7 +32,6 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
     
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var searchbar: UISearchBar!
-    
     var searchActive = false
     let getAllRoomsRequest = "https://whirlpool-indoor-maps.appspot.com/room"
     var filteredRooms = [RoomData]()
@@ -40,6 +39,10 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var roomDelagate: selectedRoomDataDelagate? = nil   //Data delgate to pass back the room choosen to the main page
     var allRooms = [RoomData]()
+    var arrayForBool = [Bool]()
+    var sectionContentDict = [String:[RoomData]]()
+    var filteredSectionsContent = [String:[RoomData]]()
+    var sectionTitleArray = [String]()
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarHidden = true
@@ -47,7 +50,9 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
         request(getAllRoomsRequest) { (response) -> Void in
             self.parseRoomsAndBuildings(response)
             self.allRooms = self.filteredRooms
+            self.filteredSectionsContent = self.sectionContentDict
             dispatch_async(dispatch_get_main_queue(),{
+                self.setUpTableViewSections()
                 self.tableview.reloadData()
             });
         }
@@ -66,6 +71,12 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
     {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func setUpTableViewSections(){
+        for _ in 0...sectionContentDict.count-1{
+            arrayForBool.append(false)
+        }
     }
     
     // Helper for showing an alert
@@ -109,19 +120,58 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
-        return 1
+        if arrayForBool.count != 0 {
+            return arrayForBool.count-1
+        }
+        return 0
     }
     
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         if (tableView == self.searchDisplayController?.searchResultsTableView)
         {
-            return self.filteredRooms.count
+            //return self.filteredRooms.count
+            let tps = sectionTitleArray[section]
+            let itemsInSection = filteredSectionsContent[tps]?.count
+            return itemsInSection!
         }
         else
         {
-            return self.allRooms.count
+            if arrayForBool[section].boolValue == true {
+                let tps = sectionTitleArray[section]
+                let itemsInSection = sectionContentDict[tps]?.count
+                return itemsInSection!
+            }
+            //return self.allRooms.count
+            return 0
         }
+    }
+    
+    func tableView(tableView:UITableView, titleForHeaderInSection section: Int)->String? {
+        return "ABC"
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 40))
+        headerView.backgroundColor = UIColor.whiteColor()
+        headerView.tag = section
+        
+        let headerString = UILabel(frame: CGRect(x: 10, y: 10, width: tableView.frame.size.width-10, height: 30)) as UILabel
+        headerString.text = sectionTitleArray[section]
+        headerView.addSubview(headerString)
+        
+        let headerTapped = UITapGestureRecognizer (target: self, action:"sectionHeaderTapped:")
+        headerView .addGestureRecognizer(headerTapped)
+        
+        return headerView
     }
     
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
@@ -133,11 +183,16 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
         
         if (tableView == searchDisplayController?.searchResultsTableView)
         {
-            room = filteredRooms[indexPath.row]
+            //room = filteredRooms[indexPath.row]
+            var content = filteredSectionsContent[sectionTitleArray[indexPath.section]]
+            room = content![indexPath.row]
+            cell?.backgroundColor = UIColor.lightGrayColor()
         }
         else
         {
-            room = allRooms[indexPath.row]
+            var content = sectionContentDict[sectionTitleArray[indexPath.section]]
+            room = content![indexPath.row]
+            cell?.backgroundColor = UIColor.lightGrayColor()
         }
         cell!.textLabel?.text = room.GetRoomName()
         return cell!
@@ -153,11 +208,13 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
         
         if (tableView == self.searchDisplayController?.searchResultsTableView)
         {
-           room = filteredRooms[indexPath.row]
+            var content = filteredSectionsContent[sectionTitleArray[indexPath.section]]
+            room = content![indexPath.row]
         }
         else
         {
-            room = allRooms[indexPath.row]
+            var content = sectionContentDict[sectionTitleArray[indexPath.section]]
+            room = content![indexPath.row]
         }
         
         
@@ -168,20 +225,62 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
-        return screenSize.height * 0.16
+        if(arrayForBool[indexPath.section].boolValue == true || tableView == self.searchDisplayController?.searchResultsTableView){
+            return screenSize.height * 0.16
+        }
+        
+        return 2
     }
+    
+    
+    //On tap of section
+    
+    func sectionHeaderTapped(recognizer: UITapGestureRecognizer) {
+        print("Tapping working")
+        print(recognizer.view?.tag)
+        
+        let indexPath : NSIndexPath = NSIndexPath(forRow: 0, inSection:(recognizer.view?.tag as Int!)!)
+        if (indexPath.row == 0) {
+            
+            var collapsed = arrayForBool[indexPath.section].boolValue
+            collapsed = !collapsed
+            
+            arrayForBool[indexPath.section] = collapsed
+            
+            //reload specific section animated
+            let range = NSMakeRange(indexPath.section, 1)
+            let sectionToReload = NSIndexSet(indexesInRange: range)
+            self.tableview.reloadSections(sectionToReload, withRowAnimation:UITableViewRowAnimation.Fade)
+        }
+        
+    }
+    
     
     
     // MARK: - Search Methods
     
     func filterContentsForSearchText(searchText: String, scope: String = "Title")
     {
+        let categoryMatch = scope == "Title"
+        for i in 0...sectionTitleArray.count-1{
+            let buildingRooms = sectionContentDict[sectionTitleArray[i]]!
+            var newFilteredRooms = [RoomData]()
+            for x in 0...buildingRooms.count-1{
+                let stringMatch = buildingRooms[x].GetRoomName().rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
+                if (categoryMatch && (stringMatch != nil)){
+                    newFilteredRooms.append(buildingRooms[x])
+                }
+                filteredSectionsContent[sectionTitleArray[i]] = newFilteredRooms
+                arrayForBool[i] = ((newFilteredRooms.count > 0) ? true : false)
+            }
+            
+        }
         
-        self.filteredRooms = allRooms.filter({ (room: RoomData) -> Bool in
-            let categoryMatch = (scope == "Title")
-            let stringMatch = room.GetRoomName().rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
-            return categoryMatch && (stringMatch != nil)
-        })
+//        self.filteredRooms = allRooms.filter({ (room: RoomData) -> Bool in
+//            let categoryMatch = (scope == "Title")
+//            let stringMatch = room.GetRoomName().rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
+//            return categoryMatch && (stringMatch != nil)
+//        })
         
         
     }
@@ -195,7 +294,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
     
     func searchDisplayController(controller: UISearchController, shouldReloadTableForSearchScope searchOption: Int) -> Bool
     {
-        clearData()
+//        clearData()
         self.filterContentsForSearchText(self.searchDisplayController!.searchBar.text!, scope: "Title")
         return true
     }
@@ -243,8 +342,21 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
         room.SetRoomType(roomJson["room_type"].stringValue)
         room.SetRoomLocation(roomJson["resource_name"].stringValue)
         room.SetRoomBuildingName(roomJson["building_name"].stringValue)
+        addToSectionTitleArray(roomJson["building_name"].stringValue, room: room)
         filteredRooms.append(room)
     }
+    
+    func addToSectionTitleArray(sectionTitle:String, room:RoomData){
+        if sectionContentDict[sectionTitle] == nil {
+            sectionContentDict[sectionTitle] = [room]
+            sectionTitleArray.append(sectionTitle)
+        }
+        else{
+            sectionContentDict[sectionTitle]?.append(room)
+        }
+    }
+    
+    
     
     
 }
