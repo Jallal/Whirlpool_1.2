@@ -10,116 +10,185 @@ import Foundation
 import CoreData
 
 
- public var canvas: Array = Array<Vertex>()
+public var canvas: Array = Array<Vertex>()
 
 class Path {
     
     var ActualPath  : Array<Vertex>
-  
-    var total: Int!
+    var total: Double!
     var destination: Vertex
     var previous: Path!
     
-
- init(){
-    destination = Vertex()
-    ActualPath  = Array<Vertex>()
     
+    init(){
+        destination = Vertex()
+        ActualPath  = Array<Vertex>()
+        
     }
-    
-    
-    
-    func getVertex(inout start: Vertex,can:Bool )-> Vertex{
-        print("***********************************")
-        print(start.lat)
-        print(start.long)
-        var smallestLatDifference : Double  = 1000;
-        var smallestLongDifference : Double = 1000
+    func getVertex(start: CLLocationCoordinate2D)-> Vertex{
+        var NewStart = Vertex();
+        var smallestLatDifference : Double  = 10000;
         for ver in canvas{
-            var value1 = (ver.lat-start.lat)
-             var value2 = (ver.long-start.long)
-            if ((value1 < smallestLatDifference)&&(value2 < smallestLongDifference) ){
-              start  = ver;
+            var value1 = abs(abs(ver.location.longitude) - abs(start.longitude)) + abs(ver.location.latitude-start.latitude)
+            
+            if(ver.location.latitude == start.latitude){
+                return Vertex(key: ver.key,loc: ver.location,visited: false,neighbors: ver.neighbors)
+            }
+            //var value2 = (ver.long-start.long)
+            if (value1 < smallestLatDifference){
+                smallestLatDifference = value1
+                NewStart = Vertex(key: ver.key,loc: ver.location,visited: false,neighbors: ver.neighbors)
             }
         }
         
-      return  start
+        return  NewStart
     }
     
-      func getVertex(inout Id:Vertex)-> Vertex{
+    func getVertex(Id:Vertex)-> Vertex{
         
         for ver in canvas{
             
             if(ver.key==Id.key){
-                Id.key = ver.key
-                Id.lat = ver.lat
-                Id.long = ver.long
-                return Id
+                return ver
             }
         }
         return Id
     }
     
     
-    func traverseGraphBFS(start: CLLocationCoordinate2D, end : CLLocationCoordinate2D,startingFloor: Int, EndingFloor: Int)-> Array<Vertex> {
+    func traverseGraphBFS(start: CLLocationCoordinate2D, end : CLLocationCoordinate2D,startingFloor: Int, EndingFloor: Int)-> Path?{
         
-        var st = Vertex(key: -1,lat: start.latitude,long: start.longitude,visited: false)
-        var ed  = Vertex(key: -1,lat: end.latitude,long: end.longitude,visited: false)
+        self.BuildGraph();
         
-   var StartingNav : Vertex = self.getVertex(&st,can: true)
-        var EndingNav : Vertex = self.getVertex(&ed,can:true)
+        var myPaths = Path?()
         
-        var myPath = Array<Vertex> ()
+        
+        var StartingNav = self.getVertex(start)
+        StartingNav.visited = false
+        var EndingNav = self.getVertex(end)
+        EndingNav.visited = false
+        print("STRATING NODE IS ")
+        print(StartingNav.key)
+        print("Ending NODE IS ")
+        print(EndingNav.key)
+        myPaths = self.processDijkstra(StartingNav,destination: EndingNav)
+        myPaths?.ActualPath.append(EndingNav)
+        while(myPaths?.previous != nil){
+            myPaths?.ActualPath.append(self.getVertex((myPaths?.previous.destination)!))
+            myPaths?.previous =  myPaths?.previous.previous
+            
+        }
+        myPaths?.ActualPath.append(StartingNav)
+        
+        
+        
+        
+        return  myPaths
+        
+    }
     
-    //establish a new queue 
-    var graphQueue: Queue<Vertex> = Queue<Vertex>()
-    //queue a starting vertex 
-    graphQueue.enQueue(StartingNav)
-   myPath.append(self.getVertex(&StartingNav))
-    while(!graphQueue.isEmpty()) {
-        //traverse the next queued vertex 
-        var vitem = graphQueue.deQueue() as Vertex!
-        //add unvisited vertices to the queue 
-        for e in vitem.neighbors {
-            var v = self.getVertex(&e.neighbor)
-            if v.visited == false {
-                 v.visited = true
-                print("adding vertex: \(e.neighbor.key)")
-                if(v.key==EndingNav.key){
-                    return myPath
+    
+    func processDijkstra(source: Vertex, destination: Vertex) -> Path? {
+        var frontier: Array = [Path]()
+        var finalPaths: Array = [Path]()
+        //use source edges to create the frontier
+        for e in source.neighbors {
+            
+            var newPath: Path = Path()
+            newPath.destination = e.neighbor
+            newPath.previous = nil
+            newPath.total = e.weight
+            //add the new path to the frontier
+            frontier.append(newPath)
+            
+            
+        }
+        
+        //obtain the best path
+        var bestPath: Path = Path()
+        while((frontier.count != 0)&&(frontier.count < 10000)) {
+            //support path changes using the greedy approach
+            bestPath = Path()
+            var x: Int = 0
+            var pathIndex: Int = 0
+            for (x = 0; x < frontier.count; x++) {
+                var itemPath: Path = frontier[x] as Path
+                if (bestPath.total == nil) || (itemPath.total < bestPath.total) {
+                    bestPath = itemPath
+                    pathIndex = x
                 }
-                graphQueue.enQueue(v)
-                myPath.append(v)
+            }
+            
+            for e in bestPath.destination.neighbors {
+                
+                var newPath: Path = Path()
+                newPath.destination = e.neighbor
+                newPath.previous = bestPath
+                newPath.total = bestPath.total + e.weight
+                //add the new path to the frontier
+                frontier.append(newPath)
+                
+            }
+            
+            //preserve the bestPath
+            finalPaths.append(bestPath)
+            //remove the bestPath from the frontier
+            frontier.removeAtIndex(pathIndex)
+        }
+        for p in finalPaths {
+            let path = p as Path
+            if (path.total < bestPath.total) && (path.destination.key == destination.key){
+                bestPath = path
             }
         }
-        //vitem.visited = true
-        print("traversed vertex: \(vitem.key)")
+        return bestPath
     }
-    //end while
-    print("graph traversal complete..")
-        return myPath
+    
+    
+    
+    func BuildGraph(){
+        
+        for i in canvas{
+            i.visited = false
+            for k in i.neighbors {
+                k.neighbor = self.getVertex(k.neighbor)
+                k.weight = self.distanceInMetersFrom(i, EndVertex: k.neighbor)
+            }
+        }
+        
+    }
+    
+    
+    
+    internal  func distanceInMetersFrom(stratVertex : Vertex,EndVertex : Vertex) -> CLLocationDistance {
+        let firstLoc = CLLocation(latitude: stratVertex.location.latitude, longitude: stratVertex.location.longitude)
+        let secondLoc = CLLocation(latitude: EndVertex.location.latitude, longitude: EndVertex.location.longitude)
+        return firstLoc.distanceFromLocation(secondLoc)
     }
     
 }
 
 
+
+
 public class Vertex {
     var key   =  -1
-    var lat   = 0.0
-    var long  = 0.0
+    var location  = CLLocationCoordinate2D(latitude: 0,longitude: 0)
     var visited : Bool = false
     var neighbors: Array<Edge>
     
     init() {
+        self.key   =  -1
+        self.location  = CLLocationCoordinate2D(latitude: 0,longitude: 0)
+        self.visited  = false
         self.neighbors = Array<Edge>()
     }
     
-    init(key:Int,lat:Double,long:Double,visited:Bool) {
+    init(key:Int,loc:CLLocationCoordinate2D,visited:Bool,neighbors:Array<Edge>) {
         self.key = key
-        self.lat = lat
-        self.long = long
+        self.location = loc
         self.visited = visited
-        self.neighbors = Array<Edge>()
+        self.neighbors = neighbors
     }
 }
 
@@ -127,97 +196,70 @@ public class Vertex {
 
 public class Edge {
     var neighbor: Vertex
-    var weight: Int
-    init() {
-        weight = 0
-        self.neighbor = Vertex()
-    }
-    init(weight : Int, neighbor :Vertex ) {
-        self.weight = weight
+    var weight :CLLocationDistance
+    /*init() {
+    self.neighbor = Vertex()
+    }*/
+    init(neighbor :Vertex , weight : CLLocationDistance) {
         self.neighbor = neighbor
+        self.weight = weight
     }
 }
 
 
 
 public class SwiftGraph {
-  
+    
     public var isDirected: Bool
     
     init() {
         canvas = Array<Vertex>()
         isDirected = true
-}
+    }
     
     
     
     
-    public func readFromFile(){
+    public func readFromFile(filename : String){
         
-        
-        let file = "ghq_nw_f4_nav"
+        let file = filename
         
         if let filepath = NSBundle.mainBundle().pathForResource(file, ofType: "txt") {
             do {
                 var contents = try NSString(contentsOfFile: filepath, usedEncoding: nil) as String
-               contents = contents.stringByReplacingOccurrencesOfString("[", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+                contents = contents.stringByReplacingOccurrencesOfString("[", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
                 contents = contents.stringByReplacingOccurrencesOfString("]", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
                 let stringArray : Array<String> = contents.componentsSeparatedByString("\n")
                 for e in stringArray{
                     var str : Array<String> = e.componentsSeparatedByString(",")
-                    var count = 0
-                     var chiled   : Vertex = Vertex()
-                    var key : Int = Int()
-                    var latitude : Double =  Double ()
-                    var longitude : Double  =  Double()
+                    //convert the array from string to double
+                    let doubleArray = str.map{NSString(string: $0).doubleValue}
+                    var chiled   : Vertex = Vertex()
+                    var count = doubleArray.count-1
+                    var key  = Int(doubleArray[0])
+                    var loc = CLLocationCoordinate2D( latitude: doubleArray[1], longitude: doubleArray[2])
                     var neighbors : Array = Array<Int>()
-                   
-                        for ee in str {
-                            
-                            if(count==0){
-                                var val =  NSNumberFormatter().numberFromString(ee)
-                                 key = val!.integerValue
-                                count = count+1
-                                
-                            }
-                            else if(count==1){
-                                var val =  NSNumberFormatter().numberFromString(ee)
-                                latitude = val!.doubleValue
-                               count = count+1
-                               
-                            }
-                            else if(count==2){
-                                var val =  NSNumberFormatter().numberFromString(ee)
-                                 longitude = val!.doubleValue
-                             count = count+1
-                                
-                            }
-                            else{
-                                var val =  NSNumberFormatter().numberFromString(ee)
-                                if(val != nil){
-                                var nan = val!.integerValue
-                              neighbors.append(nan)
-                                }
-                            count = count+1
-                            }
-
-                      }
-                    chiled =  self.addVertex(key, lat: latitude, long: longitude)
+                    for i in 3...count{
+                        let element : Int = Int(doubleArray[i])
+                        if(element != Int()){
+                            neighbors.append(element)
+                        }
+                        
+                    }
+                    chiled =  self.addVertex(key,loc: loc)
                     for nei in neighbors{
-                     var neigh  : Vertex = Vertex()
+                        var neigh  : Vertex = Vertex()
                         neigh.key =  nei
-                        self.addEdge(chiled, neighbor:  neigh, weight: 0)
+                        self.addEdge(chiled, neighbor:  neigh)
                     }
                     
-             
                 }
                 
-              
             } catch {
-                // contents could not be loaded
+                print(" contents could not be loaded")
             }
         } else {
-            // example.txt not found!
+            print(" File  not found!")
         }
     }
     
@@ -225,99 +267,28 @@ public class SwiftGraph {
     
     
     
-    func addVertex(key: Int, lat: Double, long :Double) -> Vertex {
-        var childVertex: Vertex = Vertex()
+    
+    
+    func addVertex(key: Int, loc: CLLocationCoordinate2D) -> Vertex {
+        let childVertex: Vertex = Vertex()
         childVertex.key = key
-        childVertex.lat = lat
-        childVertex.long = long
+        childVertex.location = loc
         canvas.append(childVertex)
         return childVertex
     }
-
-
- 
-    func addEdge(source: Vertex, neighbor: Vertex, weight: Int)
+    
+    
+    
+    func addEdge(source: Vertex, neighbor: Vertex)
     {
-        
-        var newEdge = Edge(weight: weight,neighbor: neighbor)
-        //newEdge.neighbor = neighbor
-        //newEdge.weight = weight
+        // var weight = self.distanceInMetersFrom(source,EndVertex: neighbor)
+        let weight = 0.0
+        let newEdge = Edge(neighbor: neighbor,weight: weight)
         source.neighbors.append(newEdge)
         if (isDirected == false) {
-            var reverseEdge = Edge()
-           
+            let reverseEdge = Edge(neighbor: neighbor,weight: weight)
             reverseEdge.neighbor = source
-            reverseEdge.weight = weight
             neighbor.neighbors.append(reverseEdge)
         }
     }
-
-
 }
-
-public class Queue<T> {
-    private var top: QNode<T>! = QNode<T>()
-//enqueue the specified object 
-    func enQueue(var key: T) {
-//check for the instance 
-        if (top == nil) {
-            top = QNode<T>()
-} //establish the top node 
-        if (top.key == nil) {
-            top.key = key; return
-        }
-        var childToUse: QNode<T> = QNode<T>()
-        var current: QNode = top
-//cycle through the list of items to get to the end. 
-        while (current.next != nil) {
-            current = current.next! }
-//append a new item 
-        childToUse.key = key; current.next = childToUse;
-    }
-    
-    
-    
-    func deQueue() -> T? {
-        //determine if the key or instance exists 
-        let topitem: T? = self.top?.key
-        if (topitem == nil) {
-            return nil
-        }
-        //retrieve and queue the next item 
-        var queueitem: T? = top.key!
-        //use optional binding 
-        if let nextitem = top.next {
-            top = nextitem
-        } else {
-            top = nil
-        }
-        return queueitem
-    }
-    
-    func isEmpty() -> Bool {
-        //determine if the key or instance exist
-        if let topitem: T = self.top?.key {
-            return false }
-        else {
-            return true
-        }
-    }
-    //retrieve the top most item
-    func peek() -> T? {
-        return top.key!
-    }
-}
-
-class QNode<T> {
-    var key: T?
-    var next: QNode?
-}
-
-
-
-
-
-
-
-
-

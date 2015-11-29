@@ -113,7 +113,21 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             )
         }
         
+        
+
+        
     }
+    
+    
+    
+       
+    
+    
+    
+    
+    
+    
+    
     
     // Construct a query and get a list of upcoming events from the user calendar
     public func fetchEvents(){

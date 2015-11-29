@@ -90,6 +90,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
   
     
     override func viewWillAppear(animated: Bool) {
+        
         super.viewWillAppear(animated)
         self.buildings = BuildingsData(delegate: self) //Grabs the abbreviations
         self.calender.reloadData()
@@ -111,6 +112,8 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         if FAVORITE_ROOM_SELECTED != nil {
             performSegueWithIdentifier("relevantSeg", sender: self)
         }
+        
+
     }
     
 
