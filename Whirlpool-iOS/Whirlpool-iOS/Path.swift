@@ -175,7 +175,7 @@ class Path {
         
         //obtain the best path
         var bestPath: Path = Path()
-        while((frontier.count != 0)&&(frontier.count < 3000)) {
+        while((frontier.count != 0)&&(frontier.count < 6000)) {
             //support path changes using the greedy approach
             bestPath = Path()
             var x: Int = 0

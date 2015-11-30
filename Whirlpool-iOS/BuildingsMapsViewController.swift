@@ -293,7 +293,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             self._room  = self._building.getARoomInBuilding(self.CurrentBuilding)
             position = CLLocationCoordinate2D(latitude: self._room.GetroomCenter().latitude, longitude: self._room.GetroomCenter().longitude)
             self.CurrentFloor.SetFloorNumber(self._room.GetRoomFloor())
-
+            
         }
         if((position.latitude != 0) && (position.longitude != 0)){
             LoadingView.hide()
@@ -360,7 +360,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
         self._StartingLocation.SetroomCenter(coordinate)
         if(self.CurrentFloor == nil ){
-        self._StartingLocation.SetRoomFloor(self.PassedFloorNumber)
+            self._StartingLocation.SetRoomFloor(self.PassedFloorNumber)
         }else{
             self._StartingLocation.SetRoomFloor(self.CurrentFloor.getFloorNumber())
         }
@@ -574,13 +574,14 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     /****************** The banner view for notifying the user and guiding them through floors****************************/
     func MapUnderConstructions(label_message : String){
-        
-        
-       LoadingView.hide()
-        self.BuildingView = false
+     self.BuildingView = false
         dispatch_async(dispatch_get_main_queue(),{
-            LoadingView.show("Building Under Construction...")
-            self.navigationController?.popViewControllerAnimated(true)
+            LoadingView.show(label_message).addTapHandler({
+                LoadingView.hide()
+                self.navigationController?.popViewControllerAnimated(true)
+
+                }, subtitle: "Tap to go back !")
+            
         });
         
     }
@@ -751,7 +752,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                 self.Invalidate(self.CurrentFloor.getFloorNumber())
                 selectedCell.contentView.backgroundColor = UIColor(red:(255/255.0), green:127/255.0, blue:80/255.0, alpha:1.0);
                 selectedCell.backgroundColor = UIColor(red:(255/255.0), green:127/255.0, blue:80/255.0, alpha:1.0);
-
+                
             }
             
         }
@@ -765,7 +766,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         cellToDeSelect.backgroundColor = UIColor.whiteColor()
     }
     
-
+    
     
     
     
@@ -782,12 +783,12 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
     }
     
-   
     
     
     
     
-   
+    
+    
     
     public func ShowPathFinal(p : Path){
         
@@ -798,7 +799,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
         let path1 = GMSMutablePath()
         self.mapPin.hidden = true
-
+        
         for node in p.ActualPath {
             path1.addCoordinate(node.location)
             
@@ -850,24 +851,24 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
         if(self.ok_button.titleLabel?.text == "Yes"){
             var index = NSNumberFormatter().numberFromString(self.floors[EndingFloor.getFloorNumber()]) as! Int
-              var indexPath = NSNumberFormatter().numberFromString(self.floors[startingFloor.getFloorNumber()]) as! Int
-             let rowToDeSelect:NSIndexPath = NSIndexPath(forRow: indexPath , inSection: 0)
-           self.tableView(floorPicker,didDeselectRowAtIndexPath: rowToDeSelect)
+            var indexPath = NSNumberFormatter().numberFromString(self.floors[startingFloor.getFloorNumber()]) as! Int
+            let rowToDeSelect:NSIndexPath = NSIndexPath(forRow: indexPath , inSection: 0)
+            self.tableView(floorPicker,didDeselectRowAtIndexPath: rowToDeSelect)
             let rowToSelect:NSIndexPath = NSIndexPath(forRow: index , inSection: 0)
             self.tableView(floorPicker, didSelectRowAtIndexPath: rowToSelect);
-
+            
             let paths = Path()
             let filereading = SwiftGraph()
-                filereading.readFromFile("\(self._building._buildingAbbr)_\(EndingFloor.getFloorNumber())")
-                var pa2   = paths.traverseGraphBFSFinalPath(self._EndNav.GetroomCenter(),end: endpoint,SameFloor: false,StartingFloor: self.CurrentFloor,EndingFloor: EndingFloor)!
-                
-               self.finishedDrawingTheMap = false
+            filereading.readFromFile("\(self._building._buildingAbbr)_\(EndingFloor.getFloorNumber())")
+            var pa2   = paths.traverseGraphBFSFinalPath(self._EndNav.GetroomCenter(),end: endpoint,SameFloor: false,StartingFloor: self.CurrentFloor,EndingFloor: EndingFloor)!
+            
+            self.finishedDrawingTheMap = false
             
             dispatch_async(dispatch_get_main_queue(),{
                 self.ShowPathFinal(pa2)
             });
             
-                
+            
             self.alertView.alpha = 0
             self.ok_button.alpha = 0
             self.label.alpha = 0
@@ -879,42 +880,42 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             })
             
             
-           
+            
         } else{
-                let paths = Path()
-                let filereading = SwiftGraph()
-        
-        /*********************************NAVIGATION********************/
-
-        filereading.readFromFile("\(self._building._buildingAbbr)_\( startingFloor.getFloorNumber())")
-        
-        if(startingFloor.getFloorNumber() != EndingFloor.getFloorNumber()){
-        let pa1   = paths.traverseGraphBFS(self._StartingLocation.GetroomCenter(),end: self._EndNav.GetroomCenter(),SameFloor: false,StartingFloor: startingFloor,EndingFloor: EndingFloor)
-             self.ShowPath(pa1!,endpoint: &endpoint)
-         self.BannerView(" Are you in \(EndingFloor.getFloorNumber()) yet ?", button_message:"Yes");
+            let paths = Path()
+            let filereading = SwiftGraph()
             
-
+            /*********************************NAVIGATION********************/
             
-        }else{
-          let p   = paths.traverseGraphBFS(self._StartingLocation.GetroomCenter(),end: self._EndNav.GetroomCenter(),SameFloor: true,StartingFloor: startingFloor,EndingFloor: EndingFloor)
-            self.ShowPath(p!,endpoint: &endpoint)
+            filereading.readFromFile("\(self._building._buildingAbbr)_\( startingFloor.getFloorNumber())")
             
+            if(startingFloor.getFloorNumber() != EndingFloor.getFloorNumber()){
+                let pa1   = paths.traverseGraphBFS(self._StartingLocation.GetroomCenter(),end: self._EndNav.GetroomCenter(),SameFloor: false,StartingFloor: startingFloor,EndingFloor: EndingFloor)
+                self.ShowPath(pa1!,endpoint: &endpoint)
+                self.BannerView(" Are you in \(EndingFloor.getFloorNumber()) yet ?", button_message:"Yes");
+                
+                
+                
+            }else{
+                let p   = paths.traverseGraphBFS(self._StartingLocation.GetroomCenter(),end: self._EndNav.GetroomCenter(),SameFloor: true,StartingFloor: startingFloor,EndingFloor: EndingFloor)
+                self.ShowPath(p!,endpoint: &endpoint)
+                
+                
+                self.alertView.alpha = 0
+                self.ok_button.alpha = 0
+                self.label.alpha = 0
+                
+                UIView.animateWithDuration(1, animations: {
+                    self.alertView.removeFromSuperview()
+                    self.ok_button.removeFromSuperview()
+                    self.label.removeFromSuperview()
+                })
+                
+                
+            }
             
-            self.alertView.alpha = 0
-            self.ok_button.alpha = 0
-            self.label.alpha = 0
-            
-            UIView.animateWithDuration(1, animations: {
-                self.alertView.removeFromSuperview()
-                self.ok_button.removeFromSuperview()
-                self.label.removeFromSuperview()
-            })
-            
-
         }
         
-        }
-      
         
     }
     
