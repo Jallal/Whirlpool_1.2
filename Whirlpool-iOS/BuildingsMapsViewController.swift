@@ -739,14 +739,19 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     {
         if(floorPicker==self.floorPicker){
             
+            self.floorPicker.reloadData()
+            
+            
             //floorPicker.deselectRowAtIndexPath(indexPath, animated: true)
             if let myNumber = NSNumberFormatter().numberFromString(floors[indexPath.row]) {
                 
                 let selectedCell:UITableViewCell = floorPicker.cellForRowAtIndexPath(indexPath)!
-                selectedCell.contentView.backgroundColor = UIColor(red:(255/255.0), green:127/255.0, blue:80/255.0, alpha:1.0);
                 self.mapView.clear()
                 self.CurrentFloor = self._building.getFloorInBuilding(myNumber.integerValue)
                 self.Invalidate(self.CurrentFloor.getFloorNumber())
+                selectedCell.contentView.backgroundColor = UIColor(red:(255/255.0), green:127/255.0, blue:80/255.0, alpha:1.0);
+                selectedCell.backgroundColor = UIColor(red:(255/255.0), green:127/255.0, blue:80/255.0, alpha:1.0);
+
             }
             
         }
@@ -757,6 +762,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     func tableView(floorPicker: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         let cellToDeSelect:UITableViewCell = floorPicker.cellForRowAtIndexPath(indexPath)!
         cellToDeSelect.contentView.backgroundColor = UIColor.clearColor()
+        cellToDeSelect.backgroundColor = UIColor.whiteColor()
     }
     
 
@@ -844,10 +850,11 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
         if(self.ok_button.titleLabel?.text == "Yes"){
             var index = NSNumberFormatter().numberFromString(self.floors[EndingFloor.getFloorNumber()]) as! Int
-            var indexPath : NSIndexPath = NSIndexPath(forRow:(NSNumberFormatter().numberFromString(self.floors[startingFloor.getFloorNumber()]) as? Int)! , inSection: 0);
-            let rowToSelect:NSIndexPath = NSIndexPath(forRow: index , inSection: 0);
-            self.floorPicker.deselectRowAtIndexPath(indexPath, animated: true)
-            self.tableView(self.floorPicker, didSelectRowAtIndexPath: rowToSelect); //Manually trigger the row to select
+              var indexPath = NSNumberFormatter().numberFromString(self.floors[startingFloor.getFloorNumber()]) as! Int
+             let rowToDeSelect:NSIndexPath = NSIndexPath(forRow: indexPath , inSection: 0)
+           self.tableView(floorPicker,didDeselectRowAtIndexPath: rowToDeSelect)
+            let rowToSelect:NSIndexPath = NSIndexPath(forRow: index , inSection: 0)
+            self.tableView(floorPicker, didSelectRowAtIndexPath: rowToSelect);
 
             let paths = Path()
             let filereading = SwiftGraph()
