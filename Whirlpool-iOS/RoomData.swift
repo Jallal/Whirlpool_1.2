@@ -159,6 +159,12 @@ public class RoomData {
     public func SetRoomBuildingName(buildingAbb:String){
         self.roomsBuilding = buildingAbb
     }
+    public func SetroomCenter(coordinates : CLLocationCoordinate2D){
+        self.roomCenter.latitude  = coordinates.latitude
+        self.roomCenter.longitude = coordinates.longitude
+        
+        
+    }
     
    
     

@@ -45,5 +45,31 @@ public class FloorData {
        return  _rooms
     }
     
+    func SetFloorNumber( floor : Int){
+        self._floorNumber = floor
+    }
+    
+    func getFloorNumber() -> Int{
+        return self._floorNumber
+    }
+    
+    
+    func getElevatorsInFloor()-> Array<RoomData>{
+        
+        var Elevators  = Array<RoomData>()
+        
+        for room in _rooms{
+            
+            if(room.GetRoomName() == "ELV"){
+                Elevators.append(room)
+                
+            }
+            
+        }
+        
+        
+        return Elevators
+    }
+    
     
 }

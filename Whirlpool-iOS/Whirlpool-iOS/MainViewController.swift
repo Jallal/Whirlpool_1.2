@@ -370,7 +370,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             /************* PASS ANY DATA YOU WOULD LIKE TO THE MAPS *****/
             BuildingVC.CurrentBuilding = _buildingAbb!
             BuildingVC._room  = RoomData()
-            BuildingVC.CurrentFloor = 1
+            BuildingVC.PassedFloorNumber = 1
             
     }
     }

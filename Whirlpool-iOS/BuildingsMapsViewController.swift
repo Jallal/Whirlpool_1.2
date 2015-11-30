@@ -22,9 +22,12 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     
     var BuildingView = true
+    var finishedDrawingTheMap = false
+    var endpoint  = CLLocationCoordinate2D(latitude: 0,longitude: 0)
     var locationManager = CLLocationManager()
-    var _StartingLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
-    var _EndNav = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    var PassedFloorNumber : Int = Int()
+    var _StartingLocation = RoomData()
+    var _EndNav = RoomData()
     var RoomAmenities = ["Capacity","Whiteboard","Monitor","Polycom","Phone","TV"]
     //The alert view for notification
     var alertView: UIView = UIView()
@@ -35,7 +38,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     var  label   : UILabel   = UILabel();
     //The room being passed
     internal var _room = RoomData()
-    var CurrentFloor : Int = Int()
+    var CurrentFloor  = FloorData!()
     var CurrentBuilding : String = String()
     var  NumberOfFloor  : Int = Int()
     var floors   =  [String]()
@@ -75,7 +78,8 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                 self.NumberOfFloor = self._building.getNumberOfFloors()
                 self.populateFloors()
                 self.floorPicker.reloadData()
-                self.Invalidate(self.CurrentFloor)
+                self.CurrentFloor =  self._building.getFloorInBuilding(self.PassedFloorNumber)
+                self.Invalidate(self.PassedFloorNumber)
             });
             if _room.GetRoomName() != String() {
                 dispatch_async(dispatch_get_main_queue(),{
@@ -86,7 +90,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             }
         }else{
             dispatch_async(dispatch_get_main_queue(),{
-                self.MapUnderConstructions("  Map Under Construction ")
+                self.MapUnderConstructions(" Map Under Construction ")
             });
         }
     }
@@ -186,9 +190,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         self.mapView.settings.compassButton = true
         self.mapView.buildingsEnabled = false
         self.mapView.indoorEnabled = false
-        /***********************   MAKE SURE YOU UPDATE THIS VARIABLES******************************/
         self._buildings = BuildingsData(delegate: self, buildingAbb: self.CurrentBuilding)
-        /*******************************************************************************************/
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
         self.locationManager.delegate = self
         self.locationManager.requestAlwaysAuthorization()
@@ -220,7 +222,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         self.view.backgroundColor = UIColor.whiteColor()
         self.floorPicker.tableFooterView = UIView(frame: CGRectZero)
         mapView.camera = GMSCameraPosition(target: CLLocationCoordinate2D(latitude: 42.1111, longitude: -86.4483), zoom: 10,bearing: 0, viewingAngle: 0)
-        
         
     }
     
@@ -284,14 +285,15 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             LoadingView.hide()
             position = CLLocationCoordinate2D(latitude: self._room.GetroomCenter().latitude, longitude: self._room.GetroomCenter().longitude)
             self._room.SetIsSelected(true)
-            self.CurrentFloor = self._room.GetRoomFloor()
+            self.CurrentFloor.SetFloorNumber(self._room.GetRoomFloor())
             
             
         }else if(self._building != nil){
             LoadingView.hide()
             self._room  = self._building.getARoomInBuilding(self.CurrentBuilding)
             position = CLLocationCoordinate2D(latitude: self._room.GetroomCenter().latitude, longitude: self._room.GetroomCenter().longitude)
-            self.CurrentFloor = self._room.GetRoomFloor()
+            self.CurrentFloor.SetFloorNumber(self._room.GetRoomFloor())
+
         }
         if((position.latitude != 0) && (position.longitude != 0)){
             LoadingView.hide()
@@ -356,7 +358,12 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     func reverseGeocodeCoordinate(coordinate: CLLocationCoordinate2D) {
         
-        self._StartingLocation = coordinate
+        self._StartingLocation.SetroomCenter(coordinate)
+        if(self.CurrentFloor == nil ){
+        self._StartingLocation.SetRoomFloor(self.PassedFloorNumber)
+        }else{
+            self._StartingLocation.SetRoomFloor(self.CurrentFloor.getFloorNumber())
+        }
         // 1
         let geocoder = GMSGeocoder()
         
@@ -367,9 +374,9 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                     for room in floorClass.getRoomsInFloor(){
                         for rect in room.GetRoomCoordinates(){
                             if(GMSGeometryContainsLocation(coordinate,rect, true)){
-                                if(self.CurrentFloor == room.GetRoomFloor()){
+                                if(self.CurrentFloor.getFloorNumber() == room.GetRoomFloor()){
                                     
-                                    let lines = ["Building : \(self.CurrentBuilding)","Floor : \(self.CurrentFloor)"," Room : \(room.GetRoomName())"]
+                                    let lines = ["Building : \(self.CurrentBuilding)","Floor : \(self.CurrentFloor.getFloorNumber())"," Room : \(room.GetRoomName())"]
                                     self.Address.text = lines.joinWithSeparator(", ")
                                 }
                                 
@@ -406,7 +413,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                             self._room = room
                             self.roomLabel.text = room.GetRoomName()
                             self.tableView.reloadData()
-                            self._EndNav = room.GetroomCenter()
+                            self._EndNav = room
                             let marker = GMSMarker(position: room.GetroomCenter())
                             marker.icon = UIImage(named: "Location End.png")
                             marker.flat = true
@@ -492,6 +499,9 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         }
         self.view.setNeedsDisplay()
         
+        self.finishedDrawingTheMap  = true
+        print(" ^^^^^^^^^^^^^^^^^^^^^^ IAM DONE DRAWING  THE MAP NOW YOU CAN DO SOMETHING ELSE&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+        
     }
     
     /**************Function to detect the user has tapped on a particular room in the floor**********************/
@@ -508,7 +518,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             }
         }
         self.mapView.clear();
-        self.Invalidate(self.CurrentFloor);
+        self.Invalidate(self.CurrentFloor.getFloorNumber());
     }
     
     
@@ -526,7 +536,8 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     }
     
     func distanceInMetersFrom(otherCoord : CLLocationCoordinate2D) -> CLLocationDistance {
-        let firstLoc = CLLocation(latitude: self._StartingLocation.latitude, longitude: self._StartingLocation.longitude)
+        var startlocation = self._StartingLocation.GetroomCenter()
+        let firstLoc = CLLocation(latitude: startlocation.latitude, longitude: startlocation.longitude)
         let secondLoc = CLLocation(latitude: otherCoord.latitude, longitude: otherCoord.longitude)
         return firstLoc.distanceFromLocation(secondLoc)
     }
@@ -725,7 +736,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     }
     
     /* Function to handel selecting a particular floor*/
-    func tableView(floorPicker: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    public func tableView(floorPicker: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         if(floorPicker==self.floorPicker){
             
@@ -735,8 +746,8 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                 let selectedCell:UITableViewCell = floorPicker.cellForRowAtIndexPath(indexPath)!
                 selectedCell.contentView.backgroundColor = UIColor(red:(255/255.0), green:127/255.0, blue:80/255.0, alpha:1.0);
                 self.mapView.clear()
-                self.CurrentFloor = myNumber.integerValue
-                self.Invalidate(self.CurrentFloor)
+                self.CurrentFloor = self._building.getFloorInBuilding(myNumber.integerValue)
+                self.Invalidate(self.CurrentFloor.getFloorNumber())
             }
             
         }
@@ -749,6 +760,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         cellToDeSelect.contentView.backgroundColor = UIColor.clearColor()
     }
     
+
     
     
     
@@ -765,34 +777,24 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
     }
     
-    /* The function that handels dismissing the notification during navigation*/
-    func onClick_ok(){
-        self.alertView.alpha = 0
-        self.ok_button.alpha = 0
-        self.label.alpha = 0
+   
+    
+    
+    
+    
+   
+    
+    public func ShowPathFinal(p : Path){
         
-        UIView.animateWithDuration(1, animations: {
-            self.alertView.removeFromSuperview()
-            self.ok_button.removeFromSuperview()
-            self.label.removeFromSuperview()
-        })
         
-        /*********************************NAVIGATION********************/
-        let paths = Path()
-        let filereading = SwiftGraph()
-        filereading.readFromFile("\(self._building._buildingAbbr)_\(CurrentFloor)")
-        let p   = paths.traverseGraphBFS(self._StartingLocation,end: self._EndNav, startingFloor: 2,EndingFloor: 2)
+        while(!self.finishedDrawingTheMap){
+            
+        }
         
         let path1 = GMSMutablePath()
         self.mapPin.hidden = true
-        let pos = self._StartingLocation
-        let marker = GMSMarker(position: pos)
-        marker.icon = UIImage(named: "Location Start.png")
-        marker.flat = true
-        marker.appearAnimation =   GoogleMaps.kGMSMarkerAnimationPop
-        marker.map = self.mapView
-        
-        for node in p!.ActualPath {
+
+        for node in p.ActualPath {
             path1.addCoordinate(node.location)
             
         }
@@ -800,7 +802,117 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         polyline.strokeColor = UIColor.blueColor()
         polyline.strokeWidth = 2.0
         polyline.geodesic = true
-        polyline.map = mapView;
+        polyline.map = self.mapView;
+        print(" ^^^^^^^^^^^^^^^^^^^^^^ IAM DONE DRAWING  THE PATH    &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+        
+        
+    }
+    
+    
+    
+    public func ShowPath(p : Path,inout endpoint : CLLocationCoordinate2D){
+        
+        let path1 = GMSMutablePath()
+        self.mapPin.hidden = true
+        let pos = self._StartingLocation.GetroomCenter()
+        let marker = GMSMarker(position: pos)
+        marker.icon = UIImage(named: "Location Start.png")
+        marker.flat = true
+        marker.appearAnimation =   GoogleMaps.kGMSMarkerAnimationPop
+        marker.map = self.mapView
+        endpoint = (p.ActualPath.first?.location)!
+        
+        
+        for node in p.ActualPath {
+            path1.addCoordinate(node.location)
+            
+        }
+        let polyline = GMSPolyline(path: path1)
+        polyline.strokeColor = UIColor.blueColor()
+        polyline.strokeWidth = 2.0
+        polyline.geodesic = true
+        polyline.map = self.mapView;
+        
+        
+    }
+    
+    
+    
+    
+    /* The function that handels dismissing the notification during navigation*/
+    func onClick_ok(){
+        var EndingFloor  = self._building.getFloorInBuilding(self._EndNav.GetRoomFloor())
+        var startingFloor =  self.CurrentFloor
+        
+        if(self.ok_button.titleLabel?.text == "Yes"){
+            var index = NSNumberFormatter().numberFromString(self.floors[EndingFloor.getFloorNumber()]) as! Int
+            var indexPath : NSIndexPath = NSIndexPath(forRow:(NSNumberFormatter().numberFromString(self.floors[startingFloor.getFloorNumber()]) as? Int)! , inSection: 0);
+            let rowToSelect:NSIndexPath = NSIndexPath(forRow: index , inSection: 0);
+            self.floorPicker.deselectRowAtIndexPath(indexPath, animated: true)
+            self.tableView(self.floorPicker, didSelectRowAtIndexPath: rowToSelect); //Manually trigger the row to select
+            print("&&&&&&&&&&   Starting POINT  AFTER YES $$$$$$$$$$$$$$$$$$$")
+            print(self._StartingLocation.GetRoomName())
+            let paths = Path()
+            let filereading = SwiftGraph()
+                filereading.readFromFile("\(self._building._buildingAbbr)_\(EndingFloor.getFloorNumber())")
+                var pa2   = paths.traverseGraphBFSFinalPath(self._EndNav.GetroomCenter(),end: endpoint,SameFloor: false,StartingFloor: self.CurrentFloor,EndingFloor: EndingFloor)!
+                
+               self.finishedDrawingTheMap = false
+            
+            dispatch_async(dispatch_get_main_queue(),{
+                self.ShowPathFinal(pa2)
+            });
+            
+                
+            self.alertView.alpha = 0
+            self.ok_button.alpha = 0
+            self.label.alpha = 0
+            
+            UIView.animateWithDuration(1, animations: {
+                self.alertView.removeFromSuperview()
+                self.ok_button.removeFromSuperview()
+                self.label.removeFromSuperview()
+            })
+            
+            
+           
+        } else{
+                let paths = Path()
+                let filereading = SwiftGraph()
+        
+        /*********************************NAVIGATION********************/
+
+        filereading.readFromFile("\(self._building._buildingAbbr)_\( startingFloor.getFloorNumber())")
+        
+        if(startingFloor.getFloorNumber() != EndingFloor.getFloorNumber()){
+        let pa1   = paths.traverseGraphBFS(self._StartingLocation.GetroomCenter(),end: self._EndNav.GetroomCenter(),SameFloor: false,StartingFloor: startingFloor,EndingFloor: EndingFloor)
+             self.ShowPath(pa1!,endpoint: &endpoint)
+         self.BannerView(" Are you in \(EndingFloor.getFloorNumber()) yet ?", button_message:"Yes");
+            
+            print("&&&&&&&&&&   Starting POINT  AFTER YES $$$$$$$$$$$$$$$$$$$")
+            print(self._StartingLocation.GetRoomName())
+
+            
+        }else{
+          let p   = paths.traverseGraphBFS(self._StartingLocation.GetroomCenter(),end: self._EndNav.GetroomCenter(),SameFloor: true,StartingFloor: startingFloor,EndingFloor: EndingFloor)
+            self.ShowPath(p!,endpoint: &endpoint)
+            
+            
+            self.alertView.alpha = 0
+            self.ok_button.alpha = 0
+            self.label.alpha = 0
+            
+            UIView.animateWithDuration(1, animations: {
+                self.alertView.removeFromSuperview()
+                self.ok_button.removeFromSuperview()
+                self.label.removeFromSuperview()
+            })
+            
+
+        }
+        
+        }
+      
         
     }
     

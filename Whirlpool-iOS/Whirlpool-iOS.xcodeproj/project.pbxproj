@@ -16,7 +16,7 @@
 		421545B31BB8533F00AE1B23 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545AD1BB8533F00AE1B23 /* LoginViewController.swift */; };
 		421545B41BB8533F00AE1B23 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421545AE1BB8533F00AE1B23 /* SearchViewController.swift */; };
 		421545BC1BB85FD600AE1B23 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 421545BB1BB85FD600AE1B23 /* MapKit.framework */; };
-		421B9E1B1BFA53FC001619B2 /* GHQ_2txt in Resources */ = {isa = PBXBuildFile; fileRef = 421B9E1A1BFA53FC001619B2 /* GHQ_2txt */; };
+		421B9E1B1BFA53FC001619B2 /* GHQ_2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 421B9E1A1BFA53FC001619B2 /* GHQ_2.txt */; };
 		42514BCE1BF9433E0094C141 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42514BCD1BF9433E0094C141 /* Path.swift */; };
 		4254961E1BBBA1B100B8CC5C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4254961D1BBBA1B100B8CC5C /* CoreLocation.framework */; };
 		427BAEDF1BB9F31100B3F63A /* BuildingsMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427BAEDE1BB9F31100B3F63A /* BuildingsMapsViewController.swift */; };
@@ -83,7 +83,7 @@
 		421545AE1BB8533F00AE1B23 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		421545B81BB85FB200AE1B23 /* Whirlpool-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Whirlpool-iOS.entitlements"; sourceTree = "<group>"; };
 		421545BB1BB85FD600AE1B23 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		421B9E1A1BFA53FC001619B2 /* GHQ_2txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GHQ_2txt; sourceTree = "<group>"; };
+		421B9E1A1BFA53FC001619B2 /* GHQ_2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GHQ_2.txt; sourceTree = "<group>"; };
 		42514BCD1BF9433E0094C141 /* Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		4254961D1BBBA1B100B8CC5C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		427BAEDE1BB9F31100B3F63A /* BuildingsMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingsMapsViewController.swift; path = ../BuildingsMapsViewController.swift; sourceTree = "<group>"; };
@@ -170,7 +170,7 @@
 			children = (
 				420864B91BF7012D00D3B7B9 /* GHQ_4.txt */,
 				420864BB1BF7012D00D3B7B9 /* GHQ_3.txt */,
-				421B9E1A1BFA53FC001619B2 /* GHQ_2txt */,
+				421B9E1A1BFA53FC001619B2 /* GHQ_2.txt */,
 				42E68C871C0A771D004DC1CF /* GHQ_1.txt */,
 				420864BF1BF7013D00D3B7B9 /* RV_2.txt */,
 				420864C01BF7013D00D3B7B9 /* RV_1.txt */,
@@ -407,7 +407,7 @@
 				4288AAAA1BB83093003EC9EF /* LaunchScreen.storyboard in Resources */,
 				420864BC1BF7012D00D3B7B9 /* GHQ_4.txt in Resources */,
 				6E6775D21BF2CF3D007F2658 /* Main.storyboard in Resources */,
-				421B9E1B1BFA53FC001619B2 /* GHQ_2txt in Resources */,
+				421B9E1B1BFA53FC001619B2 /* GHQ_2.txt in Resources */,
 				42C6AFF31BC4216D00245A2B /* web in Resources */,
 				420864BE1BF7012D00D3B7B9 /* GHQ_3.txt in Resources */,
 				42E68C881C0A771D004DC1CF /* GHQ_1.txt in Resources */,

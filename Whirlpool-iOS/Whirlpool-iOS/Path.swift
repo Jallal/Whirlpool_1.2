@@ -20,11 +20,14 @@ class Path {
     var previous: Path!
     
     
+    
     init(){
         destination = Vertex()
         ActualPath  = Array<Vertex>()
         
     }
+    
+    
     func getVertex(start: CLLocationCoordinate2D)-> Vertex{
         var NewStart = Vertex();
         var smallestLatDifference : Double  = 10000;
@@ -44,6 +47,31 @@ class Path {
         return  NewStart
     }
     
+    
+    func getVertexElevator(start: CLLocationCoordinate2D, floor: FloorData)-> CLLocationCoordinate2D{
+        var NewStart = CLLocationCoordinate2D();
+        var smallestLatDifference : Double  = 10000;
+        var AllElevatorsInFloor : [RoomData]
+        AllElevatorsInFloor = floor.getElevatorsInFloor()
+        for elv in AllElevatorsInFloor{
+            var ver = elv.GetroomCenter()
+            var value1 = abs(abs(ver.longitude) - abs(start.longitude)) + abs(ver.latitude-start.latitude)
+            
+            if(ver.latitude == start.latitude){
+                NewStart = CLLocationCoordinate2D(latitude: ver.latitude,longitude: ver.longitude)
+                return NewStart
+            }
+            //var value2 = (ver.long-start.long)
+            if (value1 < smallestLatDifference){
+                smallestLatDifference = value1
+                NewStart = CLLocationCoordinate2D(latitude: ver.latitude,longitude: ver.longitude)
+            }
+        }
+        
+        return  NewStart
+    }
+    
+    
     func getVertex(Id:Vertex)-> Vertex{
         
         for ver in canvas{
@@ -56,21 +84,13 @@ class Path {
     }
     
     
-    func traverseGraphBFS(start: CLLocationCoordinate2D, end : CLLocationCoordinate2D,startingFloor: Int, EndingFloor: Int)-> Path?{
-        
+    func traverseGraphBFSFinalPath(start: CLLocationCoordinate2D, end : CLLocationCoordinate2D,SameFloor : Bool,StartingFloor : FloorData, EndingFloor: FloorData)-> Path?{
         self.BuildGraph();
-        
         var myPaths = Path?()
-        
-        
-        var StartingNav = self.getVertex(start)
+        var StartingNav = self.getVertex(end)
         StartingNav.visited = false
-        var EndingNav = self.getVertex(end)
+        var EndingNav = self.getVertex(start)
         EndingNav.visited = false
-        print("STRATING NODE IS ")
-        print(StartingNav.key)
-        print("Ending NODE IS ")
-        print(EndingNav.key)
         myPaths = self.processDijkstra(StartingNav,destination: EndingNav)
         myPaths?.ActualPath.append(EndingNav)
         while(myPaths?.previous != nil){
@@ -79,6 +99,65 @@ class Path {
             
         }
         myPaths?.ActualPath.append(StartingNav)
+        
+        
+        return  myPaths
+        
+    }
+
+    
+    
+    func traverseGraphBFS(start: CLLocationCoordinate2D, end : CLLocationCoordinate2D,SameFloor : Bool,StartingFloor : FloorData, EndingFloor: FloorData)-> Path?{
+        
+        self.BuildGraph();
+        var myPaths = Path?()
+        
+        if(SameFloor){
+            print("CASE NAVIGATION WHITHIN THE SAME FLOOR")
+            var StartingNav = self.getVertex(start)
+            StartingNav.visited = false
+            var EndingNav = self.getVertex(end)
+            EndingNav.visited = false
+            print("STRATING NODE IS ")
+            print(StartingNav.key)
+            print("Ending NODE IS ")
+            print(EndingNav.key)
+            myPaths = self.processDijkstra(StartingNav,destination: EndingNav)
+        
+        myPaths?.ActualPath.append(EndingNav)
+        while(myPaths?.previous != nil){
+            myPaths?.ActualPath.append(self.getVertex((myPaths?.previous.destination)!))
+            myPaths?.previous =  myPaths?.previous.previous
+            
+        }
+        myPaths?.ActualPath.append(StartingNav)
+            
+             return  myPaths
+            
+            
+        }else{
+            print("CASE NAVIGATION WHITHIN  TWO DIFFERENT FLOORS FLOOR")
+            var StartingNav = self.getVertex(start)
+            StartingNav.visited = false
+            var EndingElevator = self.getVertexElevator(end,floor: StartingFloor)
+            var EndingNav = self.getVertex(EndingElevator)
+            EndingNav.visited = false
+            print("STRATING NODE IS ")
+            print(StartingNav.key)
+            print("Ending NODE IS ")
+            print(EndingNav.key)
+            myPaths = self.processDijkstra(StartingNav,destination: EndingNav)
+            myPaths?.ActualPath.append(EndingNav)
+            while(myPaths?.previous != nil){
+                myPaths?.ActualPath.append(self.getVertex((myPaths?.previous.destination)!))
+                myPaths?.previous =  myPaths?.previous.previous
+                
+            }
+            myPaths?.ActualPath.append(StartingNav)
+            
+            return  myPaths
+            
+        }
         
         
         
@@ -197,9 +276,6 @@ public class Vertex {
 public class Edge {
     var neighbor: Vertex
     var weight :CLLocationDistance
-    /*init() {
-    self.neighbor = Vertex()
-    }*/
     init(neighbor :Vertex , weight : CLLocationDistance) {
         self.neighbor = neighbor
         self.weight = weight
@@ -221,6 +297,8 @@ public class SwiftGraph {
     
     
     public func readFromFile(filename : String){
+          //clean data Stucture
+            canvas.removeAll()
         
         let file = filename
         

@@ -34,6 +34,22 @@ class Building {
       return  _floors.count
     }
     
+    func getFloorInBuilding(myfloor : Int) -> FloorData{
+        
+        var optionalFloor = FloorData(floorNumber: 1,floorWing: "nil")
+        
+        for floor in self._floors{
+
+            if(floor._floorNumber == myfloor){
+                return  floor
+            }
+        }
+        
+        
+        return optionalFloor
+    }
+    
+    
     
     
     func getARoomInBuilding(building_id : String) -> RoomData{
