@@ -113,15 +113,10 @@ class Path {
         var myPaths = Path?()
         
         if(SameFloor){
-            print("CASE NAVIGATION WHITHIN THE SAME FLOOR")
             var StartingNav = self.getVertex(start)
             StartingNav.visited = false
             var EndingNav = self.getVertex(end)
             EndingNav.visited = false
-            print("STRATING NODE IS ")
-            print(StartingNav.key)
-            print("Ending NODE IS ")
-            print(EndingNav.key)
             myPaths = self.processDijkstra(StartingNav,destination: EndingNav)
         
         myPaths?.ActualPath.append(EndingNav)
@@ -136,16 +131,11 @@ class Path {
             
             
         }else{
-            print("CASE NAVIGATION WHITHIN  TWO DIFFERENT FLOORS FLOOR")
             var StartingNav = self.getVertex(start)
             StartingNav.visited = false
             var EndingElevator = self.getVertexElevator(end,floor: StartingFloor)
             var EndingNav = self.getVertex(EndingElevator)
             EndingNav.visited = false
-            print("STRATING NODE IS ")
-            print(StartingNav.key)
-            print("Ending NODE IS ")
-            print(EndingNav.key)
             myPaths = self.processDijkstra(StartingNav,destination: EndingNav)
             myPaths?.ActualPath.append(EndingNav)
             while(myPaths?.previous != nil){

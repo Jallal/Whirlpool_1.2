@@ -500,7 +500,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         self.view.setNeedsDisplay()
         
         self.finishedDrawingTheMap  = true
-        print(" ^^^^^^^^^^^^^^^^^^^^^^ IAM DONE DRAWING  THE MAP NOW YOU CAN DO SOMETHING ELSE&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
         
     }
     
@@ -803,7 +802,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         polyline.strokeWidth = 2.0
         polyline.geodesic = true
         polyline.map = self.mapView;
-        print(" ^^^^^^^^^^^^^^^^^^^^^^ IAM DONE DRAWING  THE PATH    &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
         
         
     }
@@ -850,8 +848,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             let rowToSelect:NSIndexPath = NSIndexPath(forRow: index , inSection: 0);
             self.floorPicker.deselectRowAtIndexPath(indexPath, animated: true)
             self.tableView(self.floorPicker, didSelectRowAtIndexPath: rowToSelect); //Manually trigger the row to select
-            print("&&&&&&&&&&   Starting POINT  AFTER YES $$$$$$$$$$$$$$$$$$$")
-            print(self._StartingLocation.GetRoomName())
+
             let paths = Path()
             let filereading = SwiftGraph()
                 filereading.readFromFile("\(self._building._buildingAbbr)_\(EndingFloor.getFloorNumber())")
@@ -889,8 +886,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
              self.ShowPath(pa1!,endpoint: &endpoint)
          self.BannerView(" Are you in \(EndingFloor.getFloorNumber()) yet ?", button_message:"Yes");
             
-            print("&&&&&&&&&&   Starting POINT  AFTER YES $$$$$$$$$$$$$$$$$$$")
-            print(self._StartingLocation.GetRoomName())
 
             
         }else{
