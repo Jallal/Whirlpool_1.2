@@ -52,7 +52,7 @@ class Path {
         var NewStart = CLLocationCoordinate2D();
         var smallestLatDifference : Double  = 10000;
         var AllElevatorsInFloor : [RoomData]
-        AllElevatorsInFloor = floor.getElevatorsInFloor()
+        AllElevatorsInFloor = floor.getElevatorsAndStairsInFloor()
         for elv in AllElevatorsInFloor{
             var ver = elv.GetroomCenter()
             var value1 = abs(abs(ver.longitude) - abs(start.longitude)) + abs(ver.latitude-start.latitude)
@@ -104,7 +104,7 @@ class Path {
         return  myPaths
         
     }
-
+    
     
     
     func traverseGraphBFS(start: CLLocationCoordinate2D, end : CLLocationCoordinate2D,SameFloor : Bool,StartingFloor : FloorData, EndingFloor: FloorData)-> Path?{
@@ -118,16 +118,16 @@ class Path {
             var EndingNav = self.getVertex(end)
             EndingNav.visited = false
             myPaths = self.processDijkstra(StartingNav,destination: EndingNav)
-        
-        myPaths?.ActualPath.append(EndingNav)
-        while(myPaths?.previous != nil){
-            myPaths?.ActualPath.append(self.getVertex((myPaths?.previous.destination)!))
-            myPaths?.previous =  myPaths?.previous.previous
             
-        }
-        myPaths?.ActualPath.append(StartingNav)
+            myPaths?.ActualPath.append(EndingNav)
+            while(myPaths?.previous != nil){
+                myPaths?.ActualPath.append(self.getVertex((myPaths?.previous.destination)!))
+                myPaths?.previous =  myPaths?.previous.previous
+                
+            }
+            myPaths?.ActualPath.append(StartingNav)
             
-             return  myPaths
+            return  myPaths
             
             
         }else{
@@ -175,7 +175,7 @@ class Path {
         
         //obtain the best path
         var bestPath: Path = Path()
-        while((frontier.count != 0)&&(frontier.count < 6000)) {
+        while((frontier.count != 0)&&(frontier.count < 10000)) {
             //support path changes using the greedy approach
             bestPath = Path()
             var x: Int = 0
@@ -189,13 +189,15 @@ class Path {
             }
             
             for e in bestPath.destination.neighbors {
-                
-                var newPath: Path = Path()
-                newPath.destination = e.neighbor
-                newPath.previous = bestPath
-                newPath.total = bestPath.total + e.weight
-                //add the new path to the frontier
-                frontier.append(newPath)
+                if(e.neighbor.visited==false){
+                    var newPath: Path = Path()
+                    newPath.destination = e.neighbor
+                    newPath.previous = bestPath
+                    newPath.total = bestPath.total + e.weight
+                    //add the new path to the frontier
+                    frontier.append(newPath)
+                    e.neighbor.visited=true
+                }
                 
             }
             
@@ -287,8 +289,8 @@ public class SwiftGraph {
     
     
     public func readFromFile(filename : String){
-          //clean data Stucture
-            canvas.removeAll()
+        //clean data Stucture
+        canvas.removeAll()
         
         let file = filename
         
@@ -331,12 +333,7 @@ public class SwiftGraph {
         }
     }
     
-    
-    
-    
-    
-    
-    
+
     func addVertex(key: Int, loc: CLLocationCoordinate2D) -> Vertex {
         let childVertex: Vertex = Vertex()
         childVertex.key = key
@@ -349,7 +346,6 @@ public class SwiftGraph {
     
     func addEdge(source: Vertex, neighbor: Vertex)
     {
-        // var weight = self.distanceInMetersFrom(source,EndVertex: neighbor)
         let weight = 0.0
         let newEdge = Edge(neighbor: neighbor,weight: weight)
         source.neighbors.append(newEdge)
