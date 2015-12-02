@@ -54,7 +54,24 @@ public class FloorData {
     }
     
     
-    func getElevatorsInFloor()-> Array<RoomData>{
+    func getElevatorsAndStairsInFloor()-> Array<RoomData>{
+        
+        var Elevators  = Array<RoomData>()
+        
+        for room in _rooms{
+            
+            if((room.GetRoomName() == "ELV")||(room.GetRoomName() == "STR")){
+                Elevators.append(room)
+                
+            }
+            
+        }
+        
+        
+        return Elevators
+    }
+    
+    func getElevatorsOnlyInFloor()-> Array<RoomData>{
         
         var Elevators  = Array<RoomData>()
         
