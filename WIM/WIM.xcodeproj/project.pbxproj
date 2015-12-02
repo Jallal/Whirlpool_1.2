@@ -654,6 +654,7 @@
 			baseConfigurationReference = EBE3433BF44B93823A77301D /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Whirlpool-iOS/Whirlpool-iOS.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -687,6 +688,7 @@
 			baseConfigurationReference = 0C8F9174D8A94754789191A5 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Whirlpool-iOS/Whirlpool-iOS.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
