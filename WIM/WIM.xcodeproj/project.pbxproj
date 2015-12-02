@@ -87,15 +87,15 @@
 		42514BCD1BF9433E0094C141 /* Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		4254961D1BBBA1B100B8CC5C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		427BAEDE1BB9F31100B3F63A /* BuildingsMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingsMapsViewController.swift; path = ../BuildingsMapsViewController.swift; sourceTree = "<group>"; };
-		4288AA9C1BB83093003EC9EF /* Whirlpool-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Whirlpool-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4288AA9C1BB83093003EC9EF /* WIM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WIM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4288AA9F1BB83093003EC9EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "Whirlpool-iOS/AppDelegate.swift"; sourceTree = "<group>"; };
 		4288AAA61BB83093003EC9EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4288AAA91BB83093003EC9EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4288AAAB1BB83093003EC9EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Whirlpool-iOS/Info.plist"; sourceTree = "<group>"; };
-		4288AAB01BB83093003EC9EF /* Whirlpool-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Whirlpool-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4288AAB01BB83093003EC9EF /* WIM.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WIM.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4288AAB41BB83093003EC9EF /* Whirlpool_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Whirlpool_iOSTests.swift; sourceTree = "<group>"; };
 		4288AAB61BB83093003EC9EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4288AABB1BB83093003EC9EF /* Whirlpool-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Whirlpool-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4288AABB1BB83093003EC9EF /* WIM.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WIM.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4288AABF1BB83093003EC9EF /* Whirlpool_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Whirlpool_iOSUITests.swift; sourceTree = "<group>"; };
 		4288AAC11BB83093003EC9EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		428C22251BF038C9007A6F13 /* KeychainHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
@@ -179,7 +179,7 @@
 				42C01DFA1BB8369A00C2EEAD /* GTLCalendar_Sources.m */,
 				42C01DFB1BB8369A00C2EEAD /* GTLCalendar.h */,
 				42C01DF71BB8364700C2EEAD /* GTMOAuth2ViewTouch.xib */,
-				4288AA9E1BB83093003EC9EF /* Whirlpool-iOS */,
+				4288AA9E1BB83093003EC9EF /* WIM */,
 				4288AAB31BB83093003EC9EF /* Whirlpool-iOSTests */,
 				4288AABE1BB83093003EC9EF /* Whirlpool-iOSUITests */,
 				4288AA9D1BB83093003EC9EF /* Products */,
@@ -192,14 +192,14 @@
 		4288AA9D1BB83093003EC9EF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4288AA9C1BB83093003EC9EF /* Whirlpool-iOS.app */,
-				4288AAB01BB83093003EC9EF /* Whirlpool-iOSTests.xctest */,
-				4288AABB1BB83093003EC9EF /* Whirlpool-iOSUITests.xctest */,
+				4288AA9C1BB83093003EC9EF /* WIM.app */,
+				4288AAB01BB83093003EC9EF /* WIM.xctest */,
+				4288AABB1BB83093003EC9EF /* WIM.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4288AA9E1BB83093003EC9EF /* Whirlpool-iOS */ = {
+		4288AA9E1BB83093003EC9EF /* WIM */ = {
 			isa = PBXGroup;
 			children = (
 				6E6775D01BF2CF3D007F2658 /* Main.storyboard */,
@@ -229,6 +229,7 @@
 				6E6775DB1BF7DF33007F2658 /* HamburgerTableViewController.swift */,
 				42514BCD1BF9433E0094C141 /* Path.swift */,
 			);
+			name = WIM;
 			path = "Whirlpool-iOS";
 			sourceTree = "<group>";
 		};
@@ -288,9 +289,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4288AA9B1BB83093003EC9EF /* Whirlpool-iOS */ = {
+		4288AA9B1BB83093003EC9EF /* WIM */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4288AAC41BB83093003EC9EF /* Build configuration list for PBXNativeTarget "Whirlpool-iOS" */;
+			buildConfigurationList = 4288AAC41BB83093003EC9EF /* Build configuration list for PBXNativeTarget "WIM" */;
 			buildPhases = (
 				7B3EDED0561D6FDC0BECFE87 /* Check Pods Manifest.lock */,
 				4288AA981BB83093003EC9EF /* Sources */,
@@ -303,14 +304,14 @@
 			);
 			dependencies = (
 			);
-			name = "Whirlpool-iOS";
+			name = WIM;
 			productName = "Whirlpool-iOS";
-			productReference = 4288AA9C1BB83093003EC9EF /* Whirlpool-iOS.app */;
+			productReference = 4288AA9C1BB83093003EC9EF /* WIM.app */;
 			productType = "com.apple.product-type.application";
 		};
-		4288AAAF1BB83093003EC9EF /* Whirlpool-iOSTests */ = {
+		4288AAAF1BB83093003EC9EF /* WIMTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4288AAC71BB83093003EC9EF /* Build configuration list for PBXNativeTarget "Whirlpool-iOSTests" */;
+			buildConfigurationList = 4288AAC71BB83093003EC9EF /* Build configuration list for PBXNativeTarget "WIMTests" */;
 			buildPhases = (
 				4288AAAC1BB83093003EC9EF /* Sources */,
 				4288AAAD1BB83093003EC9EF /* Frameworks */,
@@ -321,14 +322,14 @@
 			dependencies = (
 				4288AAB21BB83093003EC9EF /* PBXTargetDependency */,
 			);
-			name = "Whirlpool-iOSTests";
+			name = WIMTests;
 			productName = "Whirlpool-iOSTests";
-			productReference = 4288AAB01BB83093003EC9EF /* Whirlpool-iOSTests.xctest */;
+			productReference = 4288AAB01BB83093003EC9EF /* WIM.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		4288AABA1BB83093003EC9EF /* Whirlpool-iOSUITests */ = {
+		4288AABA1BB83093003EC9EF /* WIMUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4288AACA1BB83093003EC9EF /* Build configuration list for PBXNativeTarget "Whirlpool-iOSUITests" */;
+			buildConfigurationList = 4288AACA1BB83093003EC9EF /* Build configuration list for PBXNativeTarget "WIMUITests" */;
 			buildPhases = (
 				4288AAB71BB83093003EC9EF /* Sources */,
 				4288AAB81BB83093003EC9EF /* Frameworks */,
@@ -339,9 +340,9 @@
 			dependencies = (
 				4288AABD1BB83093003EC9EF /* PBXTargetDependency */,
 			);
-			name = "Whirlpool-iOSUITests";
+			name = WIMUITests;
 			productName = "Whirlpool-iOSUITests";
-			productReference = 4288AABB1BB83093003EC9EF /* Whirlpool-iOSUITests.xctest */;
+			productReference = 4288AABB1BB83093003EC9EF /* WIM.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -356,7 +357,7 @@
 				TargetAttributes = {
 					4288AA9B1BB83093003EC9EF = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = 2MU5RRNWNL;
+						DevelopmentTeam = Q6PFS82967;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 1;
@@ -376,7 +377,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4288AA971BB83093003EC9EF /* Build configuration list for PBXProject "Whirlpool-iOS" */;
+			buildConfigurationList = 4288AA971BB83093003EC9EF /* Build configuration list for PBXProject "WIM" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -389,9 +390,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4288AA9B1BB83093003EC9EF /* Whirlpool-iOS */,
-				4288AAAF1BB83093003EC9EF /* Whirlpool-iOSTests */,
-				4288AABA1BB83093003EC9EF /* Whirlpool-iOSUITests */,
+				4288AA9B1BB83093003EC9EF /* WIM */,
+				4288AAAF1BB83093003EC9EF /* WIMTests */,
+				4288AABA1BB83093003EC9EF /* WIMUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -533,12 +534,12 @@
 /* Begin PBXTargetDependency section */
 		4288AAB21BB83093003EC9EF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 4288AA9B1BB83093003EC9EF /* Whirlpool-iOS */;
+			target = 4288AA9B1BB83093003EC9EF /* WIM */;
 			targetProxy = 4288AAB11BB83093003EC9EF /* PBXContainerItemProxy */;
 		};
 		4288AABD1BB83093003EC9EF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 4288AA9B1BB83093003EC9EF /* Whirlpool-iOS */;
+			target = 4288AA9B1BB83093003EC9EF /* WIM */;
 			targetProxy = 4288AABC1BB83093003EC9EF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -674,7 +675,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "MSU.Whirlpool-iOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = WIM;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Whirlpool-iOS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -707,7 +708,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "MSU.Whirlpool-iOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = WIM;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Whirlpool-iOS-Bridging-Header.h";
 			};
@@ -720,8 +721,8 @@
 				INFOPLIST_FILE = "Whirlpool-iOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "MSU.Whirlpool-iOSTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Whirlpool-iOS.app/Whirlpool-iOS";
+				PRODUCT_NAME = WIM;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WIM.app/WIM";
 			};
 			name = Debug;
 		};
@@ -732,8 +733,8 @@
 				INFOPLIST_FILE = "Whirlpool-iOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "MSU.Whirlpool-iOSTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Whirlpool-iOS.app/Whirlpool-iOS";
+				PRODUCT_NAME = WIM;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WIM.app/WIM";
 			};
 			name = Release;
 		};
@@ -743,7 +744,7 @@
 				INFOPLIST_FILE = "Whirlpool-iOSUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "MSU.Whirlpool-iOSUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = WIM;
 				TEST_TARGET_NAME = "Whirlpool-iOS";
 				USES_XCTRUNNER = YES;
 			};
@@ -755,7 +756,7 @@
 				INFOPLIST_FILE = "Whirlpool-iOSUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "MSU.Whirlpool-iOSUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = WIM;
 				TEST_TARGET_NAME = "Whirlpool-iOS";
 				USES_XCTRUNNER = YES;
 			};
@@ -764,7 +765,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4288AA971BB83093003EC9EF /* Build configuration list for PBXProject "Whirlpool-iOS" */ = {
+		4288AA971BB83093003EC9EF /* Build configuration list for PBXProject "WIM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4288AAC21BB83093003EC9EF /* Debug */,
@@ -773,7 +774,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4288AAC41BB83093003EC9EF /* Build configuration list for PBXNativeTarget "Whirlpool-iOS" */ = {
+		4288AAC41BB83093003EC9EF /* Build configuration list for PBXNativeTarget "WIM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4288AAC51BB83093003EC9EF /* Debug */,
@@ -782,7 +783,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4288AAC71BB83093003EC9EF /* Build configuration list for PBXNativeTarget "Whirlpool-iOSTests" */ = {
+		4288AAC71BB83093003EC9EF /* Build configuration list for PBXNativeTarget "WIMTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4288AAC81BB83093003EC9EF /* Debug */,
@@ -791,7 +792,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4288AACA1BB83093003EC9EF /* Build configuration list for PBXNativeTarget "Whirlpool-iOSUITests" */ = {
+		4288AACA1BB83093003EC9EF /* Build configuration list for PBXNativeTarget "WIMUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4288AACB1BB83093003EC9EF /* Debug */,

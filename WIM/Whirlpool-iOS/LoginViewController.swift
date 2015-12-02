@@ -52,7 +52,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
         )
         googleAuth = auth
           if(KeychainHelper.get(kKeychainItemName) != nil){
-            KeychainHelper.set(kKeychainItemName, value: googleAuth.accessibilityValue!)
+            KeychainHelper.set(googleAuth.clientID, value:googleAuth.clientSecret)
             
         }
                  
@@ -117,16 +117,6 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
 
         
     }
-    
-    
-    
-       
-    
-    
-    
-    
-    
-    
     
     
     // Construct a query and get a list of upcoming events from the user calendar

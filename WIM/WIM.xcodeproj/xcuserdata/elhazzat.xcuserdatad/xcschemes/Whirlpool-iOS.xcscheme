@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4288AA9B1BB83093003EC9EF"
-               BuildableName = "Whirlpool-iOS.app"
-               BlueprintName = "Whirlpool-iOS"
-               ReferencedContainer = "container:Whirlpool-iOS.xcodeproj">
+               BuildableName = "WIM.app"
+               BlueprintName = "WIM"
+               ReferencedContainer = "container:WIM.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4288AAAF1BB83093003EC9EF"
-               BuildableName = "Whirlpool-iOSTests.xctest"
-               BlueprintName = "Whirlpool-iOSTests"
-               ReferencedContainer = "container:Whirlpool-iOS.xcodeproj">
+               BuildableName = "WIM.xctest"
+               BlueprintName = "WIMTests"
+               ReferencedContainer = "container:WIM.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4288AABA1BB83093003EC9EF"
-               BuildableName = "Whirlpool-iOSUITests.xctest"
-               BlueprintName = "Whirlpool-iOSUITests"
-               ReferencedContainer = "container:Whirlpool-iOS.xcodeproj">
+               BuildableName = "WIM.xctest"
+               BlueprintName = "WIMUITests"
+               ReferencedContainer = "container:WIM.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4288AA9B1BB83093003EC9EF"
-            BuildableName = "Whirlpool-iOS.app"
-            BlueprintName = "Whirlpool-iOS"
-            ReferencedContainer = "container:Whirlpool-iOS.xcodeproj">
+            BuildableName = "WIM.app"
+            BlueprintName = "WIM"
+            ReferencedContainer = "container:WIM.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4288AA9B1BB83093003EC9EF"
-            BuildableName = "Whirlpool-iOS.app"
-            BlueprintName = "Whirlpool-iOS"
-            ReferencedContainer = "container:Whirlpool-iOS.xcodeproj">
+            BuildableName = "WIM.app"
+            BlueprintName = "WIM"
+            ReferencedContainer = "container:WIM.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -99,9 +99,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4288AA9B1BB83093003EC9EF"
-            BuildableName = "Whirlpool-iOS.app"
-            BlueprintName = "Whirlpool-iOS"
-            ReferencedContainer = "container:Whirlpool-iOS.xcodeproj">
+            BuildableName = "WIM.app"
+            BlueprintName = "WIM"
+            ReferencedContainer = "container:WIM.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
