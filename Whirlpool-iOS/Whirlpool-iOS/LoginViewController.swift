@@ -51,10 +51,10 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             clientSecret: kClientSecret
         )
         googleAuth = auth
-       /* if(KeychainHelper.get(kKeychainItemName) != nil){
-            KeychainHelper.set(kKeychainItemName, value: <#T##NSData#>)
+          if(KeychainHelper.get(kKeychainItemName) != nil){
+            KeychainHelper.set(kKeychainItemName, value: googleAuth.accessibilityValue!)
             
-        }*/
+        }
                  
     }
     
