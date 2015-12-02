@@ -882,17 +882,20 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             
             
         } else{
+            
+            
+            /*********************************NAVIGATION********************/
             let paths = Path()
             let filereading = SwiftGraph()
             
-            /*********************************NAVIGATION********************/
-            
             filereading.readFromFile("\(self._building._buildingAbbr)_\( startingFloor.getFloorNumber())")
+             //filereading.populateEdges()
+            
             
             if(startingFloor.getFloorNumber() != EndingFloor.getFloorNumber()){
                 let pa1   = paths.traverseGraphBFS(self._StartingLocation.GetroomCenter(),end: self._EndNav.GetroomCenter(),SameFloor: false,StartingFloor: startingFloor,EndingFloor: EndingFloor)
                 self.ShowPath(pa1!,endpoint: &endpoint)
-                self.BannerView(" Are you in \(EndingFloor.getFloorNumber()) yet ?", button_message:"Yes");
+                self.BannerView(" Are you in \(EndingFloor.getFloorNumber()) floor yet ?", button_message:"Yes");
                 
                 
                 
