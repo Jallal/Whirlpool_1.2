@@ -210,6 +210,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         cell.dateLabelCalender!.textColor = UIColor.blackColor()
         cell.titleLabel!.text =  calenderInfoTable![indexPath.row].title
         if calenderInfoTable![indexPath.row].location?.componentsSeparatedByString("-").count >= 3 {
+            cell.LocationLabel!.text = calenderInfoTable![indexPath.row].location
             let buidlingName = parseLocationString(calenderInfoTable![indexPath.row].location!)
             let buildingPicString = buildingToImageLarge[buidlingName]
             let buildingAbb = buildingPicString?.stringByReplacingOccurrencesOfString(" - L.png", withString: "")
@@ -228,7 +229,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return screenSize.height * 0.18
+        return 100.0
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {

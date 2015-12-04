@@ -8,6 +8,19 @@
 
 import UIKit
 
+extension NSDate {
+    var startOfDay: NSDate {
+        return NSCalendar.currentCalendar().startOfDayForDate(self)
+    }
+    
+    var endOfDay: NSDate? {
+        let components = NSDateComponents()
+        components.day = 1
+        components.second = -1
+        return NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: startOfDay, options: NSCalendarOptions())
+    }
+}
+
 class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var addEventTableView: UITableView!
@@ -27,6 +40,7 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
     var eventTitleCell:AddEventTableViewCell!
     var eventLocationCell:AddEventTableViewCell!
     var eventDescriptionCell:AddEventTableViewCell!
+    var freeBusyTimes = [(GTLDateTime,GTLDateTime)]()
     var selectedIndexPath:NSIndexPath?
     var startDate:NSDate?
     var endDate:NSDate?
@@ -46,6 +60,7 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         else {
             let newEvent = createAnEvent()
             addNewEvent(newEvent)
+            checkFreeBusyTime()
         }
         checkObservers()
         self.navigationController?.popToRootViewControllerAnimated(true)
@@ -140,6 +155,31 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
                 NSLog(error.localizedDescription)
             }
         })
+    }
+    
+    func checkFreeBusyTime(){
+        if guest != String(){
+            let requestItem = GTLCalendarFreeBusyRequestItem()
+            requestItem.identifier = guest
+            
+            var freeBusyTicket = GTLServiceTicket()
+            let query =  GTLQueryCalendar.queryForFreebusyQuery()
+            query.items = [requestItem]
+            query.maxResults = 10
+            query.timeMin = GTLDateTime(date: startDate!, timeZone: NSTimeZone.localTimeZone())
+            query.timeMax = GTLDateTime(date: NSDate().endOfDay!, timeZone: NSTimeZone.localTimeZone())
+            freeBusyTicket = service.executeQuery(query, completionHandler: { (ticket, object, error) -> Void in
+                if error == nil {
+                    print("These are the busy times")
+                    let response = object as! GTLCalendarFreeBusyResponse
+                    let responseCals = response.calendars
+                    let properties = responseCals.additionalProperties()
+                }
+                else {
+                    NSLog(error.localizedDescription)
+                }
+            })
+        }
     }
 
     

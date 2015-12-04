@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15A279b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yKG-nJ-qvB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yKG-nJ-qvB">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
@@ -10,7 +10,7 @@
         <!--Search View Controller-->
         <scene sceneID="LUX-Bn-iG7">
             <objects>
-                <viewController id="YJe-nc-tF6" customClass="SearchViewController" customModule="Whirlpool_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="YJe-nc-tF6" customClass="SearchViewController" customModule="WIM" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XKX-Xa-uq0"/>
                         <viewControllerLayoutGuide type="bottom" id="JyC-mY-9qZ"/>
@@ -19,7 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qeh-7v-J8b">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qeh-7v-J8b">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -38,15 +38,15 @@
                                         <rect key="frame" x="0.0" y="72" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="vX8-LR-6Xm" id="xj9-od-gSG">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Title" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="none" minimumScaleFactor="0.5" id="VES-vj-BUL">
-                                                    <rect key="frame" x="15" y="0.0" width="570" height="50"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Title" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="none" minimumScaleFactor="0.5" id="VES-vj-BUL">
+                                                    <rect key="frame" x="15" y="0.0" width="570" height="49.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -96,7 +96,7 @@
         <!--Login View Controller-->
         <scene sceneID="6oW-nn-1c8">
             <objects>
-                <viewController id="yKG-nJ-qvB" customClass="LoginViewController" customModule="Whirlpool_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="yKG-nJ-qvB" customClass="LoginViewController" customModule="WIM" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Kle-Mg-Q77"/>
                         <viewControllerLayoutGuide type="bottom" id="HB4-Me-12R"/>
@@ -127,7 +127,7 @@
         <!--Favorite View Controller-->
         <scene sceneID="UQk-Sx-qc0">
             <objects>
-                <viewController id="12o-pA-79f" customClass="FavoriteViewController" customModule="Whirlpool_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="12o-pA-79f" customClass="FavoriteViewController" customModule="WIM" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FqN-xW-ndm"/>
                         <viewControllerLayoutGuide type="bottom" id="mjh-mm-nst"/>
@@ -145,7 +145,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xSh-EE-KNw" id="TmG-30-a2S">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="arw-36-Lej">
@@ -209,7 +209,7 @@
         <!--Hamburger Table View Controller-->
         <scene sceneID="VPS-4a-rTD">
             <objects>
-                <tableViewController id="LDe-rw-1xD" customClass="HamburgerTableViewController" customModule="Whirlpool_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="LDe-rw-1xD" customClass="HamburgerTableViewController" customModule="WIM" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="rGE-b3-BgS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -222,37 +222,44 @@
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lay-FP-sZx" id="IYr-VJ-Mxr">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="199"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="199.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Email: " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="8KP-bg-Evo">
-                                                    <rect key="frame" x="20" y="140" width="200" height="55"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Email: " textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="8KP-bg-Evo">
+                                                    <rect key="frame" x="10" y="140" width="240" height="55"/>
                                                     <animations/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="200" id="Y7T-yT-VnR"/>
+                                                        <constraint firstAttribute="width" constant="240" id="Y7T-yT-VnR"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Whirlpool Logo Banner" translatesAutoresizingMaskIntoConstraints="NO" id="7FZ-Lu-7iF">
+                                                    <rect key="frame" x="10" y="8" width="240" height="135"/>
+                                                    <animations/>
+                                                </imageView>
                                             </subviews>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="bottomMargin" secondItem="8KP-bg-Evo" secondAttribute="bottom" constant="-3.5" id="0Yz-xQ-mcI"/>
-                                                <constraint firstItem="8KP-bg-Evo" firstAttribute="leading" secondItem="IYr-VJ-Mxr" secondAttribute="leadingMargin" constant="12" id="pvm-p5-hPj"/>
+                                                <constraint firstAttribute="topMargin" secondItem="7FZ-Lu-7iF" secondAttribute="top" id="dLR-7t-gnf"/>
+                                                <constraint firstItem="7FZ-Lu-7iF" firstAttribute="leading" secondItem="IYr-VJ-Mxr" secondAttribute="leadingMargin" constant="2" id="dZS-Px-lzM"/>
+                                                <constraint firstItem="8KP-bg-Evo" firstAttribute="top" secondItem="7FZ-Lu-7iF" secondAttribute="bottom" constant="-3" id="n7R-hP-95h"/>
+                                                <constraint firstItem="8KP-bg-Evo" firstAttribute="leading" secondItem="IYr-VJ-Mxr" secondAttribute="leadingMargin" constant="2" id="pvm-p5-hPj"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="hamburgerCell" id="vBs-HC-lQm">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="hamburgerCell" id="vBs-HC-lQm">
                                         <rect key="frame" x="0.0" y="200" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vBs-HC-lQm" id="sIW-Q2-URC">
-                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Logout" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dpB-5f-kZJ">
-                                                    <rect key="frame" x="20" y="11" width="350" height="25"/>
+                                                    <rect key="frame" x="10" y="11" width="350" height="25"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="350" id="7ey-YD-s49"/>
@@ -264,8 +271,8 @@
                                             </subviews>
                                             <animations/>
                                             <constraints>
-                                                <constraint firstItem="dpB-5f-kZJ" firstAttribute="centerY" secondItem="sIW-Q2-URC" secondAttribute="centerY" id="fJx-JS-6va"/>
-                                                <constraint firstItem="dpB-5f-kZJ" firstAttribute="leading" secondItem="sIW-Q2-URC" secondAttribute="leadingMargin" constant="12" id="mjU-zg-v7Y"/>
+                                                <constraint firstItem="dpB-5f-kZJ" firstAttribute="centerY" secondItem="sIW-Q2-URC" secondAttribute="centerY" constant="1.75" id="fJx-JS-6va"/>
+                                                <constraint firstItem="dpB-5f-kZJ" firstAttribute="leading" secondItem="sIW-Q2-URC" secondAttribute="leadingMargin" constant="2" id="mjU-zg-v7Y"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
@@ -273,15 +280,15 @@
                                             <segue destination="yKG-nJ-qvB" kind="show" id="SBE-GL-PRe"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="hamburgerCell" id="Fzj-Q7-rXr">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="hamburgerCell" id="Fzj-Q7-rXr">
                                         <rect key="frame" x="0.0" y="244" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fzj-Q7-rXr" id="ADX-xE-h23">
-                                            <rect key="frame" x="0.0" y="0.0" width="553" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Help" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qlD-DH-Kkj">
-                                                    <rect key="frame" x="20" y="11" width="350" height="25"/>
+                                                    <rect key="frame" x="10" y="11" width="350" height="25"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="350" id="9P7-G9-rH0"/>
@@ -293,21 +300,21 @@
                                             </subviews>
                                             <animations/>
                                             <constraints>
-                                                <constraint firstItem="qlD-DH-Kkj" firstAttribute="leading" secondItem="ADX-xE-h23" secondAttribute="leadingMargin" constant="12" id="3qu-Vf-6Zj"/>
-                                                <constraint firstItem="qlD-DH-Kkj" firstAttribute="centerY" secondItem="ADX-xE-h23" secondAttribute="centerY" id="VeW-nP-d7g"/>
+                                                <constraint firstItem="qlD-DH-Kkj" firstAttribute="leading" secondItem="ADX-xE-h23" secondAttribute="leadingMargin" constant="2" id="3qu-Vf-6Zj"/>
+                                                <constraint firstItem="qlD-DH-Kkj" firstAttribute="centerY" secondItem="ADX-xE-h23" secondAttribute="centerY" constant="1.75" id="VeW-nP-d7g"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="hamburgerCell" id="Mp5-Sx-Ibp">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="hamburgerCell" id="Mp5-Sx-Ibp">
                                         <rect key="frame" x="0.0" y="288" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mp5-Sx-Ibp" id="MIn-Uh-bwM">
-                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Favorites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y08-mC-x4q">
-                                                    <rect key="frame" x="20" y="11" width="350" height="25"/>
+                                                    <rect key="frame" x="10" y="11" width="350" height="25"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="350" id="v3Q-9o-6Fd"/>
@@ -319,8 +326,8 @@
                                             </subviews>
                                             <animations/>
                                             <constraints>
-                                                <constraint firstItem="Y08-mC-x4q" firstAttribute="leading" secondItem="MIn-Uh-bwM" secondAttribute="leadingMargin" constant="12" id="ngj-MB-oc3"/>
-                                                <constraint firstItem="Y08-mC-x4q" firstAttribute="centerY" secondItem="MIn-Uh-bwM" secondAttribute="centerY" id="vrs-Hs-zVY"/>
+                                                <constraint firstItem="Y08-mC-x4q" firstAttribute="leading" secondItem="MIn-Uh-bwM" secondAttribute="leadingMargin" constant="2" id="ngj-MB-oc3"/>
+                                                <constraint firstItem="Y08-mC-x4q" firstAttribute="centerY" secondItem="MIn-Uh-bwM" secondAttribute="centerY" constant="1.75" id="vrs-Hs-zVY"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
@@ -350,7 +357,7 @@
         <!--Main View Controller-->
         <scene sceneID="UIa-zt-GGf">
             <objects>
-                <viewController storyboardIdentifier="MainViewController" id="0FE-9H-6N7" customClass="MainViewController" customModule="Whirlpool_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainViewController" id="0FE-9H-6N7" customClass="MainViewController" customModule="WIM" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cPc-LM-PtI"/>
                         <viewControllerLayoutGuide type="bottom" id="kWR-8t-SCi"/>
@@ -359,33 +366,39 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="qip-Gu-TQP" userLabel="Table View1">
-                                <rect key="frame" x="0.0" y="88" width="600" height="448"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="qip-Gu-TQP" userLabel="Table View1">
+                                <rect key="frame" x="0.0" y="103" width="600" height="433"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CalenderCellID" rowHeight="70" id="0Dk-Hr-Q5y" customClass="CalenderCell" customModule="Whirlpool_iOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="22" width="600" height="70"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CalenderCellID" rowHeight="90" id="0Dk-Hr-Q5y" customClass="CalenderCell" customModule="WIM" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="22" width="600" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0Dk-Hr-Q5y" id="ajO-sG-DOV">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="69"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="89.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BfO-6m-IhH">
-                                                    <rect key="frame" x="115" y="22" width="460" height="25"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BfO-6m-IhH">
+                                                    <rect key="frame" x="115" y="20" width="200" height="20"/>
                                                     <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="200" id="Sl3-8o-rpR"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hno-L5-NvR">
-                                                    <rect key="frame" x="115" y="45" width="430" height="16"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hno-L5-NvR">
+                                                    <rect key="frame" x="115" y="58" width="200" height="16"/>
                                                     <animations/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="11"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="200" id="DXw-vL-Q6Q"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="12"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hour" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NuT-Pz-Bwp">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Hour" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NuT-Pz-Bwp">
                                                     <rect key="frame" x="492" y="0.0" width="100" height="20"/>
                                                     <animations/>
                                                     <constraints>
@@ -395,31 +408,41 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Whirlpool Default - L" translatesAutoresizingMaskIntoConstraints="NO" id="9FP-Gr-ocn">
-                                                    <rect key="frame" x="23" y="8" width="54" height="54"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YPZ-dg-r5L">
+                                                    <rect key="frame" x="115" y="41" width="200" height="16"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="200" id="BVh-Rx-JsP"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Whirlpool Default - L" translatesAutoresizingMaskIntoConstraints="NO" id="9FP-Gr-ocn">
+                                                    <rect key="frame" x="8" y="0.0" width="86" height="86"/>
                                                     <animations/>
                                                 </imageView>
                                             </subviews>
                                             <animations/>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="BfO-6m-IhH" secondAttribute="trailing" constant="17" id="14h-Eu-FRW"/>
-                                                <constraint firstItem="NuT-Pz-Bwp" firstAttribute="trailing" secondItem="ajO-sG-DOV" secondAttribute="trailingMargin" id="4Kp-Nx-SpC"/>
-                                                <constraint firstItem="Hno-L5-NvR" firstAttribute="top" secondItem="BfO-6m-IhH" secondAttribute="bottom" constant="-2" id="E94-ms-czf"/>
-                                                <constraint firstItem="NuT-Pz-Bwp" firstAttribute="top" secondItem="ajO-sG-DOV" secondAttribute="topMargin" constant="-8" id="Kal-uh-Ybp"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="Hno-L5-NvR" secondAttribute="bottom" constant="0.5" id="RoC-wx-rwV"/>
-                                                <constraint firstItem="Hno-L5-NvR" firstAttribute="leading" secondItem="ajO-sG-DOV" secondAttribute="leadingMargin" constant="107" id="UpO-bh-p6a"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Hno-L5-NvR" secondAttribute="trailing" constant="47" id="WGO-h4-70L"/>
-                                                <constraint firstItem="BfO-6m-IhH" firstAttribute="top" secondItem="ajO-sG-DOV" secondAttribute="topMargin" constant="14" id="Xjj-bp-x5S"/>
-                                                <constraint firstItem="9FP-Gr-ocn" firstAttribute="centerY" secondItem="ajO-sG-DOV" secondAttribute="centerY" constant="0.25" id="a0m-qh-a89"/>
-                                                <constraint firstItem="9FP-Gr-ocn" firstAttribute="centerY" secondItem="BfO-6m-IhH" secondAttribute="centerY" constant="0.5" id="a8q-lJ-4Wi"/>
+                                                <constraint firstItem="YPZ-dg-r5L" firstAttribute="top" secondItem="BfO-6m-IhH" secondAttribute="bottom" constant="1" id="EqK-gg-T9Q"/>
+                                                <constraint firstItem="YPZ-dg-r5L" firstAttribute="top" secondItem="BfO-6m-IhH" secondAttribute="bottom" constant="1" id="L2z-sy-TlP"/>
+                                                <constraint firstItem="Hno-L5-NvR" firstAttribute="leading" secondItem="9FP-Gr-ocn" secondAttribute="trailing" constant="21" id="LAb-Ap-JUZ"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="NuT-Pz-Bwp" secondAttribute="trailing" id="Nse-V5-KC9"/>
+                                                <constraint firstItem="9FP-Gr-ocn" firstAttribute="centerY" secondItem="ajO-sG-DOV" secondAttribute="centerY" constant="-1.75" id="OdW-wv-RWy"/>
+                                                <constraint firstItem="9FP-Gr-ocn" firstAttribute="centerY" secondItem="BfO-6m-IhH" secondAttribute="centerY" constant="13" id="a8q-lJ-4Wi"/>
                                                 <constraint firstItem="Hno-L5-NvR" firstAttribute="leading" secondItem="BfO-6m-IhH" secondAttribute="leading" id="bAg-Za-j1b"/>
-                                                <constraint firstItem="Hno-L5-NvR" firstAttribute="top" secondItem="NuT-Pz-Bwp" secondAttribute="bottom" constant="25" id="cRI-ad-d1a"/>
-                                                <constraint firstItem="BfO-6m-IhH" firstAttribute="leading" secondItem="9FP-Gr-ocn" secondAttribute="trailing" constant="38" id="w9E-xC-J6Z"/>
+                                                <constraint firstItem="Hno-L5-NvR" firstAttribute="top" secondItem="NuT-Pz-Bwp" secondAttribute="bottom" constant="38" id="cRI-ad-d1a"/>
+                                                <constraint firstItem="NuT-Pz-Bwp" firstAttribute="top" secondItem="ajO-sG-DOV" secondAttribute="topMargin" constant="-8" id="kqE-t8-H1q"/>
+                                                <constraint firstItem="Hno-L5-NvR" firstAttribute="top" secondItem="YPZ-dg-r5L" secondAttribute="bottom" constant="1" id="reZ-7E-tzo"/>
+                                                <constraint firstItem="YPZ-dg-r5L" firstAttribute="leading" secondItem="9FP-Gr-ocn" secondAttribute="trailing" constant="21" id="tOc-iI-C3g"/>
+                                                <constraint firstItem="BfO-6m-IhH" firstAttribute="leading" secondItem="9FP-Gr-ocn" secondAttribute="trailing" constant="21" id="w9E-xC-J6Z"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
                                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
+                                            <outlet property="LocationLabel" destination="YPZ-dg-r5L" id="MIu-xZ-iCN"/>
                                             <outlet property="buildingImage" destination="9FP-Gr-ocn" id="HZj-Xe-3Oe"/>
                                             <outlet property="dateLabelCalender" destination="Hno-L5-NvR" id="AH3-gc-xbt"/>
                                             <outlet property="timeTill" destination="NuT-Pz-Bwp" id="C2Z-P2-FO4"/>
@@ -429,25 +452,25 @@
                                 </prototypes>
                             </tableView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="a08-11-YVT">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="95"/>
                                 <animations/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1vG-Xr-xkd">
-                                    <size key="itemSize" width="75" height="75"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="5" id="1vG-Xr-xkd">
+                                    <size key="itemSize" width="95" height="95"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="buildingScollerCell" id="c3v-v9-onK" customClass="BuildingCollectionViewCell" customModule="Whirlpool_iOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="3" width="75" height="75"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="buildingScollerCell" id="c3v-v9-onK" customClass="BuildingCollectionViewCell" customModule="WIM" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="10" width="75" height="75"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CHi-o9-HPh">
-                                                    <rect key="frame" x="2" y="2" width="70" height="70"/>
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CHi-o9-HPh">
+                                                    <rect key="frame" x="2" y="3" width="70" height="70"/>
                                                     <animations/>
                                                     <state key="normal" image="Whirlpool Default"/>
                                                     <connections>
@@ -461,8 +484,6 @@
                                         <animations/>
                                         <constraints>
                                             <constraint firstItem="CHi-o9-HPh" firstAttribute="centerX" secondItem="c3v-v9-onK" secondAttribute="centerX" id="QvC-RH-P1n"/>
-                                            <constraint firstItem="CHi-o9-HPh" firstAttribute="leading" secondItem="c3v-v9-onK" secondAttribute="leadingMargin" constant="-6" id="cYc-8Z-cgS"/>
-                                            <constraint firstItem="CHi-o9-HPh" firstAttribute="top" secondItem="c3v-v9-onK" secondAttribute="topMargin" constant="-6" id="iIt-qU-t37"/>
                                             <constraint firstItem="CHi-o9-HPh" firstAttribute="centerY" secondItem="c3v-v9-onK" secondAttribute="centerY" id="nZG-LY-Ql0"/>
                                         </constraints>
                                         <size key="customSize" width="75" height="75"/>
@@ -495,7 +516,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="qip-Gu-TQP" firstAttribute="width" secondItem="6Kz-EB-P8R" secondAttribute="width" id="2yY-Pq-FKp"/>
-                            <constraint firstItem="qip-Gu-TQP" firstAttribute="top" secondItem="a08-11-YVT" secondAttribute="bottom" constant="8" id="Qhq-Sx-evS"/>
+                            <constraint firstItem="qip-Gu-TQP" firstAttribute="top" secondItem="a08-11-YVT" secondAttribute="bottom" id="Qhq-Sx-evS"/>
                             <constraint firstItem="a08-11-YVT" firstAttribute="width" secondItem="6Kz-EB-P8R" secondAttribute="width" id="RbI-az-yIs"/>
                             <constraint firstAttribute="trailingMargin" secondItem="m12-9L-xbO" secondAttribute="trailing" constant="-10" id="WC1-xv-XCx"/>
                             <constraint firstItem="kWR-8t-SCi" firstAttribute="top" secondItem="m12-9L-xbO" secondAttribute="bottom" constant="10" id="ljt-fL-pSY"/>
@@ -536,7 +557,7 @@
         <!--Add Event-->
         <scene sceneID="o7y-Ko-00H">
             <objects>
-                <viewController id="pfZ-AQ-pez" customClass="CalendarEventViewController" customModule="Whirlpool_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="pfZ-AQ-pez" customClass="CalendarEventViewController" customModule="WIM" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0ZW-na-Zii"/>
                         <viewControllerLayoutGuide type="bottom" id="I0Z-NN-Qi2"/>
@@ -550,11 +571,11 @@
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="addEventCell" id="UYx-XP-nyv" customClass="AddEventTableViewCell" customModule="Whirlpool_iOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="addEventCell" id="UYx-XP-nyv" customClass="AddEventTableViewCell" customModule="WIM" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UYx-XP-nyv" id="CRG-4i-ii0">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" text="Enter Title" translatesAutoresizingMaskIntoConstraints="NO" id="FqD-QE-OGj">
@@ -589,11 +610,11 @@
                                             <outlet property="cellInputText" destination="FqD-QE-OGj" id="Orc-Tv-aP0"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="datePickerCell" rowHeight="220" id="Xcp-2i-Oxw" customClass="PickerTableViewCell" customModule="Whirlpool_iOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="datePickerCell" rowHeight="220" id="Xcp-2i-Oxw" customClass="PickerTableViewCell" customModule="WIM" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="72" width="600" height="220"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xcp-2i-Oxw" id="HgH-8G-KiO">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="219"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="219.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <datePicker contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="RtX-xU-bYy">
@@ -637,11 +658,11 @@
                                             <outlet property="datePickerCellLabel" destination="FAn-or-xnz" id="g3c-Sf-ZPN"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="aUN-oC-tMg" customClass="PickerTableViewCell" customModule="Whirlpool_iOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="aUN-oC-tMg" customClass="PickerTableViewCell" customModule="WIM" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="292" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aUN-oC-tMg" id="brl-dO-3jI">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <animations/>
                                         </tableViewCellContentView>
@@ -651,7 +672,7 @@
                                         <rect key="frame" x="0.0" y="336" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="alD-4O-8hB" id="o9o-2o-6Rs">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <animations/>
                                         </tableViewCellContentView>
@@ -661,7 +682,7 @@
                                         <rect key="frame" x="0.0" y="380" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RyM-Y0-oBR" id="fER-jN-uwz">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <animations/>
                                         </tableViewCellContentView>
@@ -706,7 +727,7 @@
         <!--BuildingsMapsViewController-->
         <scene sceneID="H4D-D4-aKx">
             <objects>
-                <viewController storyboardIdentifier="BuildingsMapsViewController" title="BuildingsMapsViewController" id="9rI-gr-NXP" customClass="BuildingsMapsViewController" customModule="Whirlpool_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BuildingsMapsViewController" title="BuildingsMapsViewController" id="9rI-gr-NXP" customClass="BuildingsMapsViewController" customModule="WIM" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hpT-RI-zUT"/>
                         <viewControllerLayoutGuide type="bottom" id="qi9-Rn-eWx"/>
@@ -770,7 +791,7 @@
                                 <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="cell" rowHeight="40" style="IBUITableViewCellStyleDefault" id="9bs-na-H4X">
-                                        <rect key="frame" x="0.0" y="146" width="47" height="40"/>
+                                        <rect key="frame" x="0.0" y="145.5" width="47" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" id="pka-aW-Wjx">
                                             <rect key="frame" x="0.0" y="0.0" width="47" height="40"/>
@@ -818,11 +839,11 @@
                                                 <rect key="frame" x="0.0" y="28" width="604" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rne-Zx-m6h" id="cze-WU-Ksd">
-                                                    <rect key="frame" x="0.0" y="0.0" width="604" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="604" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wdv-l5-Sum">
-                                                            <rect key="frame" x="15" y="12" width="32" height="20"/>
+                                                            <rect key="frame" x="15" y="12" width="31.5" height="19.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <animations/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -830,7 +851,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DoE-2q-VZu">
-                                                            <rect key="frame" x="547" y="12" width="42" height="20"/>
+                                                            <rect key="frame" x="547.5" y="12" width="41.5" height="19.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <animations/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -1005,12 +1026,13 @@
         <image name="Location Start" width="20" height="29"/>
         <image name="Navigation" width="14" height="26"/>
         <image name="Time Symbol" width="24" height="24"/>
-        <image name="Whirlpool Default" width="52" height="52"/>
-        <image name="Whirlpool Default - L" width="60" height="60"/>
+        <image name="Whirlpool Default" width="64" height="64"/>
+        <image name="Whirlpool Default - L" width="76" height="78"/>
+        <image name="Whirlpool Logo Banner" width="237" height="135"/>
         <image name="info" width="36" height="46"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="OV2-DF-bGW"/>
         <segue reference="ntx-bz-kGd"/>
-        <segue reference="dRV-Fk-sZx"/>
     </inferredMetricsTieBreakers>
 </document>
