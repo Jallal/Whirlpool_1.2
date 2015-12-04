@@ -219,15 +219,15 @@
 				6E2B8C481BED8655002B6E95 /* BuildingCollectionViewCell.swift */,
 				6E6C6C711BEECE0B00D408D9 /* BuildingsData.swift */,
 				6E6C6C731BEEF39E00D408D9 /* Building.swift */,
+				6E6775D71BF6AED2007F2658 /* PickTableViewCell.swift */,
+				6E6775D91BF6C216007F2658 /* AddEventTableViewCell.swift */,
+				6E6775DB1BF7DF33007F2658 /* HamburgerTableViewController.swift */,
+				42514BCD1BF9433E0094C141 /* Path.swift */,
 				4288AAA61BB83093003EC9EF /* Assets.xcassets */,
 				4288AAA81BB83093003EC9EF /* LaunchScreen.storyboard */,
 				421545B81BB85FB200AE1B23 /* Whirlpool-iOS.entitlements */,
 				6E6775CC1BF2C817007F2658 /* Supporting Files */,
 				6E83A9751BD2D6BE00306C86 /* FavoriteModel.xcdatamodeld */,
-				6E6775D71BF6AED2007F2658 /* PickTableViewCell.swift */,
-				6E6775D91BF6C216007F2658 /* AddEventTableViewCell.swift */,
-				6E6775DB1BF7DF33007F2658 /* HamburgerTableViewController.swift */,
-				42514BCD1BF9433E0094C141 /* Path.swift */,
 			);
 			name = WIM;
 			path = "Whirlpool-iOS";
