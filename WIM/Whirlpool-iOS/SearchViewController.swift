@@ -30,6 +30,12 @@ protocol selectedRoomDataDelagate {
 
 class SearchViewController: UIViewController,UISearchBarDelegate, UISearchControllerDelegate  {
     
+    let buildingToImageSmall = ["Benson Road":"BEN.png", "BHTC":"BHTC.png",
+        "Edgewater":"ETC.png", "GHQ":"GHQ.png", "Harbortown": "HBT.png",
+        "Hilltop 150":"HTPS.png", "Hilltop 211":"HTPN.png", "MMC":"MMC.png",
+        "R&E":"R&E.png", "Riverview":"RV.png", "St. Joe Tech Center":"SJTC.png",
+        "":"Whirlpool Default.png"]
+    
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var searchbar: UISearchBar!
     var searchActive = false
@@ -56,6 +62,8 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
                 self.tableview.reloadData()
             });
         }
+        tableview.separatorStyle = .SingleLine
+        tableview.separatorColor = UIColor.whiteColor()
     }
     
     override func viewDidLoad()
@@ -152,7 +160,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return 80
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -160,11 +168,15 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 40))
+        let headerView = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 80))
         headerView.backgroundColor = UIColor.whiteColor()
         headerView.tag = section
         
-        let headerString = UILabel(frame: CGRect(x: 10, y: 10, width: tableView.frame.size.width-10, height: 30)) as UILabel
+        let headerImage = UIImageView(image: UIImage(named: sectionTitleArray[section] + ".png"))
+        headerImage.frame = CGRect(x: 10, y: 10, width: 70, height: 70)
+        headerView.addSubview(headerImage)
+        
+        let headerString = UILabel(frame: CGRect(x: 100, y: 20, width: tableView.frame.size.width/3, height: 40)) as UILabel
         headerString.text = sectionTitleArray[section]
         headerView.addSubview(headerString)
         
@@ -186,13 +198,14 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
             //room = filteredRooms[indexPath.row]
             var content = filteredSectionsContent[sectionTitleArray[indexPath.section]]
             room = content![indexPath.row]
-            cell?.backgroundColor = UIColor.lightGrayColor()
+            cell?.backgroundColor = UIColor(red: 218.0/255.0, green: 218.0/255.0, blue: 218.0/255.0, alpha: 1)
         }
         else
         {
             var content = sectionContentDict[sectionTitleArray[indexPath.section]]
             room = content![indexPath.row]
-            cell?.backgroundColor = UIColor.lightGrayColor()
+            cell?.backgroundColor = UIColor(red: 218.0/255.0, green: 218.0/255.0, blue: 218.0/255.0, alpha: 1)
+
         }
         cell!.textLabel?.text = room.GetRoomName()
         return cell!
@@ -226,7 +239,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate, UISearchContro
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
         if(arrayForBool[indexPath.section].boolValue == true || tableView == self.searchDisplayController?.searchResultsTableView){
-            return screenSize.height * 0.16
+            return 50
         }
         
         return 2

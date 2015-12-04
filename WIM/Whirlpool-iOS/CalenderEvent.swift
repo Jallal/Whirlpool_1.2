@@ -71,7 +71,7 @@ class CalenderEvent {
         else {
             //Return the minutes specifically if it is less than an hour
             if time < 1.0 {
-                let finalTime = Int(time * 100)
+                let finalTime = Int(time * 60)
                 if finalTime < 0 {
                 return NSString(format: "Now") as String
                 }
