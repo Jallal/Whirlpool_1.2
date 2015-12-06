@@ -414,12 +414,12 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="200" id="BVh-Rx-JsP"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Whirlpool Default - L" translatesAutoresizingMaskIntoConstraints="NO" id="9FP-Gr-ocn">
-                                                    <rect key="frame" x="8" y="0.0" width="86" height="86"/>
+                                                    <rect key="frame" x="15" y="0.0" width="86" height="86"/>
                                                     <animations/>
                                                 </imageView>
                                             </subviews>
@@ -427,7 +427,7 @@
                                             <constraints>
                                                 <constraint firstItem="YPZ-dg-r5L" firstAttribute="top" secondItem="BfO-6m-IhH" secondAttribute="bottom" constant="1" id="EqK-gg-T9Q"/>
                                                 <constraint firstItem="YPZ-dg-r5L" firstAttribute="top" secondItem="BfO-6m-IhH" secondAttribute="bottom" constant="1" id="L2z-sy-TlP"/>
-                                                <constraint firstItem="Hno-L5-NvR" firstAttribute="leading" secondItem="9FP-Gr-ocn" secondAttribute="trailing" constant="21" id="LAb-Ap-JUZ"/>
+                                                <constraint firstItem="Hno-L5-NvR" firstAttribute="leading" secondItem="9FP-Gr-ocn" secondAttribute="trailing" constant="14" id="LAb-Ap-JUZ"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="NuT-Pz-Bwp" secondAttribute="trailing" id="Nse-V5-KC9"/>
                                                 <constraint firstItem="9FP-Gr-ocn" firstAttribute="centerY" secondItem="ajO-sG-DOV" secondAttribute="centerY" constant="-1.75" id="OdW-wv-RWy"/>
                                                 <constraint firstItem="9FP-Gr-ocn" firstAttribute="centerY" secondItem="BfO-6m-IhH" secondAttribute="centerY" constant="13" id="a8q-lJ-4Wi"/>
@@ -435,8 +435,8 @@
                                                 <constraint firstItem="Hno-L5-NvR" firstAttribute="top" secondItem="NuT-Pz-Bwp" secondAttribute="bottom" constant="38" id="cRI-ad-d1a"/>
                                                 <constraint firstItem="NuT-Pz-Bwp" firstAttribute="top" secondItem="ajO-sG-DOV" secondAttribute="topMargin" constant="-8" id="kqE-t8-H1q"/>
                                                 <constraint firstItem="Hno-L5-NvR" firstAttribute="top" secondItem="YPZ-dg-r5L" secondAttribute="bottom" constant="1" id="reZ-7E-tzo"/>
-                                                <constraint firstItem="YPZ-dg-r5L" firstAttribute="leading" secondItem="9FP-Gr-ocn" secondAttribute="trailing" constant="21" id="tOc-iI-C3g"/>
-                                                <constraint firstItem="BfO-6m-IhH" firstAttribute="leading" secondItem="9FP-Gr-ocn" secondAttribute="trailing" constant="21" id="w9E-xC-J6Z"/>
+                                                <constraint firstItem="YPZ-dg-r5L" firstAttribute="leading" secondItem="9FP-Gr-ocn" secondAttribute="trailing" constant="14" id="tOc-iI-C3g"/>
+                                                <constraint firstItem="BfO-6m-IhH" firstAttribute="leading" secondItem="9FP-Gr-ocn" secondAttribute="trailing" constant="14" id="w9E-xC-J6Z"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
@@ -764,15 +764,27 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fuR-Yv-Gt5">
+                                <rect key="frame" x="270" y="390" width="70" height="70"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="MBy-eg-W6a"/>
+                                    <constraint firstAttribute="height" constant="70" id="VT3-yo-LAh"/>
+                                </constraints>
+                                <size key="titleShadowOffset" width="2.2250738585072014e-308" height="2.2250738585072014e-308"/>
+                                <state key="normal" image="Go">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eun-21-5NG">
-                                <rect key="frame" x="527" y="390" width="48" height="38"/>
+                                <rect key="frame" x="537" y="418" width="42" height="42"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="38" id="2WY-1n-clH"/>
-                                    <constraint firstAttribute="width" constant="48" id="xPi-VT-YRo"/>
+                                    <constraint firstAttribute="height" constant="42" id="2WY-1n-clH"/>
+                                    <constraint firstAttribute="width" constant="42" id="xPi-VT-YRo"/>
                                 </constraints>
-                                <state key="normal" title="Help" image="info"/>
+                                <state key="normal" image="info"/>
                                 <connections>
                                     <action selector="helpButton:" destination="9rI-gr-NXP" eventType="touchUpInside" id="FA4-VV-zkG"/>
                                 </connections>
@@ -917,20 +929,22 @@
                             <constraint firstAttribute="trailingMargin" secondItem="tb2-2t-ibB" secondAttribute="trailing" constant="1" id="6XH-5n-h1O"/>
                             <constraint firstItem="qi9-Rn-eWx" firstAttribute="top" secondItem="SqD-OQ-6As" secondAttribute="bottom" id="7IU-0a-Wq3"/>
                             <constraint firstItem="60y-Wl-ImA" firstAttribute="top" secondItem="HmC-MI-LrU" secondAttribute="top" id="7tV-Xw-Ahb"/>
+                            <constraint firstItem="fuR-Yv-Gt5" firstAttribute="centerX" secondItem="HmC-MI-LrU" secondAttribute="centerX" constant="5" id="9tS-EB-Nm6"/>
                             <constraint firstItem="SqD-OQ-6As" firstAttribute="top" secondItem="y2D-om-kpF" secondAttribute="bottom" constant="267" id="AU0-D7-pv3"/>
                             <constraint firstItem="y2D-om-kpF" firstAttribute="leading" secondItem="HmC-MI-LrU" secondAttribute="leadingMargin" constant="-20" id="EOH-9T-bbD"/>
-                            <constraint firstItem="qi9-Rn-eWx" firstAttribute="top" secondItem="eun-21-5NG" secondAttribute="bottom" constant="108" id="Ez4-xj-ySC"/>
+                            <constraint firstItem="qi9-Rn-eWx" firstAttribute="top" secondItem="eun-21-5NG" secondAttribute="bottom" constant="76" id="Ez4-xj-ySC"/>
                             <constraint firstItem="y2D-om-kpF" firstAttribute="top" secondItem="hpT-RI-zUT" secondAttribute="bottom" constant="1" id="FRw-PM-H8Y"/>
                             <constraint firstItem="SqD-OQ-6As" firstAttribute="top" secondItem="tb2-2t-ibB" secondAttribute="bottom" constant="3" id="KvX-zh-nan"/>
                             <constraint firstItem="60y-Wl-ImA" firstAttribute="leading" secondItem="HmC-MI-LrU" secondAttribute="leadingMargin" constant="-24" id="MNp-L5-I7Z"/>
                             <constraint firstItem="SqD-OQ-6As" firstAttribute="centerX" secondItem="HmC-MI-LrU" secondAttribute="centerX" id="Vin-og-bXZ"/>
                             <constraint firstItem="tb2-2t-ibB" firstAttribute="top" secondItem="y2D-om-kpF" secondAttribute="bottom" constant="36" id="Wjg-Dj-cQ2"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="eun-21-5NG" secondAttribute="trailing" constant="5" id="Zi1-DE-Zij"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eun-21-5NG" secondAttribute="trailing" constant="1" id="Zi1-DE-Zij"/>
                             <constraint firstItem="60y-Wl-ImA" firstAttribute="bottom" secondItem="qi9-Rn-eWx" secondAttribute="top" id="aDb-IB-7wu"/>
                             <constraint firstItem="tb2-2t-ibB" firstAttribute="centerY" secondItem="HmC-MI-LrU" secondAttribute="centerY" constant="-80" id="dEY-j2-eRR"/>
                             <constraint firstItem="5Ic-ZL-uKD" firstAttribute="centerY" secondItem="HmC-MI-LrU" secondAttribute="centerY" id="m17-dM-nKL"/>
                             <constraint firstItem="SqD-OQ-6As" firstAttribute="width" secondItem="HmC-MI-LrU" secondAttribute="width" id="oeT-e1-vrM"/>
                             <constraint firstAttribute="trailing" secondItem="60y-Wl-ImA" secondAttribute="trailing" id="p0f-Vt-uTF"/>
+                            <constraint firstItem="qi9-Rn-eWx" firstAttribute="top" secondItem="fuR-Yv-Gt5" secondAttribute="bottom" constant="76" id="vpf-w7-TOe"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="BtI-fA-a3g" appends="YES" id="Apu-Mh-QRb"/>
@@ -956,6 +970,7 @@
                         <outlet property="bookingButton" destination="NoS-GW-2lX" id="Tyq-kp-UQC"/>
                         <outlet property="buttomView" destination="SqD-OQ-6As" id="vw3-6B-8gs"/>
                         <outlet property="floorPicker" destination="tb2-2t-ibB" id="yUB-9l-Z2u"/>
+                        <outlet property="goButton" destination="fuR-Yv-Gt5" id="zE3-z9-PKA"/>
                         <outlet property="helpButton" destination="eun-21-5NG" id="box-KJ-f9U"/>
                         <outlet property="mapPin" destination="5Ic-ZL-uKD" id="gPQ-8r-o2b"/>
                         <outlet property="mapView" destination="60y-Wl-ImA" id="V48-Cv-dyy"/>
@@ -1022,17 +1037,18 @@
         <image name="Add Event Button" width="74" height="73"/>
         <image name="BookRoom" width="21" height="24"/>
         <image name="Favorite" width="24" height="20"/>
+        <image name="Go" width="70" height="70"/>
         <image name="Hamburger 2.0" width="20" height="18"/>
         <image name="Location Start" width="20" height="29"/>
         <image name="Navigation" width="14" height="26"/>
         <image name="Time Symbol" width="24" height="24"/>
         <image name="Whirlpool Default" width="64" height="64"/>
-        <image name="Whirlpool Default - L" width="76" height="78"/>
+        <image name="Whirlpool Default - L" width="77" height="77"/>
         <image name="Whirlpool Logo Banner" width="237" height="135"/>
-        <image name="info" width="36" height="46"/>
+        <image name="info" width="42" height="42"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="OV2-DF-bGW"/>
         <segue reference="ntx-bz-kGd"/>
+        <segue reference="dRV-Fk-sZx"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -23,6 +23,13 @@ extension NSDate {
 
 class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
+    struct busyTime {
+        let start: NSDate
+        let end: NSDate
+        let startString: String
+        let endString: String
+    }
+    
     @IBOutlet weak var addEventTableView: UITableView!
     var editingEventBool = false
     var editingEvent:CalenderEvent?
@@ -47,6 +54,7 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
     var eventTitle:String?
     var locationTitle:String?
     var descriptionTitle:String?
+    var _roomFreeBusyTimes = [busyTime]()
 
     @IBAction func buttonCancel(sender: AnyObject) {
         checkObservers()
@@ -56,14 +64,15 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         if editingEventBool {
             let editedEvent = createAnEvent()
             addEditedEvent(editedEvent)
+            checkObservers()
+            self.navigationController?.popToRootViewControllerAnimated(true)
         }
         else {
             let newEvent = createAnEvent()
-            addNewEvent(newEvent)
-            checkFreeBusyTime()
+            checkFreeBusyTime(newEvent)
         }
-        checkObservers()
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        
+        
     }
     
     func checkObservers(){
@@ -75,6 +84,14 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         }
     }
     
+    func checkIntervalOverlap()->Bool{
+        for i in 0..._roomFreeBusyTimes.count-1{
+            if((startDate?.timeIntervalSinceReferenceDate < _roomFreeBusyTimes[i].end.timeIntervalSinceReferenceDate) && (endDate?.timeIntervalSinceReferenceDate > _roomFreeBusyTimes[i].start.timeIntervalSinceReferenceDate)){
+                return true
+            }
+        }
+        return false
+    }
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
@@ -137,6 +154,7 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         addEventTicket = service.executeQuery(query, completionHandler: { (ticket, object, error) -> Void in
             if error == nil {
                 print("Added Sucessfully")
+                self.dismissViewControllerAnimated(true, completion: nil)
             }
             else {
                 NSLog(error.localizedDescription)
@@ -157,28 +175,75 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         })
     }
     
-    func checkFreeBusyTime(){
+    func checkFreeBusyTime(event: GTLCalendarEvent){
         if guest != String(){
+            var freeBusyTicket = GTLServiceTicket()
             let requestItem = GTLCalendarFreeBusyRequestItem()
             requestItem.identifier = guest
             
-            var freeBusyTicket = GTLServiceTicket()
-            let query =  GTLQueryCalendar.queryForFreebusyQuery()
+            let now = GTLDateTime(date: startDate, timeZone: NSTimeZone.localTimeZone())
+            print(NSTimeZone.localTimeZone())
+            let endOfDay = GTLDateTime(date: NSDate().dateByAddingTimeInterval(60.0 * 60.0 * 24.0 * 1), timeZone: NSTimeZone.localTimeZone())
+            
+            let query = GTLQueryCalendar.queryForFreebusyQuery()
             query.items = [requestItem]
-            query.maxResults = 10
-            query.timeMin = GTLDateTime(date: startDate!, timeZone: NSTimeZone.localTimeZone())
-            query.timeMax = GTLDateTime(date: NSDate().endOfDay!, timeZone: NSTimeZone.localTimeZone())
+            query.timeZone = NSTimeZone.localTimeZone().name
+            query.maxResults = 20
+            query.timeMin = now
+            query.timeMax = endOfDay
+            query.singleEvents = true
             freeBusyTicket = service.executeQuery(query, completionHandler: { (ticket, object, error) -> Void in
                 if error == nil {
-                    print("These are the busy times")
-                    let response = object as! GTLCalendarFreeBusyResponse
-                    let responseCals = response.calendars
-                    let properties = responseCals.additionalProperties()
+                    let freeBusyResponse = object as! GTLCalendarFreeBusyResponse
+                    let responseCal = freeBusyResponse.calendars
+                    var properties = responseCal.additionalProperties()
+                    let calBusyTimes = properties[self.guest]?.busy
+                    if calBusyTimes! != nil {
+                        for period in calBusyTimes! {
+                            print(period.start as GTLDateTime)
+                            print(period.end as GTLDateTime)
+                            let convStartDate = period.start as GTLDateTime
+                            let convEndDate = period.end as GTLDateTime
+                            let finStartDate = NSDateFormatter.localizedStringFromDate(convStartDate.date, dateStyle: NSDateFormatterStyle.ShortStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
+                            let finEndDate = NSDateFormatter.localizedStringFromDate(convEndDate.date, dateStyle: NSDateFormatterStyle.ShortStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
+                            let tempBusy = busyTime.init(start: convStartDate.date, end: convEndDate.date, startString: finStartDate, endString: finEndDate)
+                            self._roomFreeBusyTimes.append(tempBusy)
+                        }
+                    }
+                    if self.checkIntervalOverlap() {
+                        self.presentBusyAlert(event)
+                    }
+                    else{
+                        self.checkObservers()
+                        self.addNewEvent(event)
+                    }
                 }
                 else {
-                    NSLog(error.localizedDescription)
+                    print("Error: ", error)
+                    return
                 }
             })
+        }
+    }
+    
+    func presentBusyAlert(event: GTLCalendarEvent){
+        var message = String()
+        for i in 0..._roomFreeBusyTimes.count-1{
+            message += _roomFreeBusyTimes[i].startString + "-" + _roomFreeBusyTimes[i].endString + "\n"
+        }
+        let alertController = UIAlertController(title: "Busy Times", message: message, preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+        alertController.addAction(cancelAction)
+        
+        let destroyAction = UIAlertAction(title: "Book Anyways", style: .Destructive) { (action) in
+            self.checkObservers()
+            self.addNewEvent(event)
+        }
+        alertController.addAction(destroyAction)
+        presentViewController(alertController, animated: true) { () -> Void in
         }
     }
 
