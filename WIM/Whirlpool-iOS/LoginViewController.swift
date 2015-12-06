@@ -51,8 +51,16 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             clientSecret: kClientSecret
         )
         googleAuth = auth
+        
+    
+        
+        
+     
+        
+        
           if(KeychainHelper.get(kKeychainItemName) != nil){
-            KeychainHelper.set(googleAuth.clientID, value:googleAuth.clientSecret)
+            KeychainHelper.set("email", value:googleAuth.userEmail)
+              KeychainHelper.set("password", value:googleAuth.userID)
             
         }
                  
@@ -114,7 +122,8 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
         }
         
         
-
+        //STORE THE DATA IN THE KEYCHAIN
+    
         
     }
     
@@ -140,6 +149,9 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
     
     // Display the start dates and event summaries in the UITextView
     public func displayResultWithTicket(
+       
+   
+        
         ticket: GTLServiceTicket,
         finishedWithObject events : GTLCalendarEvents?,
         error : NSError?) {
@@ -180,7 +192,6 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
                     eventString = "No upcoming events found."
                 }
             }
-            //output.text = eventString
             
             //self.httpCall()
             self.performSegueWithIdentifier("MainPage", sender: nil)
@@ -199,6 +210,9 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             delegate: self,
             finishedSelector: "viewController:finishedWithAuth:error:"
         )
+        
+        
+       
     }
     
     // Handle completion of the authorization process, and update the Google Calendar API
@@ -252,6 +266,7 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
                 att = attributeDict
             }
         }
+     
         
 
         
@@ -259,6 +274,8 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
     
     public func parser(parser: NSXMLParser, foundCharacters string: String)
     {
+        
+      
         
         if element == ("apps:property") {
             if resName.rangeOfString("US - Benton Harbor") != nil {
@@ -290,6 +307,10 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
     }
     
     func getAbbr(location: String)->String{
+        
+        
+        
+  
         switch location {
         case "Riverview":
                 return "BHR"
