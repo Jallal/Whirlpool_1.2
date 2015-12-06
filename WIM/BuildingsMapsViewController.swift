@@ -58,6 +58,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     //Current location for the user
     @IBOutlet weak var Address: UILabel!
     //The map object
+    @IBOutlet weak var goButton: UIButton!
     @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var BottomMapView: UIView!
     @IBOutlet weak var tableView: UITableView!
@@ -175,6 +176,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     @IBAction func getDirections(sender: AnyObject) {
         self.mapPin.hidden = !self.mapPin.hidden
+        self.goButton.hidden = !self.goButton.hidden
         self.Address.hidden = !self.Address.hidden
         self.buttomView.hidden = true
         
@@ -199,8 +201,9 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         self.mapPin.hidden = true;
         self.floorPicker.hidden = true
         self.Address.hidden = true
-        mapPin.userInteractionEnabled = true
-        mapPin.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "buttonTapped:"))
+        mapPin.userInteractionEnabled = false
+        goButton.hidden = true
+        goButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "buttonTapped:"))
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         //Get the windows size infomation
         let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -250,6 +253,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         self.helpButton = nil
         self.bookingButton = nil
         self.mapPin = nil
+        self.goButton = nil
     }
     
     //The number of floors in the given building
@@ -269,7 +273,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         if status == .AuthorizedWhenInUse {
             locationManager.startUpdatingLocation()
             mapView.myLocationEnabled = true
-            mapView.settings.myLocationButton = true
+            mapView.settings.myLocationButton = false
             mapView.settings.compassButton = true
             
         }
@@ -334,7 +338,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             
             locationManager.startUpdatingLocation()
             self.mapView.myLocationEnabled = true
-            self.mapView.settings.myLocationButton = true
+            self.mapView.settings.myLocationButton = false
         }else{
             locationManager.startUpdatingLocation()
             self.mapView.settings.myLocationButton = false
@@ -435,13 +439,13 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                         if(room.GetRoomName()=="HW"){
                             polygon.fillColor  = UIColor.whiteColor()
                         }
-                        if(room.GetRoomStatus()=="Open"){
+                        if(room.GetRoomStatus()=="N"){
                             
-                            polygon.fillColor = UIColor(red: 27/255.0, green: 188/255.0, blue: 155/255.0, alpha: 1.0)// open conferance rooms
+                            polygon.fillColor = UIColor(red: 27/255.0, green: 188/255.0, blue: 155/255.0, alpha: 1.0)// busy conferance rooms
                         }
-                        if(room.GetRoomStatus()=="Busy"){
+                        if(room.GetRoomStatus()=="Y"){
                             
-                            polygon.fillColor = UIColor(red: 211/255.0, green: 84/255.0, blue:0/255.0, alpha: 1.0)// busy conferance rooms
+                            polygon.fillColor = UIColor(red: 211/255.0, green: 84/255.0, blue:0/255.0, alpha: 1.0)// open conferance rooms
                         }
                         polygon.strokeColor = UIColor(red:(108/255.0), green:(122/255.0), blue:(137/255.0), alpha:1.0);
                         polygon.strokeWidth = 0.5
@@ -799,6 +803,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
         let path1 = GMSMutablePath()
         self.mapPin.hidden = true
+        self.goButton.hidden = true
         
         for node in p.ActualPath {
             path1.addCoordinate(node.location)
@@ -819,6 +824,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         
         let path1 = GMSMutablePath()
         self.mapPin.hidden = true
+        self.goButton.hidden = true
         let pos = self._StartingLocation.GetroomCenter()
         let marker = GMSMarker(position: pos)
         marker.icon = UIImage(named: "Location Start.png")

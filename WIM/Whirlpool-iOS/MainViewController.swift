@@ -204,8 +204,8 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var calenderInfoTable = _userCalenderInfo?.getCalenderInfo()
         let cell = tableView.dequeueReusableCellWithIdentifier("CalenderCellID") as! CalenderCell
-        cell.dateLabelCalender!.font = UIFont(name: "HelveticaNeue-Thin", size: 12.0)
-        cell.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 20.0)
+        cell.dateLabelCalender!.font = UIFont(name: "HelveticaNeue-Thin", size: 10.0)
+        cell.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 16.0)
         cell.titleLabel!.textColor = UIColor.blackColor()
         cell.dateLabelCalender!.textColor = UIColor.blackColor()
         cell.titleLabel!.text =  calenderInfoTable![indexPath.row].title
