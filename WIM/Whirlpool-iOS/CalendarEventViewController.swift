@@ -224,6 +224,10 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
                 }
             })
         }
+        else{
+            self.checkObservers()
+            self.addNewEvent(event)
+        }
     }
     
     func presentBusyAlert(event: GTLCalendarEvent){
