@@ -216,8 +216,14 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                         self.CurrentFloor =  self._building.getFloorInBuilding(self.PassedFloorNumber)
                         self.Invalidate(self.PassedFloorNumber)
                     }
-                    self.CurrentFloor =  self._building.getFloorInBuilding(self._room.GetRoomFloor()!)
-                    self.Invalidate(self._room.GetRoomFloor()!)
+                    if self._room.GetRoomFloor() != nil {
+                        self.CurrentFloor =  self._building.getFloorInBuilding(self._room.GetRoomFloor()!)
+                        self.Invalidate(self._room.GetRoomFloor()!)
+                    }
+                    else{
+                        self.CurrentFloor =  self._building.getFloorInBuilding(1)
+                        self.Invalidate(1)
+                    }
                 }
                 self.updateLocation(true)
             });

@@ -1,0 +1,32 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "AAF8EF9A436AFEC75196FAB3945D2ABA5051A5E6",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "052f66bb-8366-e9ed-b056-95094e25c79e++505" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "AAF8EF9A436AFEC75196FAB3945D2ABA5051A5E6" : 0,
+    "052f66bb-8366-e9ed-b056-95094e25c79e++505" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "C817934F-1E7D-44DE-B159-BF5736AF2177",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "AAF8EF9A436AFEC75196FAB3945D2ABA5051A5E6" : "Whirlpool_1.2\/",
+    "052f66bb-8366-e9ed-b056-95094e25c79e++505" : "Whirlpool_1.2\/google-api-objectivec-client\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "WIM",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "WIM\/WIM.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/google-api-objectivec-client.googlecode.com\/svn",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "052f66bb-8366-e9ed-b056-95094e25c79e++505"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Jallal\/Whirlpool_1.2.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "AAF8EF9A436AFEC75196FAB3945D2ABA5051A5E6"
+    }
+  ]
+}

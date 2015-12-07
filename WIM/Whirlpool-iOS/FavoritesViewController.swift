@@ -140,6 +140,26 @@ class FavoriteViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        // 1
+        let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "\t" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+            do{
+                let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
+                let context = appDel.managedObjectContext
+                context.deleteObject(self._favorites[indexPath.row] as NSManagedObject)
+                self._favorites.removeAtIndex(indexPath.row)
+                try context.save()
+            } catch {
+                
+            }
+            self.relevant.reloadData()
+        })
+        
+        deleteAction.backgroundColor = UIColor(patternImage: UIImage(named: "Delete + Shape.png")!)
+        return [deleteAction]
+    }
+
+    
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
     }
