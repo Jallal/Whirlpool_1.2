@@ -225,28 +225,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="199.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Email: " textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="8KP-bg-Evo">
-                                                    <rect key="frame" x="10" y="140" width="240" height="55"/>
-                                                    <animations/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="240" id="Y7T-yT-VnR"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Whirlpool Logo Banner" translatesAutoresizingMaskIntoConstraints="NO" id="7FZ-Lu-7iF">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Whirlpool Logo Banner" translatesAutoresizingMaskIntoConstraints="NO" id="7FZ-Lu-7iF">
                                                     <rect key="frame" x="10" y="8" width="240" height="135"/>
                                                     <animations/>
                                                 </imageView>
                                             </subviews>
                                             <animations/>
                                             <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="8KP-bg-Evo" secondAttribute="bottom" constant="-3.5" id="0Yz-xQ-mcI"/>
                                                 <constraint firstAttribute="topMargin" secondItem="7FZ-Lu-7iF" secondAttribute="top" id="dLR-7t-gnf"/>
                                                 <constraint firstItem="7FZ-Lu-7iF" firstAttribute="leading" secondItem="IYr-VJ-Mxr" secondAttribute="leadingMargin" constant="2" id="dZS-Px-lzM"/>
-                                                <constraint firstItem="8KP-bg-Evo" firstAttribute="top" secondItem="7FZ-Lu-7iF" secondAttribute="bottom" constant="-3" id="n7R-hP-95h"/>
-                                                <constraint firstItem="8KP-bg-Evo" firstAttribute="leading" secondItem="IYr-VJ-Mxr" secondAttribute="leadingMargin" constant="2" id="pvm-p5-hPj"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
@@ -346,7 +333,6 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="emailLabel" destination="8KP-bg-Evo" id="YUh-Yh-U4K"/>
                         <outlet property="hamburgerMenu" destination="rGE-b3-BgS" id="4zR-Hm-1Wh"/>
                     </connections>
                 </tableViewController>

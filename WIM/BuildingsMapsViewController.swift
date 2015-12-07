@@ -80,15 +80,33 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                 self.populateFloors()
                 self.floorPicker.reloadData()
                 self.CurrentFloor =  self._building.getFloorInBuilding(self.PassedFloorNumber)
-                self.Invalidate(self.PassedFloorNumber)
+//                self.Invalidate(self.PassedFloorNumber)
             });
             if _room.GetRoomName() != String() {
                 dispatch_async(dispatch_get_main_queue(),{
-                    self._room = self._building.getARoomInBuilding(self.CurrentBuilding, roomName: self._room.GetRoomName())
-                    self._room.SetIsSelected(true)
-                    self.Invalidate(self._room.GetRoomFloor())
+                    for x in (self._buildings._buildings[self.CurrentBuilding]?._floors)!{
+                        if x._rooms[self._room.GetRoomName()] != nil {
+                            self._room = x._rooms[self._room.GetRoomName()]!
+                            self._room.SetIsSelected(true)
+                            self.PassedFloorNumber = self._room.GetRoomFloor()!
+                            self.CurrentFloor =  self._building.getFloorInBuilding(self.PassedFloorNumber)
+                            //self.Invalidate(self.PassedFloorNumber)
+                        }
+                    }
                 });
             }
+            dispatch_async(dispatch_get_main_queue(),{
+//                if self._room.GetRoomFloor() == Int(){
+//                    self.Invalidate(1)
+//                }
+                if let roomFloor = self._room.GetRoomFloor(){
+                    self.Invalidate(roomFloor)
+                }
+                else{
+                    self.Invalidate(1)
+                }
+            });
+            self._buildings._buildings[CurrentBuilding]?.buildingStartRoomUpdateTimer()
         }else{
             dispatch_async(dispatch_get_main_queue(),{
                 self.MapUnderConstructions(" Map Under Construction ")
@@ -112,6 +130,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                 self.buttomView.center = CGPoint(x:self.buttomView.center.x,
                     y:self.buttomView.center.y + translation.y)
             }
+            
         }
         sender.setTranslation(CGPointZero, inView: self.buttomView)
         
@@ -178,12 +197,31 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         self.mapPin.hidden = !self.mapPin.hidden
         self.goButton.hidden = !self.goButton.hidden
         self.Address.hidden = !self.Address.hidden
-        self.buttomView.hidden = true
+        self.buttomView.hidden = true//!self.buttomView.hidden
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            self.Invalidate(self.CurrentFloor._floorNumber)
+        }
         
     }
     
     func buildingAbbsHaveBeenLoaded(){
         
+    }
+    
+    func buildingUpdated() {
+        if(self.Address.hidden){
+            dispatch_async(dispatch_get_main_queue(),{
+                if self._building != nil {
+                    if self.PassedFloorNumber != 0 {
+                        self.CurrentFloor =  self._building.getFloorInBuilding(self.PassedFloorNumber)
+                        self.Invalidate(self.PassedFloorNumber)
+                    }
+                    self.CurrentFloor =  self._building.getFloorInBuilding(self._room.GetRoomFloor()!)
+                    self.Invalidate(self._room.GetRoomFloor()!)
+                }
+                self.updateLocation(true)
+            });
+        }
     }
     
     
@@ -243,6 +281,9 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     //Destroy objects in here before leaving the view to free up memory
     func clearMemory(){
         self._building = nil
+        for (buildingName, building) in self._buildings._buildings{
+            building.removeTimer()
+        }
         self._buildings = nil
         self.mapView.clear()
         self.mapView = nil
@@ -289,14 +330,14 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             LoadingView.hide()
             position = CLLocationCoordinate2D(latitude: self._room.GetroomCenter().latitude, longitude: self._room.GetroomCenter().longitude)
             self._room.SetIsSelected(true)
-            self.CurrentFloor.SetFloorNumber(self._room.GetRoomFloor())
+            self.CurrentFloor.SetFloorNumber(self._room.GetRoomFloor()!)
             
             
         }else if(self._building != nil){
             LoadingView.hide()
             self._room  = self._building.getARoomInBuilding(self.CurrentBuilding)
             position = CLLocationCoordinate2D(latitude: self._room.GetroomCenter().latitude, longitude: self._room.GetroomCenter().longitude)
-            self.CurrentFloor.SetFloorNumber(self._room.GetRoomFloor())
+            self.CurrentFloor.SetFloorNumber(self._room.GetRoomFloor()!)
             
         }
         if((position.latitude != 0) && (position.longitude != 0)){
@@ -326,7 +367,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         if _room.GetRoomName() != "" {
             roomLabel.text = _room.GetRoomName()
         }
-        updateLocation(true)
     }
     
     
@@ -375,7 +415,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         geocoder.reverseGeocodeCoordinate(coordinate) { response, error in
             if(!self.mapPin.hidden){
                 for floorClass in self._building.getFloors() {
-                    for room in floorClass.getRoomsInFloor(){
+                    for (roomName,room) in floorClass.getRoomsInFloor(){
                         for rect in room.GetRoomCoordinates(){
                             if(GMSGeometryContainsLocation(coordinate,rect, true)){
                                 if(self.CurrentFloor.getFloorNumber() == room.GetRoomFloor()){
@@ -409,7 +449,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     func updateUIMap(floor : Int){
         for floorClass in self._building.getFloors() {
             if(floorClass._floorNumber==floor){
-                for room in floorClass.getRoomsInFloor(){
+                for (roomName,room) in floorClass.getRoomsInFloor(){
                     for rect in room.GetRoomCoordinates(){
                         //Label HW and restroom with different colors
                         let polygon = GMSPolygon(path: rect)
@@ -429,14 +469,14 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                         }else{
                             polygon.fillColor = UIColor(red:(255/255.0), green:249/255.0, blue:236/255.0, alpha:1.0);
                         }
-                        if((room.GetRoomName()=="WB") || (room.GetRoomName()=="MB") ){
+                        if((room.GetRoomType()=="WB") || (room.GetRoomType()=="MB") ){
                             polygon.fillColor = UIColor(red: 234/255.0, green: 230/255.0, blue: 245/255.0, alpha: 1.0)//purple color
                         }
-                        if((room.GetRoomName()=="STR") || (room.GetRoomName()=="ELV") ){
+                        if((room.GetRoomType()=="STR") || (room.GetRoomType()=="ELV") ){
                             polygon.fillColor = UIColor(red: 234/255.0, green: 230/255.0, blue: 245/255.0, alpha: 1.0)//purple color
                         }
                         
-                        if(room.GetRoomName()=="HW"){
+                        if(room.GetRoomType()=="HW"){
                             polygon.fillColor  = UIColor.whiteColor()
                         }
                         if(room.GetRoomStatus()=="N"){
@@ -455,35 +495,35 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                         
                         
                         // Add imge to the bathrooms and Exit/entrance
-                        if(room.GetRoomName()=="WB"){
+                        if(room.GetRoomType()=="WB"){
                             let icon = UIImage(named: "accessibility womans.png")
                             let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
                             overlay.bearing = -10
                             overlay.map = self.mapView
-                        }else if(room.GetRoomName()=="MB"){
+                        }else if(room.GetRoomType()=="MB"){
                             let icon = UIImage(named: "accessibility mens.png")
                             let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
                             overlay.bearing = -15
                             overlay.map = self.mapView
-                        }else if(room.GetRoomName()=="STR"){
+                        }else if(room.GetRoomType()=="STR"){
                             let icon = UIImage(named: "sort.png")
                             //UIColor(red:(244/255.0), green:(179/255.0), blue:(80/255.0), alpha:1.0);
                             let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
                             overlay.bearing = -15
                             overlay.map = self.mapView
                             
-                        }else if(room.GetRoomName()=="ELV"){
+                        }else if(room.GetRoomType()=="ELV"){
                             let icon = UIImage(named: "Elevator.png")
                             let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
                             overlay.bearing = -10
                             overlay.map = self.mapView
                             
-                        }else if(room.GetRoomName()=="EXT"){
+                        }else if(room.GetRoomType()=="EXT"){
                             let icon = UIImage(named: "exit.jpg")
                             let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
                             overlay.bearing = -10
                             overlay.map = self.mapView
-                        }else if(room.GetRoomName()=="UX"){
+                        }else if(room.GetRoomType()=="UX"){
                             let icon = UIImage(named: "UX.jpg")
                             let overlay = GMSGroundOverlay(position: room.GetroomCenter(), icon: icon, zoomLevel:20)
                             overlay.bearing = -10
@@ -511,7 +551,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     func mapView(mapView: GMSMapView!, didTapOverlay overlay: GMSOverlay!) {
         for floorClass in self._building.getFloors() {
             
-            for room in floorClass.getRoomsInFloor(){
+            for (roomName,room) in floorClass.getRoomsInFloor(){
                 if(room.GetRoomName() == overlay.title){
                     room.SetIsSelected(true);
                 }else{
@@ -852,7 +892,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     /* The function that handels dismissing the notification during navigation*/
     func onClick_ok(){
-        var EndingFloor  = self._building.getFloorInBuilding(self._EndNav.GetRoomFloor())
+        var EndingFloor  = self._building.getFloorInBuilding(self._EndNav.GetRoomFloor()!)
         var startingFloor =  self.CurrentFloor
         
         if(self.ok_button.titleLabel?.text == "Yes"){
