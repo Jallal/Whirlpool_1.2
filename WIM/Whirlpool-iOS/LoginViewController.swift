@@ -10,7 +10,7 @@ import UIKit
 
 var _userCalenderInfo: UserCalenderInfo?
 var service = GTLServiceCalendar()
-var googleAuth = GTMOAuth2Authentication()
+//var googleAuth = GTMOAuth2Authentication()
 
 
 public class LoginViewController: UIViewController , NSXMLParserDelegate{
@@ -45,66 +45,72 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
         
         self.GoogleView.addSubview(output);
         
-        let auth = GTMOAuth2ViewControllerTouch.authForGoogleFromKeychainForName(
-            kKeychainItemName,
-            clientID: kClientID,
-            clientSecret: kClientSecret
-        )
-        googleAuth = auth
+//        let auth = GTMOAuth2ViewControllerTouch.authForGoogleFromKeychainForName(
+//            kKeychainItemName,
+//            clientID: kClientID,
+//            clientSecret: kClientSecret
+//        )
+//        googleAuth = auth
         
     
         
-        
+        if let auth = GTMOAuth2ViewControllerTouch.authForGoogleFromKeychainForName(
+            kKeychainItemName,
+            clientID: kClientID,
+            clientSecret: kClientSecret) {
+                service.authorizer = auth
+//                googleAuth = auth
+        }
      
         
         
-          if(KeychainHelper.get(kKeychainItemName) != nil){
-            KeychainHelper.set("email", value:googleAuth.userEmail)
-              KeychainHelper.set("password", value:googleAuth.userID)
-            
-        }
-                 
-    }
-    
-    func httpCall(){
-        let whirlpoolResourceUrl = NSURL(string: nextResourceUrlPage)
-        let request = NSMutableURLRequest(URL: whirlpoolResourceUrl!)
-        request.HTTPMethod = "GET"
-        let headerToken = "Bearer " + accessToken
-        request.allHTTPHeaderFields = ["Authorization" : headerToken]
-        let queue:NSOperationQueue = NSOperationQueue()
-        NSURLConnection.sendAsynchronousRequest(request, queue: queue, completionHandler:{ (response: NSURLResponse?, data: NSData?, error: NSError?) -> Void in
-            var err: NSError?
-            if err?.localizedDescription != nil
-            {
-                print("error:", err?.localizedDescription)
-            }
-            else
-            {
-                do {
-                    self.xmlParser = NSXMLParser(data: data!)
-                    self.xmlParser.delegate = self
-                    self.previousResourceUrlPage = self.nextResourceUrlPage
-                    if self.xmlParser.parse() {
-                        if self.nextResourceUrlPage != self.previousResourceUrlPage {
-                            self.httpCall()
-                        }
-                        else
-                        {
-                            //Make call to database
-                            //self.pushRoomDataToDatabase()
-                            self.performSegueWithIdentifier("MainPage", sender: nil)
-                        }
-                    }
-                    else{
-                        print("Darn xml parser")
-                    }
-                }
-                
-            }
-        })
+//          if(KeychainHelper.get(kKeychainItemName) != nil){
+//            KeychainHelper.set("email", value:googleAuth.userEmail)
+//              KeychainHelper.set("password", value:googleAuth.userID)
+//            
+//        }
         
     }
+    
+//    func httpCall(){
+//        let whirlpoolResourceUrl = NSURL(string: nextResourceUrlPage)
+//        let request = NSMutableURLRequest(URL: whirlpoolResourceUrl!)
+//        request.HTTPMethod = "GET"
+//        let headerToken = "Bearer " + accessToken
+//        request.allHTTPHeaderFields = ["Authorization" : headerToken]
+//        let queue:NSOperationQueue = NSOperationQueue()
+//        NSURLConnection.sendAsynchronousRequest(request, queue: queue, completionHandler:{ (response: NSURLResponse?, data: NSData?, error: NSError?) -> Void in
+//            var err: NSError?
+//            if err?.localizedDescription != nil
+//            {
+//                print("error:", err?.localizedDescription)
+//            }
+//            else
+//            {
+//                do {
+//                    self.xmlParser = NSXMLParser(data: data!)
+//                    self.xmlParser.delegate = self
+//                    self.previousResourceUrlPage = self.nextResourceUrlPage
+//                    if self.xmlParser.parse() {
+//                        if self.nextResourceUrlPage != self.previousResourceUrlPage {
+//                            self.httpCall()
+//                        }
+//                        else
+//                        {
+//                            //Make call to database
+//                            //self.pushRoomDataToDatabase()
+//                            self.performSegueWithIdentifier("MainPage", sender: nil)
+//                        }
+//                    }
+//                    else{
+//                        print("Darn xml parser")
+//                    }
+//                }
+//                
+//            }
+//        })
+//        
+//    }
     
     // When the view appears, ensure that the Google Calendar API service is authorized
     // and perform API calls
@@ -192,8 +198,6 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
                     eventString = "No upcoming events found."
                 }
             }
-            
-            //self.httpCall()
             self.performSegueWithIdentifier("MainPage", sender: nil)
             
     }
@@ -248,84 +252,84 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
     }
     
     
-    public func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
-        
-        if (elementName == "link" && attributeDict["rel"] == "next")  {
-            nextResourceUrlPage = attributeDict["href"]!
-            //print("This is the next Resource Page: " + nextResourceUrlPage)
-        }
-        
-        if (elementName == "apps:property" ){
-            if attributeDict["name"] == "resourceCommonName" {
-                element = elementName
-                att = attributeDict
-                resName = att["value"]!
-            }
-            if attributeDict["name"] == "resourceEmail" {
-                element = elementName
-                att = attributeDict
-            }
-        }
-     
-        
-
-        
-    }
-    
-    public func parser(parser: NSXMLParser, foundCharacters string: String)
-    {
-        
-      
-        
-        if element == ("apps:property") {
-            if resName.rangeOfString("US - Benton Harbor") != nil {
-                resEmail = att["value"]!
-                let tempResName = resName
-                resName = ""
-                let newRoom = RoomData()
-                newRoom.SetRoomEmail(resEmail)
-                newRoom.SetRoomName(tempResName)
-               // _roomsData.addARoom(newRoom)
-            }
-            
-            
-        }
-    }
-    
-    
-    
-    func pushRoomDataToDatabase(){
-        /*for room in _roomsData.getAllRooms() {
-            let roomLongName = room.GetRoomName()
-            var splitRoomName = roomLongName.componentsSeparatedByString("-")
-            
-            if splitRoomName.count >= 4 {
-                let locTemp = getAbbr(splitRoomName[2].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
-                let roomTemp = splitRoomName[3].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-            }
-        }*/
-    }
-    
-    func getAbbr(location: String)->String{
-        
-        
-        
-  
-        switch location {
-        case "Riverview":
-                return "BHR"
-        case "Hilltop 150":
-            return "HIL150"
-        case "Hilltop 211":
-            return "HIL211"
-        case "St. Joe Tech Center":
-            return "SJTech"
-        default:
-            return location
-            
-        }
-    }
-    
+//    public func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+//        
+//        if (elementName == "link" && attributeDict["rel"] == "next")  {
+//            nextResourceUrlPage = attributeDict["href"]!
+//            //print("This is the next Resource Page: " + nextResourceUrlPage)
+//        }
+//        
+//        if (elementName == "apps:property" ){
+//            if attributeDict["name"] == "resourceCommonName" {
+//                element = elementName
+//                att = attributeDict
+//                resName = att["value"]!
+//            }
+//            if attributeDict["name"] == "resourceEmail" {
+//                element = elementName
+//                att = attributeDict
+//            }
+//        }
+//     
+//        
+//
+//        
+//    }
+//    
+//    public func parser(parser: NSXMLParser, foundCharacters string: String)
+//    {
+//        
+//      
+//        
+//        if element == ("apps:property") {
+//            if resName.rangeOfString("US - Benton Harbor") != nil {
+//                resEmail = att["value"]!
+//                let tempResName = resName
+//                resName = ""
+//                let newRoom = RoomData()
+//                newRoom.SetRoomEmail(resEmail)
+//                newRoom.SetRoomName(tempResName)
+//               // _roomsData.addARoom(newRoom)
+//            }
+//            
+//            
+//        }
+//    }
+//    
+//    
+//    
+//    func pushRoomDataToDatabase(){
+//        /*for room in _roomsData.getAllRooms() {
+//            let roomLongName = room.GetRoomName()
+//            var splitRoomName = roomLongName.componentsSeparatedByString("-")
+//            
+//            if splitRoomName.count >= 4 {
+//                let locTemp = getAbbr(splitRoomName[2].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
+//                let roomTemp = splitRoomName[3].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+//            }
+//        }*/
+//    }
+//    
+//    func getAbbr(location: String)->String{
+//        
+//        
+//        
+//  
+//        switch location {
+//        case "Riverview":
+//                return "BHR"
+//        case "Hilltop 150":
+//            return "HIL150"
+//        case "Hilltop 211":
+//            return "HIL211"
+//        case "St. Joe Tech Center":
+//            return "SJTech"
+//        default:
+//            return location
+//            
+//        }
+//    }
+//    
     
     
     
