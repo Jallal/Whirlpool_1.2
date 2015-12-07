@@ -51,9 +51,9 @@ class Path {
     func getVertexElevator(start: CLLocationCoordinate2D, floor: FloorData)-> CLLocationCoordinate2D{
         var NewStart = CLLocationCoordinate2D();
         var smallestLatDifference : Double  = 10000;
-        var AllElevatorsInFloor : [RoomData]
+        var AllElevatorsInFloor : [String:RoomData]
         AllElevatorsInFloor = floor.getElevatorsAndStairsInFloor()
-        for elv in AllElevatorsInFloor{
+        for (elvName,elv) in AllElevatorsInFloor{
             var ver = elv.GetroomCenter()
             var value1 = abs(abs(ver.longitude) - abs(start.longitude)) + abs(ver.latitude-start.latitude)
             

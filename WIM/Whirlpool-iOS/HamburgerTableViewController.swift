@@ -19,7 +19,6 @@ class HamburgerTableViewController: UITableViewController, selectedFavoriteDelag
     var hamburgerSections = [String]()
     var hamburgerSectionsAndBool = [Int:Bool]()
     var _roomToPass:RoomData?
-    @IBOutlet weak var emailLabel: UILabel!
     private let kKeychainItemName = "Google Calendar API"
     private let kClientID = "656758157986-ipeuj79t544atfl6fuuc6ij9q7eqh8mh.apps.googleusercontent.com"
     private let kClientSecret = "9--EmDPAMnvbJFhGbWKQyw1p"
@@ -28,9 +27,6 @@ class HamburgerTableViewController: UITableViewController, selectedFavoriteDelag
         super.viewDidLoad()
         hamburgerMenu.dataSource = self
         hamburgerMenu.delegate = self
-        if googleAuth.userEmail != nil {
-            emailLabel.text = emailLabel.text! + googleAuth.userEmail
-        }
     }
 
     func userSelectedFavorite(favRoom: RoomData) {

@@ -14,13 +14,15 @@ import SwiftyJSON
 protocol buildingsLoadedDelegate {
     func buildingAbbsHaveBeenLoaded()
     func buildingInfoHasBeenLoaded()
+    func buildingUpdated()
 }
 
-class BuildingsData {
+class BuildingsData: buildingsUpdatedDelagate{
     var _buildings = [String:Building]()
     var _buildingAbbr = [String]()
     var _amountOfBuildings: Int?
     var _buildingDelegate: buildingsLoadedDelegate? = nil
+    var (_elvCount, _mbCount, _wbCount, _strCount, _hwCount, _uxCount, _extCount) = (Int(),Int(),Int(),Int(),Int(),Int(),Int())
     var (_maxX, _maxY, _minX, _minY) = (Double(),Double(),Double(),Double())
     let BUILDINGS_URL = "https://whirlpool-indoor-maps.appspot.com/buildings"
     let BUILDING_URL =  "https://whirlpool-indoor-maps.appspot.com/building?building_name="
@@ -43,6 +45,7 @@ class BuildingsData {
     let JSON_TYPE = "type"
     
     
+    
     //This init is used just to populate the abbreviations of buildings
     init(delegate: buildingsLoadedDelegate){
         _buildingDelegate = delegate
@@ -51,6 +54,10 @@ class BuildingsData {
             self.parseOutBuildingInfo(response)
             self._buildingDelegate?.buildingAbbsHaveBeenLoaded()
         }
+    }
+    
+    func doneUpdating() {
+        self._buildingDelegate?.buildingUpdated()
     }
     
     //This init is used to grab data for a building by abbreviation, checks abbreviation passed in after gettting proper abbreviations from database
@@ -67,6 +74,7 @@ class BuildingsData {
                         if response["count"].int > 0 {
                             self.parseBuildingData(response)
                         }
+                        self._buildings[buildingAbb]?.UpdateBuildingsRoomStatus()
                         //call the protocol func here thats implimented in your class that you wanted
                         //This tell the class that the building objects are done being populated
                         self._buildingDelegate?.buildingInfoHasBeenLoaded()
@@ -109,7 +117,7 @@ class BuildingsData {
             let buildingAbb = buildingInfoResponse[BUILDING_NAME_JSON_ID].string!
             let numberOfFloors = buildingInfoResponse[BUILDING_FLOORNUM_JSON_ID].int!
             let numberOfWings = buildingInfoResponse[BUILDING_WINGNUM_JSON_ID].int!
-            let building = Building(buildingAbbr: buildingAbb, numberOfFloors: numberOfFloors, numberOfWings: numberOfWings)
+            let building = Building(buildingAbbr: buildingAbb, numberOfFloors: numberOfFloors, numberOfWings: numberOfWings, delg: self)
             _buildings[buildingAbb] = building
         }
     }
@@ -137,15 +145,15 @@ class BuildingsData {
     }
     
     //This is parsing out all the rooms and their coordinates and returning a list to add the rooms to the specific floor
-    func parseGeoJsonOfEachFloor(jsonBuildingAndFloorData: JSON, buildingAbb: String, floorNum: Int)->[RoomData]{
+    func parseGeoJsonOfEachFloor(jsonBuildingAndFloorData: JSON, buildingAbb: String, floorNum: Int)->[String : RoomData]{
         let strData = jsonBuildingAndFloorData["geojson"].string!.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
         let geoJsonInfo = JSON(data: strData!, options: NSJSONReadingOptions.MutableContainers, error: nil)
-        var floorsRooms = [RoomData]()
+        var floorsRooms = [String:RoomData]()
         for x in 0...(geoJsonInfo[JSON_FEATURES].count - 1) {
             let roomName = geoJsonInfo[JSON_FEATURES][x][JSON_PROP][JSON_ROOM].string
             var room = RoomData()
             if(roomName != nil){
-            self.updateRoomsInfo(buildingAbb, room_name: roomName!, RoomInformation: &room)
+            //self.updateRoomsInfo(buildingAbb, room_name: roomName!, RoomInformation: &room)
             let roomType = geoJsonInfo[JSON_FEATURES][x][JSON_GEOM][JSON_TYPE].string
             if roomType == "Polygon" {
                 (_maxX, _maxY, _minX, _minY) = (-180.0,-90.0,180.0,90.0)
@@ -160,11 +168,48 @@ class BuildingsData {
                 room.SetRoomCoordinates(rec)
                 room.SetRoomFloor(floorNum)
                 room.SetroomCenter(_minX, minY: _minY, maxX: _maxX, maxY: _maxY)
-                floorsRooms.append(room)
+                let potentialNewName = checkForDupName(roomName!, floorsRooms: floorsRooms)
+                if potentialNewName == String(){
+                    floorsRooms[roomName!] = (room)
+                }
+                else{
+                    room.SetRoomName(potentialNewName)
+                    room.SetRoomType(roomName!)
+                    floorsRooms[potentialNewName] = (room)
+                }
+                
             }
             }
         }
         return floorsRooms
+    }
+    
+    func checkForDupName(roomLookUp:String, floorsRooms: [String:RoomData])->String{
+            switch roomLookUp{
+                case "ELV":
+                    _elvCount++
+                    return "ELV\(_elvCount)"
+                case "WB":
+                    _wbCount++
+                    return "WB\(_wbCount)"
+                case "MB":
+                    _mbCount++
+                    return "MB\(_mbCount)"
+                case "STR":
+                    _strCount++
+                    return "STR\(_strCount)"
+                case "HW":
+                    _hwCount++
+                    return "HW\(_hwCount)"
+                case "UX":
+                    _uxCount++
+                    return "UX\(_uxCount)"
+                case "EXT":
+                    _extCount++
+                    return "EXT\(_extCount)"
+                default:
+                    return String()
+            }
     }
     
     func determineMaxMin(maxX:Double, maxY:Double,minX:Double,minY:Double){
@@ -184,65 +229,65 @@ class BuildingsData {
         case ConversionFailed = "ERROR: conversion from JSON failed"
     }
     
-    func updateRoomsInfo(building_id : String ,room_name : String, inout RoomInformation : RoomData) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-            let urlPath = "https://whirlpool-indoor-maps.appspot.com/room?building_name=\(building_id)&room_name=\(room_name)"
-            guard let endpoint = NSURL(string: urlPath) else { print("Error creating endpoint");return }
-            let request = NSMutableURLRequest(URL:endpoint)
-            NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
-                do {
-                    
-                    do {
-                        
-                        if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as?  NSDictionary {
-                            if let features = json["amenities"] as? NSArray {
-                                for resource in features {
-                                    RoomInformation.SetRoomResources((resource as? String)!)
-                                }
-                            }
-                            
-                            
-                            if let rows = json["rooms"] as? [[String: AnyObject]] {
-                                for ro in rows {
-                                    
-                                    if let cap = ro["capacity"] as? Int {
-                                        RoomInformation.SetRoomCapacity(cap)
-                                    }
-                                    if let ext = ro["extension"] as? String {
-                                        RoomInformation.SetRoomExt(ext);
-                                    }
-                                    if let stat = ro["occupancy_status"] as? String {
-                                        RoomInformation.SetRoomStatus(stat)
-                                    }
-                                    if let name = ro["room_name"] as? String {
-                                        RoomInformation.SetRoomName(name)
-                                    }
-                                    if let loc = ro["building_name"] as? String {
-                                        RoomInformation.SetRoomLocation(loc)
-                                    }
-                                    if let type = ro["room_type"] as? String {
-                                        RoomInformation.SetRoomType(type)
-                                    }
-                                    if let email = ro["email"] as? String {
-                                        RoomInformation.SetRoomEmail(email)
-                                    }
-                                    
-                                }
-
-                            }
-                        }
-                        
-                    }
-                } catch let error as JSONError {
-                    print(error.rawValue)
-                } catch {
-                    print(error)
-                }
-                
-                }.resume()
-        })
-        
-    }
+//    func updateRoomsInfo(building_id : String ,room_name : String, inout RoomInformation : RoomData) {
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+//            let urlPath = "https://whirlpool-indoor-maps.appspot.com/room?building_name=\(building_id)&room_name=\(room_name)"
+//            guard let endpoint = NSURL(string: urlPath) else { print("Error creating endpoint");return }
+//            let request = NSMutableURLRequest(URL:endpoint)
+//            NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
+//                do {
+//                    
+//                    do {
+//                        
+//                        if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as?  NSDictionary {
+//                            if let features = json["amenities"] as? NSArray {
+//                                for resource in features {
+//                                    RoomInformation.SetRoomResources((resource as? String)!)
+//                                }
+//                            }
+//                            
+//                            
+//                            if let rows = json["rooms"] as? [[String: AnyObject]] {
+//                                for ro in rows {
+//                                    
+//                                    if let cap = ro["capacity"] as? Int {
+//                                        RoomInformation.SetRoomCapacity(cap)
+//                                    }
+//                                    if let ext = ro["extension"] as? String {
+//                                        RoomInformation.SetRoomExt(ext);
+//                                    }
+//                                    if let stat = ro["occupancy_status"] as? String {
+//                                        RoomInformation.SetRoomStatus(stat)
+//                                    }
+//                                    if let name = ro["room_name"] as? String {
+//                                        RoomInformation.SetRoomName(name)
+//                                    }
+//                                    if let loc = ro["building_name"] as? String {
+//                                        RoomInformation.SetRoomLocation(loc)
+//                                    }
+//                                    if let type = ro["room_type"] as? String {
+//                                        RoomInformation.SetRoomType(type)
+//                                    }
+//                                    if let email = ro["email"] as? String {
+//                                        RoomInformation.SetRoomEmail(email)
+//                                    }
+//                                    
+//                                }
+//
+//                            }
+//                        }
+//                        
+//                    }
+//                } catch let error as JSONError {
+//                    print(error.rawValue)
+//                } catch {
+//                    print(error)
+//                }
+//                
+//                }.resume()
+//        })
+//        
+//    }
 
     
 

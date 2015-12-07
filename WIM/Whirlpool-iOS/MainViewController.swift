@@ -70,6 +70,8 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     func buildingInfoHasBeenLoaded(){
     }
+    func buildingUpdated() {
+    }
     
     func buildingSelected(buildingAbb:String) {
         _buildingAbb = buildingAbb
@@ -336,6 +338,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             let room = FAVORITE_ROOM_SELECTED
             if room!.GetRoomName() != String(){
                 buildingVC._room = room!
+                buildingVC._room.SetIsSelected(true)
                 buildingVC.CurrentBuilding = room!.GetBuildingOfRoom()
             }
             FAVORITE_ROOM_SELECTED = nil
@@ -345,6 +348,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             let room = specificSearchedRoom!
             specificSearchedRoom = nil
             buildingVC._room = room
+            buildingVC._room.SetIsSelected(true)
             buildingVC.CurrentBuilding = room.GetBuildingOfRoom()
         }
         

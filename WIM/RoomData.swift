@@ -152,8 +152,8 @@ public class RoomData {
     public func SetRoomFloor(floor : Int){
         self.roomFloor = floor
     }
-    public func GetRoomFloor()->Int{
-        return self.roomFloor!
+    public func GetRoomFloor()->Int?{
+        return self.roomFloor
     }
     
     public func SetRoomBuildingName(buildingAbb:String){
@@ -165,6 +165,9 @@ public class RoomData {
         
         
     }
+    
+    
+    
     
    
     

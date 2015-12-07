@@ -14,7 +14,7 @@ import GoogleMaps
 
 public class FloorData {
 
-   var _rooms  = Array<RoomData>()
+    var _rooms  = [String:RoomData]()
    var _floorNumber:Int!
 
     var _floorWing:String!
@@ -22,26 +22,27 @@ public class FloorData {
     init(floorNumber: Int, floorWing: String){
         _floorNumber = floorNumber
         _floorWing = floorWing
-        _rooms = [RoomData]()
+        _rooms = [String:RoomData]()
     }
     
-    func setRooms(rooms: [RoomData]){
+
+    func setRooms(rooms: [String:RoomData]){
         _rooms = rooms
     }
     
     func appendRoom(room: RoomData){
-        _rooms.append(room)
+        _rooms[room.GetRoomName()]=(room)
     }
     
-    func getRoomsInFloor(Floor : Int)->[RoomData] {
+    func getRoomsInFloor(Floor : Int)->[String: RoomData] {
         if(self._floorNumber == Floor){
             return self._rooms
         }else{
-            return [RoomData] ()
+            return [String: RoomData] ()
         }
     }
     
-    func getRoomsInFloor()-> Array<RoomData>{
+    func getRoomsInFloor()-> [String:RoomData]{
        return  _rooms
     }
     
@@ -54,15 +55,14 @@ public class FloorData {
     }
     
     
-    func getElevatorsAndStairsInFloor()-> Array<RoomData>{
+    func getElevatorsAndStairsInFloor()-> [String:RoomData]{
         
-        var Elevators  = Array<RoomData>()
+        var Elevators  = [String:RoomData]()
         
-        for room in _rooms{
+        for (roomName, room) in _rooms{
             
-            if((room.GetRoomName() == "ELV")||(room.GetRoomName() == "STR")){
-                Elevators.append(room)
-                
+            if((room.GetRoomName().containsString("ELV"))||(room.GetRoomName().containsString("STR"))){
+                Elevators[roomName] = (room)
             }
             
         }
@@ -71,22 +71,22 @@ public class FloorData {
         return Elevators
     }
     
-    func getElevatorsOnlyInFloor()-> Array<RoomData>{
-        
-        var Elevators  = Array<RoomData>()
-        
-        for room in _rooms{
-            
-            if(room.GetRoomName() == "ELV"){
-                Elevators.append(room)
-                
-            }
-            
-        }
-        
-        
-        return Elevators
-    }
+//    func getElevatorsOnlyInFloor()-> [String: RoomData]{
+//        
+//        var Elevators  = [String:RoomData]()
+//        
+//        for (roomName, room) in _rooms{
+//            
+//            if(room.GetRoomName() == "ELV"){
+//                Elevators[roomName] = (room)
+//                
+//            }
+//            
+//        }
+//        
+//        
+//        return Elevators
+//    }
     
     
 }
