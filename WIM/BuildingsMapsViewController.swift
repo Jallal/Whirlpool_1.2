@@ -170,6 +170,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     func parseRoomJson(roomInfo: JSON)->RoomData{
         if roomInfo["rooms"][0]["room_name"].stringValue == _room.GetRoomName() {
             let room = RoomData()
+            let roomAmentities = roomInfo["amenities"].arrayValue
             room.SetRoomName(roomInfo["rooms"][0]["room_name"].stringValue)
             room.SetRoomEmail(roomInfo["rooms"][0]["email"].stringValue)
             room.SetRoomLocation(roomInfo["rooms"][0]["resource_name"].stringValue)
@@ -198,6 +199,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         self.goButton.hidden = !self.goButton.hidden
         self.Address.hidden = !self.Address.hidden
         self.buttomView.hidden = true//!self.buttomView.hidden
+        self.mapView.clear()
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             self.Invalidate(self.CurrentFloor._floorNumber)
         }
@@ -224,8 +226,9 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
                         self.CurrentFloor =  self._building.getFloorInBuilding(1)
                         self.Invalidate(1)
                     }
+                    self.updateLocation(true)
                 }
-                self.updateLocation(true)
+                
             });
         }
     }
@@ -560,6 +563,12 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             for (roomName,room) in floorClass.getRoomsInFloor(){
                 if(room.GetRoomName() == overlay.title){
                     room.SetIsSelected(true);
+                    findRoomInfo(room.GetRoomName(), successHandler: { (response) -> Void in
+                        let tempRoom = self.parseRoomJson(response)
+                        room.ReplaceRoomResources(tempRoom.GetRoomResources())
+                        self.tableView.reloadData()
+                        
+                    })
                 }else{
                     room.SetIsSelected(false);
                 }
@@ -569,7 +578,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         self.mapView.clear();
         self.Invalidate(self.CurrentFloor.getFloorNumber());
     }
-    
     
     /******************************  Redraw  function  *************************/
     
@@ -594,6 +602,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     
     func buttonTapped(sender: UITapGestureRecognizer) {
+        goButton.hidden = true
         if (sender.state == .Ended) {
             self.drawRoute();
         }
@@ -867,14 +876,16 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     
     
     
-    public func ShowPath(p : Path,inout endpoint : CLLocationCoordinate2D){
+    func ShowPath(p : Path,inout endpoint : CLLocationCoordinate2D){
         
         let path1 = GMSMutablePath()
         self.mapPin.hidden = true
         self.goButton.hidden = true
         let pos = self._StartingLocation.GetroomCenter()
+        
         let marker = GMSMarker(position: pos)
         marker.icon = UIImage(named: "Location Start.png")
+        
         marker.flat = true
         marker.appearAnimation =   GoogleMaps.kGMSMarkerAnimationPop
         marker.map = self.mapView

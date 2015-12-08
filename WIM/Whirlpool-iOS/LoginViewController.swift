@@ -44,32 +44,12 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
         output.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         
         self.GoogleView.addSubview(output);
-        
-//        let auth = GTMOAuth2ViewControllerTouch.authForGoogleFromKeychainForName(
-//            kKeychainItemName,
-//            clientID: kClientID,
-//            clientSecret: kClientSecret
-//        )
-//        googleAuth = auth
-        
-    
-        
         if let auth = GTMOAuth2ViewControllerTouch.authForGoogleFromKeychainForName(
             kKeychainItemName,
             clientID: kClientID,
             clientSecret: kClientSecret) {
                 service.authorizer = auth
-//                googleAuth = auth
         }
-     
-        
-        
-//          if(KeychainHelper.get(kKeychainItemName) != nil){
-//            KeychainHelper.set("email", value:googleAuth.userEmail)
-//              KeychainHelper.set("password", value:googleAuth.userID)
-//            
-//        }
-        
     }
     
 //    func httpCall(){
@@ -117,7 +97,18 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
     override public func viewDidAppear(animated: Bool) {
         if let authorizer = service.authorizer,
             canAuth = authorizer.canAuthorize where canAuth {
-                fetchEvents()
+                if authorizer.userEmail.containsString("@whirlpool.com"){
+                    fetchEvents()
+                }else{
+                    GTMOAuth2ViewControllerTouch.removeAuthFromKeychainForName(kKeychainItemName)
+                    service.authorizer = nil
+                    _userCalenderInfo = nil
+                    presentViewController(
+                        createAuthController(),
+                        animated: true,
+                        completion: nil
+                    )
+                }
                 
         } else {
             presentViewController(
@@ -150,14 +141,8 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
         
     }
     
-    
-    
-    
     // Display the start dates and event summaries in the UITextView
     public func displayResultWithTicket(
-       
-   
-        
         ticket: GTLServiceTicket,
         finishedWithObject events : GTLCalendarEvents?,
         error : NSError?) {
