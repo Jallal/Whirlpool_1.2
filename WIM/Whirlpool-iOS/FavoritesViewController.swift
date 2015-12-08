@@ -47,12 +47,26 @@ class FavoriteViewController: UIViewController, UITableViewDataSource, UITableVi
         
         //2
         let fetchRequest = NSFetchRequest(entityName: "Whirlpool_favorites_table")
-        
+//        let resultPredicate = NSPredicate(format: "userEmail == %@", googleAuth.userEmail)
+//        fetchRequest.predicate = resultPredicate
+        print(service.authorizer.userEmail)
         //3
         do {
             let results =
             try managedContext.executeFetchRequest(fetchRequest)
-            _favorites = results as! [NSManagedObject]
+            let tempResults = results as! [NSManagedObject]
+            if tempResults.count>0{
+                for x in 0...tempResults.count-1{
+                    let email = tempResults[x].valueForKey("userEmail") as? String
+                    let appLoginEmail = service.authorizer.userEmail
+                    let boolResult = email == appLoginEmail
+                    if email != nil {
+                        if email == service.authorizer.userEmail{
+                            _favorites.append(tempResults[x])
+                        }
+                    }
+                }
+            }
             self.relevant.reloadData()
             
         } catch let error as NSError {

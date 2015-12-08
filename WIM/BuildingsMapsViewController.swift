@@ -679,10 +679,11 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         let entity = NSEntityDescription.entityForName("Whirlpool_favorites_table", inManagedObjectContext: managedContext)
         
         let favoriteRoom = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
-        
+        print(service.authorizer.userEmail)
         favoriteRoom.setValue(room.GetRoomName(), forKey: "roomName")
         favoriteRoom.setValue(room.GetRoomEmail(), forKey: "roomEmail")
         favoriteRoom.setValue(CurrentBuilding, forKey: "buildingAbb")
+        favoriteRoom.setValue(service.authorizer.userEmail,forKey:"userEmail")
         //4
         do {
             try managedContext.save()

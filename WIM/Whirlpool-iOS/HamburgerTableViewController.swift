@@ -76,9 +76,12 @@ class HamburgerTableViewController: UITableViewController, selectedFavoriteDelag
     }
     
     func logoutHit(){
-        GTMOAuth2ViewControllerTouch.revokeTokenForGoogleAuthentication(googleAuth)
+//        GTMOAuth2ViewControllerTouch.revokeTokenForGoogleAuthentication(service.)
         GTMOAuth2ViewControllerTouch.removeAuthFromKeychainForName(kKeychainItemName)
-        service = GTLServiceCalendar()
+        service.authorizer = nil
+        _userCalenderInfo = nil
+//        googleAuth = GTMOAuth2Authentication()
+        
     }
     
     
