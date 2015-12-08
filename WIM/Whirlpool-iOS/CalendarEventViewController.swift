@@ -111,7 +111,7 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         }
     
     override func viewDidLoad() {
-
+        
     }
     
     
@@ -157,6 +157,7 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
             else {
+                self.presentInvalidTimeRangeAlert()
                 NSLog(error.localizedDescription)
             }
         })
@@ -250,19 +251,30 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         presentViewController(alertController, animated: true) { () -> Void in
         }
     }
+    
+    
+    func presentInvalidTimeRangeAlert(){
+        var message = "Please choose a  earlier starting\n then end time."
+        let alertController = UIAlertController(title: "Invalid Time Range", message: message, preferredStyle: .Alert)
+        presentViewController(alertController, animated: true) { () -> Void in
+            sleep(2)
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+
 
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return false
-    }
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n"{
-            textView.resignFirstResponder()
-            return false
-        }
-        return true
-    }
+//    func textFieldShouldReturn(textField: UITextField) -> Bool {
+//        textField.resignFirstResponder()
+//        return false
+//    }
+//    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+//        if text == "\n"{
+//            textView.resignFirstResponder()
+//            return false
+//        }
+//        return true
+//    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
@@ -398,5 +410,4 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
             }
         }
     }
-    
 }
