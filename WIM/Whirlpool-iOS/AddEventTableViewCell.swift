@@ -9,8 +9,11 @@
 import Foundation
 import UIKit
 
-class AddEventTableViewCell: UITableViewCell {
 
+
+class AddEventTableViewCell: UITableViewCell, UITextViewDelegate {
+
+    //@IBOutlet weak var cellInputText: UITextField!
     @IBOutlet weak var cellInputText: UITextView!
     @IBOutlet weak var cellImage: UIImageView!
 
@@ -21,6 +24,5 @@ class AddEventTableViewCell: UITableViewCell {
     func setCellInputTextHeight(){
         cellInputText.bounds.size.height = self.bounds.size.height
     }
-    
     
 }

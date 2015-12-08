@@ -21,6 +21,73 @@ extension NSDate {
     }
 }
 
+
+extension UITextView: UITextViewDelegate {
+    
+    // Placeholder text
+    var placeholder: String? {
+        
+        get {
+            // Get the placeholder text from the label
+            var placeholderText: String?
+            
+            if let placeHolderLabel = self.viewWithTag(100) as? UILabel {
+                placeholderText = placeHolderLabel.text
+            }
+            return placeholderText
+        }
+        
+        set {
+            // Store the placeholder text in the label
+            let placeHolderLabel = self.viewWithTag(100) as! UILabel?
+            if placeHolderLabel == nil {
+                // Add placeholder label to text view
+                self.addPlaceholderLabel(newValue!)
+            }
+            else {
+                placeHolderLabel?.text = newValue
+                placeHolderLabel?.sizeToFit()
+            }
+        }
+    }
+    
+    // Hide the placeholder label if there is no text
+    // in the text viewotherwise, show the label
+    public func textViewDidChange(textView: UITextView) {
+        
+        let placeHolderLabel = self.viewWithTag(100)
+        
+        if !self.hasText() {
+            // Get the placeholder label
+            placeHolderLabel?.hidden = false
+        }
+        else {
+            placeHolderLabel?.hidden = true
+        }
+    }
+    
+    // Add a placeholder label to the text view
+    func addPlaceholderLabel(placeholderText: String) {
+        
+        // Create the label and set its properties
+        let placeholderLabel = UILabel()
+        placeholderLabel.text = placeholderText
+        placeholderLabel.sizeToFit()
+        placeholderLabel.frame.origin.x = 5.0
+        placeholderLabel.frame.origin.y = 5.0
+        placeholderLabel.font = self.font
+        placeholderLabel.textColor = UIColor.lightGrayColor()
+        placeholderLabel.tag = 100
+        
+        // Hide the label if there is text in the text view
+        placeholderLabel.hidden = (self.text.characters.count > 0)
+        
+        self.addSubview(placeholderLabel)
+        self.delegate = self;
+    }
+    
+}
+
 class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     struct busyTime {
@@ -85,9 +152,11 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
     }
     
     func checkIntervalOverlap()->Bool{
-        for i in 0..._roomFreeBusyTimes.count-1{
-            if((startDate?.timeIntervalSinceReferenceDate < _roomFreeBusyTimes[i].end.timeIntervalSinceReferenceDate) && (endDate?.timeIntervalSinceReferenceDate > _roomFreeBusyTimes[i].start.timeIntervalSinceReferenceDate)){
-                return true
+        if _roomFreeBusyTimes.count-1 >= 0 {
+            for i in 0..._roomFreeBusyTimes.count-1{
+                if((startDate?.timeIntervalSinceReferenceDate < _roomFreeBusyTimes[i].end.timeIntervalSinceReferenceDate) && (endDate?.timeIntervalSinceReferenceDate > _roomFreeBusyTimes[i].start.timeIntervalSinceReferenceDate)){
+                    return true
+                }
             }
         }
         return false
@@ -111,7 +180,7 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         }
     
     override func viewDidLoad() {
-
+        
     }
     
     
@@ -157,6 +226,7 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
             else {
+                self.presentInvalidTimeRangeAlert()
                 NSLog(error.localizedDescription)
             }
         })
@@ -250,19 +320,30 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         presentViewController(alertController, animated: true) { () -> Void in
         }
     }
+    
+    
+    func presentInvalidTimeRangeAlert(){
+        var message = "Please choose a  earlier starting\n then end time."
+        let alertController = UIAlertController(title: "Invalid Time Range", message: message, preferredStyle: .Alert)
+        presentViewController(alertController, animated: true) { () -> Void in
+            sleep(2)
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+
 
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return false
-    }
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n"{
-            textView.resignFirstResponder()
-            return false
-        }
-        return true
-    }
+//    func textFieldShouldReturn(textField: UITextField) -> Bool {
+//        textField.resignFirstResponder()
+//        return false
+//    }
+//    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+//        if text == "\n"{
+//            textView.resignFirstResponder()
+//            return false
+//        }
+//        return true
+//    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
@@ -306,11 +387,13 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
         switch indexPath.row{
         case 0:
             let cell = tableView.dequeueReusableCellWithIdentifier("addEventCell", forIndexPath: indexPath) as! AddEventTableViewCell
-            cell.cellInputText.text = "Enter Title"
+            
             eventTitleCell = cell
             eventTitleCell.setCellInputTextHeight()
             if eventTitle != nil {
                 eventTitleCell.cellInputText.text = eventTitle
+            }else{
+                cell.cellInputText.placeholder = "Enter Title"
             }
             return eventTitleCell
         case 1:
@@ -340,22 +423,26 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
                 return eventEndCell
         case 3:
             let cell = tableView.dequeueReusableCellWithIdentifier("addEventCell", forIndexPath: indexPath) as! AddEventTableViewCell
-            cell.cellInputText.text = "Location"
+            
             eventLocationCell = cell
             eventLocationCell.cellImage.image = UIImage(named: "Location.png")
             eventLocationCell.setCellInputTextHeight()
             if locationTitle != nil {
                 eventLocationCell.cellInputText.text = locationTitle
+            }else{
+            cell.cellInputText.placeholder = "Location"
             }
             return eventLocationCell
         case 4:
             let cell = tableView.dequeueReusableCellWithIdentifier("addEventCell", forIndexPath: indexPath) as! AddEventTableViewCell
-            cell.cellInputText.text = "Add Note"
+            
             eventDescriptionCell = cell
             eventDescriptionCell.cellImage.image = UIImage(named: "Add Note.png")
             eventDescriptionCell.setCellInputTextHeight()
             if descriptionTitle != nil {
                 eventDescriptionCell.cellInputText.text = descriptionTitle
+            }else{
+                cell.cellInputText.placeholder = "Add Note"
             }
             return eventDescriptionCell
         default:
@@ -398,5 +485,4 @@ class CalendarEventViewController: UIViewController,UITextFieldDelegate, UITextV
             }
         }
     }
-    
 }

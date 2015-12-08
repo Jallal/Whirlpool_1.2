@@ -42,27 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Whirlpool-iOS/CalendarEventViewController.swift"
-            timestampString = "471197344.442219"
+            timestampString = "471230347.574958"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "buttonAddEvent(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Whirlpool-iOS/CalendarEventViewController.swift"
-            timestampString = "471198305.459948"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
             landmarkName = "checkFreeBusyTime(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -115,13 +99,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Whirlpool-iOS/LoginViewController.swift"
-            timestampString = "471223856.979855"
+            filePath = "Whirlpool-iOS/CalendarEventViewController.swift"
+            timestampString = "471230347.574958"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "230"
+            endingLineNumber = "230"
+            landmarkName = "addNewEvent(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
