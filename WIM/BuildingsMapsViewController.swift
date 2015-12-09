@@ -311,7 +311,14 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         var i : Int = 0
         if(self.NumberOfFloor != 0){
             for index  in (1...NumberOfFloor).reverse(){
+                
+                if(i==0){
+                    floors.append("T")
+                    
+                }else{
+                
                 floors.append("\(index)")
+                }
                 i = i+1
             }
         }
