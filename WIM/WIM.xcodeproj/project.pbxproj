@@ -26,6 +26,7 @@
 		4288AAB51BB83093003EC9EF /* Whirlpool_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4288AAB41BB83093003EC9EF /* Whirlpool_iOSTests.swift */; };
 		4288AAC01BB83093003EC9EF /* Whirlpool_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4288AABF1BB83093003EC9EF /* Whirlpool_iOSUITests.swift */; };
 		428C22261BF038C9007A6F13 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428C22251BF038C9007A6F13 /* KeychainHelper.swift */; };
+		42946B291C17C4960019CCFB /* RV_3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 42946B281C17C4960019CCFB /* RV_3.txt */; };
 		42AC8C441BEEDD7500ECE6A6 /* FloorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AC8C431BEEDD7500ECE6A6 /* FloorData.swift */; };
 		42B976CD1BC1D5950012D29B /* UserCalenderInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B976CC1BC1D5950012D29B /* UserCalenderInfo.swift */; };
 		42C01DF21BB8351600C2EEAD /* libGTLTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C01DF11BB8351600C2EEAD /* libGTLTouchStaticLib.a */; };
@@ -99,6 +100,7 @@
 		4288AABF1BB83093003EC9EF /* Whirlpool_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Whirlpool_iOSUITests.swift; sourceTree = "<group>"; };
 		4288AAC11BB83093003EC9EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		428C22251BF038C9007A6F13 /* KeychainHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		42946B281C17C4960019CCFB /* RV_3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RV_3.txt; sourceTree = "<group>"; };
 		42AC8C431BEEDD7500ECE6A6 /* FloorData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloorData.swift; sourceTree = "<group>"; };
 		42B976CC1BC1D5950012D29B /* UserCalenderInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCalenderInfo.swift; sourceTree = "<group>"; };
 		42C01DF11BB8351600C2EEAD /* libGTLTouchStaticLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGTLTouchStaticLib.a; path = "../google-api-objectivec-client/Source/build/Debug-iphoneos/libGTLTouchStaticLib.a"; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				42E68C871C0A771D004DC1CF /* GHQ_1.txt */,
 				420864BF1BF7013D00D3B7B9 /* RV_2.txt */,
 				420864C01BF7013D00D3B7B9 /* RV_1.txt */,
+				42946B281C17C4960019CCFB /* RV_3.txt */,
 				42C6AFF21BC4216C00245A2B /* web */,
 				4288AA9F1BB83093003EC9EF /* AppDelegate.swift */,
 				42C01DFA1BB8369A00C2EEAD /* GTLCalendar_Sources.m */,
@@ -402,6 +405,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42946B291C17C4960019CCFB /* RV_3.txt in Resources */,
 				847B58761BB9DA2900E22862 /* CalenderCell.swift in Resources */,
 				420864C21BF7013D00D3B7B9 /* RV_1.txt in Resources */,
 				42C01DF81BB8364700C2EEAD /* GTMOAuth2ViewTouch.xib in Resources */,
