@@ -21,6 +21,20 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
      //Remove this variable only for beta
     
     
+    
+    /// must be >= 1.0
+    var snapY:CGFloat = 1.0
+    
+    /// how far to move before dragging
+    var threshold:CGFloat = 0.0
+    
+    /// drag in the Y direction?
+    var shouldDragY = true
+    
+    var centerYBottomView: CGFloat?
+    var originalTableViewPosition: CGPoint?
+    
+    
     var BuildingView = true
     var finishedDrawingTheMap = false
     var endpoint  = CLLocationCoordinate2D(latitude: 0,longitude: 0)
@@ -50,6 +64,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     var routePolyline: GMSPolyline!
     var _buildings : BuildingsData!
     var _building : Building!
+    var selectedView: UIView?
     
     @IBOutlet weak var helpButton: UIButton!
     @IBOutlet weak var bookingButton: UIButton!
@@ -68,7 +83,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
     @IBOutlet weak var floorPicker: UITableView!
     
     @IBAction func cancelMapScreen(sender: AnyObject) {
-        clearMemory()
+        //clearMemory()
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     func buildingInfoHasBeenLoaded(){
@@ -114,26 +129,82 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         }
     }
     
-    @IBAction func pan(sender: UIPanGestureRecognizer) {
-        //Get the size of the screen
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
-        //let screenWidth : CGFloat  = screenSize.width
-        let screenHeight : CGFloat  = screenSize.height
-        //View will not go out of the frame of the screen
-        let MagicNumber : CGFloat = screenSize.height*0.70
+    @IBAction func pan(rec: UIPanGestureRecognizer) {
+//        //Get the size of the screen
+//        let screenSize: CGRect = UIScreen.mainScreen().bounds
+//        //let screenWidth : CGFloat  = screenSize.width
+//        let screenHeight : CGFloat  = screenSize.height
+//        //View will not go out of the frame of the screen
+//        let MagicNumber : CGFloat = screenSize.height*0.70
+//        
+//        //Translate the PX to the screen size
+//        let translation = sender.translationInView(self.buttomView)
+//        if let view = sender.view{
+//            let d: CGFloat = (self.buttomView.center.y + translation.y)
+//            if(((MagicNumber)<=d)&&(d<(screenHeight+20))){
+//                self.buttomView.center = CGPoint(x:self.buttomView.center.x,
+//                    y:self.buttomView.center.y + translation.y)
+//            }
+//            
+//        }
+//        sender.setTranslation(CGPointZero, inView: self.buttomView)
         
-        //Translate the PX to the screen size
-        let translation = sender.translationInView(self.buttomView)
-        if let view = sender.view{
-            let d: CGFloat = (self.buttomView.center.y + translation.y)
-            if(((MagicNumber)<=d)&&(d<(screenHeight+20))){
-                self.buttomView.center = CGPoint(x:self.buttomView.center.x,
-                    y:self.buttomView.center.y + translation.y)
+        var p:CGPoint = rec.locationInView(self.view)
+        var center:CGPoint = CGPointZero
+        
+        switch rec.state {
+        case .Began:
+            print("began")
+            selectedView = view.hitTest(p, withEvent: nil)
+            if selectedView != nil {
+                self.view.bringSubviewToFront(selectedView!)
             }
             
+        case .Changed:
+            if let subview = selectedView {
+                center = subview.center
+                var distance = (sqrt(pow((center.y - p.y), 2.0))) // self.view.bounds.maxY
+                //print("distance \(distance)")
+                
+                if subview == buttomView {
+                    if distance > threshold {
+                        if shouldDragY {
+                            //subview.frame = CGRectOffset(subview.frame, 0, distance)
+                            subview.center = CGPoint(x: self.buttomView.center.x, y: subview.center.y + rec.translationInView(subview).y)
+                            rec.setTranslation(CGPointZero, inView: subview)
+//                            (p.y - (p.y % snapY))
+                        }
+                    }
+                }
+            }
+            
+        case .Ended:
+            print("ended")
+            if let subview = selectedView {
+                if subview == buttomView {
+                    print((subview.center.y - (subview.bounds.height/2)))
+                    print(subview.bounds.height/2)
+                    print(centerYBottomView! - 40)
+                    if (subview.center.y - (subview.bounds.height/2)) > (centerYBottomView! - 40){
+                        subview.center = CGPoint(x: self.buttomView.center.x, y: self.view.frame.maxY)
+                        print("subview center set: ",subview.center)
+                        rec.setTranslation(CGPointZero, inView: subview)
+                    }
+                    else{
+                        subview.center = CGPoint(x: self.buttomView.center.x, y: self.view.frame.maxY - (self.tableView.bounds.maxY - 10))
+                        rec.setTranslation(CGPointZero, inView: subview)
+                    }
+                }
+            }
+            selectedView = nil
+            
+        case .Possible:
+            print("possible")
+        case .Cancelled:
+            print("cancelled")
+        case .Failed:
+            print("failed")
         }
-        sender.setTranslation(CGPointZero, inView: self.buttomView)
-        
     }
     
     /**
@@ -179,8 +250,10 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             room.SetRoomType(roomInfo["rooms"][0]["room_type"].stringValue)
             room.SetRoomBuildingName(roomInfo["rooms"][0]["building_name"].stringValue)
             room.SetRoomStatus(roomInfo["rooms"][0]["occupancy_status"].stringValue)
-            for i in 0...roomInfo["amenities"].count-1{
-                room.SetRoomResources(roomInfo["amenities"][i].stringValue)
+            if roomInfo["amenities"].count > 0 {
+                for i in 0...roomInfo["amenities"].count-1{
+                    room.SetRoomResources(roomInfo["amenities"][i].stringValue)
+                }
             }
             return room
         }
@@ -232,10 +305,18 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             });
         }
     }
-    
+    func setupGestures() {
+        var pan = UIPanGestureRecognizer(target:self, action:"pan:")
+        pan.maximumNumberOfTouches = 1
+        pan.minimumNumberOfTouches = 1
+        self.buttomView.addGestureRecognizer(pan)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.centerYBottomView = buttomView.center.y
+        self.originalTableViewPosition = buttomView.center
+        print("original x: ",originalTableViewPosition?.x)
         self.mapView.settings.compassButton = true
         self.mapView.buildingsEnabled = false
         self.mapView.indoorEnabled = false
@@ -586,7 +667,6 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
         dispatch_async(dispatch_get_main_queue()) {
             do {
                 self.updateUIMap(floor)
-                
             }
         }
         
@@ -672,7 +752,7 @@ class  BuildingsMapsViewController : UIViewController , CLLocationManagerDelegat
             let eventVC = segue.destinationViewController as! CalendarEventViewController
             eventVC.guest = _room.GetRoomEmail()
             eventVC.location = _room.GetRoomLocation()
-            clearMemory()
+            //clearMemory()
         }
         
     }
