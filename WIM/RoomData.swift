@@ -166,6 +166,10 @@ public class RoomData {
         
     }
     
+    func ReplaceRoomResources(resorces: [String]){
+        roomAvResources = resorces
+    }
+    
     
     
     
