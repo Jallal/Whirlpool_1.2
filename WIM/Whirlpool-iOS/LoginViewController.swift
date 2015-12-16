@@ -200,7 +200,6 @@ public class LoginViewController: UIViewController , NSXMLParserDelegate{
             finishedSelector: "viewController:finishedWithAuth:error:"
         )
         
-        
        
     }
     
